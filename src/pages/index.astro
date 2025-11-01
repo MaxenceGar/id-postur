@@ -1,0 +1,346 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout>
+  <!-- Hero section -->
+  <section class="relative from-white py-24 md:py-32 px-6 overflow-hidden">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-2 items-center gap-12">
+      <!-- Texte -->
+      <div class="text-center md:text-left">
+        <h1
+          class="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight mb-6"
+        >
+          <span class="block">Analysez. Corrigez.</span>
+          <span class="block text-red-800">Transformez votre posture.</span>
+        </h1>
+        <p
+          class="text-gray-600 text-lg md:text-xl max-w-lg mx-auto md:mx-0 mb-10 leading-relaxed"
+        >
+          Améliorez votre bien-être, vos performances et votre confort au
+          quotidien grâce à une approche personnalisée de la posture.
+        </p>
+        <div
+          class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start"
+        >
+          <a
+            href="https://calendly.com/ton_compte_calendly"
+            target="_blank"
+            class="bg-red-900 hover:bg-red-800 text-white font-semibold py-3 px-8 shadow-md transition"
+          >
+            Prendre rendez-vous
+          </a>
+        </div>
+      </div>
+
+      <!-- Image -->
+      <div class="relative">
+        <img
+          src="/images/photo.jpeg"
+          alt="Analyse posturale ID Postur"
+          class="w-full max-w-md md:max-w-lg mx-auto shadow-xl border-4 border-red-900 transition duration-300 ease-in-out hover:scale-110"
+          loading="lazy"
+        />
+        <!-- Accent décoratif -->
+        <div
+          class="absolute -z-10 top-6 right-6 w-64 h-64 bg-red-200 rounded-full blur-3xl opacity-50"
+        >
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Avantages -->
+  <section id="avantages" class="py-24 px-6 bg-white">
+    <div
+      class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 text-center bg-gray-50 shadow-2xl rounded-2xl p-2 border-2 border-gray-50"
+    >
+      <!-- Bloc 1 -->
+      <div class="flex flex-col items-center">
+        <img
+          src="/src/assets/svg-test.svg"
+          alt="Étude"
+          class="w-20 mb-4"
+          loading="lazy"
+        />
+        <div class="text-3xl font-bold text-red-900 mb-1">+800</div>
+        <div class="text-gray-700 font-light text-base">
+          Études réalisées avec succès
+        </div>
+      </div>
+
+      <!-- Bloc 2 -->
+      <div class="flex flex-col items-center">
+        <img
+          src="/src/assets/svg-test.svg"
+          alt="Cyclistes"
+          class="w-20 mb-4"
+          loading="lazy"
+        />
+        <div class="text-3xl font-bold text-red-900 mb-1">+25</div>
+        <div class="text-gray-700 font-light text-base">
+          Cyclistes professionnels accompagnés
+        </div>
+      </div>
+
+      <!-- Bloc 3 -->
+      <div class="flex flex-col items-center">
+        <img
+          src="/src/assets/svg-test.svg"
+          alt="Expérience"
+          class="w-20 mb-4"
+          loading="lazy"
+        />
+        <div class="text-3xl font-bold text-red-900 mb-1">+3 ans</div>
+        <div class="text-gray-700 font-light text-base">d’expérience</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Section de test -->
+
+<section class="py-24 px-6 bg-white flex items-center justify-center">
+  <div class="max-w-5xl mx-auto text-center">
+    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+      Qui sommes-nous ?
+    </h2>
+
+    <div class="h-[3px] w-24 bg-red-900 mx-auto mb-6 rounded-full"></div>
+
+    <p class="text-gray-600 uppercase tracking-wide mb-8">
+      by Romain Hardy
+    </p>
+
+    <p class="text-gray-700 leading-relaxed mb-8">
+      <strong>ID Postur</strong> est un centre d’étude posturale pour le cycliste, fondé en 2023 par
+      <strong>Romain Hardy</strong>, ancien cycliste professionnel.  
+      Nous avons déjà accompagné plus de <strong>300 cyclistes</strong> dans l’optimisation de leur position pour
+      gagner en performance et réduire les douleurs.  
+      Route, VTT, Gravel, Triathlon : améliorez votre confort et vos performances grâce à une expertise
+      scientifique au service de chaque athlète.
+    </p>
+
+    <a
+      href="https://google.com"
+      target="_blank"
+      class="inline-block bg-red-900 hover:bg-red-800 text-white font-semibold py-3 px-10 shadow-md transition"
+    >
+      En savoir plus
+    </a>
+  </div>
+</section>
+
+  <!-- Photo + texte -->
+  <section class="py-24 px-6 bg-red-900 text-white">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+      <div class="flex justify-center">
+        <img
+          src="/images/photo.jpeg"
+          alt="Séance d'analyse posturale"
+          class="w-full max-w-md shadow-lg border-white border-4"
+          loading="lazy"
+        />
+      </div>
+
+      <div class="text-left">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">
+          Une approche personnalisée de la posture
+        </h2>
+        <p class="leading-relaxed mb-6">
+          Chez <strong>ID Postur</strong>, chaque séance est adaptée à vos
+          besoins spécifiques. Nous analysons votre posture, votre mobilité et
+          vos habitudes pour construire un plan d’amélioration durable et
+          efficace.
+        </p>
+        <a
+          href="https://calendly.com/ton_compte_calendly"
+          target="_blank"
+          class="inline-block bg-white text-red-900 font-semibold py-3 px-4 transition"
+        >
+          Réserver une séance
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section des prix -->
+  <section class="py-24 px-6 bg-gray-50">
+    <div class="max-w-6xl mx-auto text-center">
+      <h2 id="tarifs" class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        Nos formules
+      </h2>
+      <p class="text-gray-600 max-w-2xl mx-auto mb-12">
+        Choisissez la formule qui correspond le mieux à vos besoins. Chaque
+        séance est personnalisée selon votre posture et vos objectifs.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Carte 1 -->
+        <div
+          class="bg-white shadow p-8 flex flex-col items-center hover:shadow-lg transition"
+        >
+          <h3 class="text-xl font-semibold text-gray-900 mb-4">
+            Séance Découverte
+          </h3>
+          <p class="text-gray-600 mb-6 text-sm">
+            Analyse posturale complète + conseils personnalisés
+          </p>
+          <p class="text-4xl font-bold mb-6">49€</p>
+          <a
+            href="https://calendly.com/ton_compte_calendly"
+            target="_blank"
+            class="bg-red-900 hover:bg-red-800 text-white font-semibold py-2 px-6 shadow-md transition"
+          >
+            Réserver
+          </a>
+        </div>
+
+        <!-- Carte 2 -->
+        <div
+          class="bg-white shadow-lg border-2 border-red-900 p-8 flex flex-col items-center scale-105"
+        >
+          <h3 class="text-xl font-semibold text-gray-900 mb-4">
+            Étude complète
+          </h3>
+          <p class="text-gray-600 mb-6 text-sm">
+            3 séances d'accompagnement pour un suivi complet
+          </p>
+          <p class="text-4xl font-bold mb-6">250€</p>
+          <a
+            href="https://calendly.com/ton_compte_calendly"
+            target="_blank"
+            class="bg-red-900 hover:bg-red-800 text-white font-semibold py-2 px-6 shadow-md transition"
+          >
+            Réserver
+          </a>
+        </div>
+
+        <!-- Carte 3 -->
+        <div
+          class="bg-white shadow p-8 flex flex-col items-center hover:shadow-lg transition"
+        >
+          <h3 class="text-xl font-semibold text-gray-900 mb-4">
+            Pack Performance
+          </h3>
+          <p class="text-gray-600 mb-6 text-sm">
+            5 séances pour transformer durablement votre posture
+          </p>
+          <p class="text-4xl font-bold mb-6">199€</p>
+          <a
+            href="https://calendly.com/ton_compte_calendly"
+            target="_blank"
+            class="bg-red-900 hover:bg-red-800 text-white font-semibold py-2 px-6 shadow-md transition"
+          >
+            Réserver
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Avis -->
+  <section class="py-24 px-6 bg-white">
+    <div class="max-w-6xl mx-auto text-center">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        Ce qu’ils disent de nous
+      </h2>
+      <p class="text-gray-600 max-w-2xl mx-auto mb-12">
+        Découvrez les retours de nos clients qui ont transformé leur posture et
+        retrouvé un vrai confort au quotidien.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Avis 1 -->
+        <div
+          class="bg-gray-50 p-8 shadow hover:shadow-lg transition text-left flex flex-col justify-between"
+        >
+          <p class="text-gray-700 italic mb-6">
+            “J’ai enfin compris l’origine de mes douleurs de dos. En quelques
+            séances, ma posture s’est améliorée et mes douleurs ont diminué.”
+          </p>
+          <div class="flex items-center gap-4 mt-auto">
+            <img
+              src="/images/avatar1.jpg"
+              alt="Photo de client"
+              class="w-12 h-12 rounded-full object-cover"
+            />
+            <div>
+              <p class="font-semibold text-gray-900">Julie M.</p>
+              <p class="text-sm text-gray-500">Cliente ID Postur</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Avis 2 -->
+        <div
+          class="bg-gray-50 p-8 shadow-lg border-t-4 border-red-900 text-left flex flex-col justify-between"
+        >
+          <p class="text-gray-700 italic mb-6">
+            “Une approche très pro et bienveillante. J’ai appris à corriger mes
+            postures au travail, et je me sens beaucoup mieux.”
+          </p>
+          <div class="flex items-center gap-4 mt-auto">
+            <img
+              src="/images/avatar2.jpg"
+              alt="Photo de client"
+              class="w-12 h-12 rounded-full object-cover"
+            />
+            <div>
+              <p class="font-semibold text-gray-900">Marc D.</p>
+              <p class="text-sm text-gray-500">Chef de projet</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Avis 3 -->
+        <div
+          class="bg-gray-50 p-8 shadow hover:shadow-lg transition text-left flex flex-col justify-between"
+        >
+          <p class="text-gray-700 italic mb-6">
+            “Des conseils simples, efficaces et adaptés à mon quotidien.
+            Résultats visibles en quelques semaines seulement !”
+          </p>
+          <div class="flex items-center gap-4 mt-auto">
+            <img
+              src="/images/avatar3.jpg"
+              alt="Photo de client"
+              class="w-12 h-12 rounded-full object-cover"
+            />
+            <div>
+              <p class="font-semibold text-gray-900">Sophie L.</p>
+              <p class="text-sm text-gray-500">Coach sportive</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Localisation -->
+  <section class="py-24 px-6 bg-white text-center">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        Où nous trouver
+      </h2>
+      <p class="text-gray-600 mb-12">
+        Venez nous rencontrer dans notre cabinet pour une analyse posturale
+        complète.
+      </p>
+
+      <!-- Carte Google Maps -->
+      <div class="w-full h-96 rounded-2xl overflow-hidden shadow-lg">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2659.601386665857!2d-1.7331216882687308!3d48.19503124703998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x480ee7b291800b81%3A0x80a2431b7f9b35ae!2sID%20Postur%20-%20%C3%89tude%20Posturale%20%C3%A0%20Rennes!5e0!3m2!1sfr!2sfr!4v1761949499098!5m2!1sfr!2sfr"
+          width="100%"
+          height="100%"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
