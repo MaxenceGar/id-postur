@@ -4,15 +4,16 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
 <BaseLayout>
   <!-- Hero section -->
-  <section class="relative from-white py-24 md:py-32 px-6 overflow-hidden">
+  <section class="relative from-white py-24 px-6 md:py-24 overflow-hidden">
     <div class="max-w-6xl mx-auto grid md:grid-cols-2 items-center gap-12">
       <!-- Texte -->
-      <div class="text-center md:text-left">
+      <div class="text-left">
         <h1
           class="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight mb-6"
         >
-          <span class="block">Analysez. Corrigez.</span>
-          <span class="block text-red-800">Transformez votre posture.</span>
+          <span class="block">Étude posturale à </span>
+          <span class="block text-transparent bg-clip-text
+          bg-gradient-to-r from-id-postur to-id-postur-dark">Rennes</span>
         </h1>
         <p
           class="text-gray-600 text-lg md:text-xl max-w-lg mx-auto md:mx-0 mb-10 leading-relaxed"
@@ -21,24 +22,28 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           quotidien grâce à une approche personnalisée de la posture.
         </p>
         <div
-          class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start"
+          class="flex flex-col sm:flex-row gap-3 justify-center md:justify-start"
         >
           <a
             href="https://calendly.com/ton_compte_calendly"
             target="_blank"
-            class="bg-red-900 hover:bg-red-800 text-white font-semibold py-3 px-8 shadow-md transition"
+            class="bg-id-postur hover:bg-id-postur-dark text-white font-semibold py-3 px-8 shadow-md transition text-center"
           >
             Prendre rendez-vous
           </a>
+		  <a class="bg-white border-2 border-black justify-center py-3 px-8" 
+			href="#tarifs">
+			Voir les formules
+		  </a>
+     	 </div>
         </div>
-      </div>
 
       <!-- Image -->
       <div class="relative">
         <img
-          src="/images/photo.jpeg"
+          src="/images/id-postur-interieur.jpg"
           alt="Analyse posturale ID Postur"
-          class="w-full max-w-md md:max-w-lg mx-auto shadow-xl border-4 border-red-900 transition duration-300 ease-in-out hover:scale-110"
+          class="w-full max-w-md md:max-w-lg mx-auto shadow-xl border-4 border-id-postur transition duration-300 ease-in-out"
           loading="lazy"
         />
         <!-- Accent décoratif -->
@@ -50,69 +55,66 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     </div>
   </section>
 
-  <!-- Avantages -->
-  <section id="avantages" class="py-24 px-6 bg-white">
-    <div
-      class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 text-center bg-gray-50 shadow-2xl rounded-2xl p-2 border-2 border-gray-50"
-    >
-      <!-- Bloc 1 -->
-      <div class="flex flex-col items-center">
-        <img
-          src="/src/assets/svg-test.svg"
-          alt="Étude"
-          class="w-20 mb-4"
-          loading="lazy"
-        />
-        <div class="text-3xl font-bold text-red-900 mb-1">+800</div>
-        <div class="text-gray-700 font-light text-base">
-          Études réalisées avec succès
+<!-- AVANTAGES / IMPACT -->
+<section id="avantages" class="relative py-28 px-6 overflow-hidden bg-white">
+
+  <div class="relative max-w-6xl mx-auto text-center">
+
+    <!-- Grille -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+      <!-- Carte 1 -->
+      <div class="group bg-white shadow-lg hover:shadow-2xl transition border border-gray-100 p-8 flex flex-col items-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-[#F80000]/5 opacity-0 transition"></div>
+        <div class="flex justify-center items-center bg-[#F80000]/10 text-[#F80000] rounded-full w-16 h-16 mb-6">
+          <img src="/src/assets/cycling.svg" alt="Étude" class="w-10 h-10" loading="lazy" />
         </div>
+        <div class="text-5xl font-bold text-id-postur mb-2">+800</div>
+        <p class="text-gray-700 font-medium">Études posturales réalisées</p>
+        <span class="mt-4 w-12 h-[3px] bg-id-postur-dark rounded-full"></span>
       </div>
 
-      <!-- Bloc 2 -->
-      <div class="flex flex-col items-center">
-        <img
-          src="/src/assets/svg-test.svg"
-          alt="Cyclistes"
-          class="w-20 mb-4"
-          loading="lazy"
-        />
-        <div class="text-3xl font-bold text-red-900 mb-1">+25</div>
-        <div class="text-gray-700 font-light text-base">
-          Cyclistes professionnels accompagnés
+      <!-- Carte 2 -->
+      <div class="group bg-white shadow-lg hover:shadow-2xl transition border border-gray-100 p-8 flex flex-col items-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-[#F80000]/5 opacity-0 transition"></div>
+        <div class="flex justify-center items-center bg-[#F80000]/10 text-[#F80000] rounded-full w-16 h-16 mb-6">
+          <img src="/src/assets/cycling.svg" alt="Cyclistes" class="w-10 h-10" loading="lazy" />
         </div>
+        <div class="text-5xl font-bold text-id-postur mb-2">+25</div>
+        <p class="text-gray-700 font-medium">Cyclistes professionnels accompagnés</p>
+        <span class="mt-4 w-12 h-[3px] bg-id-postur-dark rounded-full"></span>
       </div>
 
-      <!-- Bloc 3 -->
-      <div class="flex flex-col items-center">
-        <img
-          src="/src/assets/svg-test.svg"
-          alt="Expérience"
-          class="w-20 mb-4"
-          loading="lazy"
-        />
-        <div class="text-3xl font-bold text-red-900 mb-1">+3 ans</div>
-        <div class="text-gray-700 font-light text-base">d’expérience</div>
+      <!-- Carte 3 -->
+      <div class="group bg-white shadow-lg hover:shadow-2xl transition border border-gray-100 p-8 flex flex-col items-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-[#F80000]/5 opacity-0 transition"></div>
+        <div class="flex justify-center items-center bg-[#F80000]/10 text-[#F80000] rounded-full w-16 h-16 mb-6">
+          <img src="/src/assets/cycling.svg" alt="Expérience" class="w-10 h-10" loading="lazy" />
+        </div>
+        <div class="text-5xl font-bold text-id-postur mb-2">+3 ans</div>
+        <p class="text-gray-700 font-medium">d’expérience terrain et analyse</p>
+        <span class="mt-4 w-12 h-[3px] bg-id-postur-dark"></span>
       </div>
     </div>
-  </section>
+  </div>
+</section>
+
 
 
   <!-- Section de test -->
 
 <section class="py-24 px-6 bg-white flex items-center justify-center">
-  <div class="max-w-5xl mx-auto text-center">
+  <div class="max-w-5xl mx-auto text-left md:text-center">
     <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
       Qui sommes-nous ?
     </h2>
 
-    <div class="h-[3px] w-24 bg-red-900 mx-auto mb-6 rounded-full"></div>
+    <div class="h-[3px] w-24 bg-id-postur-dark mx-auto mb-6 rounded-full"></div>
 
     <p class="text-gray-600 uppercase tracking-wide mb-8">
       by Romain Hardy
     </p>
 
-    <p class="text-gray-700 leading-relaxed mb-8">
+    <p class="text-gray-700 leading-relaxed mb-8 text-left md:text-center">
       <strong>ID Postur</strong> est un centre d’étude posturale pour le cycliste, fondé en 2023 par
       <strong>Romain Hardy</strong>, ancien cycliste professionnel.  
       Nous avons déjà accompagné plus de <strong>300 cyclistes</strong> dans l’optimisation de leur position pour
@@ -124,7 +126,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     <a
       href="https://google.com"
       target="_blank"
-      class="inline-block bg-red-900 hover:bg-red-800 text-white font-semibold py-3 px-10 shadow-md transition"
+      class="inline-block bg-id-postur hover:bg-id-postur-dark text-white font-semibold py-3 px-10 shadow-md transition"
     >
       En savoir plus
     </a>
@@ -132,11 +134,11 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 </section>
 
   <!-- Photo + texte -->
-  <section class="py-24 px-6 bg-red-900 text-white">
+  <section class="py-24 px-6 bg-id-postur-dark text-white">
     <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
       <div class="flex justify-center">
         <img
-          src="/images/photo.jpeg"
+          src="/images/id-postur-interieur.jpg"
           alt="Séance d'analyse posturale"
           class="w-full max-w-md shadow-lg border-white border-4"
           loading="lazy"
@@ -190,7 +192,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           <a
             href="https://calendly.com/ton_compte_calendly"
             target="_blank"
-            class="bg-red-900 hover:bg-red-800 text-white font-semibold py-2 px-6 shadow-md transition"
+            class="bg-id-postur hover:bg-id-postur-dark text-white font-semibold py-2 px-6 shadow-md transition"
           >
             Réserver
           </a>
@@ -198,7 +200,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
         <!-- Carte 2 -->
         <div
-          class="bg-white shadow-lg border-2 border-red-900 p-8 flex flex-col items-center scale-105"
+          class="bg-white shadow-lg border-2 border-id-postur-dark p-8 flex flex-col items-center scale-105"
         >
           <h3 class="text-xl font-semibold text-gray-900 mb-4">
             Étude complète
@@ -210,7 +212,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           <a
             href="https://calendly.com/ton_compte_calendly"
             target="_blank"
-            class="bg-red-900 hover:bg-red-800 text-white font-semibold py-2 px-6 shadow-md transition"
+            class="bg-id-postur hover:bg-id-postur-dark text-white font-semibold py-2 px-6 shadow-md transition"
           >
             Réserver
           </a>
@@ -230,7 +232,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           <a
             href="https://calendly.com/ton_compte_calendly"
             target="_blank"
-            class="bg-red-900 hover:bg-red-800 text-white font-semibold py-2 px-6 shadow-md transition"
+            class="bg-id-postur hover:bg-id-postur-dark text-white font-semibold py-2 px-6 shadow-md transition"
           >
             Réserver
           </a>
@@ -261,11 +263,6 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             séances, ma posture s’est améliorée et mes douleurs ont diminué.”
           </p>
           <div class="flex items-center gap-4 mt-auto">
-            <img
-              src="/images/avatar1.jpg"
-              alt="Photo de client"
-              class="w-12 h-12 rounded-full object-cover"
-            />
             <div>
               <p class="font-semibold text-gray-900">Julie M.</p>
               <p class="text-sm text-gray-500">Cliente ID Postur</p>
@@ -275,18 +272,13 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
         <!-- Avis 2 -->
         <div
-          class="bg-gray-50 p-8 shadow-lg border-t-4 border-red-900 text-left flex flex-col justify-between"
+          class="bg-gray-50 p-8 shadow-lg border-t-4 border-id-postur text-left flex flex-col justify-between"
         >
           <p class="text-gray-700 italic mb-6">
             “Une approche très pro et bienveillante. J’ai appris à corriger mes
             postures au travail, et je me sens beaucoup mieux.”
           </p>
           <div class="flex items-center gap-4 mt-auto">
-            <img
-              src="/images/avatar2.jpg"
-              alt="Photo de client"
-              class="w-12 h-12 rounded-full object-cover"
-            />
             <div>
               <p class="font-semibold text-gray-900">Marc D.</p>
               <p class="text-sm text-gray-500">Chef de projet</p>
@@ -303,11 +295,6 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             Résultats visibles en quelques semaines seulement !”
           </p>
           <div class="flex items-center gap-4 mt-auto">
-            <img
-              src="/images/avatar3.jpg"
-              alt="Photo de client"
-              class="w-12 h-12 rounded-full object-cover"
-            />
             <div>
               <p class="font-semibold text-gray-900">Sophie L.</p>
               <p class="text-sm text-gray-500">Coach sportive</p>
@@ -342,5 +329,105 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       </div>
     </div>
   </section>
+
+  <!-- SECTION FAQ -->
+<section id="faq" class="relative py-28 px-6 bg-white overflow-hidden">
+  <div class="relative max-w-5xl mx-auto text-center">
+    <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">
+      Foire aux questions
+    </h2>
+    <p class="text-gray-600 mb-12 max-w-2xl mx-auto">
+      Vous hésitez encore ? Voici les réponses aux questions les plus fréquentes de nos cyclistes.
+    </p>
+
+    <!-- Bloc FAQ -->
+    <div class="space-y-6 text-left">
+      <!-- Question 1 -->
+      <details
+        class="group bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition"
+      >
+        <summary
+          class="flex items-center justify-between cursor-pointer list-none"
+        >
+          <h3 class="text-lg font-semibold text-gray-900">
+            Combien de temps dure une étude posturale ?
+          </h3>
+          <span
+            class="text-[#F80000] transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
+            >+</span
+          >
+        </summary>
+        <p class="mt-4 text-gray-600 leading-relaxed">
+          Une séance complète dure environ <strong>1 h 30</strong>.  
+          Cela comprend l’analyse, les ajustements du vélo et les recommandations personnalisées.
+        </p>
+      </details>
+
+      <!-- Question 2 -->
+      <details
+        class="group bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition"
+      >
+        <summary
+          class="flex items-center justify-between cursor-pointer list-none"
+        >
+          <h3 class="text-lg font-semibold text-gray-900">
+            Dois-je venir avec mon propre vélo ?
+          </h3>
+          <span
+            class="text-[#F80000] transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
+            >+</span
+          >
+        </summary>
+        <p class="mt-4 text-gray-600 leading-relaxed">
+          Oui ! L’étude est effectuée sur votre vélo pour garantir des réglages adaptés à votre
+          morphologie, vos composants et votre pratique (route, VTT, triathlon…).
+        </p>
+      </details>
+
+      <!-- Question 3 -->
+      <details
+        class="group bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition"
+      >
+        <summary
+          class="flex items-center justify-between cursor-pointer list-none"
+        >
+          <h3 class="text-lg font-semibold text-gray-900">
+            Y a-t-il un suivi après la séance ?
+          </h3>
+          <span
+            class="text-[#F80000] transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
+            >+</span
+          >
+        </summary>
+        <p class="mt-4 text-gray-600 leading-relaxed">
+          Bien sûr ! Un <strong>suivi gratuit</strong> est inclus pour ajuster la position
+          après vos premières sorties et s’assurer que tout est parfaitement optimisé.
+        </p>
+      </details>
+
+      <!-- Question 4 -->
+      <details
+        class="group bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition"
+      >
+        <summary
+          class="flex items-center justify-between cursor-pointer list-none"
+        >
+          <h3 class="text-lg font-semibold text-gray-900">
+            Puis-je offrir une séance à un proche ?
+          </h3>
+          <span
+            class="text-[#F80000] transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
+            >+</span
+          >
+        </summary>
+        <p class="mt-4 text-gray-600 leading-relaxed">
+          Absolument ! Nous proposons des <strong>cartes cadeaux</strong> personnalisées.
+          C’est une excellente idée pour un cycliste passionné 🎁.
+        </p>
+      </details>
+    </div>
+  </div>
+</section>
+
 
 </BaseLayout>
