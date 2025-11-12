@@ -6,12 +6,57 @@ import Footer from "../components/Footer.astro";
 
 <html lang="fr">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ID Postur</title>
-  </head>
+  <!-- Informations de base -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ID Postur — Coaching, bien-être et santé posturale</title>
+  <meta name="description" content="ID Postur — Coaching, bien-être et santé posturale pour améliorer votre équilibre, votre posture et votre qualité de vie au quotidien." />
 
-  <body class="font-sans bg-white text-gray-800 flex flex-col min-h-screen">
+  <!-- Favicon & identité -->
+  <link rel="icon" type="image/png" href="/id-postur-favicon.png" />
+  <link rel="apple-touch-icon" href="/id-postur-favicon.png" />
+
+  <!-- SEO -->
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="ID Postur" />
+  <meta property="og:title" content="ID Postur — Coaching, bien-être et santé posturale" />
+  <meta property="og:description" content="Retrouvez équilibre et confort grâce à un accompagnement personnalisé par ID Postur." />
+  <meta property="og:image" content="/id-postur-cover.jpg" />
+  <meta property="og:url" content="https://www.idpostur.fr/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Sécurité & bonnes pratiques -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src * data:; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src *;" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+  <!-- Accessibilité / PWA (optionnel) -->
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#ffffff" />
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "ID Postur",
+  "description": "Étude posturale et coaching postural à Rennes.",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Rennes",
+    "addressCountry": "FR"
+  },
+  "url": "https://www.idpostur.fr",
+  "telephone": "06 12 34 56 78"
+}
+</script>
+
+  
+</head>
+
+
+  <body class="font-sans text-gray-800 flex flex-col min-h-screen">
     <Header />
 
     <!-- Ici, le contenu de chaque page sera injecté -->
