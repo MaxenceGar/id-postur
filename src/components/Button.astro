@@ -1,0 +1,29 @@
+---
+const {
+  label = "Cliquez ici", // texte du bouton
+  href = "",              // optionnel : lien
+  type = "button",        // "button", "submit", etc.
+  variant = "primary",    // style visuel : primary / secondary...
+  onClick,                // (optionnel) pour un handler JS plus tard
+} = Astro.props;
+
+// classes Tailwind dynamiques selon le style choisi
+const baseClass =
+  "inline-block px-6 py-3 rounded-2xl font-semibold transition duration-300 ease-in-out";
+const variants = {
+  primary: "bg-blue-600 text-white hover:bg-blue-700",
+  secondary: "bg-gray-200 text-gray-800 hover:bg-gray-300",
+  outline: "border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white",
+};
+const buttonClass = `${baseClass} ${variants[variant] || variants.primary}`;
+---
+
+{href ? (
+  <a href={href} class={buttonClass}>
+    {label}
+  </a>
+) : (
+  <button type={type} class={buttonClass}>
+    {label}
+  </button>
+)}

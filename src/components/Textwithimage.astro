@@ -1,0 +1,62 @@
+---
+import "../styles/global.css";
+
+const {
+  etape,
+  description,
+  images = [],
+  imagePosition = "right",
+} = Astro.props;
+---
+
+<section class="py-6">
+  <div class="md:w-full items-stretch max-w-7xl mx-auto grid md:grid-cols-2">
+    {imagePosition === "left" ? (
+      <>
+        {/* Image à gauche */}
+        {images.length > 0 && (
+          <div class="justify-center">
+            {images.map((img, i) => (
+              <img
+                key={i}
+                src={img}
+                alt="id-postur"
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+            ))}
+          </div>
+        )}
+
+        {/* Texte à droite */}
+        <div class="bg-gray-50 p-7 flex flex-col justify-center items-center text-left">
+          <h2 class="text-2xl md:text-2xl font-bold mb-4 w-full">{etape}</h2>
+          <p class="leading-relaxed mb-6 w-full">{description}</p>
+        </div>
+      </>
+    ) : (
+      <>
+        {/* Texte à gauche */}
+        <div class="bg-gray-50 p-7 flex flex-col justify-center items-center text-left">
+          <h2 class="text-2xl md:text-2xl font-bold mb-4 w-full">{etape}</h2>
+          <p class="leading-relaxed mb-6 w-full">{description}</p>
+        </div>
+
+        {/* Image à droite */}
+        {images.length > 0 && (
+          <div class="justify-center">
+            {images.map((img, i) => (
+              <img
+                key={i}
+                src={img}
+                alt="id-postur"
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+            ))}
+          </div>
+        )}
+      </>
+    )}
+  </div>
+</section>
