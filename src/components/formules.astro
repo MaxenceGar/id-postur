@@ -4,77 +4,180 @@ import '../styles/global.css'
 
 ---
 
-<section class="py-12 px-6 bg-gray-50">
-    <div class="max-w-6xl mx-auto text-center">
-      <h2 id="tarifs" class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-        Nos formules
-      </h2>
-      <div class="h-[3px] w-24 bg-id-postur-dark mx-auto mb-6 rounded-full"></div>
-      <p class="text-gray-600 max-w-2xl mx-auto mb-12">
-        Choisissez la formule qui correspond le mieux à vos besoins. Chaque
-        séance est personnalisée selon votre posture et vos objectifs.
-      </p>
+<section class="bg-gray-50 py-16">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <!-- Carte 1 -->
-        <div
-          class="bg-white shadow p-8 flex flex-col items-center hover:shadow-lg transition"
-        >
-          <h3 class="text-xl font-semibold text-gray-900 mb-4">
-            Séance Découverte
-          </h3>
-          <p class="text-gray-600 mb-6 text-sm">
-            Analyse posturale complète + conseils personnalisés
-          </p>
-          <p class="text-4xl font-bold mb-6">49€</p>
-          <a
-            href="https://calendly.com/ton_compte_calendly"
-            target="_blank"
-            class="bg-id-postur-dark hover:bg-id-postur text-white font-semibold py-2 px-6 shadow-md transition"
-          >
-            Réserver
-          </a>
+    <h3 class="text-center my-8 text-2xl font-bold">Nos offres pour le réglage de votre vélo</h3>
+
+    <!-- Grid des offres -->
+    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+
+      <!-- Étude posturale complète -->
+      <div class="relative flex flex-col h-full bg-white shadow-sm border border-gray-200">
+        <div class="absolute -top-3 left-4 inline-flex items-center bg-[#C00201] px-3 py-1 text-xs font-semibold text-white shadow">
+          Offre la plus complète
         </div>
-
-        <!-- Carte 2 -->
-        <div
-          class="bg-white shadow-lg border-2 border-id-postur-dark p-8 flex flex-col items-center scale-105"
-        >
-          <h3 class="text-xl font-semibold text-gray-900 mb-4">
-            Étude complète
+        <div class="p-6 flex-1 flex flex-col">
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">
+            Étude posturale complète
           </h3>
-          <p class="text-gray-600 mb-6 text-sm">
-            3 séances d'accompagnement pour un suivi complet
+          <p class="text-sm text-gray-500 mb-4">
+            Analyse complète de votre position pour optimiser confort et performance.
           </p>
-          <p class="text-4xl font-bold mb-6">250€</p>
-          <a
-            href="https://calendly.com/ton_compte_calendly"
-            target="_blank"
-            class="bg-id-postur-dark hover:bg-id-postur text-white font-semibold py-2 px-6 shadow-md transition"
-          >
-            Réserver
-          </a>
-        </div>
-
-        <!-- Carte 3 -->
-        <div
-          class="bg-white shadow p-8 flex flex-col items-center hover:shadow-lg transition"
-        >
-          <h3 class="text-xl font-semibold text-gray-900 mb-4">
-            Pack Performance
-          </h3>
-          <p class="text-gray-600 mb-6 text-sm">
-            5 séances pour transformer durablement votre posture
+          <div class="mb-4">
+            <span class="text-3xl font-bold text-gray-900">280€</span>
+          </div>
+          <p class="text-sm font-medium text-gray-700 mb-4">
+            ⏱ Durée : <span class="font-semibold">2 heures</span>
           </p>
-          <p class="text-4xl font-bold mb-6">199€</p>
-          <a
-            href="https://calendly.com/ton_compte_calendly"
-            target="_blank"
-            class="bg-id-postur-dark hover:bg-id-postur text-white font-semibold py-2 px-6 shadow-md transition"
-          >
-            Réserver
-          </a>
+          <ul class="text-sm text-gray-600 space-y-1 mb-6">
+            <li>Équipement à apporter :</li>
+            <li>• Vélo</li>
+            <li>• Chaussures</li>
+            <li>• Cuissard</li>
+            <li>• Maillot</li>
+            <li>• Pièces spécifiques à votre vélo</li>
+          </ul>
+          <div class="mt-auto">
+            <button class="w-full inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-white bg-[#C00201] hover:bg-[#C00201]/90 transition">
+              Réserver une étude complète
+            </button>
+          </div>
         </div>
       </div>
+
+      <!-- Étude posturale complète -15 ans -->
+      <div class="flex flex-col h-full bg-white shadow-sm border border-gray-200">
+        <div class="p-6 flex-1 flex flex-col">
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">
+            Étude posturale complète <span class="text-sm text-[#C00201] font-semibold">(-15 ans)</span>
+          </h3>
+          <p class="text-sm text-gray-500 mb-4">
+            Étude adaptée aux jeunes cyclistes en croissance.
+          </p>
+          <div class="mb-4">
+            <span class="text-3xl font-bold text-gray-900">120€</span>
+          </div>
+          <p class="text-sm font-medium text-gray-700 mb-4">
+            ⏱ Durée : <span class="font-semibold">1 heure</span>
+          </p>
+          <ul class="text-sm text-gray-600 space-y-1 mb-6">
+            <li>Équipement à apporter :</li>
+            <li>• Vélo</li>
+            <li>• Chaussures</li>
+            <li>• Cuissard</li>
+            <li>• Maillot</li>
+            <li>• Pièces spécifiques à votre vélo</li>
+          </ul>
+          <div class="mt-auto">
+            <button class="w-full inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-[#C00201] border border-[#C00201] bg-white hover:bg-[#C00201]/5 transition">
+              Réserver pour un jeune cycliste
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Réglages nouveau vélo -->
+      <div class="flex flex-col h-full bg-white shadow-sm border border-gray-200">
+        <div class="p-6 flex-1 flex flex-col">
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">
+            Réglages nouveau vélo
+          </h3>
+          <p class="text-sm text-gray-500 mb-4">
+            Ajustement rapide après changement de vélo.
+          </p>
+          <div class="mb-4">
+            <p class="text-3xl font-bold text-gray-900">50€</p>
+            <span class="text-xs font-semibold text-gray-900">Gratuit dans les 6 mois</span>
+          </div>
+          <p class="text-sm font-medium text-gray-700 mb-4">
+            ⏱ Durée : <span class="font-semibold">30 minutes</span>
+          </p>
+          <ul class="text-sm text-gray-600 space-y-1 mb-6">
+            <li>Équipement à apporter :</li>
+            <li>• Vélo</li>
+            <li>• Chaussures</li>
+            <li>• Cuissard</li>
+            <li>• Maillot</li>
+            <li>• Pièces spécifiques à votre vélo</li>
+          </ul>
+          <div class="mt-auto">
+            <button class="w-full inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-[#C00201] border border-[#C00201] bg-white hover:bg-[#C00201]/5 transition">
+              Ajuster mon nouveau vélo
+            </button>
+          </div>
+        </div>
+      </div>
+
     </div>
-  </section>
+
+    <h3 class="text-center my-8 text-2xl font-bold">Nos offres pour le réglage de vos cales</h3>
+
+    <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-8">
+
+      <!-- Réglages cales -->
+      <div class="flex flex-col h-full bg-white shadow-sm border border-gray-200">
+        <div class="p-6 flex-1 flex flex-col">
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">
+            Réglages cales
+          </h3>
+          <p class="text-sm text-gray-500 mb-4">
+            Positionnement précis de vos cales pour un pédalage fluide et efficace.
+          </p>
+          <div class="mb-4">
+            <span class="text-3xl font-bold text-gray-900">50€</span>
+          </div>
+          <p class="text-sm font-medium text-gray-700 mb-4">
+            ⏱ Durée : <span class="font-semibold">30 minutes</span>
+          </p>
+          <ul class="text-sm text-gray-600 space-y-1 mb-6">
+            <li>Équipement à apporter :</li>
+            <li>• Vélo</li>
+            <li>• Chaussures</li>
+            <li>• Cuissard</li>
+            <li>• Maillot</li>
+            <li>• Pièces spécifiques à votre vélo</li>
+          </ul>
+          <div class="mt-auto">
+            <button class="w-full inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-[#C00201] border border-[#C00201] bg-white hover:bg-[#C00201]/5 transition">
+              Prendre rendez-vous
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Réglages changement de cales / nouvelles chaussures -->
+      <div class="flex flex-col h-full bg-white shadow-sm border border-gray-200">
+        <div class="p-6 flex-1 flex flex-col">
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">
+            Nouvelles cales ou nouvelles chaussures
+          </h3>
+          <p class="text-sm text-gray-500 mb-4">
+            Ajustement après changement de matériel.
+          </p>
+          <div class="mb-4">
+            <span class="text-3xl font-bold text-gray-900">30€</span>
+          </div>
+          <p class="text-sm font-medium text-gray-700 mb-4">
+            ⏱ Durée : <span class="font-semibold">20 minutes</span>
+          </p>
+          <ul class="text-sm text-gray-600 space-y-1 mb-6">
+            <li>Équipement à apporter :</li>
+            <li>• Vélo</li>
+            <li>• Chaussures</li>
+            <li>• Cuissard</li>
+            <li>• Maillot</li>
+            <li>• Pièces spécifiques à votre vélo</li>
+          </ul>
+          <div class="mt-auto">
+            <button class="w-full inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-[#C00201] border border-[#C00201] bg-white hover:bg-[#C00201]/5 transition">
+              Ajuster mes nouvelles cales
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
