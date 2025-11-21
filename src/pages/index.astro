@@ -11,7 +11,16 @@ import Partenaires from "../components/partenaires.astro"
 ---
 
 <BaseLayout>
-  <div class="font-id-postur">
+  <div class="font-id-postur relative">
+
+    <!-- 🌟 Grande forme décorative -->
+    <img
+      src="/images/triangle.svg"
+      class="absolute top-0 right-0 opacity-30 pointer-events-none -z-10"
+      alt=""
+    />
+
+    <!-- Sections normales -->
     <Hero />
     <Chiffres />
     <Qui />
@@ -20,5 +29,6 @@ import Partenaires from "../components/partenaires.astro"
     <Confiances />
     <Partenaires />
     <Faq />
+
   </div>
 </BaseLayout>
