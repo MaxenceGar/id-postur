@@ -1,52 +1,22 @@
+---
+import ConfianceTabs from "./confiance-tabs.astro"
+---
+
 <section class="relative">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 my-16">
-  <h2 class="text-3xl md:text-4xl font-bold text-gray-900 text-center">
-    Ils m'ont fait confiance
-  </h2>
-  <div class="h-[3px] w-24 bg-id-postur-dark mx-auto mt-4 mb-10 rounded-full"></div>
+  <div class="mx-auto px-4 sm:px-6 lg:px-8 my-16 z-20 container">
+    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 text-center">
+      Ils m'ont fait confiance
+    </h2>
 
-  <!-- Grid -->
-  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-10">
+    <div class="h-[3px] w-24 bg-id-postur-dark mx-auto mt-4 mb-10 rounded-full"></div>
 
-    <!-- Warren Barguil -->
-    <div class="relative w-full h-[250px] sm:h-[400px] bg-[url('/images/warrenbarguil.webp')] bg-cover bg-center rounded-xl overflow-hidden hover:scale-105 sm:hover:scale-110 duration-200 transition-all">
-      <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
-      <div class="absolute bottom-2 left-2">
-        <p class="text-white text-sm sm:text-base font-medium">Warren Barguil</p>
-        <p class="text-white text-xs sm:text-sm opacity-90">Cycliste professionnel</p>
+    <div class="relative overflow-hidden">
+      <!-- ligne 1 -->
+      <div class="flex gap-6 sm:gap-6 animate-marquee">
+        <ConfianceTabs />
+        <ConfianceTabs />
       </div>
-    </div>
 
-    <!-- Amandine Fouquenet -->
-    <div class="relative w-full h-[250px] sm:h-[400px] bg-[url('/images/AmandineFouquenet.webp')] bg-cover bg-center rounded-xl overflow-hidden hover:scale-105 sm:hover:scale-110 duration-200 transition-all">
-      <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
-      <div class="absolute bottom-2 left-2">
-        <p class="text-white text-sm sm:text-base font-medium">Amandine Fouquenet</p>
-        <p class="text-white text-xs sm:text-sm opacity-90">Cycliste professionnelle</p>
-      </div>
-    </div>
-
-    <!-- Thibault Gernalec -->
-    <div class="relative w-full h-[250px] sm:h-[400px] bg-[url('/images/thibaultgernalec.webp')] bg-cover bg-center rounded-xl overflow-hidden hover:scale-105 sm:hover:scale-110 duration-200 transition-all">
-      <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
-      <div class="absolute bottom-2 left-2">
-        <p class="text-white text-sm sm:text-base font-medium">Thibault Gernalec</p>
-        <p class="text-white text-xs sm:text-sm opacity-90">Cycliste professionnel</p>
-      </div>
-    </div>
-
-    <!-- Yann Guyot -->
-    <div class="relative w-full h-[250px] sm:h-[400px] bg-[url('/images/yannguyot.jpg')] bg-cover bg-center rounded-xl overflow-hidden hover:scale-105 sm:hover:scale-110 duration-200 transition-all">
-      <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
-      <div class="absolute bottom-2 left-2">
-        <p class="text-white text-sm sm:text-base font-medium">Yann Guyot</p>
-        <p class="text-white text-xs sm:text-sm opacity-90">Triathlète</p>
-      </div>
-    </div>
-
-  </div>
-  </div>
-  <img src="/images/fond-deco.svg"
-       alt="Décoration"
-       class="absolute -left-12 top-0 -translate-y-1/2 h-24 lg:h-auto opacity-70 z-1">
+      <div class="h-full w-24 absolute top-0 right-0 bg-gradient-to-l from-white to-transparent"></div>
+      <div class="h-full w-24 absolute top-0 left-0 bg-gradient-to-r from-white to-transparent"></div>
 </section>
