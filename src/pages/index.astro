@@ -1,18 +1,18 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Textwithimages from '../components/Textwithimages.astro';
-import Chiffres from '../components/chiffres.astro'
-import Hero from '../components/hero.astro'
-import Qui from '../components/qui.astro'
-import Formules from '../components/formules.astro'
-import Faq from '../components/faq.astro'
+import Textwithimages from "../components/Textwithimages.astro";
+import Chiffres from "../components/chiffres.astro";
+import Hero from "../components/hero.astro";
+import Qui from "../components/qui.astro";
+import Formules from "../components/formules.astro";
+import Faq from "../components/faq.astro";
 import Confiances from "../components/confiances.astro";
-import Partenaires from "../components/partenaires.astro"
+import Partenaires from "../components/partenaires.astro";
+import Formule from "../components/formule.astro";
 ---
 
 <BaseLayout>
   <div class="font-id-postur relative">
-
     <!-- 🌟 Grande forme décorative -->
     <img
       src="/images/triangle.svg"
@@ -20,23 +20,26 @@ import Partenaires from "../components/partenaires.astro"
       alt=""
     />
 
-      <img src="/images/fond-deco.svg"
-       alt="Décoration"
-       class="absolute left-0 top-[70%] -translate-y-1/2 h-auto hidden lg:block opacity-70 -z-1">
+    <img
+      src="/images/fond-deco.svg"
+      alt="Décoration"
+      class="absolute left-0 top-[70%] -translate-y-1/2 h-auto hidden lg:block opacity-70 -z-1"
+    />
 
-       <img src="/images/fond-deco.svg"
-       alt="Décoration"
-       class="absolute right-0 top-[90%] -translate-y-1/2 h-48 lg:h-auto opacity-70 -z-1">
+    <img
+      src="/images/fond-deco.svg"
+      alt="Décoration"
+      class="absolute right-0 top-[90%] -translate-y-1/2 h-48 lg:h-auto opacity-70 -z-1"
+    />
 
     <!-- Sections normales -->
     <Hero />
     <Chiffres />
     <Qui />
     <Textwithimages />
-    <Formules />
+    <Formule />
     <Confiances />
     <Partenaires />
     <Faq />
-
   </div>
 </BaseLayout>
