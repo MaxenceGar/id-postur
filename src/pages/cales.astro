@@ -27,7 +27,8 @@ import "../styles/global.css";
       <div class="inline-block mx-auto">
         <a
           class="text-center inline-block px-6 py-2 bg-id-postur-dark text-white font-medium hover:opacity-90 transition duration-300 cursor-pointer"
-          href="/offres"
+          href="/etudes-posturales"
+          rel="nofollow"
         >
           Étude Posturale
         </a>
@@ -38,8 +39,10 @@ import "../styles/global.css";
   <div
     class="grid md:grid-cols-1 lg:grid-cols-2 gap-8 container px-5 py-24 mx-auto"
   >
-    <div class="p-6 flex-1 flex flex-col border-2 border-gray-50">
-      <h3 class="text-xl font-semibold text-gray-900 mb-2">Réglages cales</h3>
+    <div class="p-6 flex-1 flex flex-col border-1 border-gray-100">
+      <h3 class="text-xl font-semibold text-gray-900 mb-2">
+        Réglages cales/chaussures
+      </h3>
       <p class="text-sm text-gray-500 mb-4">
         Positionnement précis de vos cales pour un pédalage fluide et efficace.
       </p>
@@ -59,7 +62,7 @@ import "../styles/global.css";
       <div class="mt-auto">
         <a
           href="https://calendly.com/idpostur/reglage-des-cales"
-          class="cursor-pointer"
+          rel="nofollow"
         >
           <button
             class="cursor-pointer w-full inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-[#C00201] border border-[#C00201] bg-white hover:bg-[#C00201]/5 transition"
@@ -70,7 +73,7 @@ import "../styles/global.css";
       </div>
     </div>
 
-    <div class="p-6 flex-1 flex flex-col border-2 border-gray-50">
+    <div class="p-6 flex-1 flex flex-col border-1 border-gray-100">
       <h3 class="text-xl font-semibold text-gray-900 mb-2">
         Réglages nouvelles cales/chaussures
       </h3>
@@ -78,7 +81,7 @@ import "../styles/global.css";
         Re-positionnement précis de vos cales/chaussures
       </p>
       <div class="mb-4">
-        <span class="text-3xl font-bold text-gray-900">50€</span>
+        <span class="text-3xl font-bold text-gray-900">20€</span>
       </div>
       <p class="text-sm font-medium text-gray-700 mb-4">
         ⏱ Durée : <span class="font-semibold">30 minutes</span>
@@ -93,8 +96,8 @@ import "../styles/global.css";
       </ul>
       <div class="mt-auto">
         <a
-          href="https://calendly.com/idpostur/reglage-des-cales"
-          class="cursor-pointer"
+          href="https://calendly.com/idpostur/reglages-nouvelles-cales-chaussures"
+          rel="nofollow"
         >
           <button
             class="cursor-pointer w-full inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-[#C00201] border border-[#C00201] bg-white hover:bg-[#C00201]/5 transition"
@@ -105,4 +108,70 @@ import "../styles/global.css";
       </div>
     </div>
   </div>
+
+  <section class="relative px-6 overflow-hidden">
+    <div class="relative max-w-5xl mx-auto text-center">
+      <h2 id="faq" class="text-3xl md:text-4xl font-extrabold mb-4">
+        En savoir plus
+      </h2>
+      <div class="h-[3px] w-24 bg-id-postur-dark mx-auto mb-6"></div>
+
+      <!-- Bloc FAQ -->
+      <div class="space-y-6 text-left">
+        <!-- Question 1 -->
+        <details class="group bg-white border border-gray-200 p-6 transition">
+          <summary
+            class="flex items-center justify-between cursor-pointer list-none"
+          >
+            <h3 class="text-lg font-semibold">
+              Combien de temps dure un le réglage des cales ?
+            </h3>
+            <span
+              class="text-[#F80000] transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
+              >+</span
+            >
+          </summary>
+          <p class="mt-4 leading-relaxed">
+            La durée des réglages des cales est de 30 minutes.
+          </p>
+        </details>
+
+        <!-- Question 2 -->
+        <details class="group bg-white border border-gray-200 p-6 transition">
+          <summary
+            class="flex items-center justify-between cursor-pointer list-none"
+          >
+            <h3 class="text-lg font-semibold">
+              Quelle est le prix pour le réglage des cales ?
+            </h3>
+            <span
+              class="text-[#F80000] transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
+              >+</span
+            >
+          </summary>
+          <p>Le prix pour réaliser le réglage de vos cales de 50€.</p>
+        </details>
+
+        <!-- Question 3 -->
+        <details class="group bg-white border border-gray-200 p-6 transition">
+          <summary
+            class="flex items-center justify-between cursor-pointer list-none"
+          >
+            <h3 class="text-lg font-semibold">
+              Avec quel équipement dois-je venir ?
+            </h3>
+            <span
+              class="text-[#F80000] transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
+              >+</span
+            >
+          </summary>
+          <p class="mt-4 leading-relaxed">
+            Le jour du rendez-vous, venez avec votre vélo, votre paire de
+            chaussure et vos cales que vous souhaitez régler ainsi que votre
+            tenue de vélo.
+          </p>
+        </details>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
