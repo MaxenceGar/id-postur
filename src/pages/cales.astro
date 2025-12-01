@@ -4,9 +4,36 @@ import "../styles/global.css";
 ---
 
 <BaseLayout>
-  <h3 class="text-center my-8 text-2xl font-bold">
-    Nos offres pour le réglage de vos cales
-  </h3>
+  <div
+    class="w-full h-96 relative bg-[url('/images/id-postur-cales.webp')] bg-cover bg-center flex items-center justify-center bg-black/50 bg-blend-overlay"
+  >
+    <div class="grid grid-cols-1 text-white">
+      <h3 class="text-3xl md:text-4xl font-bold text-center">
+        Nos offres pour le réglage de vos cales
+      </h3>
+      <div
+        class="h-[3px] w-24 bg-id-postur-dark mx-auto mt-4 mb-10 rounded-full"
+      >
+      </div>
+      <p class="text-center max-w-4xl mx-auto pb-4">
+        Grâce à la technologie <span class="font-bold">ID Match</span>,
+        <span class="font-bold">ID Postur</span> vous aide à trouver le positionnement
+        idéal de vos <span class="font-bold">cales</span>. Que vous pratiquiez
+        la <span class="font-bold"
+          >Route, le VTT, le Gravel ou le Triathlon</span
+        >, un réglage précis améliore votre confort, votre efficacité de
+        pédalage et limite les risques de blessures.
+      </p>
+      <div class="inline-block mx-auto">
+        <a
+          class="text-center inline-block px-6 py-2 bg-id-postur-dark text-white font-medium hover:opacity-90 transition duration-300 cursor-pointer"
+          href="/offres"
+        >
+          Étude Posturale
+        </a>
+      </div>
+    </div>
+  </div>
 
   <div
     class="grid md:grid-cols-1 lg:grid-cols-2 gap-8 container px-5 py-24 mx-auto"
@@ -22,11 +49,12 @@ import "../styles/global.css";
       <p class="text-sm font-medium text-gray-700 mb-4">
         ⏱ Durée : <span class="font-semibold">30 minutes</span>
       </p>
-      <ul class="text-sm text-gray-600 space-y-1 mb-6">
+      <ul class="text-base text-gray-950 space-y-1 mb-6">
         <li>Équipement à apporter :</li>
+        <li>• Chaussures</li>
         <li>• Vélo</li>
         <li>• Cales</li>
-        <li>• Chaussures</li>
+        <li>• Tenue de vélo</li>
       </ul>
       <div class="mt-auto">
         <a
@@ -55,11 +83,13 @@ import "../styles/global.css";
       <p class="text-sm font-medium text-gray-700 mb-4">
         ⏱ Durée : <span class="font-semibold">30 minutes</span>
       </p>
-      <ul class="text-sm text-gray-600 space-y-1 mb-6">
+      <ul class="text-base text-gray-950 space-y-1 mb-6">
         <li>Équipement à apporter :</li>
-        <li>• Vélo</li>
         <li>• Nouvelles chaussures</li>
         <li>• Nouvelles cales</li>
+        <li>• Vélo</li>
+        <li>• Cales</li>
+        <li>• Tenue de vélo</li>
       </ul>
       <div class="mt-auto">
         <a
