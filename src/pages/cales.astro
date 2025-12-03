@@ -73,7 +73,12 @@ import "../styles/global.css";
       </div>
     </div>
 
-    <div class="p-6 flex-1 flex flex-col border-1 border-gray-100">
+    <div class="relative p-6 flex-1 flex flex-col border-1 border-gray-100">
+      <div
+        class="absolute -top-3 left-4 inline-flex items-center bg-[#C00201] px-3 py-1 text-xs font-semibold text-white shadow"
+      >
+        Réservé aux clients ayant déjà réalisé une étude chez ID Postur
+      </div>
       <h3 class="text-xl font-semibold text-gray-900 mb-2">
         Réglages nouvelles cales/chaussures
       </h3>
@@ -124,7 +129,7 @@ import "../styles/global.css";
             class="flex items-center justify-between cursor-pointer list-none"
           >
             <h3 class="text-lg font-semibold">
-              Combien de temps dure un le réglage des cales ?
+              Combien de temps dure le réglage des cales ?
             </h3>
             <span
               class="text-[#F80000] transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
@@ -132,7 +137,7 @@ import "../styles/global.css";
             >
           </summary>
           <p class="mt-4 leading-relaxed">
-            La durée des réglages des cales est de 30 minutes.
+            La durée du réglage des cales est de <strong>30 minutes</strong>.
           </p>
         </details>
 
@@ -142,14 +147,20 @@ import "../styles/global.css";
             class="flex items-center justify-between cursor-pointer list-none"
           >
             <h3 class="text-lg font-semibold">
-              Quelle est le prix pour le réglage des cales ?
+              Quel est le prix pour le réglage des cales ?
             </h3>
             <span
               class="text-[#F80000] transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
               >+</span
             >
           </summary>
-          <p>Le prix pour réaliser le réglage de vos cales de 50€.</p>
+          <p>
+            Le prix pour le réglage de vos cales est de <strong>50€</strong>.<br
+            />
+            Si vous êtes déjà venu faire régler vos cales, le prix est de <strong
+              >20€</strong
+            >.
+          </p>
         </details>
 
         <!-- Question 3 -->
@@ -167,8 +178,7 @@ import "../styles/global.css";
           </summary>
           <p class="mt-4 leading-relaxed">
             Le jour du rendez-vous, venez avec votre vélo, votre paire de
-            chaussure et vos cales que vous souhaitez régler ainsi que votre
-            tenue de vélo.
+            chaussures, vos cales à régler ainsi que votre tenue de vélo.
           </p>
         </details>
       </div>
