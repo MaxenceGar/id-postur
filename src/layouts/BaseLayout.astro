@@ -42,7 +42,15 @@ import SpeedInsights from "@vercel/speed-insights/astro";
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; img-src * data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src *;"
+      content="
+    default-src 'self';
+    img-src * data:;
+    script-src 'self' 'unsafe-inline' https://www.youtube.com https://www.gstatic.com;
+    style-src 'self' 'unsafe-inline';
+    frame-src https://www.youtube.com https://youtube.com;
+    media-src https://www.youtube.com https://youtube.com;
+    connect-src *;
+  "
     />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
 
