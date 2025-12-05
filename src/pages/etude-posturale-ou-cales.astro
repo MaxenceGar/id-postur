@@ -1,14 +1,13 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import "../styles/global.css";
-import { Tweet, Vimeo, YouTube } from "astro-embed";
 ---
 
 <BaseLayout>
   <section class="py-20 bg-white">
     <div class="max-w-4xl mx-auto px-6 text-center">
       <h2 class="text-3xl md:text-4xl font-bold text-gray-900">
-        Choisissez votre situation
+        Vous souhaitez prendre rendez-vous pour
       </h2>
       <div
         class="h-[3px] w-24 bg-id-postur-dark mx-auto mt-4 mb-12 rounded-full"
@@ -18,15 +17,19 @@ import { Tweet, Vimeo, YouTube } from "astro-embed";
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <!-- Option 1 -->
         <a
-          href="/etude-posturale"
+          href="/premiere-ou-nouvelle"
           class="group block border border-gray-200 p-8 hover:shadow-xl transition-all hover:border-id-postur-dark"
         >
-          <div class="text-5xl mb-4">🆕</div>
+          <img
+            src="images/id-postur-img-1.webp"
+            alt="Étude Posturale"
+            class="mb-8"
+          />
           <h3 class="text-2xl font-semibold mb-3">
-            Première étude posturale ?
+            Réaliser une étude posturale
           </h3>
           <p class="text-gray-600 leading-relaxed">
-            Réalisons ensemble votre première étude posturale chez ID Postur
+            Réalisons ensemble votre étude posturale chez ID Postur
           </p>
 
           <span
@@ -38,13 +41,19 @@ import { Tweet, Vimeo, YouTube } from "astro-embed";
 
         <!-- Option 2 -->
         <a
-          href="/nouveau-velo-ou-reglage"
+          href="/cales"
           class="group block border border-gray-200 p-8 hover:shadow-xl transition-all hover:border-id-postur-dark"
         >
-          <div class="text-5xl mb-4">✔️</div>
-          <h3 class="text-2xl font-semibold mb-3">Déjà client ?</h3>
+          <img
+            src="images/id-postur-cales.webp"
+            alt="Étude Posturale"
+            class="mb-8"
+          />
+          <h3 class="text-2xl font-semibold mb-3">
+            Régler votre paire de cale/chaussures
+          </h3>
           <p class="text-gray-600 leading-relaxed">
-            Nous avons déjà vos mesures : réglons ensemble votre nouveau vélo.
+            Réalisons ensemble le régalge de vos cales et de vos chaussures
           </p>
 
           <span
