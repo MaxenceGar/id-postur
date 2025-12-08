@@ -10,8 +10,8 @@ export default function Funnel() {
   const urls = {
     etudeComplete: "https://calendly.com/idpostur/etude-posturale-complete",
     returnStudy: "https://calendly.com/idpostur/etude-retour",
-    fullCleats: "https://calendly.com/idpostur/reglage-cales",
-    returnCleats: "https://calendly.com/idpostur/reglage-cales-retour",
+    fullCleats: "https://calendly.com/idpostur/reglage-des-cales",
+    returnCleats: "https://calendly.com/idpostur/reglages-nouvelles-cales-chaussures",
     fullStudyChild: "https://calendly.com/idpostur/etude-posturale-complete-15-ans",
     fullRetryStudy: "https://calendly.com/idpostur/etude-posturale-nouveau-velo"
   };
@@ -85,18 +85,6 @@ export default function Funnel() {
 
   return (
     <div className="w-full justify-center mx-auto p-4 text-center">
-      
-      {/* BOUTON RETOUR : Visible à partir de l'étape 2 */}
-      {step > 1 && (
-        <div className="flex justify-center max-w-7xl mx-auto">
-          <button
-            onClick={goBack}
-            className="text-gray-600 hover:text-gray-900 text-sm font-medium transition duration-150 p-2 absolute left-4 md:left-10 top-4"
-          >
-            ← Retour
-          </button>
-        </div>
-      )}
       
       <Breadcrumbs />
 
@@ -266,6 +254,19 @@ export default function Funnel() {
             </div>
           </div>
         )}
+
+{/* BOUTON RETOUR : Visible à partir de l'étape 2 */}
+      {step > 1 && (
+        <div className="flex justify-center max-w-7xl mx-auto">
+          <button
+            onClick={goBack}
+            className="text-white text-base font-medium transition duration-150 p-2 left-4 md:left-10 top-4 bg-id-postur-dark my-4"
+          >
+            ← Retour
+          </button>
+        </div>
+      )}
+
       </div>
     </div>
   );
