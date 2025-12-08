@@ -32,3 +32,17 @@
   animation: marquee 25s linear infinite;
   animation-delay: -12.5s; /* la moitié */
 }
+
+
+.btn-funnel {
+  background-color: #c00000;
+  padding: 10px;
+  color: white;
+  font-weight: 600;
+}
+
+.h2-funnel {
+  font-size: var(--text-4xl); /* 2.25rem (36px) */ 
+  line-height: var(--text-4xl--line-height); /* calc(2.5 / 2.25) */
+  font-weight: 700;
+}

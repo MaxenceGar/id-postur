@@ -1,0 +1,11 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Funnel from "../components/Funnel.jsx";
+import "../styles/global.css";
+---
+
+<BaseLayout>
+  <section class="w-full mx-auto">
+    <Funnel client:load />
+  </section>
+</BaseLayout>
