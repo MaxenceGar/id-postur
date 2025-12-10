@@ -112,7 +112,7 @@ export default function Funnel() {
         {step === 2 && service === "study" && (
           <div className="space-y-4">
             <h2 className="h2-funnel">
-              Êtes-vous un adulte ou un enfant ?
+              Quel cycliste êtes-vous ?
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 justify-center mx-auto gap-4 w-full md:max-w-7xl">
             <Card
@@ -139,13 +139,14 @@ export default function Funnel() {
               Avez-vous déjà réalisé une étude posturale chez ID Postur ?
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 mx-auto justify-center gap-4 w-full md:max-w-7xl">
-            <div className="hover:bg-green-300">
             <Card
               title="Oui, je suis déjà client"
-              desc="Pour un réajustement votre vélo ou ajuster un nouveau vélo."
+              desc={`Pour un réajustement ou l'ajustement de votre nouveau vélo.<br><br>
+                    Étant déjà client ID Postur, nous disposons de vos mesures. Cela permet d'ajuster votre position (ou votre nouveau vélo) plus rapidement et avec une précision optimale.`}
+              time="30 minutes"
+              price="100€"
               onClick={() => (window.location.href = urls.fullRetryStudy)}
             />
-            </div>
             <Card
               title="Non, c'est ma première étude"
               desc="Sélectionnez cette option si vous n'avez jamais réalisé d'étude posturale chez ID Postur."
