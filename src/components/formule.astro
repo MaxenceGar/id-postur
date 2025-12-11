@@ -66,25 +66,37 @@
   </div>
 </section>
 
-<section class="py-8 bg-gray-50">
-  <div class="container mx-auto px-5">
-    <h2 class="text-center text-3xl md:text-4xl font-bold text-gray-900">
+<section class="container mx-auto px-5 sm:px-6 lg:px-8 py-12">
+  <div class="lg:w-full mb-6 lg:mb-10">
+    <h2 class="sm:text-4xl text-3xl font-bold title-font mb-3 text-gray-900">
       Pour en savoir plus sur ID Postur avant de prendre rendez-vous 👇
     </h2>
-
-    <div class="h-[3px] w-24 bg-id-postur-dark mx-auto mt-4 mb-12 rounded-full">
-    </div>
-
-    <div class="flex flex-col md:flex-row justify-center gap-8 mx-auto">
-      <!-- Vidéo 1 -->
-      <div class="w-full md:w-1/2 aspect-video">
+    <div class="h-1 w-24 bg-id-postur-dark"></div>
+  </div>
+  <div class="flex flex-col md:flex-row justify-center items-stretch gap-8">
+    <div class="w-full md:w-1/2">
+      <div class="aspect-video overflow-hidden shadow-2xl">
         <iframe
-          class="w-full h-full rounded-xl"
+          class="w-full h-full"
           src="https://www.youtube.com/embed/5iGajrIt3I0?si=HbiRRXqWhc0Tr2tv"
-          title="Présentation ID Postur"
-          frameborder="0"
+          title="Vidéo 1 : Aperçu des fonctionnalités ID Postur"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowfullscreen
+          loading="lazy"
+        >
+        </iframe>
+      </div>
+    </div>
+
+    <div class="w-full md:w-1/2">
+      <div class="aspect-video overflow-hidden shadow-2xl">
+        <iframe
+          class="w-full h-full"
+          src="https://www.youtube.com/embed/9cvgGC2bqQ0?si=DTMPE88Pc0eN6rET"
+          title="Vidéo 2 : Cas d'utilisation et bénéfices ID Postur"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+          loading="lazy"
         >
         </iframe>
       </div>
