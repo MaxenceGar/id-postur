@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import "../styles/global.css";
+import Formulecomponent from "../components/formulecomponent.astro";
 ---
 
 <BaseLayout>
@@ -40,132 +41,75 @@ import "../styles/global.css";
         </div>
         <div class="grid gap-8 md:grid-cols-3 lg:grid-cols-3 py-10">
           <!-- Étude posturale complète -->
-          <div
-            class="relative flex flex-col h-full bg-white shadow-sm border border-gray-200"
-          >
-            <div
-              class="absolute -top-3 left-4 inline-flex items-center bg-[#C00201] px-3 py-1 text-xs font-semibold text-white shadow"
-            >
-              Offre la plus complète
-            </div>
-            <div class="p-6 flex-1 flex flex-col">
-              <h3 class="text-xl font-semibold text-gray-900 mb-2">
-                Étude posturale complète
-              </h3>
-              <p class="text-sm text-gray-500 mb-4">
-                Analyse biométrique 3D + réglage ultra-précis. Optimisation de
-                votre confort et performance.
-              </p>
-              <div class="mb-4">
-                <span class="text-3xl font-bold text-gray-900">250€</span>
-              </div>
-              <p class="text-sm font-medium text-gray-700 mb-4">
-                ⏱ Durée : <span class="font-semibold">2 heures</span>
-              </p>
-              <ul class="text-sm text-gray-600 space-y-1 mb-6">
-                <li>Équipement à apporter :</li>
-                <li>• Vélo</li>
-                <li>• Chaussures</li>
-                <li>• Cuissard</li>
-                <li>• Maillot</li>
-                <li>• Pièces spécifiques à votre vélo</li>
-              </ul>
-              <div class="mt-auto">
-                <a
-                  href="https://calendly.com/idpostur/etude-posturale-complete"
-                  rel="nofollow"
-                >
-                  <button
-                    class="cursor-pointer w-full inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-[#C00201] border border-[#C00201] bg-white hover:bg-[#C00201]/5 transition"
-                  >
-                    Prendre rendez-vous
-                  </button>
-                </a>
-              </div>
-            </div>
-          </div>
+          <Formulecomponent
+            baseline="Offre la plus complète"
+            title="Étude Posturale Complète"
+            description="Analyse biométrique 3D + réglage ultra-précis. Optimisation de votre confort et performance."
+            price="250€"
+            time="2 heures"
+            link="https://calendly.com/idpostur/etude-posturale-complete"
+            stack1="• Vélo"
+            stack2="• Chaussures"
+            stack3="• Cuissard"
+            stack4="• Maillot"
+            stack5="• Pièces spécifiques à votre vélo"
+          />
 
-          <!-- Étude posturale complète -15 ans -->
-          <div
-            class="relative flex flex-col h-full bg-white shadow-sm border border-gray-200"
-          >
-            <div
-              class="absolute -top-3 left-4 inline-flex items-center bg-[#C00201] px-3 py-1 text-xs font-semibold text-white shadow"
-            >
-              Offre pour les moins de 15 ans
-            </div>
-            <div class="p-6 flex-1 flex flex-col">
-              <h3 class="text-xl font-semibold text-gray-900 mb-2">
-                Étude posturale complète
-              </h3>
-              <p class="text-sm text-gray-500 mb-4">
-                Étude adaptée aux jeunes cyclistes en croissance.
-              </p>
-              <div class="mb-4">
-                <span class="text-3xl font-bold text-gray-900">120€</span>
-              </div>
-              <p class="text-sm font-medium text-gray-700 mb-4">
-                ⏱ Durée : <span class="font-semibold">1 heure</span>
-              </p>
-              <ul class="text-sm text-gray-600 space-y-1 mb-6">
-                <li>Équipement à apporter :</li>
-                <li>• Vélo</li>
-                <li>• Chaussures</li>
-                <li>• Cuissard</li>
-                <li>• Maillot</li>
-                <li>• Pièces spécifiques à votre vélo</li>
-              </ul>
-              <div class="mt-auto">
-                <a
-                  href="https://calendly.com/idpostur/etude-posturale-complete-15-ans"
-                  rel="nofollow"
-                >
-                  <button
-                    class="cursor-pointer w-full inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-[#C00201] border border-[#C00201] bg-white hover:bg-[#C00201]/5 transition"
-                  >
-                    Prendre rendez-vous
-                  </button>
-                </a>
-              </div>
-            </div>
-          </div>
+          <Formulecomponent
+            baseline="Deux Vélos de la même discipline"
+            title="Étude Posturale Deux Vélos"
+            description="Réglons ensembles vos deux vélos de la même discipline (Ex: Route + Route ou VTT + VTT ou Chrono + Chrono)"
+            price="300€"
+            time="2h15"
+            link="https://calendly.com/idpostur/etude-posturale-meme-discipline"
+            stack1="• Vos Deux Vélos"
+            stack2="• Chaussures"
+            stack3="• Cuissard"
+            stack4="• Maillot"
+            stack5="• Pièces spécifiques à votre vélo"
+          />
 
-          <!-- Réglages Réglage vélo ville/électrique/vtt électrique -->
-          <div
-            class="flex flex-col h-full bg-white shadow-sm border border-gray-200"
-          >
-            <div class="p-6 flex-1 flex flex-col">
-              <h3 class="text-xl font-semibold text-gray-900 mb-2">
-                Réglage vélo ville/électrique/vtt électrique
-              </h3>
-              <p class="text-sm text-gray-500 mb-4">
-                Ajustement de votre posture pour un meilleur confore
-              </p>
-              <div class="mb-4">
-                <p class="text-3xl font-bold text-gray-900">90€</p>
-              </div>
-              <p class="text-sm font-medium text-gray-700 mb-4">
-                ⏱ Durée : <span class="font-semibold">1h</span>
-              </p>
-              <ul class="text-sm text-gray-600 space-y-1 mb-6">
-                <li>Équipement à apporter :</li>
-                <li>• Votre vélo</li>
-                <li>• Équipement spécifique</li>
-              </ul>
-              <div class="mt-auto">
-                <a
-                  href="https://calendly.com/idpostur/etude-posturale-velo-ville-electrique-vtt-electrique"
-                  rel="nofollow"
-                >
-                  <button
-                    class="cursor-pointer w-full inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-[#C00201] border border-[#C00201] bg-white hover:bg-[#C00201]/5 transition"
-                  >
-                    Prendre rendez-vous
-                  </button>
-                </a>
-              </div>
-            </div>
-          </div>
+          <Formulecomponent
+            baseline="Deux Vélos de Deux Disciplines différentes"
+            title="Étude Posturale Deux Vélos"
+            description="Réglons ensembles vos deux vélos de discipline différentes. (Ex: Route + Chrono ou Route + VTT ou Chrono + VTT)"
+            price="350€"
+            time="2 heures"
+            link="https://calendly.com/idpostur/etude-posturale-deux-discipline"
+            stack1="• Vos Deux Vélos"
+            stack2="• Chaussures"
+            stack3="• Cuissard"
+            stack4="• Maillot"
+            stack5="• Pièces spécifiques à votre vélo"
+          />
+
+          <Formulecomponent
+            baseline="Offre pour les moins de 15 ans"
+            title="Étude posturale complète"
+            description="Étude adaptée aux jeunes cyclistes en croissance."
+            price="120€"
+            time="1 heure"
+            link="https://calendly.com/idpostur/etude-posturale-complete-15-ans"
+            stack1="• Vélo"
+            stack2="• Chaussures"
+            stack3="• Cuissard"
+            stack4="• Maillot"
+            stack5="• Pièces spécifiques à votre vélo"
+          />
+
+          <Formulecomponent
+            baseline="Offre Unique"
+            title="Réglage vélo ville/électrique/vtt électrique"
+            description="Ajustement de votre posture pour un meilleur confore"
+            price="90€"
+            time="1 heure"
+            link="https://calendly.com/idpostur/etude-posturale-velo-ville-electrique-vtt-electrique"
+            stack1="• Vélo"
+            stack2="• Chaussures"
+            stack3="• Pièces spécifiques à votre vélo"
+            stack4=""
+            stack5=""
+          />
         </div>
 
         <section class="py-16">
@@ -186,55 +130,47 @@ import "../styles/global.css";
               </p>
             </div>
             <div class="grid gap-8 md:grid-cols-3 lg:grid-cols-3 py-10">
-              <!-- Réglages nouveau vélo -->
-              <div
-                class="relative flex flex-col h-full bg-white shadow-sm border border-gray-200"
-              >
-                <div
-                  class="absolute -top-3 left-4 inline-flex items-center bg-[#C00201] px-3 py-1 text-xs font-semibold text-white shadow"
-                >
-                  Si vous avez déjà réalisé une étude chez ID Postur
-                </div>
-                <div class="p-6 flex-1 flex flex-col">
-                  <h3 class="text-xl font-semibold text-gray-900 mb-2">
-                    Réglage nouveau vélo
-                  </h3>
-                  <p class="text-sm text-gray-500 mb-4">
-                    Ajustement rapide de votre nouveau vélo grâce à votre
-                    précédente étude.
-                    <strong>Validation vidéo incluse.</strong>
-                  </p>
-                  <div class="mb-4">
-                    <p class="text-3xl font-bold text-gray-900">100€</p>
-                    <span class="text-xs font-semibold text-gray-900"
-                      >Gratuit dans les 6 mois après première étude</span
-                    >
-                  </div>
-                  <p class="text-sm font-medium text-gray-700 mb-4">
-                    ⏱ Durée : <span class="font-semibold">30 minutes</span>
-                  </p>
-                  <ul class="text-sm text-gray-600 space-y-1 mb-6">
-                    <li>Équipement à apporter :</li>
-                    <li>• Votre nouveau vélo</li>
-                    <li>• Chaussures</li>
-                    <li>• Cuissard</li>
-                    <li>• Maillot</li>
-                    <li>• Pièces spécifiques à votre vélo</li>
-                  </ul>
-                  <div class="mt-auto">
-                    <a
-                      href="https://calendly.com/idpostur/etude-posturale-nouveau-velo"
-                      rel="nofollow"
-                    >
-                      <button
-                        class="cursor-pointer w-full inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-[#C00201] border border-[#C00201] bg-white hover:bg-[#C00201]/5 transition"
-                      >
-                        Prendre rendez-vous
-                      </button>
-                    </a>
-                  </div>
-                </div>
-              </div>
+              <Formulecomponent
+                baseline="Offert dans les 4 mois suivant votre première étude posturale"
+                title="Ajustement Nouveau Vélo (Moins de 4 mois)"
+                description="Mise au point de votre nouveau vélo, basée sur les données de votre étude précédente. Prestation offerte si le vélo est acquis dans les 4 mois."
+                price="0 €"
+                time="30 minutes"
+                link="https://calendly.com/idpostur/etude-posturale-nouveau-velo"
+                stack1="• Vélo"
+                stack2="• Chaussures"
+                stack3="• Cuissard"
+                stack4="• Maillot"
+                stack5="• Pièces spécifiques à votre vélo"
+              />
+
+              <Formulecomponent
+                baseline="Au-delà des 4 mois suivant votre première étude posturale"
+                title="Ajustement Nouveau Vélo (Après 4 Mois)"
+                description="Ajustement de votre nouveau vélo, validé par vidéo. Ce tarif s'applique si l'achat dépasse 4 mois après votre étude."
+                price="100 €"
+                time="30 minutes"
+                link="https://calendly.com/idpostur/etude-posturale-nouveau-velo"
+                stack1="• Vélo"
+                stack2="• Chaussures"
+                stack3="• Cuissard"
+                stack4="• Maillot"
+                stack5="• Pièces spécifiques à votre vélo"
+              />
+
+              <Formulecomponent
+                baseline="Pour les clients déjà venus"
+                title="Étude Posturale Nouvelle Discipline"
+                description="Étude complète et ajustement pour un vélo d'une nouvelle discipline (ex : passage de Route à VTT ou Chrono). Réservé aux clients existants."
+                price="100 €"
+                time="30 minutes"
+                link="https://calendly.com/idpostur/reglage-nouvelle-discipline"
+                stack1="• Vélo"
+                stack2="• Chaussures"
+                stack3="• Cuissard"
+                stack4="• Maillot"
+                stack5="• Pièces spécifiques à votre vélo"
+              />
             </div>
           </div>
         </section>
@@ -267,80 +203,33 @@ import "../styles/global.css";
       <div
         class="grid md:grid-cols-1 lg:grid-cols-2 gap-8 container px-5 py-24 mx-auto"
       >
-        <div class="p-6 flex-1 flex flex-col border-1 border-gray-100">
-          <h3 class="text-xl font-semibold text-gray-900 mb-2">
-            Réglages cales/chaussures
-          </h3>
-          <p class="text-sm text-gray-500 mb-4">
-            Positionnement précis de vos cales pour un pédalage fluide et
-            efficace.
-          </p>
-          <div class="mb-4">
-            <span class="text-3xl font-bold text-gray-900">50€</span>
-          </div>
-          <p class="text-sm font-medium text-gray-700 mb-4">
-            ⏱ Durée : <span class="font-semibold">30 minutes</span>
-          </p>
-          <ul class="text-base text-gray-950 space-y-1 mb-6">
-            <li>Équipement à apporter :</li>
-            <li>• Chaussures</li>
-            <li>• Vélo</li>
-            <li>• Cales</li>
-            <li>• Tenue de vélo</li>
-          </ul>
-          <div class="mt-auto">
-            <a
-              href="https://calendly.com/idpostur/reglage-des-cales"
-              rel="nofollow"
-            >
-              <button
-                class="cursor-pointer w-full inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-[#C00201] border border-[#C00201] bg-white hover:bg-[#C00201]/5 transition"
-              >
-                Prendre rendez-vous
-              </button>
-            </a>
-          </div>
-        </div>
+        <Formulecomponent
+          description="Positionnement précis de vos cales pour un pédalage fluide et efficace."
+          baseline="Pour votre première étude de cale chez ID Postur"
+          title="Réglages cales/chaussures"
+          price="50€"
+          time="30 minutes"
+          link="https://calendly.com/idpostur/reglage-des-cales"
+          stack1="• Chaussures"
+          stack2="• Vélo"
+          stack3="• Cales"
+          stack4="• Tenue de vélo"
+          stack5=""
+        />
 
-        <div class="relative p-6 flex-1 flex flex-col border-1 border-gray-100">
-          <div
-            class="absolute -top-3 left-4 inline-flex items-center bg-[#C00201] px-3 py-1 text-xs font-semibold text-white shadow"
-          >
-            Réservé aux clients ayant déjà réalisé une étude chez ID Postur
-          </div>
-          <h3 class="text-xl font-semibold text-gray-900 mb-2">
-            Réglages nouvelles cales/chaussures
-          </h3>
-          <p class="text-sm text-gray-500 mb-4">
-            Re-positionnement précis de vos cales/chaussures.
-          </p>
-          <div class="mb-4">
-            <span class="text-3xl font-bold text-gray-900">20€</span>
-          </div>
-          <p class="text-sm font-medium text-gray-700 mb-4">
-            ⏱ Durée : <span class="font-semibold">30 minutes</span>
-          </p>
-          <ul class="text-base text-gray-950 space-y-1 mb-6">
-            <li>Équipement à apporter :</li>
-            <li>• Nouvelles chaussures</li>
-            <li>• Nouvelles cales</li>
-            <li>• Vélo</li>
-            <li>• Cales</li>
-            <li>• Tenue de vélo</li>
-          </ul>
-          <div class="mt-auto">
-            <a
-              href="https://calendly.com/idpostur/reglages-nouvelles-cales-chaussures"
-              rel="nofollow"
-            >
-              <button
-                class="cursor-pointer w-full inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-[#C00201] border border-[#C00201] bg-white hover:bg-[#C00201]/5 transition"
-              >
-                Prendre rendez-vous
-              </button>
-            </a>
-          </div>
-        </div>
+        <Formulecomponent
+          description="Re-positionnement précis de vos cales/chaussures"
+          baseline="Réservé aux clients ayant déjà réalisé une étude chez ID Postur"
+          title="Réglages nouvelles cales/chaussures"
+          price="20€"
+          time="30 minutes"
+          link="https://calendly.com/idpostur/reglages-nouvelles-cales-chaussures"
+          stack1="• Chaussures"
+          stack2="• Vélo"
+          stack3="• Cales"
+          stack4="• Tenue de vélo"
+          stack5=""
+        />
       </div>
     </section>
   </section>

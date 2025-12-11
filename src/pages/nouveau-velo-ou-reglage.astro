@@ -27,23 +27,49 @@ import Formulecomponent from "../components/formulecomponent.astro";
       </p>
     </div>
   </div>
-  <section class="py-16">
-    <div class="flex justify-center py-10">
-      <div class="w-full md:w-4xl max-w-md mx-4">
-        <Formulecomponent
-          baseline="Gratuit dans les 6 mois après première étude"
-          title="Réglage nouveau vélo"
-          description="Ajustement rapide de votre nouveau vélo grâce à votre précédente étude. Validation vidéo incluse."
-          price="100€"
-          time="30 minutes"
-          link="https://calendly.com/idpostur/etude-posturale-nouveau-velo"
-          stack1="• Vélo"
-          stack2="• Chaussures"
-          stack3="• Cuissard"
-          stack4="• Maillot"
-          stack5="• Pièces spécifiques à votre vélo"
-        />
-      </div>
+  <section class="container px-2 md:px-5 mx-auto">
+    <div class="grid gap-8 md:grid-cols-3 lg:grid-cols-3 py-10">
+      <Formulecomponent
+        baseline="Offert dans les 4 mois suivant votre première étude posturale"
+        title="Ajustement Nouveau Vélo (Moins de 4 mois)"
+        description="Mise au point de votre nouveau vélo, basée sur les données de votre étude précédente. Prestation offerte si le vélo est acquis dans les 4 mois."
+        price="0 €"
+        time="30 minutes"
+        link="https://calendly.com/idpostur/etude-posturale-nouveau-velo"
+        stack1="• Vélo"
+        stack2="• Chaussures"
+        stack3="• Cuissard"
+        stack4="• Maillot"
+        stack5="• Pièces spécifiques à votre vélo"
+      />
+
+      <Formulecomponent
+        baseline="Au-delà des 4 mois suivant votre première étude posturale"
+        title="Ajustement Nouveau Vélo (Après 4 Mois)"
+        description="Ajustement de votre nouveau vélo, validé par vidéo. Ce tarif s'applique si l'achat dépasse 4 mois après votre étude."
+        price="100 €"
+        time="30 minutes"
+        link="https://calendly.com/idpostur/etude-posturale-nouveau-velo"
+        stack1="• Vélo"
+        stack2="• Chaussures"
+        stack3="• Cuissard"
+        stack4="• Maillot"
+        stack5="• Pièces spécifiques à votre vélo"
+      />
+
+      <Formulecomponent
+        baseline="Pour les clients déjà venus"
+        title="Étude Posturale Nouvelle Discipline"
+        description="Étude complète et ajustement pour un vélo d'une nouvelle discipline (ex : passage de Route à VTT ou Chrono). Réservé aux clients existants."
+        price="100 €"
+        time="30 minutes"
+        link="https://calendly.com/idpostur/reglage-nouvelle-discipline"
+        stack1="• Vélo"
+        stack2="• Chaussures"
+        stack3="• Cuissard"
+        stack4="• Maillot"
+        stack5="• Pièces spécifiques à votre vélo"
+      />
     </div>
   </section>
   <div class="w-full flex justify-center">
