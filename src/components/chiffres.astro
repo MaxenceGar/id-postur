@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import { motion } from "framer-motion";
 ---
 
 <!-- AVANTAGES / IMPACT -->
@@ -8,18 +9,26 @@ import "../styles/global.css";
     <!-- Grille -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
       <!-- Carte 1 -->
-      <div
-        class="group p-8 flex flex-col items-center relative overflow-hidden"
+      <motion.div
+        className="group p-8 flex flex-col items-center relative overflow-hidden"
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+        client:visible
       >
         <div class="absolute inset-0 bg-[#F80000] opacity-0 transition"></div>
         <div class="text-5xl font-bold text-id-postur-dark mb-2">+800</div>
         <p class="text-gray-700 font-medium">Études posturales réalisées</p>
         <span class="mt-4 w-12 h-[3px] bg-id-postur-dark rounded-full"></span>
-      </div>
+      </motion.div>
 
       <!-- Carte 2 -->
-      <div
-        class="group p-8 flex flex-col items-center relative overflow-hidden"
+      <motion.div
+        className="group p-8 flex flex-col items-center relative overflow-hidden"
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        client:visible
       >
         <div class="absolute inset-0 bg-[#F80000] opacity-0 transition"></div>
         <div class="text-5xl font-bold text-id-postur-dark mb-2">+25</div>
@@ -27,17 +36,21 @@ import "../styles/global.css";
           Athlètes professionnels accompagnés
         </p>
         <span class="mt-4 w-12 h-[3px] bg-id-postur-dark rounded-full"></span>
-      </div>
+      </motion.div>
 
       <!-- Carte 3 -->
-      <div
-        class="group p-8 flex flex-col items-center relative overflow-hidden"
+      <motion.div
+        className="group p-8 flex flex-col items-center relative overflow-hidden"
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5, delay: 0.3 }}
+        client:visible
       >
         <div class="absolute inset-0 bg-[#F80000] opacity-0 transition"></div>
         <div class="text-5xl font-bold text-id-postur-dark mb-2">+3 ans</div>
         <p class="text-gray-700 font-medium">d’expérience terrain et analyse</p>
         <span class="mt-4 w-12 h-[3px] bg-id-postur-dark"></span>
-      </div>
+      </motion.div>
     </div>
   </div>
 </section>
