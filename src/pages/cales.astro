@@ -78,37 +78,67 @@ const faqSchema = {
     </div>
   </div>
 
-  <div
-    class="grid md:grid-cols-1 lg:grid-cols-2 gap-8 container px-5 py-24 mx-auto"
-  >
-    <Formulecomponent
-      description="Positionnement précis de vos cales pour un pédalage fluide et efficace."
-      baseline="Pour votre première étude de cale chez ID Postur"
-      title="Réglages cales/chaussures"
-      price="50€"
-      time="30 minutes"
-      link="https://calendly.com/idpostur/reglage-des-cales"
-      stack1="• Chaussures"
-      stack2="• Vélo"
-      stack3="• Cales"
-      stack4="• Tenue de vélo"
-      stack5=""
-    />
-
-    <Formulecomponent
-      description="Re-positionnement précis de vos cales/chaussures"
-      baseline="Réservé aux clients ayant déjà réalisé une étude chez ID Postur"
-      title="Réglages nouvelles cales/chaussures"
-      price="20€"
-      time="30 minutes"
-      link="https://calendly.com/idpostur/reglages-nouvelles-cales-chaussures"
-      stack1="• Chaussures"
-      stack2="• Vélo"
-      stack3="• Cales"
-      stack4="• Tenue de vélo"
-      stack5=""
-    />
+  <div class="container px-5 py-24 mx-auto">
+    <div class="max-w-2xl mx-auto">
+      <Formulecomponent
+        description="Re-positionnement précis de vos cales/chaussures."
+        baseline="Réservé aux clients ayant déjà réalisé une étude chez ID Postur"
+        title="Réglages nouvelles cales/chaussures"
+        price="20€"
+        time="30 minutes"
+        link="https://calendly.com/idpostur/reglages-nouvelles-cales-chaussures"
+        stack1="• Chaussures"
+        stack2="• Vélo"
+        stack3="• Cales"
+        stack4="• Tenue de vélo"
+        stack5=""
+      />
+    </div>
   </div>
+
+  <section class="py-16">
+    <div class="container mx-auto px-2 md:px-5">
+      <div>
+        <h2 class="text-xl md:text-4xl font-bold">
+          Besoin d'une petite révision ou d'un réglage ponctuel ?
+        </h2>
+        <div class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-4 rounded-full">
+        </div>
+        <p class="block md:w-4xl">
+          Pour une vérification rapide, un micro-ajustement ou une question
+          technique, prenez un rendez-vous ponctuel de 15 ou 30 minutes.
+        </p>
+      </div>
+      <div class="grid gap-8 md:grid-cols-2 py-10">
+        <Formulecomponent
+          baseline="Intervention rapide"
+          title="RDV divers — 15 min"
+          description="Vérification rapide, conseil technique ou micro-réglage sans test en pédalage."
+          price="25€"
+          time="15 minutes"
+          link="https://calendly.com/idpostur/rendez-vous-divers-15-min"
+          stack1="• Vélo"
+          stack2=""
+          stack3=""
+          stack4=""
+          stack5=""
+        />
+        <Formulecomponent
+          baseline="Intervention étendue"
+          title="RDV divers — 30 min"
+          description="Révision ou réglage ponctuel avec test en pédalage pour valider la sensation en conditions réelles."
+          price="50€"
+          time="30 minutes"
+          link="https://calendly.com/idpostur/rendez-vous-divers-30-min"
+          stack1="• Vélo"
+          stack2="• Chaussures"
+          stack3="• Cuissard"
+          stack4="• Tenue complète"
+          stack5=""
+        />
+      </div>
+    </div>
+  </section>
 
   <section class="relative px-6 overflow-hidden">
     <div class="relative max-w-5xl mx-auto text-center">
@@ -128,7 +158,7 @@ const faqSchema = {
               Combien de temps dure le réglage des cales ?
             </h3>
             <span
-              class="text-[#F80000] transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
+              class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
               >+</span
             >
           </summary>
@@ -146,7 +176,7 @@ const faqSchema = {
               Quel est le prix pour le réglage des cales ?
             </h3>
             <span
-              class="text-[#F80000] transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
+              class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
               >+</span
             >
           </summary>
@@ -168,7 +198,7 @@ const faqSchema = {
               Avec quel équipement dois-je venir ?
             </h3>
             <span
-              class="text-[#F80000] transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
+              class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
               >+</span
             >
           </summary>

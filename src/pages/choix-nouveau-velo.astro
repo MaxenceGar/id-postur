@@ -1,0 +1,128 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import "../styles/global.css";
+import Formulecomponent from "../components/formulecomponent.astro";
+---
+
+<BaseLayout
+  title="Aide au choix d'un nouveau vélo à Rennes | ID Postur"
+  description="Hésitation avant d'acheter un nouveau vélo ? ID Postur vous aide à Rennes à choisir la taille et l'ergonomie idéales avant l'achat. RDV 15 ou 30 min, dès 25€."
+  ogImage="/images/id-postur-img-1.webp"
+>
+  <div
+    class="w-full h-96 relative bg-[url('/images/id-postur-img-1.webp')] bg-cover bg-center flex items-center justify-center bg-black/50 bg-blend-overlay"
+  >
+    <div class="grid grid-cols-1 text-white px-4">
+      <h1 class="text-3xl md:text-4xl font-bold text-center">
+        Choisissez votre nouveau vélo en toute confiance
+      </h1>
+      <div
+        class="h-[3px] w-24 bg-id-postur-dark mx-auto mt-4 mb-10 rounded-full"
+      >
+      </div>
+      <p class="text-center max-w-4xl mx-auto pb-4">
+        Avant d'investir dans un nouveau vélo, <strong>ID Postur</strong> vous accompagne
+        à Rennes pour valider la taille, l'ergonomie et la compatibilité avec votre
+        morphologie. Un conseil éclairé qui évite les mauvais achats et prépare votre
+        future étude posturale.
+      </p>
+    </div>
+  </div>
+
+  <section class="py-2 md:py-16">
+    <div class="container px-2 md:px-5 py-2 md:py-24 mx-auto">
+      <div>
+        <h2 class="text-xl md:text-4xl font-bold">
+          Deux formules pour vous aider à choisir
+        </h2>
+        <div
+          class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-0 md:mb-10 rounded-full"
+        >
+        </div>
+      </div>
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-2 py-10">
+        <Formulecomponent
+          baseline="Vérification rapide avant achat"
+          title="Sans pédalage"
+          description="Mesures statiques et conseils sur la taille et l'ergonomie du vélo envisagé. Idéal pour un avis rapide avant l'achat, sans test en conditions réelles."
+          price="25€"
+          time="15 minutes"
+          link="https://calendly.com/idpostur/nouveau-velo-sans-pedalage"
+          stack1="• Vélo (celui que vous envisagez)"
+          stack2="• Tenue non nécessaire"
+          stack3=""
+          stack4=""
+          stack5=""
+        />
+
+        <Formulecomponent
+          baseline="Test complet avant achat"
+          title="Avec pédalage"
+          description="Analyse de votre position sur le vélo en pédalant, validation de la taille et de l'ergonomie en conditions réelles avant de finaliser votre achat."
+          price="50€"
+          time="30 minutes"
+          link="https://calendly.com/idpostur/nouveau-velo-avec-pedalage"
+          stack1="• Vélo"
+          stack2="• Chaussures"
+          stack3="• Cuissard"
+          stack4="• Maillot"
+          stack5=""
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16">
+    <div class="container mx-auto px-2 md:px-5">
+      <div>
+        <h2 class="text-xl md:text-4xl font-bold">
+          Besoin d'une petite révision ou d'un réglage ponctuel ?
+        </h2>
+        <div class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-4 rounded-full">
+        </div>
+        <p class="block md:w-4xl">
+          Pour une vérification rapide, un micro-ajustement ou une question
+          technique, prenez un rendez-vous ponctuel de 15 ou 30 minutes.
+        </p>
+      </div>
+      <div class="grid gap-8 md:grid-cols-2 py-10">
+        <Formulecomponent
+          baseline="Intervention rapide"
+          title="RDV divers — 15 min"
+          description="Vérification rapide, conseil technique ou micro-réglage sans test en pédalage."
+          price="25€"
+          time="15 minutes"
+          link="https://calendly.com/idpostur/rendez-vous-divers-15-min"
+          stack1="• Vélo"
+          stack2=""
+          stack3=""
+          stack4=""
+          stack5=""
+        />
+        <Formulecomponent
+          baseline="Intervention étendue"
+          title="RDV divers — 30 min"
+          description="Révision ou réglage ponctuel avec test en pédalage pour valider la sensation en conditions réelles."
+          price="50€"
+          time="30 minutes"
+          link="https://calendly.com/idpostur/rendez-vous-divers-30-min"
+          stack1="• Vélo"
+          stack2="• Chaussures"
+          stack3="• Cuissard"
+          stack4="• Tenue complète"
+          stack5=""
+        />
+      </div>
+    </div>
+  </section>
+
+  <div class="w-full flex justify-center pb-12">
+    <a href="/" rel="nofollow">
+      <button
+        class="cursor-pointer inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-[#C00201] border border-[#C00201] bg-white hover:bg-[#C00201]/5 transition"
+      >
+        Revenir à l'accueil
+      </button>
+    </a>
+  </div>
+</BaseLayout>
