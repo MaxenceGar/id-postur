@@ -21,7 +21,10 @@ export default defineConfig({
 
   integrations: [
     sitemap({
-      filter: (page) => !NOINDEX_PATHS.some((path) => page.includes(path)),
+      filter: (page) => {
+        const pathname = new URL(page).pathname.replace(/\/$/, "");
+        return !NOINDEX_PATHS.includes(pathname);
+      },
     }),
   ],
 });

@@ -1,0 +1,709 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import "../styles/global.css";
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Combien de temps faut-il pour venir à ID Postur depuis Nantes ?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Comptez environ 1h15 de route depuis Nantes centre jusqu'à ID Postur, situé à La Mézière (35520) au nord-ouest de Rennes. Le trajet s'effectue principalement par la N137, une 2x2 voies gratuite. Un parking est disponible sur place.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Peut-on faire l'étude posturale sur une journée aller-retour depuis Nantes ?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Oui, c'est le cas le plus fréquent pour les cyclistes nantais. L'étude posturale complète dure 2 heures. Avec le trajet aller-retour, prévoyez environ 5h au total sur la journée. Nous adaptons les horaires (ouverture matinale ou fin de journée) pour faciliter votre venue.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Combien coûte une étude posturale à Rennes pour un cycliste nantais ?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "L'étude posturale complète coûte 250€ pour un vélo, 300€ pour deux vélos de la même discipline et 350€ pour deux vélos de disciplines différentes. Pour les moins de 15 ans, le tarif est de 120€. Aucun surcoût géographique pour les cyclistes venant de Nantes.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Pourquoi venir à ID Postur plutôt que chez un bike fitter à Nantes ?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "ID Postur est équipé de la technologie IDmatch BikeLab, un système d'analyse 3D de référence en Europe, encore rare dans l'ouest de la France. Romain Hardy, fondateur, est un ancien cycliste professionnel, ce qui apporte une expertise terrain unique. Le centre a réalisé plus de 800 études posturales et accompagné 25+ athlètes professionnels, avec 62 avis 5/5 sur Google.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Dois-je venir avec mon propre vélo depuis Nantes ?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Oui, l'étude posturale se fait obligatoirement sur votre vélo afin de garantir des réglages adaptés à votre morphologie, vos composants et votre pratique. Prévoyez également votre tenue complète (cuissard, maillot), vos chaussures, vos cales et les pièces spécifiques à votre vélo.",
+      },
+    },
+  ],
+};
+
+const datePublished = "2026-04-22";
+const dateModified = "2026-04-22";
+const dateHumanReadable = "22 avril 2026";
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Étude posturale cycliste IDmatch BikeLab",
+  serviceType: "Bike fitting",
+  provider: {
+    "@id": "https://id-postur.fr/#business",
+  },
+  areaServed: {
+    "@type": "City",
+    name: "Nantes",
+    sameAs: "https://fr.wikipedia.org/wiki/Nantes",
+  },
+  description:
+    "Étude posturale complète pour cyclistes nantais avec la technologie IDmatch BikeLab. Analyse 3D sans marqueurs, réglages précis du vélo et optimisation de la position.",
+  offers: {
+    "@type": "Offer",
+    price: "250",
+    priceCurrency: "EUR",
+    availability: "https://schema.org/InStock",
+  },
+  url: "https://id-postur.fr/etude-posturale-nantes",
+  datePublished,
+  dateModified,
+};
+
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": "https://id-postur.fr/#romain-hardy",
+  name: "Romain Hardy",
+  jobTitle:
+    "Fondateur d'ID Postur, expert en étude posturale cycliste",
+  description:
+    "Ancien cycliste professionnel, fondateur d'ID Postur (2023). Spécialiste de l'analyse posturale avec la technologie IDmatch BikeLab. 800+ études posturales réalisées, 25+ athlètes professionnels accompagnés.",
+  worksFor: {
+    "@id": "https://id-postur.fr/#business",
+  },
+  image: "https://id-postur.fr/images/romain-hardy.jpg",
+  knowsAbout: [
+    "Étude posturale cycliste",
+    "Bike fitting",
+    "IDmatch BikeLab",
+    "Cyclisme professionnel",
+    "Position sur le vélo",
+  ],
+};
+---
+
+<BaseLayout
+  title="Étude posturale à Nantes | Bike fitting IDmatch — ID Postur"
+  description="Étude posturale cycliste à Nantes : analyse 3D IDmatch BikeLab par Romain Hardy, ex-cycliste pro. 62 avis 5/5 Google. Route, VTT, Gravel, Triathlon. Dès 120€."
+  ogImage="/images/id-postur-img-1.webp"
+>
+  <script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(faqSchema)}
+  />
+  <script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(serviceSchema)}
+  />
+  <script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(personSchema)}
+  />
+
+  <!-- HERO -->
+  <div
+    class="w-full h-96 relative bg-[url('/images/id-postur-img-1.webp')] bg-cover bg-center flex items-center justify-center bg-black/50 bg-blend-overlay"
+  >
+    <div class="grid grid-cols-1 text-white px-4 max-w-5xl mx-auto">
+      <h1 class="text-3xl md:text-5xl font-bold text-center">
+        Étude posturale à Nantes
+      </h1>
+      <div
+        class="h-[3px] w-24 bg-id-postur-dark mx-auto mt-4 mb-6 rounded-full"
+      >
+      </div>
+      <p class="text-center max-w-3xl mx-auto text-base md:text-lg">
+        Cyclistes nantais, optimisez votre position sur le vélo avec <strong
+          >IDmatch BikeLab</strong
+        > — à 1h15 de Nantes. 800+ études réalisées, 62 avis 5/5 sur Google.
+      </p>
+    </div>
+  </div>
+
+  <!-- BYLINE -->
+  <div class="container mx-auto px-5 pt-6 max-w-5xl">
+    <p class="text-sm text-gray-500 text-center">
+      Par <strong class="text-gray-700">Romain Hardy</strong>, ex-cycliste
+      professionnel et fondateur d'ID Postur · <time datetime={dateModified}
+        >Mis à jour le {dateHumanReadable}</time
+      >
+    </p>
+  </div>
+
+  <!-- BADGE GOOGLE + CTA -->
+  <section class="container mx-auto px-5 py-12">
+    <div
+      class="flex flex-col md:flex-row items-center justify-center gap-6 text-center"
+    >
+      <a
+        href="https://www.google.com/maps?cid=9269044768465958318"
+        target="_blank"
+        rel="noopener"
+        aria-label="Voir nos 62 avis Google, note 5 sur 5"
+        class="group inline-flex items-center gap-3 bg-white border border-gray-200 pl-3 pr-4 py-2 shadow-sm hover:shadow-md hover:border-gray-300 transition-all"
+      >
+        <svg
+          class="w-5 h-5 shrink-0"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill="#4285F4"
+            d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+          ></path>
+          <path
+            fill="#34A853"
+            d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+          ></path>
+          <path
+            fill="#FBBC05"
+            d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+          ></path>
+          <path
+            fill="#EA4335"
+            d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+          ></path>
+        </svg>
+        <span class="flex items-center gap-1.5">
+          <span class="font-semibold text-gray-900">5,0</span>
+          <span
+            class="text-amber-400 text-base leading-none tracking-tighter"
+            aria-hidden="true">★★★★★</span
+          >
+        </span>
+        <span class="text-gray-300" aria-hidden="true">|</span>
+        <span class="text-sm text-gray-600">62 avis Google</span>
+      </a>
+
+      <a
+        href="https://calendly.com/idpostur/etude-posturale-complete"
+        rel="nofollow"
+        class="inline-block px-6 py-3 bg-id-postur-dark text-white font-semibold hover:opacity-90 transition duration-300"
+      >
+        Prendre rendez-vous
+      </a>
+    </div>
+  </section>
+
+  <!-- POURQUOI VENIR DE NANTES -->
+  <section class="container mx-auto px-5 py-16">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">
+        Pourquoi les cyclistes nantais viennent chez ID Postur ?
+      </h2>
+      <div class="h-[3px] w-24 bg-id-postur-dark mb-10 rounded-full"></div>
+
+      <p class="mb-10 leading-relaxed text-gray-700">
+        À Nantes, la pratique cycliste est riche : cyclotourisme le long de la
+        Loire, triathlon sur le bassin nantais, VTT dans la forêt du Gâvre,
+        sorties route vers le vignoble ou le littoral. Mais pour optimiser
+        véritablement votre position, peu de centres disposent aujourd'hui de la
+        technologie <strong>IDmatch BikeLab</strong>. ID Postur, à 1h15 de
+        Nantes, est l'un des rares en France à proposer cette analyse 3D de
+        référence — raison pour laquelle de nombreux cyclistes de la région
+        nantaise font le trajet.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="border-l-4 border-id-postur-dark pl-6">
+          <h3 class="text-xl font-semibold mb-3">Technologie IDmatch BikeLab</h3>
+          <p class="text-sm text-gray-700 leading-relaxed">
+            Analyse 3D sans marqueurs développée en Italie et utilisée par les
+            équipes World Tour. Mesure en temps réel de vos angles articulaires,
+            de vos appuis et de votre dynamique de pédalage. Encore rare dans
+            l'ouest de la France.
+          </p>
+        </div>
+        <div class="border-l-4 border-id-postur-dark pl-6">
+          <h3 class="text-xl font-semibold mb-3">
+            Un ex-cycliste professionnel
+          </h3>
+          <p class="text-sm text-gray-700 leading-relaxed">
+            Romain Hardy, fondateur d'ID Postur, a couru au plus haut niveau
+            professionnel. Cette expérience terrain nourrit chaque étude
+            posturale : il sait ce que ressent un cycliste fatigué à la 4ᵉ heure
+            d'une sortie ou sur un final de course.
+          </p>
+        </div>
+        <div class="border-l-4 border-id-postur-dark pl-6">
+          <h3 class="text-xl font-semibold mb-3">
+            62 avis 5/5 sur Google
+          </h3>
+          <p class="text-sm text-gray-700 leading-relaxed">
+            Une note maximale sur plus de 60 avis, signe d'une prestation
+            constante. Les cyclistes qui viennent de loin (Nantes, Saint-Malo,
+            Angers) mentionnent souvent que le trajet valait le déplacement.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRAJET DEPUIS NANTES -->
+  <section class="bg-gray-50 py-16">
+    <div class="container mx-auto px-5 max-w-5xl">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">
+        Venir à ID Postur depuis Nantes
+      </h2>
+      <div class="h-[3px] w-24 bg-id-postur-dark mb-10 rounded-full"></div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <div>
+          <h3 class="text-xl font-semibold mb-4">Le trajet en pratique</h3>
+          <ul class="space-y-3 text-gray-700 leading-relaxed">
+            <li>
+              <strong>Distance :</strong> environ 110 km depuis Nantes centre.
+            </li>
+            <li>
+              <strong>Durée :</strong> 1h15 à 1h30 selon le trafic.
+            </li>
+            <li>
+              <strong>Itinéraire :</strong> N137 (2x2 voies, gratuit) direction
+              Rennes, sortie La Mézière.
+            </li>
+            <li>
+              <strong>Adresse :</strong> 112 Route du Meuble, 35520 La Mézière
+              (au nord-ouest de Rennes).
+            </li>
+            <li>
+              <strong>Parking :</strong> disponible sur place, gratuit.
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold mb-4">
+            Organiser votre venue depuis Nantes
+          </h3>
+          <p class="text-gray-700 leading-relaxed mb-4">
+            Pour les cyclistes nantais, la majorité des études posturales se
+            font sur une journée aller-retour. Avec 2h d'étude sur place et 2x
+            1h15 de route, comptez environ 5h au total.
+          </p>
+          <p class="text-gray-700 leading-relaxed">
+            Nous adaptons les créneaux en début ou fin de journée pour éviter
+            les heures de pointe entre Nantes et Rennes. N'hésitez pas à nous
+            appeler au <a
+              href="tel:0607167323"
+              class="text-id-postur-dark font-semibold">06 07 16 73 23</a
+            > pour trouver ensemble le meilleur horaire.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CE QUE COMPREND L'ÉTUDE -->
+  <section class="container mx-auto px-5 py-16">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">
+        Ce que comprend votre étude posturale
+      </h2>
+      <div class="h-[3px] w-24 bg-id-postur-dark mb-10 rounded-full"></div>
+
+      <p class="mb-8 text-gray-700 leading-relaxed">
+        Une étude posturale complète chez ID Postur dure <strong
+          >2 heures</strong
+        > et couvre l'ensemble des paramètres qui influent sur votre position et
+        votre rendement.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-white border border-gray-200 p-6">
+          <h3 class="text-lg font-semibold mb-3">
+            1. Entretien et analyse de l'historique
+          </h3>
+          <p class="text-sm text-gray-700 leading-relaxed">
+            Discussion sur votre pratique, vos objectifs, vos éventuelles
+            douleurs, votre matériel actuel et l'historique de blessures. Étape
+            cruciale pour contextualiser les réglages.
+          </p>
+        </div>
+        <div class="bg-white border border-gray-200 p-6">
+          <h3 class="text-lg font-semibold mb-3">
+            2. Analyse biomécanique 3D
+          </h3>
+          <p class="text-sm text-gray-700 leading-relaxed">
+            Mesures IDmatch BikeLab en conditions dynamiques : flexions, appuis,
+            symétrie, puissance par jambe. Données précises et reproductibles.
+          </p>
+        </div>
+        <div class="bg-white border border-gray-200 p-6">
+          <h3 class="text-lg font-semibold mb-3">
+            3. Réglages et ajustements
+          </h3>
+          <p class="text-sm text-gray-700 leading-relaxed">
+            Hauteur et recul de selle, cockpit, cales, potence : nous ajustons
+            l'ensemble de votre vélo en direct, en validant chaque modification
+            sur les courbes de pédalage.
+          </p>
+        </div>
+        <div class="bg-white border border-gray-200 p-6">
+          <h3 class="text-lg font-semibold mb-3">
+            4. Synthèse et suivi
+          </h3>
+          <p class="text-sm text-gray-700 leading-relaxed">
+            Remise d'un compte-rendu avec toutes vos mesures. Possibilité de
+            revenir pour ajuster un nouveau vélo ou une nouvelle discipline —
+            tarif préférentiel pour les clients existants.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-10 text-center">
+        <a
+          href="/etudes-posturales"
+          class="inline-block text-id-postur-dark font-semibold underline hover:opacity-80"
+        >
+          Voir tous les détails de l'étude posturale →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- POUR QUELS CYCLISTES NANTAIS -->
+  <section class="bg-gray-50 py-16">
+    <div class="container mx-auto px-5 max-w-5xl">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">
+        Pour quels cyclistes de la région nantaise ?
+      </h2>
+      <div class="h-[3px] w-24 bg-id-postur-dark mb-10 rounded-full"></div>
+
+      <p class="mb-8 text-gray-700 leading-relaxed">
+        ID Postur accueille tous les profils de cyclistes — du pratiquant
+        occasionnel à l'athlète professionnel. Voici quelques cas concrets
+        rencontrés chez les cyclistes de la région nantaise :
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="flex gap-4">
+          <span class="text-2xl shrink-0">🚴</span>
+          <div>
+            <h3 class="font-semibold mb-1">Cyclistes route</h3>
+            <p class="text-sm text-gray-700">
+              Pour les sorties longues vers le vignoble, la côte ou les
+              cyclosportives. L'étude élimine les douleurs aux lombaires et aux
+              genoux sur les sorties de 4-5h.
+            </p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <span class="text-2xl shrink-0">🏁</span>
+          <div>
+            <h3 class="font-semibold mb-1">Triathlètes nantais</h3>
+            <p class="text-sm text-gray-700">
+              Position CLM / aérodynamique optimisée pour les épreuves
+              triathlon et Ironman. Gains en watts et en confort sur partie
+              vélo.
+            </p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <span class="text-2xl shrink-0">🌲</span>
+          <div>
+            <h3 class="font-semibold mb-1">VTTistes (forêt du Gâvre, Ancenis)</h3>
+            <p class="text-sm text-gray-700">
+              Réglage adapté aux positions dynamiques, montées techniques et
+              longues descentes. Précision sur la cale et la hauteur de selle.
+            </p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <span class="text-2xl shrink-0">🛣️</span>
+          <div>
+            <h3 class="font-semibold mb-1">Gravel & cyclotouristes Loire</h3>
+            <p class="text-sm text-gray-700">
+              Position hybride route/VTT pour les sorties au long cours. Confort
+              et rendement sur terrain mixte.
+            </p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <span class="text-2xl shrink-0">🎯</span>
+          <div>
+            <h3 class="font-semibold mb-1">Jeunes cyclistes en croissance</h3>
+            <p class="text-sm text-gray-700">
+              Tarif réduit (120€) pour les moins de 15 ans. Protocole adapté
+              aux morphologies en évolution.
+            </p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <span class="text-2xl shrink-0">🏆</span>
+          <div>
+            <h3 class="font-semibold mb-1">Compétiteurs et élites</h3>
+            <p class="text-sm text-gray-700">
+              25+ athlètes professionnels accompagnés. Réglages au dixième de
+              millimètre pour gagner en puissance et en endurance.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TARIFS -->
+  <section class="container mx-auto px-5 py-16">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">
+        Tarifs pour une étude posturale
+      </h2>
+      <div class="h-[3px] w-24 bg-id-postur-dark mb-10 rounded-full"></div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-white border-2 border-id-postur-dark p-6 text-center">
+          <h3 class="font-semibold mb-2">Étude complète</h3>
+          <p class="text-3xl font-bold text-id-postur-dark mb-2">250€</p>
+          <p class="text-sm text-gray-600">1 vélo · 2h</p>
+        </div>
+        <div class="bg-white border border-gray-200 p-6 text-center">
+          <h3 class="font-semibold mb-2">2 vélos — même discipline</h3>
+          <p class="text-3xl font-bold text-id-postur-dark mb-2">300€</p>
+          <p class="text-sm text-gray-600">2h15</p>
+        </div>
+        <div class="bg-white border border-gray-200 p-6 text-center">
+          <h3 class="font-semibold mb-2">2 vélos — disciplines différentes</h3>
+          <p class="text-3xl font-bold text-id-postur-dark mb-2">350€</p>
+          <p class="text-sm text-gray-600">3h</p>
+        </div>
+        <div class="bg-white border border-gray-200 p-6 text-center">
+          <h3 class="font-semibold mb-2">Jeune cycliste (-15 ans)</h3>
+          <p class="text-3xl font-bold text-id-postur-dark mb-2">120€</p>
+          <p class="text-sm text-gray-600">1h</p>
+        </div>
+      </div>
+
+      <div class="text-center mt-8">
+        <a
+          href="https://calendly.com/idpostur/etude-posturale-complete"
+          rel="nofollow"
+          class="inline-block px-8 py-3 bg-id-postur-dark text-white font-semibold hover:opacity-90 transition duration-300"
+        >
+          Réserver mon étude posturale
+        </a>
+        <p class="text-sm text-gray-600 mt-3">
+          Ou par téléphone au <a
+            href="tel:0607167323"
+            class="text-id-postur-dark font-semibold">06 07 16 73 23</a
+          >
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ NANTES -->
+  <section class="bg-gray-50 py-16">
+    <div class="container mx-auto px-5 max-w-4xl">
+      <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">
+        Questions fréquentes des cyclistes nantais
+      </h2>
+      <div
+        class="h-[3px] w-24 bg-id-postur-dark mx-auto mb-10 rounded-full"
+      >
+      </div>
+
+      <div class="space-y-6">
+        <details class="group bg-white border border-gray-200 p-6 transition">
+          <summary
+            class="flex items-center justify-between cursor-pointer list-none"
+          >
+            <h3 class="text-lg font-semibold">
+              Combien de temps faut-il pour venir à ID Postur depuis Nantes ?
+            </h3>
+            <span
+              class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
+              >+</span
+            >
+          </summary>
+          <p class="mt-4 text-gray-700 leading-relaxed">
+            Comptez environ <strong>1h15 de route</strong> depuis Nantes centre
+            jusqu'à ID Postur, situé à La Mézière (35520) au nord-ouest de
+            Rennes. Le trajet s'effectue principalement par la N137, une 2x2
+            voies gratuite. Un parking est disponible sur place.
+          </p>
+        </details>
+
+        <details class="group bg-white border border-gray-200 p-6 transition">
+          <summary
+            class="flex items-center justify-between cursor-pointer list-none"
+          >
+            <h3 class="text-lg font-semibold">
+              Peut-on faire l'étude posturale sur une journée aller-retour depuis
+              Nantes ?
+            </h3>
+            <span
+              class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
+              >+</span
+            >
+          </summary>
+          <p class="mt-4 text-gray-700 leading-relaxed">
+            Oui, c'est le cas le plus fréquent pour les cyclistes nantais.
+            L'étude posturale complète dure <strong>2 heures</strong>. Avec le
+            trajet aller-retour, prévoyez environ 5h au total sur la journée.
+            Nous adaptons les horaires (ouverture matinale ou fin de journée)
+            pour faciliter votre venue.
+          </p>
+        </details>
+
+        <details class="group bg-white border border-gray-200 p-6 transition">
+          <summary
+            class="flex items-center justify-between cursor-pointer list-none"
+          >
+            <h3 class="text-lg font-semibold">
+              Combien coûte une étude posturale à Rennes pour un cycliste nantais
+              ?
+            </h3>
+            <span
+              class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
+              >+</span
+            >
+          </summary>
+          <p class="mt-4 text-gray-700 leading-relaxed">
+            L'étude posturale complète coûte <strong>250€</strong> pour un
+            vélo, <strong>300€</strong> pour deux vélos de la même discipline et
+            <strong>350€</strong> pour deux vélos de disciplines différentes.
+            Pour les moins de 15 ans, le tarif est de <strong>120€</strong>.
+            Aucun surcoût géographique pour les cyclistes venant de Nantes.
+          </p>
+        </details>
+
+        <details class="group bg-white border border-gray-200 p-6 transition">
+          <summary
+            class="flex items-center justify-between cursor-pointer list-none"
+          >
+            <h3 class="text-lg font-semibold">
+              Pourquoi venir à ID Postur plutôt que chez un bike fitter à Nantes ?
+            </h3>
+            <span
+              class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
+              >+</span
+            >
+          </summary>
+          <p class="mt-4 text-gray-700 leading-relaxed">
+            ID Postur est équipé de la technologie <strong
+              >IDmatch BikeLab</strong
+            >, un système d'analyse 3D de référence en Europe, encore rare dans
+            l'ouest de la France. Romain Hardy, fondateur, est un ancien
+            cycliste professionnel, ce qui apporte une expertise terrain unique.
+            Le centre a réalisé plus de <strong>800 études posturales</strong>
+            et accompagné <strong>25+ athlètes professionnels</strong>, avec
+            <strong>62 avis 5/5</strong> sur Google.
+          </p>
+        </details>
+
+        <details class="group bg-white border border-gray-200 p-6 transition">
+          <summary
+            class="flex items-center justify-between cursor-pointer list-none"
+          >
+            <h3 class="text-lg font-semibold">
+              Dois-je venir avec mon propre vélo depuis Nantes ?
+            </h3>
+            <span
+              class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
+              >+</span
+            >
+          </summary>
+          <p class="mt-4 text-gray-700 leading-relaxed">
+            Oui, l'étude posturale se fait obligatoirement sur votre vélo afin
+            de garantir des réglages adaptés à votre morphologie, vos composants
+            et votre pratique. Prévoyez également votre tenue complète
+            (cuissard, maillot), vos chaussures, vos cales et les pièces
+            spécifiques à votre vélo.
+          </p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- À PROPOS DE L'EXPERT -->
+  <section class="bg-white py-16 border-t border-gray-100">
+    <div class="container mx-auto px-5 max-w-4xl">
+      <div class="flex flex-col md:flex-row items-center gap-8">
+        <img
+          src="/images/romain-hardy.jpg"
+          alt="Romain Hardy, ex-cycliste professionnel et fondateur d'ID Postur"
+          class="w-40 h-40 object-cover rounded-full shrink-0 shadow-md"
+          loading="lazy"
+        />
+        <div>
+          <h2 class="text-2xl md:text-3xl font-bold mb-3">
+            Par Romain Hardy, fondateur d'ID Postur
+          </h2>
+          <p class="text-gray-700 leading-relaxed mb-3">
+            <strong>Ancien cycliste professionnel</strong>, Romain Hardy a couru
+            plusieurs saisons au plus haut niveau avant de se reconvertir dans
+            l'étude posturale. Formé à la technologie <strong
+              >IDmatch BikeLab</strong
+            >, il a fondé ID Postur en 2023 à La Mézière, près de Rennes.
+          </p>
+          <p class="text-gray-700 leading-relaxed">
+            Plus de <strong>800 études posturales</strong> réalisées,
+            <strong>25+ athlètes professionnels</strong> accompagnés, et une
+            note de <strong>5/5 sur 62 avis Google</strong>. Son expérience
+            terrain de coureur pro nourrit chaque réglage : il sait ce que
+            ressent un cycliste à la 4ᵉ heure d'une sortie.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIENS INTERNES -->
+  <section class="container mx-auto px-5 py-16 max-w-5xl">
+    <h2 class="text-3xl md:text-4xl font-bold mb-4">Aller plus loin</h2>
+    <div class="h-[3px] w-24 bg-id-postur-dark mb-10 rounded-full"></div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <a
+        href="/etudes-posturales"
+        class="block p-6 border border-gray-200 hover:border-id-postur-dark transition"
+      >
+        <h3 class="font-semibold mb-2">Étude posturale détaillée</h3>
+        <p class="text-sm text-gray-700">
+          Découvrez toutes les formules et le déroulé complet.
+        </p>
+      </a>
+      <a
+        href="/cales"
+        class="block p-6 border border-gray-200 hover:border-id-postur-dark transition"
+      >
+        <h3 class="font-semibold mb-2">Réglage des cales</h3>
+        <p class="text-sm text-gray-700">
+          Positionnement précis des cales pour cyclistes déjà venus.
+        </p>
+      </a>
+      <a
+        href="/choix-nouveau-velo"
+        class="block p-6 border border-gray-200 hover:border-id-postur-dark transition"
+      >
+        <h3 class="font-semibold mb-2">Aide au choix d'un nouveau vélo</h3>
+        <p class="text-sm text-gray-700">
+          Avant l'achat, validez la taille et l'ergonomie de votre futur vélo.
+        </p>
+      </a>
+    </div>
+  </section>
+</BaseLayout>
