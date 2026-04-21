@@ -4,14 +4,18 @@ import "../styles/global.css";
 import Formulecomponent from "../components/formulecomponent.astro";
 ---
 
-<BaseLayout>
+<BaseLayout
+  title="Réglage nouveau vélo – Client ID Postur | Rennes"
+  description="Vous êtes déjà client ID Postur ? Réglons votre nouveau vélo rapidement grâce à vos mesures existantes. Offert pendant 6 mois après votre première étude."
+  noindex={true}
+>
   <div
     class="w-full h-96 relative bg-[url('/images/id-postur-img-1.webp')] bg-cover bg-center flex items-center justify-center bg-black/50 bg-blend-overlay"
   >
     <div class="grid grid-cols-1 text-white">
-      <h3 class="text-3xl md:text-4xl font-bold text-center">
+      <h1 class="text-3xl md:text-4xl font-bold text-center">
         Déjà client chez ID Postur ?
-      </h3>
+      </h1>
       <div
         class="h-[3px] w-24 bg-id-postur-dark mx-auto mt-4 mb-10 rounded-full"
       >

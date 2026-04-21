@@ -1,16 +1,57 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import "../styles/global.css";
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Combien de temps dure une étude posturale ?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Une étude posturale complète dure 2 heures, et 1h30 pour les moins de 15 ans. Si vous avez déjà réalisé une étude posturale, nous disposons déjà de vos mesures, ce qui nous permet de régler votre nouveau vélo en 30 minutes.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Quel est le prix d'une étude posturale à Rennes ?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "L'étude posturale complète à Rennes chez ID Postur coûte 250€ pour un vélo, 300€ pour deux vélos de la même discipline, 350€ pour deux vélos de disciplines différentes, et 120€ pour les moins de 15 ans.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Avec quel équipement dois-je venir ?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Le jour du rendez-vous, venez accompagné du vélo que vous souhaitez régler, de votre tenue complète ainsi que de votre paire de chaussures et de vos cales.",
+      },
+    },
+  ],
+};
 ---
 
-<BaseLayout>
+<script
+  is:inline
+  type="application/ld+json"
+  set:html={JSON.stringify(faqSchema)}
+/>
+
+<BaseLayout
+  title="Étude posturale vélo à Rennes – Analyse 3D | ID Postur"
+  description="Étude posturale complète pour cyclistes à Rennes : analyse 3D IDmatch, réglage précis du vélo pour gagner en confort et performance. Route, VTT, Gravel, Triathlon. À partir de 120€."
+  ogImage="/images/id-postur-img-1.webp"
+>
   <div
     class="w-full h-96 relative bg-[url('/images/id-postur-img-1.webp')] bg-cover bg-center flex items-center justify-center bg-black/50 bg-blend-overlay"
   >
     <div class="grid grid-cols-1 text-white">
-      <h3 class="text-3xl md:text-4xl font-bold text-center">
-        Nos offres pour le réglage de votre vélo
-      </h3>
+      <h1 class="text-3xl md:text-4xl font-bold text-center">
+        Étude posturale vélo à Rennes
+      </h1>
       <div
         class="h-[3px] w-24 bg-id-postur-dark mx-auto mt-4 mb-10 rounded-full"
       >
@@ -245,78 +286,78 @@ import "../styles/global.css";
       </div>
     </section>
   </section>
-</BaseLayout>
 
-<section class="relative px-6 overflow-hidden">
-  <div class="relative max-w-5xl mx-auto text-center">
-    <h2 id="faq" class="text-3xl md:text-4xl font-extrabold mb-4">
-      En savoir plus
-    </h2>
-    <div class="h-[3px] w-24 bg-id-postur-dark mx-auto mb-6"></div>
+  <section class="relative px-6 overflow-hidden">
+    <div class="relative max-w-5xl mx-auto text-center">
+      <h2 id="faq" class="text-3xl md:text-4xl font-extrabold mb-4">
+        En savoir plus
+      </h2>
+      <div class="h-[3px] w-24 bg-id-postur-dark mx-auto mb-6"></div>
 
-    <!-- Bloc FAQ -->
-    <div class="space-y-6 text-left">
-      <!-- Question 1 -->
-      <details class="group bg-white border border-gray-200 p-6 transition">
-        <summary
-          class="flex items-center justify-between cursor-pointer list-none"
-        >
-          <h3 class="text-lg font-semibold">
-            Combien de temps dure une étude posturale ?
-          </h3>
-          <span
-            class="text-[#F80000] transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
-            >+</span
+      <!-- Bloc FAQ -->
+      <div class="space-y-6 text-left">
+        <!-- Question 1 -->
+        <details class="group bg-white border border-gray-200 p-6 transition">
+          <summary
+            class="flex items-center justify-between cursor-pointer list-none"
           >
-        </summary>
-        <p class="mt-4 leading-relaxed">
-          Une étude posturale complète dure <strong>2 heures</strong>, et
-          <strong>1h30 pour les moins de 15 ans</strong>. Si vous avez déjà
-          réalisé une étude posturale, nous disposons déjà de vos mesures, ce
-          qui nous permet de régler votre nouveau vélo en
-          <strong>30 minutes</strong>.
-        </p>
-      </details>
+            <h3 class="text-lg font-semibold">
+              Combien de temps dure une étude posturale ?
+            </h3>
+            <span
+              class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
+              >+</span
+            >
+          </summary>
+          <p class="mt-4 leading-relaxed">
+            Une étude posturale complète dure <strong>2 heures</strong>, et
+            <strong>1h30 pour les moins de 15 ans</strong>. Si vous avez déjà
+            réalisé une étude posturale, nous disposons déjà de vos mesures, ce
+            qui nous permet de régler votre nouveau vélo en
+            <strong>30 minutes</strong>.
+          </p>
+        </details>
 
-      <!-- Question 2 -->
-      <details class="group bg-white border border-gray-200 p-6 transition">
-        <summary
-          class="flex items-center justify-between cursor-pointer list-none"
-        >
-          <h3 class="text-lg font-semibold">
-            Quelle est le prix d'une étude posturale à Rennes ?
-          </h3>
-          <span
-            class="text-[#F80000] transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
-            >+</span
+        <!-- Question 2 -->
+        <details class="group bg-white border border-gray-200 p-6 transition">
+          <summary
+            class="flex items-center justify-between cursor-pointer list-none"
           >
-        </summary>
-        <p>
-          Le jour du rendez-vous, venez avec le vélo que vous souhaitez régler,
-          votre <strong>tenue complète</strong>, ainsi que vos
-          <strong>chaussures</strong> et vos <strong>cales</strong>.
-        </p>
-      </details>
+            <h3 class="text-lg font-semibold">
+              Quelle est le prix d'une étude posturale à Rennes ?
+            </h3>
+            <span
+              class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
+              >+</span
+            >
+          </summary>
+          <p>
+            Le jour du rendez-vous, venez avec le vélo que vous souhaitez
+            régler, votre <strong>tenue complète</strong>, ainsi que vos
+            <strong>chaussures</strong> et vos <strong>cales</strong>.
+          </p>
+        </details>
 
-      <!-- Question 3 -->
-      <details class="group bg-white border border-gray-200 p-6 transition">
-        <summary
-          class="flex items-center justify-between cursor-pointer list-none"
-        >
-          <h3 class="text-lg font-semibold">
-            Avec quel équipement dois-je venir ?
-          </h3>
-          <span
-            class="text-[#F80000] transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
-            >+</span
+        <!-- Question 3 -->
+        <details class="group bg-white border border-gray-200 p-6 transition">
+          <summary
+            class="flex items-center justify-between cursor-pointer list-none"
           >
-        </summary>
-        <p class="mt-4 leading-relaxed">
-          Le jour du rendez-vous, venez accompagné du vélo que vous souhaitez
-          régler, de votre tenue complète ainsi que de votre paire de chaussures
-          et de vos cales.
-        </p>
-      </details>
+            <h3 class="text-lg font-semibold">
+              Avec quel équipement dois-je venir ?
+            </h3>
+            <span
+              class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
+              >+</span
+            >
+          </summary>
+          <p class="mt-4 leading-relaxed">
+            Le jour du rendez-vous, venez accompagné du vélo que vous souhaitez
+            régler, de votre tenue complète ainsi que de votre paire de
+            chaussures et de vos cales.
+          </p>
+        </details>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+</BaseLayout>

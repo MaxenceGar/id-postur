@@ -1,6 +1,43 @@
 ---
 import "../styles/global.css";
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Combien de temps dure une étude posturale ?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Une étude posturale complète dure 2 heures. Le réglage de vos cales dure 30 minutes.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Dois-je venir avec mon propre vélo ?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Oui, l'étude est effectuée sur votre vélo pour garantir des réglages adaptés à votre morphologie, vos composants et votre pratique (route, VTT, triathlon).",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Puis-je offrir une séance à un proche ?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Absolument. ID Postur propose des cartes cadeaux personnalisées. Contactez-nous sur Instagram ou directement à ID Postur, 112 route du Meuble, La Mézière.",
+      },
+    },
+  ],
+};
 ---
+
+<script
+  is:inline
+  type="application/ld+json"
+  set:html={JSON.stringify(faqSchema)}
+/>
 
 <section class="relative py-28 px-6 overflow-hidden">
   <div class="relative max-w-5xl mx-auto text-center">
@@ -20,7 +57,7 @@ import "../styles/global.css";
             Combien de temps dure une étude posturale ?
           </h3>
           <span
-            class="text-[#F80000] transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
+            class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
             >+</span
           >
         </summary>
@@ -39,7 +76,7 @@ import "../styles/global.css";
             Dois-je venir avec mon propre vélo ?
           </h3>
           <span
-            class="text-[#F80000] transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
+            class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
             >+</span
           >
         </summary>
@@ -59,7 +96,7 @@ import "../styles/global.css";
             Puis-je offrir une séance à un proche ?
           </h3>
           <span
-            class="text-[#F80000] transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
+            class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
             >+</span
           >
         </summary>

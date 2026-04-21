@@ -1,56 +1,62 @@
 ---
 import "../styles/global.css";
-import { motion } from "framer-motion";
 ---
 
 <!-- AVANTAGES / IMPACT -->
 <section id="avantages" class="relative py-28 px-6 overflow-hidden">
   <div class="relative max-w-6xl mx-auto text-center">
     <!-- Grille -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10" data-chiffres>
       <!-- Carte 1 -->
-      <motion.div
-        className="group p-8 flex flex-col items-center relative overflow-hidden"
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5, delay: 0.1 }}
-        client:visible
+      <div
+        class="chiffre-card group p-8 flex flex-col items-center relative overflow-hidden"
       >
-        <div class="absolute inset-0 bg-[#F80000] opacity-0 transition"></div>
+        <div class="absolute inset-0 bg-id-postur opacity-0 transition"></div>
         <div class="text-5xl font-bold text-id-postur-dark mb-2">+800</div>
         <p class="text-gray-700 font-medium">Études posturales réalisées</p>
         <span class="mt-4 w-12 h-[3px] bg-id-postur-dark rounded-full"></span>
-      </motion.div>
+      </div>
 
       <!-- Carte 2 -->
-      <motion.div
-        className="group p-8 flex flex-col items-center relative overflow-hidden"
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-        client:visible
+      <div
+        class="chiffre-card group p-8 flex flex-col items-center relative overflow-hidden"
       >
-        <div class="absolute inset-0 bg-[#F80000] opacity-0 transition"></div>
+        <div class="absolute inset-0 bg-id-postur opacity-0 transition"></div>
         <div class="text-5xl font-bold text-id-postur-dark mb-2">+25</div>
         <p class="text-gray-700 font-medium">
           Athlètes professionnels accompagnés
         </p>
         <span class="mt-4 w-12 h-[3px] bg-id-postur-dark rounded-full"></span>
-      </motion.div>
+      </div>
 
       <!-- Carte 3 -->
-      <motion.div
-        className="group p-8 flex flex-col items-center relative overflow-hidden"
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5, delay: 0.3 }}
-        client:visible
+      <div
+        class="chiffre-card group p-8 flex flex-col items-center relative overflow-hidden"
       >
-        <div class="absolute inset-0 bg-[#F80000] opacity-0 transition"></div>
+        <div class="absolute inset-0 bg-id-postur opacity-0 transition"></div>
         <div class="text-5xl font-bold text-id-postur-dark mb-2">+3 ans</div>
-        <p class="text-gray-700 font-medium">d’expérience terrain et analyse</p>
+        <p class="text-gray-700 font-medium">d'expérience terrain et analyse</p>
         <span class="mt-4 w-12 h-[3px] bg-id-postur-dark"></span>
-      </motion.div>
+      </div>
     </div>
   </div>
 </section>
+
+<script>
+  const grid = document.querySelector<HTMLElement>("[data-chiffres]");
+  if (grid) {
+    const cards = grid.querySelectorAll<HTMLElement>(".chiffre-card");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            cards.forEach((card) => card.classList.add("is-visible"));
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.2 },
+    );
+    observer.observe(grid);
+  }
+</script>

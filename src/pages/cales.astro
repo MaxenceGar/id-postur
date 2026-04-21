@@ -2,16 +2,57 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import "../styles/global.css";
 import Formulecomponent from "../components/formulecomponent.astro";
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Combien de temps dure le réglage des cales ?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "La durée du réglage des cales est de 30 minutes.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Quel est le prix pour le réglage des cales ?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Le prix pour le réglage de vos cales est de 50€. Si vous êtes déjà venu faire régler vos cales, le prix est de 20€.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Avec quel équipement dois-je venir ?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Le jour du rendez-vous, venez avec votre vélo, votre paire de chaussures, vos cales à régler ainsi que votre tenue de vélo.",
+      },
+    },
+  ],
+};
 ---
 
-<BaseLayout>
+<script
+  is:inline
+  type="application/ld+json"
+  set:html={JSON.stringify(faqSchema)}
+/>
+
+<BaseLayout
+  title="Réglage des cales vélo à Rennes – IDmatch Cleat Fit | ID Postur"
+  description="Réglage professionnel des cales et chaussures de vélo à Rennes avec la technologie IDmatch Cleat Fit. Positionnement précis pour Route, VTT, Gravel, Triathlon. À partir de 20€."
+  ogImage="/images/id-postur-cales.webp"
+>
   <div
     class="w-full h-96 relative bg-[url('/images/id-postur-cales.webp')] bg-cover bg-center flex items-center justify-center bg-black/50 bg-blend-overlay"
   >
     <div class="grid grid-cols-1 text-white">
-      <h3 class="text-3xl md:text-4xl font-bold text-center">
-        Nos offres pour le réglage de vos cales
-      </h3>
+      <h1 class="text-3xl md:text-4xl font-bold text-center">
+        Réglage des cales vélo à Rennes
+      </h1>
       <div
         class="h-[3px] w-24 bg-id-postur-dark mx-auto mt-4 mb-10 rounded-full"
       >
