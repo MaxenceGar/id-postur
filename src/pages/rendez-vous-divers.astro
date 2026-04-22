@@ -5,26 +5,26 @@ import Formulecomponent from "../components/formulecomponent.astro";
 ---
 
 <BaseLayout
-  title="Aide au choix d'un nouveau vélo à Rennes | ID Postur"
-  description="Hésitation avant d'acheter un nouveau vélo ? ID Postur vous aide à Rennes à choisir la taille et l'ergonomie idéales avant l'achat. RDV 15 ou 30 min, dès 25€."
-  ogImage="/images/id-postur-img-1.webp"
+  title="Rendez-vous divers à Rennes – Révision et réglage vélo | ID Postur"
+  description="Besoin d'une révision rapide, d'un micro-réglage ou d'un conseil technique ponctuel sur votre vélo ? ID Postur propose 3 formules à Rennes : 15 min (25€), 30 min (50€) ou 1h (100€)."
+  ogImage="/images/id-postur-interieur.jpg"
 >
   <div
-    class="w-full h-96 relative bg-[url('/images/id-postur-img-1.webp')] bg-cover bg-center flex items-center justify-center bg-black/50 bg-blend-overlay"
+    class="w-full h-96 relative bg-[url('/images/id-postur-interieur.jpg')] bg-cover bg-center flex items-center justify-center bg-black/50 bg-blend-overlay"
   >
     <div class="grid grid-cols-1 text-white px-4">
       <h1 class="text-3xl md:text-4xl font-bold text-center">
-        Choisissez votre nouveau vélo en toute confiance
+        Rendez-vous divers à Rennes
       </h1>
       <div
         class="h-[3px] w-24 bg-id-postur-dark mx-auto mt-4 mb-10 rounded-full"
       >
       </div>
       <p class="text-center max-w-4xl mx-auto pb-4">
-        Avant d'investir dans un nouveau vélo, <strong>ID Postur</strong> vous accompagne
-        à Rennes pour valider la taille, l'ergonomie et la compatibilité avec votre
-        morphologie. Un conseil éclairé qui évite les mauvais achats et prépare votre
-        future étude posturale.
+        Besoin d'une <strong>vérification rapide</strong>, d'un <strong
+          >micro-réglage</strong
+        > ou d'un <strong>conseil technique</strong> ponctuel ? Choisissez la durée
+        qui correspond à votre besoin.
       </p>
     </div>
   </div>
@@ -33,57 +33,12 @@ import Formulecomponent from "../components/formulecomponent.astro";
     <div class="container px-2 md:px-5 py-2 md:py-24 mx-auto">
       <div>
         <h2 class="text-xl md:text-4xl font-bold">
-          Deux formules pour vous aider à choisir
+          Trois formules pour répondre à votre besoin
         </h2>
         <div
           class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-0 md:mb-10 rounded-full"
         >
         </div>
-      </div>
-      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-2 py-10">
-        <Formulecomponent
-          baseline="Vérification rapide avant achat"
-          title="Sans pédalage"
-          description="Mesures statiques et conseils sur la taille et l'ergonomie du vélo envisagé. Idéal pour un avis rapide avant l'achat, sans test en conditions réelles."
-          price="25€"
-          time="15 minutes"
-          link="https://calendly.com/idpostur/nouveau-velo-sans-pedalage"
-          stack1="• Vélo (celui que vous envisagez)"
-          stack2="• Tenue non nécessaire"
-          stack3=""
-          stack4=""
-          stack5=""
-        />
-
-        <Formulecomponent
-          baseline="Test complet avant achat"
-          title="Avec pédalage"
-          description="Analyse de votre position sur le vélo en pédalant, validation de la taille et de l'ergonomie en conditions réelles avant de finaliser votre achat."
-          price="50€"
-          time="30 minutes"
-          link="https://calendly.com/idpostur/nouveau-velo-avec-pedalage"
-          stack1="• Vélo"
-          stack2="• Chaussures"
-          stack3="• Cuissard"
-          stack4="• Maillot"
-          stack5=""
-        />
-      </div>
-    </div>
-  </section>
-
-  <section class="py-16">
-    <div class="container mx-auto px-2 md:px-5">
-      <div>
-        <h2 class="text-xl md:text-4xl font-bold">
-          Besoin d'une petite révision ou d'un réglage ponctuel ?
-        </h2>
-        <div class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-4 rounded-full">
-        </div>
-        <p class="block md:w-4xl">
-          Pour une vérification rapide, un micro-ajustement ou une question
-          technique, prenez un rendez-vous ponctuel de 15 min, 30 min ou 1h.
-        </p>
       </div>
       <div class="grid gap-8 md:grid-cols-3 py-10">
         <Formulecomponent
