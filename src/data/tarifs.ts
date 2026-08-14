@@ -32,14 +32,6 @@ export interface Prestation {
   disciplines: string;
 }
 
-/**
- * TODO — Seul l'événement Calendly « moins de 15 ans » reste à créer.
- * En attendant, cette offre pointe vers la page Calendly générale : le
- * visiteur choisit lui-même, aucun lien ne renvoie vers une ancienne
- * formule au mauvais tarif.
- */
-const CALENDLY_A_DEFINIR = "https://calendly.com/idpostur";
-
 /** Équipement commun à toutes les études posturales. */
 const EQUIPEMENT_ETUDE = [
   "• Votre vélo",
@@ -68,7 +60,8 @@ const DISCIPLINES_2D = "Route, VTT et gravel";
  *
  * ⚠ Formulation à ne pas modifier sans réfléchir : on affirme uniquement que
  * ces équipes utilisent l'analyse 3D pour leurs études posturales. Écrire
- * qu'elles travaillent avec ID Postur, ou qu'elles utilisent IDmatch BikeLab,
+ * qu'elles travaillent avec ID Postur, ou qu'elles utilisent le même
+ * équipement STT,
  * serait une revendication que rien ne permet d'appuyer.
  */
 export const EQUIPES_3D = [
@@ -87,7 +80,7 @@ export const ETUDES_POSTURALES: Prestation[] = [
     baseline: "L'analyse la plus complète",
     title: "Étude posturale 3D",
     description:
-      "Analyse posturale complète en 3D avec la technologie IDmatch BikeLab. Toutes disciplines, y compris chrono et triathlon.",
+      "Analyse posturale complète par capture optique 3D avec la technologie STT 3DMA. Toutes disciplines, y compris chrono et triathlon.",
     price: 300,
     duration: "2h30",
     durationISO: "PT2H30M",
@@ -102,7 +95,7 @@ export const ETUDES_POSTURALES: Prestation[] = [
     baseline: "Format plus court",
     title: "Étude posturale 2D",
     description:
-      "Analyse posturale en 2D et réglage de votre position. Route, VTT et gravel.",
+      "Analyse posturale par vidéo 2D avec la technologie STT 2DMA et réglage de votre position. Route, VTT et gravel.",
     price: 180,
     duration: "1h30",
     durationISO: "PT1H30M",
@@ -152,7 +145,7 @@ export const PRESTATIONS_COURTES: Prestation[] = [
     baseline: "Réglage de précision",
     title: "Réglage des cales",
     description:
-      "Positionnement de vos cales au millimètre avec IDmatch Cleat Fit, pour un pédalage aligné et sans douleur.",
+      "Positionnement de vos cales au millimètre, pour un pédalage aligné et sans douleur.",
     price: 30,
     duration: "20 minutes",
     durationISO: "PT20M",
@@ -224,7 +217,7 @@ export const OFFRES_PARTICULIERES: Prestation[] = [
     disciplines: DISCIPLINES_2D,
     equipment: EQUIPEMENT_ETUDE,
     note: RESTRICTION_2D,
-    link: CALENDLY_A_DEFINIR,
+    link: "https://calendly.com/idpostur/etude-posturale-complete-moins-de-15-ans",
     page: "/etudes-posturales",
   },
 ];
@@ -289,6 +282,16 @@ export interface LigneComparatif {
 
 export const COMPARATIF_3D_2D: LigneComparatif[] = [
   {
+    critere: "Technologie",
+    troisD: "Capture optique 3D par marqueurs (STT 3DMA)",
+    deuxD: "Analyse vidéo haute résolution (STT 2DMA)",
+  },
+  {
+    critere: "Ce qui est mesuré",
+    troisD: "Le cycliste et le vélo, dans les trois plans du mouvement",
+    deuxD: "Le cycliste, en vue latérale",
+  },
+  {
     critere: "Durée du rendez-vous",
     troisD: "2h30",
     deuxD: "1h30",
@@ -334,18 +337,26 @@ export interface FormatEtude {
 }
 
 /**
- * TODO — « Choisissez la 3D si… » / « Choisissez la 2D si… »
+ * « Choisissez la 3D si… » / « Choisissez la 2D si… »
  *
- * À remplir dès que la différence technique entre les deux analyses est
- * connue (ce que mesure chaque système, dans quels cas l'une est préférable).
- * Tant que ces deux tableaux sont vides, la section « Comment choisir »
- * n'est pas rendue : sur une page dont c'est tout l'objet, une réponse
- * approximative vaut moins que pas de réponse.
+ * Faits issus de la documentation STT Systems (Motio 3DMA / 2DMA) :
+ * - 3DMA : capture optique 3D par marqueurs réfléchissants, multi-caméras,
+ *   erreur de suivi < 1 mm, analyse dans les trois plans, mesure le cycliste
+ *   et les paramètres du vélo.
+ * - 2DMA : analyse vidéo 1080p dans un plan (vue latérale), plus de 50
+ *   mesures automatiques de bike fitting, références par discipline ;
+ *   mesure le cycliste uniquement.
  */
 export const POUR_QUI_3D: string[] = [
   "Vous roulez sur un vélo de chrono ou de triathlon : c'est le seul format qui prend ces positions en charge.",
+  "Vous voulez une analyse dans les trois plans : asymétries gauche/droite, genoux qui rentrent, bascule du bassin — des mouvements invisibles sur une vue 2D.",
+  "Vous cherchez la précision maximale : capture par marqueurs avec moins d'un millimètre d'erreur, position du cycliste et paramètres du vélo mesurés en 3D.",
 ];
-export const POUR_QUI_2D: string[] = [];
+export const POUR_QUI_2D: string[] = [
+  "Vous roulez route, VTT ou gravel et cherchez un réglage complet de votre position en vue latérale.",
+  "Vous voulez l'essentiel du bike fitting — plus de 50 mesures automatiques, avec des références par discipline — sur un format plus court et plus abordable.",
+  "C'est votre première étude posturale et vous préférez commencer par le format le plus accessible.",
+];
 
 export const FORMATS_ETUDE: FormatEtude[] = [
   {
@@ -353,9 +364,9 @@ export const FORMATS_ETUDE: FormatEtude[] = [
     titre: "L'étude posturale 3D",
     accroche: "300€ · 2h30 · toutes disciplines, chrono et triathlon compris",
     paragraphes: [
-      "L'étude posturale 3D est le format le plus complet proposé par ID Postur. Elle s'appuie sur la technologie IDmatch BikeLab et se déroule sur une séance de 2h30, entièrement consacrée à votre position sur le vélo.",
-      "C'est aussi le seul format ouvert aux vélos de chrono et de triathlon : ces positions très spécifiques ne peuvent pas être analysées en 2D.",
-      "Le rendez-vous se fait sur votre propre vélo, avec votre tenue complète, vos chaussures et vos cales. Seule contrainte : évitez les vêtements réfléchissants, qui perturbent la captation.",
+      "L'étude posturale 3D est le format le plus complet proposé par ID Postur. Elle s'appuie sur la technologie de capture optique STT 3DMA : des marqueurs réfléchissants placés sur le corps, suivis par plusieurs caméras avec une précision inférieure au millimètre, et se déroule sur une séance de 2h30, entièrement consacrée à votre position sur le vélo.",
+      "L'analyse couvre les trois plans du mouvement : elle révèle aussi les asymétries gauche/droite et les désalignements latéraux — genoux, bassin — invisibles sur une vue 2D. C'est aussi le seul format ouvert aux vélos de chrono et de triathlon : ces positions très spécifiques ne peuvent pas être analysées en 2D.",
+      "Le rendez-vous se fait sur votre propre vélo, avec votre tenue complète, vos chaussures et vos cales. Seule contrainte : évitez les vêtements réfléchissants, qui perturbent la captation des marqueurs.",
     ],
     image: "/images/id-postur-img-1.webp",
     imageAlt:
@@ -368,7 +379,7 @@ export const FORMATS_ETUDE: FormatEtude[] = [
     titre: "L'étude posturale 2D",
     accroche: "180€ · 1h30 · route, VTT et gravel",
     paragraphes: [
-      "L'étude posturale 2D est un format plus court, sur une séance d'1h30. Elle s'adresse aux cyclistes route, VTT et gravel, et se déroule elle aussi sur votre propre vélo.",
+      "L'étude posturale 2D est un format plus court, sur une séance d'1h30. Elle s'appuie sur la technologie d'analyse vidéo STT 2DMA : une captation haute résolution de votre pédalage en vue latérale, avec plus de 50 mesures automatiques de bike fitting et des références par discipline. Elle s'adresse aux cyclistes route, VTT et gravel, et se déroule elle aussi sur votre propre vélo.",
       "Les prérequis sont identiques : votre vélo, votre tenue complète, vos chaussures et vos cales, sans contrainte sur les vêtements réfléchissants. En revanche, les vélos de chrono et de triathlon ne peuvent pas être pris en charge dans ce format : leur position demande l'analyse 3D.",
     ],
     image: "/images/id-postur-img-2.webp",

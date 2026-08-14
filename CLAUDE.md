@@ -7,7 +7,7 @@ Fiche de référence pour travailler vite et juste sur ce site. **Priorité : SE
 ## 1. Activité & contexte business
 
 - **Activité** : Étude posturale et bike fitting pour cyclistes (route, VTT, gravel, triathlon).
-- **Technologie** : IDmatch BikeLab + IDmatch Cleat Fit.
+- **Technologie** : STT Systems Motio — 3DMA (capture optique 3D par marqueurs réfléchissants, précision < 1 mm, mesure cycliste + vélo dans les 3 plans) et 2DMA (analyse vidéo 1080p en vue latérale, 50+ mesures automatiques, mesure le cycliste uniquement). ⚠ IDmatch (BikeLab, Cleat Fit) n'est **plus utilisé** — ne plus le mentionner.
 - **Fondateur** : Romain Hardy (ex-cycliste pro), créé en 2023.
 - **Chiffres clés** : 800+ études, 25+ pros, 3+ ans d'expérience.
 - **Localisation** : 112 Route du Meuble, 35520 La Mézière (près de Rennes), Bretagne, France.
@@ -130,7 +130,7 @@ npm run preview   # preview prod localement
 
 ### 4.4 Ciblage mots-clés (état actuel)
 - **Principaux** : `étude posturale`, `Rennes`, `cycliste`, `vélo`, `réglage cales`, `bike fitting`.
-- **Secondaires** : `route`, `VTT`, `gravel`, `triathlon`, `confort`, `performance`, `IDmatch`, `douleurs vélo`, `position cycliste`.
+- **Secondaires** : `route`, `VTT`, `gravel`, `triathlon`, `confort`, `performance`, `STT`, `capture de mouvement 3D`, `douleurs vélo`, `position cycliste`.
 
 ### 4.5 Checklist rapide avant chaque nouvelle page
 - [ ] H1 unique, ciblé mot-clé

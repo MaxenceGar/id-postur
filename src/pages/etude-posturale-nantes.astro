@@ -33,7 +33,7 @@ const faqItems = [
     question:
       "Pourquoi venir à ID Postur plutôt que chez un bike fitter à Nantes ?",
     answer:
-      "ID Postur est équipé de la technologie IDmatch BikeLab, un système d'analyse de référence en Europe, encore rare dans l'ouest de la France. Romain Hardy, fondateur, est un ancien cycliste professionnel, ce qui apporte une expertise terrain unique. Le centre a réalisé plus de 800 études posturales et accompagné 25+ athlètes professionnels, avec 62 avis 5/5 sur Google.",
+      "ID Postur est équipé de la technologie de capture de mouvement STT (3DMA), un système d'analyse de référence en Europe, encore rare dans l'ouest de la France. Romain Hardy, fondateur, est un ancien cycliste professionnel, ce qui apporte une expertise terrain unique. Le centre a réalisé plus de 800 études posturales et accompagné 25+ athlètes professionnels, avec 62 avis 5/5 sur Google.",
   },
   {
     question: "Dois-je venir avec mon propre vélo depuis Nantes ?",
@@ -62,7 +62,7 @@ const dateHumanReadable = "11 août 2026";
 const serviceSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
-  name: "Étude posturale cycliste IDmatch BikeLab",
+  name: "Étude posturale cycliste STT 3DMA",
   serviceType: "Bike fitting",
   provider: {
     "@id": "https://id-postur.fr/#business",
@@ -73,7 +73,7 @@ const serviceSchema = {
     sameAs: "https://fr.wikipedia.org/wiki/Nantes",
   },
   description:
-    "Étude posturale pour cyclistes nantais avec la technologie IDmatch BikeLab. Analyse 3D ou 2D, réglages précis du vélo et optimisation de la position.",
+    "Étude posturale pour cyclistes nantais avec la technologie de capture de mouvement STT. Analyse 3D ou 2D, réglages précis du vélo et optimisation de la position.",
   offers: ETUDES_POSTURALES.map((prestation) => ({
     "@type": "Offer",
     name: prestation.title,
@@ -95,7 +95,7 @@ const personSchema = {
   jobTitle:
     "Fondateur d'ID Postur, expert en étude posturale cycliste",
   description:
-    "Ancien cycliste professionnel, fondateur d'ID Postur (2023). Spécialiste de l'analyse posturale avec la technologie IDmatch BikeLab. 800+ études posturales réalisées, 25+ athlètes professionnels accompagnés.",
+    "Ancien cycliste professionnel, fondateur d'ID Postur (2023). Spécialiste de l'analyse posturale avec la technologie de capture de mouvement STT. 800+ études posturales réalisées, 25+ athlètes professionnels accompagnés.",
   worksFor: {
     "@id": "https://id-postur.fr/#business",
   },
@@ -103,7 +103,7 @@ const personSchema = {
   knowsAbout: [
     "Étude posturale cycliste",
     "Bike fitting",
-    "IDmatch BikeLab",
+    "STT 3DMA",
     "Cyclisme professionnel",
     "Position sur le vélo",
   ],
@@ -111,8 +111,8 @@ const personSchema = {
 ---
 
 <BaseLayout
-  title="Étude posturale à Nantes | Bike fitting IDmatch — ID Postur"
-  description={`Étude posturale cycliste à Nantes : analyse IDmatch BikeLab par Romain Hardy, ex-cycliste pro. 62 avis 5/5 Google. Route, VTT, gravel, chrono. 3D ${formatPrix(troisD.price)} ou 2D ${formatPrix(deuxD.price)}.`}
+  title="Étude posturale à Nantes | Bike fitting 3D — ID Postur"
+  description={`Étude posturale cycliste à Nantes : capture de mouvement 3D STT par Romain Hardy, ex-cycliste pro. 62 avis 5/5 Google. Route, VTT, gravel, chrono. 3D ${formatPrix(troisD.price)} ou 2D ${formatPrix(deuxD.price)}.`}
   ogImage="/images/id-postur-img-1.webp"
 >
   <script
@@ -144,8 +144,8 @@ const personSchema = {
       >
       </div>
       <p class="text-center max-w-3xl mx-auto text-base md:text-lg">
-        Cyclistes nantais, optimisez votre position sur le vélo avec <strong
-          >IDmatch BikeLab</strong
+        Cyclistes nantais, optimisez votre position sur le vélo avec la capture
+        de mouvement <strong>STT 3DMA</strong
         > — à 1h15 de Nantes. 800+ études réalisées, 62 avis 5/5 sur Google.
       </p>
     </div>
@@ -229,20 +229,22 @@ const personSchema = {
         Loire, triathlon sur le bassin nantais, VTT dans la forêt du Gâvre,
         sorties route vers le vignoble ou le littoral. Mais pour optimiser
         véritablement votre position, peu de centres disposent aujourd'hui de la
-        technologie <strong>IDmatch BikeLab</strong>. ID Postur, à 1h15 de
-        Nantes, est l'un des rares en France à proposer cette analyse 3D de
-        référence — raison pour laquelle de nombreux cyclistes de la région
-        nantaise font le trajet.
+        capture de mouvement 3D <strong>STT 3DMA</strong>. ID Postur, à 1h15 de
+        Nantes, est l'un des rares dans l'ouest de la France à proposer cette
+        analyse 3D de référence — raison pour laquelle de nombreux cyclistes de
+        la région nantaise font le trajet.
       </p>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div class="border-l-4 border-id-postur-dark pl-6">
-          <h3 class="text-xl font-semibold mb-3">Technologie IDmatch BikeLab</h3>
+          <h3 class="text-xl font-semibold mb-3">Technologie STT 3DMA</h3>
           <p class="text-sm text-gray-700 leading-relaxed">
-            Analyse 3D sans marqueurs développée en Italie et utilisée par les
-            équipes World Tour. Mesure en temps réel de vos angles articulaires,
-            de vos appuis et de votre dynamique de pédalage. Encore rare dans
-            l'ouest de la France.
+            Capture optique 3D par marqueurs, avec une précision inférieure au
+            millimètre — la technologie d'analyse utilisée par de grandes
+            équipes du World Tour. Mesure en temps réel de vos angles
+            articulaires, de vos appuis et de votre dynamique de pédalage,
+            dans les trois plans du mouvement. Encore rare dans l'ouest de la
+            France.
           </p>
         </div>
         <div class="border-l-4 border-id-postur-dark pl-6">
@@ -355,8 +357,9 @@ const personSchema = {
             2. Analyse biomécanique 3D
           </h3>
           <p class="text-sm text-gray-700 leading-relaxed">
-            Mesures IDmatch BikeLab en conditions dynamiques : flexions, appuis,
-            symétrie, puissance par jambe. Données précises et reproductibles.
+            Mesures STT 3DMA en conditions dynamiques : flexions, appuis,
+            symétrie, alignement des genoux et du bassin. Données précises et
+            reproductibles.
           </p>
         </div>
         <div class="bg-white border border-gray-200 p-6">
@@ -571,8 +574,8 @@ const personSchema = {
           <p class="text-gray-700 leading-relaxed mb-3">
             <strong>Ancien cycliste professionnel</strong>, Romain Hardy a couru
             plusieurs saisons au plus haut niveau avant de se reconvertir dans
-            l'étude posturale. Formé à la technologie <strong
-              >IDmatch BikeLab</strong
+            l'étude posturale. Formé à la technologie de capture de mouvement <strong
+              >STT</strong
             >, il a fondé ID Postur en 2023 à La Mézière, près de Rennes.
           </p>
           <p class="text-gray-700 leading-relaxed">
