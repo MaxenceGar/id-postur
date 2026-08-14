@@ -1,3 +1,45 @@
+---
+import { formatPrix, getPrestation } from "../data/tarifs";
+
+const etude3D = getPrestation("etude-posturale-3d");
+const etude2D = getPrestation("etude-posturale-2d");
+const cales = getPrestation("reglage-cales");
+const choixVelo = getPrestation("choix-nouveau-velo");
+const rdvDivers = getPrestation("rendez-vous-divers");
+
+const offres = [
+  {
+    // Passe par l'étape de tri : le cycliste indique d'abord s'il est déjà venu.
+    href: "/reserver",
+    image: "/images/id-postur-img-2.webp",
+    alt: "Étude posturale ID Postur",
+    titre: "Étude posturale",
+    tarif: `${formatPrix(etude3D.price)} en 3D (${etude3D.duration}) · ${formatPrix(etude2D.price)} en 2D (${etude2D.duration})`,
+  },
+  {
+    href: "/cales",
+    image: "/images/id-postur-cales.webp",
+    alt: "Réglage des cales ID Postur",
+    titre: "Réglage des cales",
+    tarif: `${formatPrix(cales.price)} · ${cales.duration}`,
+  },
+  {
+    href: "/choix-nouveau-velo",
+    image: "/images/id-postur-img-1.webp",
+    alt: "Aide au choix d'un nouveau vélo ID Postur",
+    titre: "Choix de votre nouveau vélo",
+    tarif: `${formatPrix(choixVelo.price)} · ${choixVelo.duration}`,
+  },
+  {
+    href: "/rendez-vous-divers",
+    image: "/images/id-postur-interieur.jpg",
+    alt: "Rendez-vous divers ID Postur",
+    titre: "Rendez-vous divers",
+    tarif: `${formatPrix(rdvDivers.price)} · ${rdvDivers.duration}`,
+  },
+];
+---
+
 <section class="bg-gray-50 py-16" id="formules">
   <div class="container mx-auto px-5">
     <div class="lg:w-full mb-6 lg:mb-10">
@@ -12,27 +54,37 @@
         class="flex flex-col border-id-postur-dark border-2 bg-white overflow-hidden"
       >
         <img
-          src="/images/id-postur-img-2.webp"
-          alt="Étude posturale ID Postur"
+          src={offres[0].image}
+          alt={offres[0].alt}
           class="object-cover w-full h-64"
           loading="lazy"
         />
         <div class="flex flex-col flex-1 px-4 pt-5 pb-6 text-center">
-          <h2 class="text-2xl font-semibold mb-3">Étude posturale</h2>
-          <p class="flex-1 mb-6 text-sm text-left leading-relaxed text-gray-700">
-            Une analyse 3D sans marqueurs réalisée avec le système <strong
-              >IDmatch BikeLab</strong
+          <h3 class="text-2xl font-semibold mb-3">{offres[0].titre}</h3>
+          <p class="flex-1 mb-4 text-sm text-left leading-relaxed text-gray-700">
+            Une analyse réalisée avec le système <strong>IDmatch BikeLab</strong
             >. Nous mesurons vos angles, vos appuis et vos déséquilibres pour
             vous proposer une position qui réduit les douleurs, augmente la
             puissance et améliore votre confort.
             <br /><br />
-            Route, VTT, Gravel ou Triathlon : votre posture devient un atout.
+            Deux formats au choix — <strong>3D</strong> ou <strong>2D</strong>.
+            La 3D couvre toutes les disciplines, chrono et triathlon compris ;
+            la 2D s'adresse à la route, au VTT et au gravel.
+          </p>
+          <p class="mb-4 text-sm font-semibold text-gray-900">
+            {offres[0].tarif}
           </p>
           <a
             class="self-center inline-block px-6 py-2 bg-id-postur-dark text-white font-medium hover:opacity-90 transition duration-300 cursor-pointer"
-            href="/premiere-ou-nouvelle"
+            href={offres[0].href}
           >
             Prendre rendez-vous
+          </a>
+          <a
+            class="mt-3 text-sm text-id-postur-dark underline hover:opacity-80"
+            href="/etude-posturale-3d-ou-2d"
+          >
+            Quelle différence entre la 3D et la 2D ?
           </a>
         </div>
       </div>
@@ -41,14 +93,14 @@
         class="flex flex-col border-id-postur-dark border-2 bg-white overflow-hidden"
       >
         <img
-          src="/images/id-postur-cales.webp"
-          alt="Réglage des cales ID Postur"
+          src={offres[1].image}
+          alt={offres[1].alt}
           class="object-cover w-full h-64"
           loading="lazy"
         />
         <div class="flex flex-col flex-1 px-4 pt-5 pb-6 text-center">
-          <h2 class="text-2xl font-semibold mb-3">Réglage des cales</h2>
-          <p class="flex-1 mb-6 text-sm text-left leading-relaxed text-gray-700">
+          <h3 class="text-2xl font-semibold mb-3">{offres[1].titre}</h3>
+          <p class="flex-1 mb-4 text-sm text-left leading-relaxed text-gray-700">
             Avec <strong>IDmatch Cleat Fit</strong>, nous réglons vos cales au
             millimètre près pour améliorer l'alignement de vos membres, assurer
             un pédalage fluide et prévenir les douleurs aux genoux, hanches ou
@@ -56,40 +108,12 @@
             <br /><br />
             Une connexion parfaite entre vous et votre vélo pour un rendement maximal.
           </p>
-          <a
-            class="self-center inline-block px-6 py-2 bg-id-postur-dark text-white font-medium hover:opacity-90 transition duration-300 cursor-pointer"
-            href="/cales"
-          >
-            Prendre rendez-vous
-          </a>
-        </div>
-      </div>
-
-      <div
-        class="flex flex-col border-id-postur-dark border-2 bg-white overflow-hidden"
-      >
-        <img
-          src="/images/id-postur-img-1.webp"
-          alt="Aide au choix d'un nouveau vélo ID Postur"
-          class="object-cover w-full h-64"
-          loading="lazy"
-        />
-        <div class="flex flex-col flex-1 px-4 pt-5 pb-6 text-center">
-          <h2 class="text-2xl font-semibold mb-3">
-            Choix de votre nouveau vélo
-          </h2>
-          <p class="flex-1 mb-6 text-sm text-left leading-relaxed text-gray-700">
-            Vous hésitez avant d'acheter un nouveau vélo ? <strong
-              >ID Postur</strong
-            > vous aide à vérifier la taille, l'ergonomie et valider votre choix
-            avant l'achat.
-            <br /><br />
-            Deux formules rapides pour sécuriser votre investissement : avec ou sans
-            pédalage, selon votre besoin.
+          <p class="mb-4 text-sm font-semibold text-gray-900">
+            {offres[1].tarif}
           </p>
           <a
             class="self-center inline-block px-6 py-2 bg-id-postur-dark text-white font-medium hover:opacity-90 transition duration-300 cursor-pointer"
-            href="/choix-nouveau-velo"
+            href={offres[1].href}
           >
             Prendre rendez-vous
           </a>
@@ -100,23 +124,57 @@
         class="flex flex-col border-id-postur-dark border-2 bg-white overflow-hidden"
       >
         <img
-          src="/images/id-postur-interieur.jpg"
-          alt="Rendez-vous divers ID Postur"
+          src={offres[2].image}
+          alt={offres[2].alt}
           class="object-cover w-full h-64"
           loading="lazy"
         />
         <div class="flex flex-col flex-1 px-4 pt-5 pb-6 text-center">
-          <h2 class="text-2xl font-semibold mb-3">Rendez-vous divers</h2>
-          <p class="flex-1 mb-6 text-sm text-left leading-relaxed text-gray-700">
+          <h3 class="text-2xl font-semibold mb-3">{offres[2].titre}</h3>
+          <p class="flex-1 mb-4 text-sm text-left leading-relaxed text-gray-700">
+            Vous hésitez avant d'acheter un nouveau vélo ? <strong
+              >ID Postur</strong
+            > vous aide à vérifier la taille, l'ergonomie et à valider votre choix
+            avant l'achat.
+            <br /><br />
+            Un rendez-vous court pour sécuriser votre investissement.
+          </p>
+          <p class="mb-4 text-sm font-semibold text-gray-900">
+            {offres[2].tarif}
+          </p>
+          <a
+            class="self-center inline-block px-6 py-2 bg-id-postur-dark text-white font-medium hover:opacity-90 transition duration-300 cursor-pointer"
+            href={offres[2].href}
+          >
+            Prendre rendez-vous
+          </a>
+        </div>
+      </div>
+
+      <div
+        class="flex flex-col border-id-postur-dark border-2 bg-white overflow-hidden"
+      >
+        <img
+          src={offres[3].image}
+          alt={offres[3].alt}
+          class="object-cover w-full h-64"
+          loading="lazy"
+        />
+        <div class="flex flex-col flex-1 px-4 pt-5 pb-6 text-center">
+          <h3 class="text-2xl font-semibold mb-3">{offres[3].titre}</h3>
+          <p class="flex-1 mb-4 text-sm text-left leading-relaxed text-gray-700">
             Besoin d'une petite révision, d'un <strong>micro-réglage</strong> ou
             d'un <strong>conseil ponctuel</strong> ?
             <br /><br />
-            Trois formules au choix selon votre besoin : 15 min (25€), 30 min (50€)
-            ou 1h (100€).
+            Un créneau court pour répondre à un besoin précis, sans passer par une
+            étude complète.
+          </p>
+          <p class="mb-4 text-sm font-semibold text-gray-900">
+            {offres[3].tarif}
           </p>
           <a
             class="self-center inline-block px-6 py-2 bg-id-postur-dark text-white font-medium hover:opacity-90 transition duration-300 cursor-pointer"
-            href="/rendez-vous-divers"
+            href={offres[3].href}
           >
             Prendre rendez-vous
           </a>

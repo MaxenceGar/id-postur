@@ -2,13 +2,79 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import "../styles/global.css";
 import Formulecomponent from "../components/formulecomponent.astro";
+import AutresPrestations from "../components/autres-prestations.astro";
+import { formatPrix, getPrestation } from "../data/tarifs";
+
+const choix = getPrestation("choix-nouveau-velo");
+const etude3D = getPrestation("etude-posturale-3d");
+
+const faqItems = [
+  {
+    question: "Combien coûte un rendez-vous pour choisir un nouveau vélo ?",
+    answer: `Le rendez-vous coûte ${formatPrix(choix.price)} et dure ${choix.duration}.`,
+  },
+  {
+    question: "Dois-je venir avec le vélo que j'envisage d'acheter ?",
+    answer:
+      "Idéalement oui : nous validons alors directement la taille et l'ergonomie du modèle. Si le vélo n'est pas disponible, venez avec ses caractéristiques précises (taille, géométrie, longueur de potence) et votre vélo actuel comme point de comparaison.",
+  },
+  {
+    question: "Ce rendez-vous remplace-t-il une étude posturale ?",
+    answer: `Non. Il sert à sécuriser votre achat avant de commander le vélo. Une fois le vélo acquis, une étude posturale complète (${formatPrix(etude3D.price)} en 3D) permet de régler finement votre position.`,
+  },
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqItems.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: { "@type": "Answer", text: item.answer },
+  })),
+};
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Aide au choix d'un nouveau vélo",
+  serviceType: "Conseil à l'achat vélo",
+  provider: { "@id": "https://id-postur.fr/#business" },
+  areaServed: [
+    { "@type": "City", name: "Rennes" },
+    { "@type": "AdministrativeArea", name: "Ille-et-Vilaine" },
+  ],
+  description:
+    "Validation de la taille et de l'ergonomie d'un vélo avant l'achat, à Rennes.",
+  url: "https://id-postur.fr/choix-nouveau-velo",
+  offers: {
+    "@type": "Offer",
+    price: String(choix.price),
+    priceCurrency: "EUR",
+    availability: "https://schema.org/InStock",
+    url: "https://id-postur.fr/choix-nouveau-velo",
+  },
+};
 ---
 
 <BaseLayout
-  title="Aide au choix d'un nouveau vélo à Rennes | ID Postur"
-  description="Hésitation avant d'acheter un nouveau vélo ? ID Postur vous aide à Rennes à choisir la taille et l'ergonomie idéales avant l'achat. RDV 15 ou 30 min, dès 25€."
+  title="Choisir son nouveau vélo à Rennes – Conseil avant achat | ID Postur"
+  description={`Hésitation avant d'acheter un nouveau vélo ? ID Postur valide à Rennes la taille et l'ergonomie idéales avant l'achat. Rendez-vous de ${choix.duration} à ${formatPrix(choix.price)}.`}
   ogImage="/images/id-postur-img-1.webp"
 >
+  <script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(faqSchema)}
+    slot="head"
+  />
+  <script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(serviceSchema)}
+    slot="head"
+  />
+
   <div
     class="w-full h-96 relative bg-[url('/images/id-postur-img-1.webp')] bg-cover bg-center flex items-center justify-center bg-black/50 bg-blend-overlay"
   >
@@ -29,113 +95,42 @@ import Formulecomponent from "../components/formulecomponent.astro";
     </div>
   </div>
 
-  <section class="py-2 md:py-16">
-    <div class="container px-2 md:px-5 py-2 md:py-24 mx-auto">
-      <div>
-        <h2 class="text-xl md:text-4xl font-bold">
-          Deux formules pour vous aider à choisir
-        </h2>
-        <div
-          class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-0 md:mb-10 rounded-full"
-        >
-        </div>
-      </div>
-      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-2 py-10">
-        <Formulecomponent
-          baseline="Vérification rapide avant achat"
-          title="Sans pédalage"
-          description="Mesures statiques et conseils sur la taille et l'ergonomie du vélo envisagé. Idéal pour un avis rapide avant l'achat, sans test en conditions réelles."
-          price="25€"
-          time="15 minutes"
-          link="https://calendly.com/idpostur/nouveau-velo-sans-pedalage"
-          stack1="• Vélo (celui que vous envisagez)"
-          stack2="• Tenue non nécessaire"
-          stack3=""
-          stack4=""
-          stack5=""
-        />
-
-        <Formulecomponent
-          baseline="Test complet avant achat"
-          title="Avec pédalage"
-          description="Analyse de votre position sur le vélo en pédalant, validation de la taille et de l'ergonomie en conditions réelles avant de finaliser votre achat."
-          price="50€"
-          time="30 minutes"
-          link="https://calendly.com/idpostur/nouveau-velo-avec-pedalage"
-          stack1="• Vélo"
-          stack2="• Chaussures"
-          stack3="• Cuissard"
-          stack4="• Maillot"
-          stack5=""
-        />
-      </div>
-    </div>
-  </section>
-
   <section class="py-16">
-    <div class="container mx-auto px-2 md:px-5">
-      <div>
-        <h2 class="text-xl md:text-4xl font-bold">
-          Besoin d'une petite révision ou d'un réglage ponctuel ?
-        </h2>
-        <div class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-4 rounded-full">
-        </div>
-        <p class="block md:w-4xl">
-          Pour une vérification rapide, un micro-ajustement ou une question
-          technique, prenez un rendez-vous ponctuel de 15 min, 30 min ou 1h.
-        </p>
-      </div>
-      <div class="grid gap-8 md:grid-cols-3 py-10">
-        <Formulecomponent
-          baseline="Intervention rapide"
-          title="RDV divers — 15 min"
-          description="Vérification rapide, conseil technique ou micro-réglage sans test en pédalage."
-          price="25€"
-          time="15 minutes"
-          link="https://calendly.com/idpostur/rendez-vous-divers-15-min"
-          stack1="• Vélo"
-          stack2=""
-          stack3=""
-          stack4=""
-          stack5=""
-        />
-        <Formulecomponent
-          baseline="Intervention étendue"
-          title="RDV divers — 30 min"
-          description="Révision ou réglage ponctuel avec test en pédalage pour valider la sensation en conditions réelles."
-          price="50€"
-          time="30 minutes"
-          link="https://calendly.com/idpostur/rendez-vous-divers-30-min"
-          stack1="• Vélo"
-          stack2="• Chaussures"
-          stack3="• Cuissard"
-          stack4="• Tenue complète"
-          stack5=""
-        />
-        <Formulecomponent
-          baseline="Intervention complète"
-          title="RDV divers — 1h"
-          description="Session complète pour une révision approfondie, plusieurs réglages ou un accompagnement détaillé avec test en pédalage."
-          price="100€"
-          time="1 heure"
-          link="https://calendly.com/idpostur/rendez-vous-divers-1h"
-          stack1="• Vélo"
-          stack2="• Chaussures"
-          stack3="• Cuissard"
-          stack4="• Tenue complète"
-          stack5=""
-        />
+    <div class="container px-5 mx-auto">
+      <h2 class="text-xl md:text-4xl font-bold">
+        Un rendez-vous court pour sécuriser votre achat
+      </h2>
+      <div class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-10 rounded-full"></div>
+      <div class="max-w-md">
+        <Formulecomponent prestation={choix} highlight />
       </div>
     </div>
   </section>
 
-  <div class="w-full flex justify-center pb-12">
-    <a href="/" rel="nofollow">
-      <button
-        class="cursor-pointer inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-[#C00201] border border-[#C00201] bg-white hover:bg-[#C00201]/5 transition"
-      >
-        Revenir à l'accueil
-      </button>
-    </a>
-  </div>
+  <AutresPrestations exclude="choix-nouveau-velo" />
+
+  <section class="relative px-6 pb-16 overflow-hidden">
+    <div class="relative max-w-5xl mx-auto text-center">
+      <h2 id="faq" class="text-3xl md:text-4xl font-extrabold mb-4">
+        En savoir plus
+      </h2>
+      <div class="h-[3px] w-24 bg-id-postur-dark mx-auto mb-6"></div>
+
+      <div class="space-y-6 text-left">
+        {
+          faqItems.map((item) => (
+            <details class="group bg-white border border-gray-200 p-6 transition">
+              <summary class="flex items-center justify-between cursor-pointer list-none">
+                <h3 class="text-lg font-semibold">{item.question}</h3>
+                <span class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none">
+                  +
+                </span>
+              </summary>
+              <p class="mt-4 leading-relaxed">{item.answer}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
 </BaseLayout>

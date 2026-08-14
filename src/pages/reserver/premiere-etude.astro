@@ -1,0 +1,80 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import "../../styles/global.css";
+import Formulecomponent from "../../components/formulecomponent.astro";
+import {
+  ETUDES_PREMIERE_VISITE,
+  OFFRES_PARTICULIERES,
+} from "../../data/tarifs";
+
+/** Étape finale du parcours de réservation — noindex, cf. /reserver. */
+---
+
+<BaseLayout
+  title="Première étude posturale – Réserver | ID Postur"
+  description="Formules d'étude posturale 3D et 2D pour une première venue chez ID Postur."
+  noindex={true}
+>
+  <section class="container mx-auto px-5 py-16 md:py-24">
+    <div class="max-w-4xl mx-auto">
+      <nav aria-label="Fil d'ariane" class="mb-8 text-sm text-gray-500">
+        <a href="/reserver" class="hover:text-id-postur-dark underline"
+          >Réserver</a
+        > <span aria-hidden="true">›</span> Première étude posturale
+      </nav>
+
+      <h1 class="text-3xl md:text-4xl font-bold">
+        Votre première étude posturale
+      </h1>
+      <div class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-6 rounded-full"></div>
+      <p class="text-gray-700 mb-12 max-w-2xl">
+        Deux formats au choix. L'étude 3D couvre toutes les disciplines, chrono
+        et triathlon compris ; l'étude 2D s'adresse à la route, au VTT et au
+        gravel. Dans les deux cas, venez avec votre vélo et votre tenue
+        complète.
+      </p>
+
+      <div class="grid gap-8 md:grid-cols-2">
+        {
+          ETUDES_PREMIERE_VISITE.map((prestation, index) => (
+            <Formulecomponent prestation={prestation} highlight={index === 0} />
+          ))
+        }
+      </div>
+
+      <section class="mt-16">
+        <h2 class="text-2xl md:text-3xl font-bold">Offre particulière</h2>
+        <div class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-4 rounded-full">
+        </div>
+        <p class="text-gray-700 mb-8 max-w-2xl">
+          Une formule à tarif unique pour les jeunes cyclistes, réalisée avec
+          la technologie d'analyse 2D sur une séance d'1h30.
+        </p>
+
+        <div class="grid gap-8 md:grid-cols-2">
+          {
+            OFFRES_PARTICULIERES.map((prestation) => (
+              <Formulecomponent prestation={prestation} />
+            ))
+          }
+        </div>
+      </section>
+
+      <div class="mt-12 text-center text-sm text-gray-600">
+        <p>
+          Vous êtes déjà venu chez ID Postur ? <a
+            href="/reserver/deja-client"
+            class="text-id-postur-dark font-semibold underline hover:opacity-80"
+            >Accédez au tarif réduit</a
+          >.
+        </p>
+        <p class="mt-4">
+          Une question avant de réserver ? Appelez-nous au <a
+            href="tel:0607167323"
+            class="text-id-postur-dark font-semibold">06 07 16 73 23</a
+          >.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

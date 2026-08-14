@@ -1,35 +1,50 @@
 ---
+import { formatPrix, type Prestation } from "../data/tarifs";
+
 export interface Props {
-  baseline: string;
-  title: string;
-  description: string;
-  price: string;
-  time: string;
-  link: string;
-  stack1: string;
-  stack2: string;
-  stack3: string;
-  stack4: string;
-  stack5: string;
+  prestation: Prestation;
+  /** Met la carte en avant (bordure rouge). */
+  highlight?: boolean;
+  /**
+   * Affiche le bouton de réservation. Le mettre à false sur les pages
+   * vitrines : la réservation passe alors par l'étape de choix /reserver,
+   * qui évite qu'un cycliste réserve le mauvais créneau.
+   */
+  cta?: boolean;
+  /** Destination du bouton, si différente du lien Calendly de la prestation. */
+  ctaHref?: string;
+  ctaLabel?: string;
 }
 
+const {
+  prestation,
+  highlight = false,
+  cta = true,
+  ctaHref,
+  ctaLabel = "Prendre rendez-vous",
+} = Astro.props;
 const {
   baseline,
   title,
   description,
   price,
-  time,
+  duration,
+  disciplines,
+  equipment,
+  note,
   link,
-  stack1,
-  stack2,
-  stack3,
-  stack4,
-  stack5,
-} = Astro.props;
+} = prestation;
+
+const href = ctaHref ?? link;
+/** Les liens internes ne doivent pas être en nofollow ni ouverts dans un onglet. */
+const externe = href.startsWith("http");
 ---
 
 <div
-  class="relative flex flex-col h-full bg-white shadow-sm border border-gray-200"
+  class:list={[
+    "relative flex flex-col h-full bg-white shadow-sm",
+    highlight ? "border-2 border-id-postur-dark" : "border border-gray-200",
+  ]}
 >
   <div
     class="absolute -top-3 left-4 inline-flex items-center bg-[#C00201] px-3 py-1 text-xs font-semibold text-white shadow"
@@ -44,27 +59,36 @@ const {
       {description}
     </p>
     <div class="mb-4">
-      <span class="text-3xl font-bold text-gray-900">{price}</span>
+      <span class="text-3xl font-bold text-gray-900">{formatPrix(price)}</span>
     </div>
-    <p class="text-sm font-medium text-gray-700 mb-4">
-      ⏱ Durée : <span class="font-semibold">{time}</span>
+    <p class="text-sm font-medium text-gray-700 mb-1">
+      ⏱ Durée : <span class="font-semibold">{duration}</span>
     </p>
-    <ul class="text-sm text-gray-600 space-y-1 mb-6">
-      <li>Équipement à apporter :</li>
-      <li>{stack1}</li>
-      <li>{stack2}</li>
-      <li>{stack3}</li>
-      <li>{stack4}</li>
-      <li>{stack5}</li>
+    <p class="text-sm text-gray-700 mb-4">
+      Disciplines : <span class="font-semibold">{disciplines}</span>
+    </p>
+    <ul class="text-sm text-gray-600 space-y-1 mb-4">
+      <li class="font-medium text-gray-700">Équipement à apporter :</li>
+      {equipment.map((item) => <li>{item}</li>)}
     </ul>
-    <div class="mt-auto">
-      <a href={link} rel="nofollow">
-        <button
-          class="cursor-pointer w-full inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-[#C00201] border border-[#C00201] bg-white hover:bg-[#C00201]/5 transition"
-        >
-          Prendre rendez-vous
-        </button>
-      </a>
-    </div>
+    {
+      note && (
+        <p class="text-sm text-id-postur-dark font-medium mb-4">{note}</p>
+      )
+    }
+    {
+      cta && (
+        <div class="mt-auto">
+          <a
+            href={href}
+            rel={externe ? "nofollow noopener" : undefined}
+            target={externe ? "_blank" : undefined}
+            class="cursor-pointer w-full inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-[#C00201] border border-[#C00201] bg-white hover:bg-[#C00201]/5 transition"
+          >
+            {ctaLabel}
+          </a>
+        </div>
+      )
+    }
   </div>
 </div>

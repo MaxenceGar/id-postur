@@ -2,13 +2,79 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import "../styles/global.css";
 import Formulecomponent from "../components/formulecomponent.astro";
+import AutresPrestations from "../components/autres-prestations.astro";
+import { formatPrix, getPrestation } from "../data/tarifs";
+
+const rdv = getPrestation("rendez-vous-divers");
+
+const faqItems = [
+  {
+    question: "Que peut-on faire en 20 minutes ?",
+    answer:
+      "Une vérification rapide de votre position, un micro-réglage (hauteur de selle, recul, potence), un contrôle après un changement de composant ou une question technique précise sur votre vélo.",
+  },
+  {
+    question: "Combien coûte un rendez-vous divers ?",
+    answer: `Le rendez-vous coûte ${formatPrix(rdv.price)} pour ${rdv.duration}.`,
+  },
+  {
+    question: "Quand faut-il plutôt une étude posturale complète ?",
+    answer:
+      "Dès qu'il s'agit de douleurs persistantes, d'un nouveau vélo ou d'une refonte de votre position. Le rendez-vous de 20 minutes sert aux ajustements ponctuels, pas à une analyse complète.",
+  },
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqItems.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: { "@type": "Answer", text: item.answer },
+  })),
+};
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Rendez-vous vélo ponctuel",
+  serviceType: "Réglage vélo",
+  provider: { "@id": "https://id-postur.fr/#business" },
+  areaServed: [
+    { "@type": "City", name: "Rennes" },
+    { "@type": "AdministrativeArea", name: "Ille-et-Vilaine" },
+  ],
+  description:
+    "Rendez-vous court à Rennes pour un micro-réglage, une vérification rapide ou un conseil technique sur votre vélo.",
+  url: "https://id-postur.fr/rendez-vous-divers",
+  offers: {
+    "@type": "Offer",
+    price: String(rdv.price),
+    priceCurrency: "EUR",
+    availability: "https://schema.org/InStock",
+    url: "https://id-postur.fr/rendez-vous-divers",
+  },
+};
 ---
 
 <BaseLayout
-  title="Rendez-vous divers à Rennes – Révision et réglage vélo | ID Postur"
-  description="Besoin d'une révision rapide, d'un micro-réglage ou d'un conseil technique ponctuel sur votre vélo ? ID Postur propose 3 formules à Rennes : 15 min (25€), 30 min (50€) ou 1h (100€)."
+  title="Rendez-vous vélo à Rennes – Révision et micro-réglage | ID Postur"
+  description={`Besoin d'une vérification rapide, d'un micro-réglage ou d'un conseil technique sur votre vélo ? ID Postur propose à Rennes un rendez-vous de ${rdv.duration} à ${formatPrix(rdv.price)}.`}
   ogImage="/images/id-postur-interieur.jpg"
 >
+  <script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(faqSchema)}
+    slot="head"
+  />
+  <script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(serviceSchema)}
+    slot="head"
+  />
+
   <div
     class="w-full h-96 relative bg-[url('/images/id-postur-interieur.jpg')] bg-cover bg-center flex items-center justify-center bg-black/50 bg-blend-overlay"
   >
@@ -23,74 +89,48 @@ import Formulecomponent from "../components/formulecomponent.astro";
       <p class="text-center max-w-4xl mx-auto pb-4">
         Besoin d'une <strong>vérification rapide</strong>, d'un <strong
           >micro-réglage</strong
-        > ou d'un <strong>conseil technique</strong> ponctuel ? Choisissez la durée
-        qui correspond à votre besoin.
+        > ou d'un <strong>conseil technique</strong> ponctuel ? ID Postur vous reçoit
+        pour un rendez-vous court, sans passer par une étude complète.
       </p>
     </div>
   </div>
 
-  <section class="py-2 md:py-16">
-    <div class="container px-2 md:px-5 py-2 md:py-24 mx-auto">
-      <div>
-        <h2 class="text-xl md:text-4xl font-bold">
-          Trois formules pour répondre à votre besoin
-        </h2>
-        <div
-          class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-0 md:mb-10 rounded-full"
-        >
-        </div>
-      </div>
-      <div class="grid gap-8 md:grid-cols-3 py-10">
-        <Formulecomponent
-          baseline="Intervention rapide"
-          title="RDV divers — 15 min"
-          description="Vérification rapide, conseil technique ou micro-réglage sans test en pédalage."
-          price="25€"
-          time="15 minutes"
-          link="https://calendly.com/idpostur/rendez-vous-divers-15-min"
-          stack1="• Vélo"
-          stack2=""
-          stack3=""
-          stack4=""
-          stack5=""
-        />
-        <Formulecomponent
-          baseline="Intervention étendue"
-          title="RDV divers — 30 min"
-          description="Révision ou réglage ponctuel avec test en pédalage pour valider la sensation en conditions réelles."
-          price="50€"
-          time="30 minutes"
-          link="https://calendly.com/idpostur/rendez-vous-divers-30-min"
-          stack1="• Vélo"
-          stack2="• Chaussures"
-          stack3="• Cuissard"
-          stack4="• Tenue complète"
-          stack5=""
-        />
-        <Formulecomponent
-          baseline="Intervention complète"
-          title="RDV divers — 1h"
-          description="Session complète pour une révision approfondie, plusieurs réglages ou un accompagnement détaillé avec test en pédalage."
-          price="100€"
-          time="1 heure"
-          link="https://calendly.com/idpostur/rendez-vous-divers-1h"
-          stack1="• Vélo"
-          stack2="• Chaussures"
-          stack3="• Cuissard"
-          stack4="• Tenue complète"
-          stack5=""
-        />
+  <section class="py-16">
+    <div class="container px-5 mx-auto">
+      <h2 class="text-xl md:text-4xl font-bold">
+        Un créneau court pour un besoin précis
+      </h2>
+      <div class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-10 rounded-full"></div>
+      <div class="max-w-md">
+        <Formulecomponent prestation={rdv} highlight />
       </div>
     </div>
   </section>
 
-  <div class="w-full flex justify-center pb-12">
-    <a href="/" rel="nofollow">
-      <button
-        class="cursor-pointer inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-[#C00201] border border-[#C00201] bg-white hover:bg-[#C00201]/5 transition"
-      >
-        Revenir à l'accueil
-      </button>
-    </a>
-  </div>
+  <AutresPrestations exclude="rendez-vous-divers" />
+
+  <section class="relative px-6 pb-16 overflow-hidden">
+    <div class="relative max-w-5xl mx-auto text-center">
+      <h2 id="faq" class="text-3xl md:text-4xl font-extrabold mb-4">
+        En savoir plus
+      </h2>
+      <div class="h-[3px] w-24 bg-id-postur-dark mx-auto mb-6"></div>
+
+      <div class="space-y-6 text-left">
+        {
+          faqItems.map((item) => (
+            <details class="group bg-white border border-gray-200 p-6 transition">
+              <summary class="flex items-center justify-between cursor-pointer list-none">
+                <h3 class="text-lg font-semibold">{item.question}</h3>
+                <span class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none">
+                  +
+                </span>
+              </summary>
+              <p class="mt-4 leading-relaxed">{item.answer}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
 </BaseLayout>

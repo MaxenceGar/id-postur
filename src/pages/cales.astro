@@ -2,54 +2,87 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import "../styles/global.css";
 import Formulecomponent from "../components/formulecomponent.astro";
+import AutresPrestations from "../components/autres-prestations.astro";
+import { formatPrix, getPrestation } from "../data/tarifs";
+
+const cales = getPrestation("reglage-cales");
+
+const faqItems = [
+  {
+    question: "Combien de temps dure le réglage des cales ?",
+    answer: `Le réglage des cales dure ${cales.duration}.`,
+  },
+  {
+    question: "Quel est le prix pour le réglage des cales ?",
+    answer: `Le réglage de vos cales coûte ${formatPrix(cales.price)}, quel que soit le nombre de vos passages chez ID Postur.`,
+  },
+  {
+    question: "Avec quel équipement dois-je venir ?",
+    answer:
+      "Le jour du rendez-vous, venez avec votre vélo, votre paire de chaussures, vos cales à régler ainsi que votre tenue de vélo.",
+  },
+  {
+    question: "Le réglage des cales est-il inclus dans l'étude posturale ?",
+    answer:
+      "Oui. Le positionnement des cales fait partie intégrante de l'étude posturale 3D comme de l'étude posturale 2D. Ce rendez-vous de 20 minutes s'adresse à ceux qui souhaitent uniquement régler leurs cales, par exemple après un changement de chaussures.",
+  },
+];
 
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  mainEntity: [
-    {
-      "@type": "Question",
-      name: "Combien de temps dure le réglage des cales ?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "La durée du réglage des cales est de 30 minutes.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Quel est le prix pour le réglage des cales ?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Le prix pour le réglage de vos cales est de 50€. Si vous êtes déjà venu faire régler vos cales, le prix est de 20€.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Avec quel équipement dois-je venir ?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Le jour du rendez-vous, venez avec votre vélo, votre paire de chaussures, vos cales à régler ainsi que votre tenue de vélo.",
-      },
-    },
+  mainEntity: faqItems.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: { "@type": "Answer", text: item.answer },
+  })),
+};
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Réglage des cales de vélo",
+  serviceType: "Réglage des cales cycliste",
+  provider: { "@id": "https://id-postur.fr/#business" },
+  areaServed: [
+    { "@type": "City", name: "Rennes" },
+    { "@type": "AdministrativeArea", name: "Ille-et-Vilaine" },
   ],
+  description:
+    "Réglage des cales de vélo à Rennes avec la technologie IDmatch Cleat Fit. Positionnement précis pour route, VTT, gravel et chrono.",
+  url: "https://id-postur.fr/cales",
+  offers: {
+    "@type": "Offer",
+    price: String(cales.price),
+    priceCurrency: "EUR",
+    availability: "https://schema.org/InStock",
+    url: "https://id-postur.fr/cales",
+  },
 };
 ---
 
-<script
-  is:inline
-  type="application/ld+json"
-  set:html={JSON.stringify(faqSchema)}
-/>
-
 <BaseLayout
   title="Réglage des cales vélo à Rennes – IDmatch Cleat Fit | ID Postur"
-  description="Réglage professionnel des cales et chaussures de vélo à Rennes avec la technologie IDmatch Cleat Fit. Positionnement précis pour Route, VTT, Gravel, Triathlon. À partir de 20€."
+  description={`Réglage professionnel des cales de vélo à Rennes avec IDmatch Cleat Fit. Positionnement précis pour route, VTT, gravel et chrono. ${formatPrix(cales.price)} pour ${cales.duration}.`}
   ogImage="/images/id-postur-cales.webp"
 >
+  <script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(faqSchema)}
+    slot="head"
+  />
+  <script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(serviceSchema)}
+    slot="head"
+  />
+
   <div
     class="w-full h-96 relative bg-[url('/images/id-postur-cales.webp')] bg-cover bg-center flex items-center justify-center bg-black/50 bg-blend-overlay"
   >
-    <div class="grid grid-cols-1 text-white">
+    <div class="grid grid-cols-1 text-white px-4">
       <h1 class="text-3xl md:text-4xl font-bold text-center">
         Réglage des cales vélo à Rennes
       </h1>
@@ -58,168 +91,57 @@ const faqSchema = {
       >
       </div>
       <p class="text-center max-w-4xl mx-auto pb-4">
-        Grâce à la technologie <span class="font-bold">ID Match</span>,
+        Grâce à la technologie <span class="font-bold">IDmatch Cleat Fit</span>,
         <span class="font-bold">ID Postur</span> vous aide à trouver le positionnement
-        idéal de vos <span class="font-bold">cales</span>. Que vous pratiquiez
-        la <span class="font-bold"
-          >Route, le VTT, le Gravel ou le Triathlon</span
-        >, un réglage précis améliore votre confort, votre efficacité de
-        pédalage et limite les risques de blessures.
+        idéal de vos <span class="font-bold">cales</span>. Que vous pratiquiez la
+        <span class="font-bold">route, le VTT, le gravel ou le chrono</span>, un
+        réglage précis améliore votre confort, votre efficacité de pédalage et
+        limite les risques de blessures.
       </p>
       <div class="inline-block mx-auto">
         <a
           class="text-center inline-block px-6 py-2 bg-id-postur-dark text-white font-medium hover:opacity-90 transition duration-300 cursor-pointer"
           href="/etudes-posturales"
-          rel="nofollow"
         >
-          Étude Posturale
+          Voir les études posturales
         </a>
       </div>
     </div>
   </div>
 
-  <div class="container px-5 py-24 mx-auto">
-    <div class="max-w-2xl mx-auto">
-      <Formulecomponent
-        description="Re-positionnement précis de vos cales/chaussures."
-        baseline="Réservé aux clients ayant déjà réalisé une étude chez ID Postur"
-        title="Réglages nouvelles cales/chaussures"
-        price="20€"
-        time="30 minutes"
-        link="https://calendly.com/idpostur/reglages-nouvelles-cales-chaussures"
-        stack1="• Chaussures"
-        stack2="• Vélo"
-        stack3="• Cales"
-        stack4="• Tenue de vélo"
-        stack5=""
-      />
-    </div>
-  </div>
-
   <section class="py-16">
-    <div class="container mx-auto px-2 md:px-5">
-      <div>
-        <h2 class="text-xl md:text-4xl font-bold">
-          Besoin d'une petite révision ou d'un réglage ponctuel ?
-        </h2>
-        <div class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-4 rounded-full">
-        </div>
-        <p class="block md:w-4xl">
-          Pour une vérification rapide, un micro-ajustement ou une question
-          technique, prenez un rendez-vous ponctuel de 15 min, 30 min ou 1h.
-        </p>
-      </div>
-      <div class="grid gap-8 md:grid-cols-3 py-10">
-        <Formulecomponent
-          baseline="Intervention rapide"
-          title="RDV divers — 15 min"
-          description="Vérification rapide, conseil technique ou micro-réglage sans test en pédalage."
-          price="25€"
-          time="15 minutes"
-          link="https://calendly.com/idpostur/rendez-vous-divers-15-min"
-          stack1="• Vélo"
-          stack2=""
-          stack3=""
-          stack4=""
-          stack5=""
-        />
-        <Formulecomponent
-          baseline="Intervention étendue"
-          title="RDV divers — 30 min"
-          description="Révision ou réglage ponctuel avec test en pédalage pour valider la sensation en conditions réelles."
-          price="50€"
-          time="30 minutes"
-          link="https://calendly.com/idpostur/rendez-vous-divers-30-min"
-          stack1="• Vélo"
-          stack2="• Chaussures"
-          stack3="• Cuissard"
-          stack4="• Tenue complète"
-          stack5=""
-        />
-        <Formulecomponent
-          baseline="Intervention complète"
-          title="RDV divers — 1h"
-          description="Session complète pour une révision approfondie, plusieurs réglages ou un accompagnement détaillé avec test en pédalage."
-          price="100€"
-          time="1 heure"
-          link="https://calendly.com/idpostur/rendez-vous-divers-1h"
-          stack1="• Vélo"
-          stack2="• Chaussures"
-          stack3="• Cuissard"
-          stack4="• Tenue complète"
-          stack5=""
-        />
+    <div class="container px-5 mx-auto">
+      <h2 class="text-xl md:text-4xl font-bold">Le réglage des cales</h2>
+      <div class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-10 rounded-full"></div>
+      <div class="max-w-md">
+        <Formulecomponent prestation={cales} highlight />
       </div>
     </div>
   </section>
 
-  <section class="relative px-6 overflow-hidden">
+  <AutresPrestations exclude="reglage-cales" />
+
+  <section class="relative px-6 pb-16 overflow-hidden">
     <div class="relative max-w-5xl mx-auto text-center">
       <h2 id="faq" class="text-3xl md:text-4xl font-extrabold mb-4">
         En savoir plus
       </h2>
       <div class="h-[3px] w-24 bg-id-postur-dark mx-auto mb-6"></div>
 
-      <!-- Bloc FAQ -->
       <div class="space-y-6 text-left">
-        <!-- Question 1 -->
-        <details class="group bg-white border border-gray-200 p-6 transition">
-          <summary
-            class="flex items-center justify-between cursor-pointer list-none"
-          >
-            <h3 class="text-lg font-semibold">
-              Combien de temps dure le réglage des cales ?
-            </h3>
-            <span
-              class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
-              >+</span
-            >
-          </summary>
-          <p class="mt-4 leading-relaxed">
-            La durée du réglage des cales est de <strong>30 minutes</strong>.
-          </p>
-        </details>
-
-        <!-- Question 2 -->
-        <details class="group bg-white border border-gray-200 p-6 transition">
-          <summary
-            class="flex items-center justify-between cursor-pointer list-none"
-          >
-            <h3 class="text-lg font-semibold">
-              Quel est le prix pour le réglage des cales ?
-            </h3>
-            <span
-              class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
-              >+</span
-            >
-          </summary>
-          <p>
-            Le prix pour le réglage de vos cales est de <strong>50€</strong>.<br
-            />
-            Si vous êtes déjà venu faire régler vos cales, le prix est de <strong
-              >20€</strong
-            >.
-          </p>
-        </details>
-
-        <!-- Question 3 -->
-        <details class="group bg-white border border-gray-200 p-6 transition">
-          <summary
-            class="flex items-center justify-between cursor-pointer list-none"
-          >
-            <h3 class="text-lg font-semibold">
-              Avec quel équipement dois-je venir ?
-            </h3>
-            <span
-              class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
-              >+</span
-            >
-          </summary>
-          <p class="mt-4 leading-relaxed">
-            Le jour du rendez-vous, venez avec votre vélo, votre paire de
-            chaussures, vos cales à régler ainsi que votre tenue de vélo.
-          </p>
-        </details>
+        {
+          faqItems.map((item) => (
+            <details class="group bg-white border border-gray-200 p-6 transition">
+              <summary class="flex items-center justify-between cursor-pointer list-none">
+                <h3 class="text-lg font-semibold">{item.question}</h3>
+                <span class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none">
+                  +
+                </span>
+              </summary>
+              <p class="mt-4 leading-relaxed">{item.answer}</p>
+            </details>
+          ))
+        }
       </div>
     </div>
   </section>

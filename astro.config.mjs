@@ -4,11 +4,16 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 
+/**
+ * Pages exclues du sitemap (celles en noindex).
+ * Le parcours /reserver sert uniquement à orienter le client vers le bon
+ * créneau : aucune valeur en résultat de recherche, et il ferait doublon
+ * avec /etudes-posturales. Ajouter ici toute future page en noindex.
+ */
 const NOINDEX_PATHS = [
-  '/premiere-ou-nouvelle',
-  '/etude-posturale-ou-cales',
-  '/nouveau-velo-ou-reglage',
-  '/etude-posturale',
+  '/reserver',
+  '/reserver/premiere-etude',
+  '/reserver/deja-client',
 ];
 
 // https://astro.build/config

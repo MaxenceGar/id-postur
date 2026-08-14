@@ -1,35 +1,44 @@
 ---
 import "../styles/global.css";
+import { formatPrix, getPrestation } from "../data/tarifs";
+
+const troisD = getPrestation("etude-posturale-3d");
+const deuxD = getPrestation("etude-posturale-2d");
+const cales = getPrestation("reglage-cales");
+
+/** Une seule source pour la FAQ visible et le JSON-LD FAQPage. */
+const faqItems = [
+  {
+    question: "Combien de temps dure une étude posturale ?",
+    answer: `L'étude posturale 3D dure ${troisD.duration} et l'étude posturale 2D ${deuxD.duration}. Le réglage seul de vos cales dure ${cales.duration}.`,
+  },
+  {
+    question: "Quelle est la différence de prix entre les formules ?",
+    answer: `L'étude posturale 3D coûte ${formatPrix(troisD.price)} et l'étude posturale 2D ${formatPrix(deuxD.price)}. Si vous avez déjà réalisé une étude chez ID Postur, un tarif réduit s'applique. Les rendez-vous courts (réglage des cales, choix d'un nouveau vélo, réglage ponctuel) sont à ${formatPrix(cales.price)}.`,
+  },
+  {
+    question: "Dois-je venir avec mon propre vélo ?",
+    answer:
+      "Oui, l'étude est effectuée sur votre vélo pour garantir des réglages adaptés à votre morphologie, vos composants et votre pratique (route, VTT, gravel, chrono). Prévoyez également votre tenue complète.",
+  },
+  {
+    question: "Puis-je offrir une séance à un proche ?",
+    answer:
+      "Absolument. ID Postur propose des cartes cadeaux personnalisées. Contactez-nous sur Instagram ou directement à ID Postur, 112 route du Meuble, La Mézière.",
+  },
+];
 
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  mainEntity: [
-    {
-      "@type": "Question",
-      name: "Combien de temps dure une étude posturale ?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Une étude posturale complète dure 2 heures. Le réglage de vos cales dure 30 minutes.",
-      },
+  mainEntity: faqItems.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.answer,
     },
-    {
-      "@type": "Question",
-      name: "Dois-je venir avec mon propre vélo ?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Oui, l'étude est effectuée sur votre vélo pour garantir des réglages adaptés à votre morphologie, vos composants et votre pratique (route, VTT, triathlon).",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Puis-je offrir une séance à un proche ?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Absolument. ID Postur propose des cartes cadeaux personnalisées. Contactez-nous sur Instagram ou directement à ID Postur, 112 route du Meuble, La Mézière.",
-      },
-    },
-  ],
+  })),
 };
 ---
 
@@ -46,67 +55,22 @@ const faqSchema = {
     </h2>
     <div class="h-[3px] w-24 bg-id-postur-dark mx-auto mb-6"></div>
 
-    <!-- Bloc FAQ -->
     <div class="space-y-6 text-left">
-      <!-- Question 1 -->
-      <details class="group bg-white border border-gray-200 p-6 transition">
-        <summary
-          class="flex items-center justify-between cursor-pointer list-none"
-        >
-          <h3 class="text-lg font-semibold text-gray-900">
-            Combien de temps dure une étude posturale ?
-          </h3>
-          <span
-            class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
-            >+</span
-          >
-        </summary>
-        <p class="mt-4 text-gray-600 leading-relaxed">
-          Une étude posturale complète dure <strong>2 heures</strong>. Le
-          réglage de vos cales dure <strong>30 minutes</strong>.
-        </p>
-      </details>
-
-      <!-- Question 2 -->
-      <details class="group bg-white border border-gray-200 p-6 transition">
-        <summary
-          class="flex items-center justify-between cursor-pointer list-none"
-        >
-          <h3 class="text-lg font-semibold text-gray-900">
-            Dois-je venir avec mon propre vélo ?
-          </h3>
-          <span
-            class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
-            >+</span
-          >
-        </summary>
-        <p class="mt-4 text-gray-600 leading-relaxed">
-          Oui ! L’étude est effectuée sur votre vélo pour garantir des réglages
-          adaptés à votre morphologie, vos composants et votre pratique (route,
-          VTT, triathlon…).
-        </p>
-      </details>
-
-      <!-- Question 3 -->
-      <details class="group bg-white border border-gray-200 p-6 transition">
-        <summary
-          class="flex items-center justify-between cursor-pointer list-none"
-        >
-          <h3 class="text-lg font-semibold text-gray-900">
-            Puis-je offrir une séance à un proche ?
-          </h3>
-          <span
-            class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
-            >+</span
-          >
-        </summary>
-        <p class="mt-4 text-gray-600 leading-relaxed">
-          Absolument ! Nous proposons des <strong>cartes cadeaux</strong> personnalisées.
-          C’est une excellente idée pour un cycliste passionné 🎁. <br />
-          Contactez-nous sur notre Instagram ou venez directement à ID Postur, 112
-          route du meuble, La Mézière.
-        </p>
-      </details>
+      {
+        faqItems.map((item) => (
+          <details class="group bg-white border border-gray-200 p-6 transition">
+            <summary class="flex items-center justify-between cursor-pointer list-none">
+              <h3 class="text-lg font-semibold text-gray-900">
+                {item.question}
+              </h3>
+              <span class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none">
+                +
+              </span>
+            </summary>
+            <p class="mt-4 text-gray-600 leading-relaxed">{item.answer}</p>
+          </details>
+        ))
+      }
     </div>
   </div>
 </section>

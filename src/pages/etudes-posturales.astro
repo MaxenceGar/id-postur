@@ -2,54 +2,112 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Formulecomponent from "../components/formulecomponent.astro";
 import "../styles/global.css";
+import {
+  ETUDES_POSTURALES,
+  OFFRES_PARTICULIERES,
+  PRESTATIONS_COURTES,
+  PRIX_REDUIT_ETUDE,
+  REGLE_DEJA_CLIENT,
+  formatPrix,
+  getPrestation,
+} from "../data/tarifs";
+
+const troisD = getPrestation("etude-posturale-3d");
+const deuxD = getPrestation("etude-posturale-2d");
+const troisDClient = getPrestation("etude-posturale-3d-deja-client");
+const deuxDClient = getPrestation("etude-posturale-2d-deja-client");
+
+const premiereEtude = [troisD, deuxD];
+const dejaClient = [troisDClient, deuxDClient];
+
+/**
+ * Une seule source pour la FAQ visible et le JSON-LD FAQPage :
+ * les deux ne peuvent pas diverger, et les prix viennent de src/data/tarifs.ts.
+ */
+const faqItems = [
+  {
+    question: "Combien de temps dure une étude posturale ?",
+    answer: `L'étude posturale 3D dure ${troisD.duration} et l'étude posturale 2D ${deuxD.duration}. Ces durées sont les mêmes que vous soyez nouveau client ou que vous ayez déjà réalisé une étude chez ID Postur.`,
+  },
+  {
+    question: "Quel est le prix d'une étude posturale à Rennes ?",
+    answer: `L'étude posturale 3D coûte ${formatPrix(troisD.price)} et l'étude posturale 2D ${formatPrix(deuxD.price)}. Si vous avez déjà réalisé une étude posturale chez ID Postur, les tarifs sont respectivement de ${formatPrix(troisDClient.price)} et ${formatPrix(deuxDClient.price)}.`,
+  },
+  {
+    question: "Que veut dire le tarif « déjà client » ?",
+    answer: `${REGLE_DEJA_CLIENT} Ce tarif réduit s'applique sans limite de temps depuis votre première étude.`,
+  },
+  {
+    question: "Avec quel équipement dois-je venir ?",
+    answer:
+      "Le jour du rendez-vous, venez avec le vélo que vous souhaitez régler, votre tenue complète (cuissard et maillot), vos chaussures, vos cales et les pièces spécifiques à votre vélo. Pour l'étude posturale 3D, évitez les vêtements réfléchissants : ils perturbent la captation.",
+  },
+  {
+    question: "Quelles disciplines sont prises en charge ?",
+    answer:
+      "L'étude posturale 3D couvre toutes les disciplines : route, VTT, gravel, chrono et triathlon. L'étude posturale 2D est proposée pour la route, le VTT et le gravel — les vélos de chrono et de triathlon nécessitent l'analyse 3D.",
+  },
+];
 
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  mainEntity: [
-    {
-      "@type": "Question",
-      name: "Combien de temps dure une étude posturale ?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Une étude posturale complète dure 2 heures, et 1h30 pour les moins de 15 ans. Si vous avez déjà réalisé une étude posturale, nous disposons déjà de vos mesures, ce qui nous permet de régler votre nouveau vélo en 30 minutes.",
-      },
+  mainEntity: faqItems.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.answer,
     },
-    {
-      "@type": "Question",
-      name: "Quel est le prix d'une étude posturale à Rennes ?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "L'étude posturale complète à Rennes chez ID Postur coûte 250€ pour un vélo, 300€ pour deux vélos de la même discipline, 350€ pour deux vélos de disciplines différentes, et 120€ pour les moins de 15 ans.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Avec quel équipement dois-je venir ?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Le jour du rendez-vous, venez accompagné du vélo que vous souhaitez régler, de votre tenue complète ainsi que de votre paire de chaussures et de vos cales.",
-      },
-    },
+  })),
+};
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Étude posturale cycliste",
+  serviceType: "Bike fitting",
+  provider: { "@id": "https://id-postur.fr/#business" },
+  areaServed: [
+    { "@type": "City", name: "Rennes" },
+    { "@type": "AdministrativeArea", name: "Ille-et-Vilaine" },
   ],
+  description:
+    "Étude posturale pour cyclistes à Rennes : analyse 3D ou 2D et réglage précis du vélo. Route, VTT, gravel, chrono.",
+  url: "https://id-postur.fr/etudes-posturales",
+  offers: [...ETUDES_POSTURALES, ...OFFRES_PARTICULIERES].map((prestation) => ({
+    "@type": "Offer",
+    name: prestation.title,
+    price: String(prestation.price),
+    priceCurrency: "EUR",
+    availability: "https://schema.org/InStock",
+    url: "https://id-postur.fr/etudes-posturales",
+  })),
 };
 ---
 
-<script
-  is:inline
-  type="application/ld+json"
-  set:html={JSON.stringify(faqSchema)}
-/>
-
 <BaseLayout
-  title="Étude posturale vélo à Rennes – Analyse 3D | ID Postur"
-  description="Étude posturale complète pour cyclistes à Rennes : analyse 3D IDmatch, réglage précis du vélo pour gagner en confort et performance. Route, VTT, Gravel, Triathlon. À partir de 120€."
+  title="Étude posturale vélo à Rennes – 3D et 2D | ID Postur"
+  description={`Étude posturale pour cyclistes à Rennes : analyse 3D (${formatPrix(troisD.price)}) ou 2D (${formatPrix(deuxD.price)}) avec IDmatch. Route, VTT, gravel, chrono. Tarif réduit dès ${formatPrix(PRIX_REDUIT_ETUDE)} pour les clients déjà venus.`}
   ogImage="/images/id-postur-img-1.webp"
 >
+  <script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(faqSchema)}
+    slot="head"
+  />
+  <script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(serviceSchema)}
+    slot="head"
+  />
+
   <div
     class="w-full h-96 relative bg-[url('/images/id-postur-img-1.webp')] bg-cover bg-center flex items-center justify-center bg-black/50 bg-blend-overlay"
   >
-    <div class="grid grid-cols-1 text-white">
+    <div class="grid grid-cols-1 text-white px-4">
       <h1 class="text-3xl md:text-4xl font-bold text-center">
         Étude posturale vélo à Rennes
       </h1>
@@ -58,363 +116,193 @@ const faqSchema = {
       >
       </div>
       <p class="text-center max-w-4xl mx-auto pb-4">
-        <span class="font-bold">ID Postur</span> accompagné de la technologie ID
-        Match vous permet de trouver scientifiquement le réglage idéal pour votre
-        vélo. <span class="font-bold">Route, VTT, Gravel, Triathlon</span> : améliorez
-        vos performances et votre confort en fonction de vos besoins et de vos caractéristiques
-        physiques.
+        <span class="font-bold">ID Postur</span>, accompagné de la technologie <span
+          class="font-bold">IDmatch</span
+        >, vous permet de trouver scientifiquement le réglage idéal pour votre
+        vélo. <span class="font-bold">Route, VTT, Gravel, Chrono</span> :
+        améliorez votre confort et vos performances en fonction de vos besoins
+        et de vos caractéristiques physiques.
       </p>
       <div class="inline-block mx-auto">
         <a
           class="text-center inline-block px-6 py-2 bg-id-postur-dark text-white font-medium hover:opacity-90 transition duration-300 cursor-pointer"
-          href="/cales"
-          rel="nofollow"
+          href="#formules"
         >
-          Réglage des cales
+          Voir les tarifs
         </a>
       </div>
     </div>
   </div>
 
-  <section class="py-2 md:py-16">
-    <div class="container px-2 md:px-5 py-2 md:py-24 mx-auto">
-      <!-- Grid des offres -->
-      <div>
-        <h2 class="text-xl md:text-4xl font-bold">
-          Il s'agit de votre première étude posturale chez ID Postur à Rennes ?
-        </h2>
-        <div
-          class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-0 md:mb-10 rounded-full"
-        >
-        </div>
+  <section class="bg-gray-50 py-16">
+    <div class="container mx-auto px-5 max-w-4xl text-center">
+      <h2 class="text-xl md:text-3xl font-bold">
+        Étude posturale 3D ou 2D : laquelle choisir ?
+      </h2>
+      <div class="h-[3px] w-24 bg-id-postur-dark mx-auto mt-4 mb-6 rounded-full">
       </div>
-      <div class="grid gap-8 md:grid-cols-3 lg:grid-cols-3 py-10">
-        <!-- Étude posturale complète -->
-        <div
-          class="relative flex flex-col h-full bg-white shadow-sm border border-gray-200"
-        >
-          <div
-            class="absolute -top-3 left-4 inline-flex items-center bg-[#C00201] px-3 py-1 text-xs font-semibold text-white shadow"
-          >
-            Offre la plus complète
-          </div>
-          <div class="p-6 flex-1 flex flex-col">
-            <h3 class="text-xl font-semibold text-gray-900 mb-2">
-              Étude posturale complète
-            </h3>
-            <p class="text-sm text-gray-500 mb-4">
-              Analyse biométrique 3D + réglage ultra-précis. Optimisation de
-              votre confort et performance.
-            </p>
-            <div class="mb-4">
-              <span class="text-3xl font-bold text-gray-900">250€</span>
-            </div>
-            <p class="text-sm font-medium text-gray-700 mb-4">
-              ⏱ Durée : <span class="font-semibold">2 heures</span>
-            </p>
-            <ul class="text-sm text-gray-600 space-y-1 mb-6">
-              <li>Équipement à apporter :</li>
-              <li>• Vélo</li>
-              <li>• Chaussures</li>
-              <li>• Cuissard</li>
-              <li>• Maillot</li>
-              <li>• Pièces spécifiques à votre vélo</li>
-            </ul>
-            <div class="mt-auto">
-              <a
-                href="https://calendly.com/idpostur/etude-posturale-complete"
-                rel="nofollow"
-              >
-                <button
-                  class="cursor-pointer w-full inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-[#C00201] border border-[#C00201] bg-white hover:bg-[#C00201]/5 transition"
-                >
-                  Prendre rendez-vous
-                </button>
-              </a>
-            </div>
-          </div>
-        </div>
+      <p class="text-gray-700 mb-6">
+        Les deux formats se déroulent sur votre propre vélo. Ils se distinguent
+        par les disciplines couvertes — le chrono et le triathlon demandent la
+        3D — ainsi que par leur durée et leur tarif :
+        {troisD.duration} et {formatPrix(troisD.price)} en 3D, {deuxD.duration}
+        et {formatPrix(deuxD.price)} en 2D.
+      </p>
+      <a
+        href="/etude-posturale-3d-ou-2d"
+        class="inline-flex justify-center items-center px-6 py-3 bg-id-postur-dark text-white font-semibold hover:opacity-90 transition"
+      >
+        Voir le comparatif détaillé
+      </a>
+    </div>
+  </section>
 
-        <!-- Étude posturale complète -15 ans -->
-        <div
-          class="relative flex flex-col h-full bg-white shadow-sm border border-gray-200"
-        >
-          <div
-            class="absolute -top-3 left-4 inline-flex items-center bg-[#C00201] px-3 py-1 text-xs font-semibold text-white shadow"
-          >
-            Offre pour les moins de 15 ans
-          </div>
-          <div class="p-6 flex-1 flex flex-col">
-            <h3 class="text-xl font-semibold text-gray-900 mb-2">
-              Étude posturale complète
-            </h3>
-            <p class="text-sm text-gray-500 mb-4">
-              Étude adaptée aux jeunes cyclistes en croissance.
-            </p>
-            <div class="mb-4">
-              <span class="text-3xl font-bold text-gray-900">120€</span>
-            </div>
-            <p class="text-sm font-medium text-gray-700 mb-4">
-              ⏱ Durée : <span class="font-semibold">1 heure</span>
-            </p>
-            <ul class="text-sm text-gray-600 space-y-1 mb-6">
-              <li>Équipement à apporter :</li>
-              <li>• Vélo</li>
-              <li>• Chaussures</li>
-              <li>• Cuissard</li>
-              <li>• Maillot</li>
-              <li>• Pièces spécifiques à votre vélo</li>
-            </ul>
-            <div class="mt-auto">
-              <a
-                href="https://calendly.com/idpostur/etude-posturale-complete-15-ans"
-                rel="nofollow"
-              >
-                <button
-                  class="cursor-pointer w-full inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-[#C00201] border border-[#C00201] bg-white hover:bg-[#C00201]/5 transition"
-                >
-                  Prendre rendez-vous
-                </button>
-              </a>
-            </div>
-          </div>
-        </div>
+  <section class="py-16" id="formules">
+    <div class="container px-2 md:px-5 mx-auto">
+      <h2 class="text-xl md:text-4xl font-bold">
+        Il s'agit de votre première étude posturale chez ID Postur ?
+      </h2>
+      <div class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-4 rounded-full"></div>
+      <p class="block md:max-w-4xl">
+        Deux formats au choix. L'étude 3D couvre toutes les disciplines, y
+        compris les vélos de chrono et de triathlon ; l'étude 2D s'adresse à la
+        route, au VTT et au gravel. Dans les deux cas, venez avec votre vélo et
+        votre tenue complète.
+      </p>
 
-        <!-- Réglages Réglage vélo ville/électrique/vtt électrique -->
-        <div
-          class="flex flex-col h-full bg-white shadow-sm border border-gray-200"
-        >
-          <div class="p-6 flex-1 flex flex-col">
-            <h3 class="text-xl font-semibold text-gray-900 mb-2">
-              Réglage vélo ville/électrique/vtt électrique
-            </h3>
-            <p class="text-sm text-gray-500 mb-4">
-              Ajustement de votre posture pour un meilleur confore
-            </p>
-            <div class="mb-4">
-              <p class="text-3xl font-bold text-gray-900">90€</p>
-            </div>
-            <p class="text-sm font-medium text-gray-700 mb-4">
-              ⏱ Durée : <span class="font-semibold">1h</span>
-            </p>
-            <ul class="text-sm text-gray-600 space-y-1 mb-6">
-              <li>Équipement à apporter :</li>
-              <li>• Votre vélo</li>
-              <li>• Équipement spécifique</li>
-            </ul>
-            <div class="mt-auto">
-              <a
-                href="https://calendly.com/idpostur/etude-posturale-velo-ville-electrique-vtt-electrique"
-                rel="nofollow"
-              >
-                <button
-                  class="cursor-pointer w-full inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-[#C00201] border border-[#C00201] bg-white hover:bg-[#C00201]/5 transition"
-                >
-                  Prendre rendez-vous
-                </button>
-              </a>
-            </div>
-          </div>
-        </div>
+      <div class="grid gap-8 md:grid-cols-2 py-10 md:max-w-4xl">
+        {
+          premiereEtude.map((prestation, index) => (
+            <Formulecomponent
+              prestation={prestation}
+              highlight={index === 0}
+              ctaHref="/reserver/premiere-etude"
+              ctaLabel="Réserver cette formule"
+            />
+          ))
+        }
       </div>
     </div>
+  </section>
 
-    <section class="py-16">
-      <div class="container mx-auto">
-        <div>
-          <h2 class="text-xl md:text-4xl font-bold">
-            Vous souhaitez ajuster votre nouveau vélo ?
-          </h2>
-          <div class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-4 rounded-full">
-          </div>
-          <p class="block md:w-4xl">
-            Si vous avez déjà réalisé une étude posturale chez ID Postur, nous
-            disposons déjà de vos mesures. Cela nous permet d’effectuer le
-            réglage de votre nouveau vélo plus rapidement et plus efficacement.
-          </p>
-        </div>
-        <div class="grid gap-8 md:grid-cols-3 lg:grid-cols-3 py-10">
-          <!-- Réglages nouveau vélo -->
-          <div
-            class="relative flex flex-col h-full bg-white shadow-sm border border-gray-200"
-          >
-            <div
-              class="absolute -top-3 left-4 inline-flex items-center bg-[#C00201] px-3 py-1 text-xs font-semibold text-white shadow"
-            >
-              Si vous avez déjà réalisé une étude chez ID Postur
-            </div>
-            <div class="p-6 flex-1 flex flex-col">
-              <h3 class="text-xl font-semibold text-gray-900 mb-2">
-                Réglage nouveau vélo
-              </h3>
-              <p class="text-sm text-gray-500 mb-4">
-                Ajustement rapide de votre nouveau vélo grâce à votre précédente
-                étude.
-                <strong>Validation vidéo incluse.</strong>
-              </p>
-              <div class="mb-4">
-                <p class="text-3xl font-bold text-gray-900">100€</p>
-                <span class="text-xs font-semibold text-gray-900"
-                  >Gratuit dans les 6 mois après première étude</span
-                >
-              </div>
-              <p class="text-sm font-medium text-gray-700 mb-4">
-                ⏱ Durée : <span class="font-semibold">30 minutes</span>
-              </p>
-              <ul class="text-sm text-gray-600 space-y-1 mb-6">
-                <li>Équipement à apporter :</li>
-                <li>• Votre nouveau vélo</li>
-                <li>• Chaussures</li>
-                <li>• Cuissard</li>
-                <li>• Maillot</li>
-                <li>• Pièces spécifiques à votre vélo</li>
-              </ul>
-              <div class="mt-auto">
-                <a
-                  href="https://calendly.com/idpostur/etude-posturale-nouveau-velo"
-                  rel="nofollow"
-                >
-                  <button
-                    class="cursor-pointer w-full inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-[#C00201] border border-[#C00201] bg-white hover:bg-[#C00201]/5 transition"
-                  >
-                    Prendre rendez-vous
-                  </button>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
+  <section class="py-16">
+    <div class="container px-2 md:px-5 mx-auto">
+      <h2 class="text-xl md:text-4xl font-bold">Offre particulière</h2>
+      <div class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-4 rounded-full"></div>
+      <p class="block md:max-w-4xl">
+        Une formule à tarif unique pour les jeunes cyclistes, réalisée avec la
+        technologie d'analyse 2D sur une séance d'1h30. Le tarif reste le même
+        à chaque visite : la croissance modifie les mesures, l'étude est donc
+        refaite entièrement.
+      </p>
+
+      <div class="grid gap-8 md:grid-cols-2 py-10 md:max-w-4xl">
+        {
+          OFFRES_PARTICULIERES.map((prestation) => (
+            <Formulecomponent
+              prestation={prestation}
+              ctaHref="/reserver/premiere-etude"
+              ctaLabel="Réserver cette formule"
+            />
+          ))
+        }
       </div>
-    </section>
+    </div>
+  </section>
+
+  <section class="bg-gray-50 py-16">
+    <div class="container px-2 md:px-5 mx-auto">
+      <h2 class="text-xl md:text-4xl font-bold">
+        Vous avez déjà réalisé une étude chez ID Postur ?
+      </h2>
+      <div class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-4 rounded-full"></div>
+      <p class="block md:max-w-4xl">
+        {REGLE_DEJA_CLIENT} Ce tarif réduit s'applique sans limite de temps depuis
+        votre première étude.
+      </p>
+
+      <div class="grid gap-8 md:grid-cols-2 py-10 md:max-w-4xl">
+        {
+          dejaClient.map((prestation) => (
+            <Formulecomponent
+              prestation={prestation}
+              ctaHref="/reserver/deja-client"
+              ctaLabel="Réserver cette formule"
+            />
+          ))
+        }
+      </div>
+
+      <p class="text-sm text-gray-700">
+        Vous venez de Nantes ou de sa région ? Consultez notre page dédiée aux
+        <a
+          href="/etude-posturale-nantes"
+          class="text-id-postur-dark font-semibold underline hover:opacity-80"
+        >
+          cyclistes nantais</a
+        > : trajet, organisation de la journée et tarifs.
+      </p>
+    </div>
   </section>
 
   <section class="py-16">
     <div class="container mx-auto px-2 md:px-5">
-      <div>
-        <h2 class="text-xl md:text-4xl font-bold">
-          Besoin d'une petite révision ou d'un réglage ponctuel ?
-        </h2>
-        <div class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-4 rounded-full">
-        </div>
-        <p class="block md:w-4xl">
-          Pour une vérification rapide, un micro-ajustement ou une question
-          technique, prenez un rendez-vous ponctuel de 15 min, 30 min ou 1h.
-        </p>
-      </div>
+      <h2 class="text-xl md:text-4xl font-bold">
+        Besoin d'un réglage ponctuel plutôt que d'une étude complète ?
+      </h2>
+      <div class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-4 rounded-full"></div>
+      <p class="block md:max-w-4xl">
+        Pour un réglage de cales, un avis avant l'achat d'un vélo ou une
+        vérification rapide, ID Postur propose des rendez-vous courts de 20
+        minutes.
+      </p>
+
       <div class="grid gap-8 md:grid-cols-3 py-10">
-        <Formulecomponent
-          baseline="Intervention rapide"
-          title="RDV divers — 15 min"
-          description="Vérification rapide, conseil technique ou micro-réglage sans test en pédalage."
-          price="25€"
-          time="15 minutes"
-          link="https://calendly.com/idpostur/rendez-vous-divers-15-min"
-          stack1="• Vélo"
-          stack2=""
-          stack3=""
-          stack4=""
-          stack5=""
-        />
-        <Formulecomponent
-          baseline="Intervention étendue"
-          title="RDV divers — 30 min"
-          description="Révision ou réglage ponctuel avec test en pédalage pour valider la sensation en conditions réelles."
-          price="50€"
-          time="30 minutes"
-          link="https://calendly.com/idpostur/rendez-vous-divers-30-min"
-          stack1="• Vélo"
-          stack2="• Chaussures"
-          stack3="• Cuissard"
-          stack4="• Tenue complète"
-          stack5=""
-        />
-        <Formulecomponent
-          baseline="Intervention complète"
-          title="RDV divers — 1h"
-          description="Session complète pour une révision approfondie, plusieurs réglages ou un accompagnement détaillé avec test en pédalage."
-          price="100€"
-          time="1 heure"
-          link="https://calendly.com/idpostur/rendez-vous-divers-1h"
-          stack1="• Vélo"
-          stack2="• Chaussures"
-          stack3="• Cuissard"
-          stack4="• Tenue complète"
-          stack5=""
-        />
+        {
+          PRESTATIONS_COURTES.map((prestation) => (
+            <a
+              href={prestation.page}
+              class="block bg-white border border-gray-200 p-6 hover:border-id-postur-dark transition"
+            >
+              <h3 class="text-xl font-semibold text-gray-900 mb-2">
+                {prestation.title}
+              </h3>
+              <p class="text-sm text-gray-500 mb-4">{prestation.description}</p>
+              <p class="text-2xl font-bold text-gray-900">
+                {formatPrix(prestation.price)}
+              </p>
+              <p class="text-sm text-gray-700">⏱ {prestation.duration}</p>
+              <span class="inline-block mt-4 text-sm font-semibold text-id-postur-dark">
+                En savoir plus →
+              </span>
+            </a>
+          ))
+        }
       </div>
     </div>
   </section>
 
-  <section class="relative px-6 overflow-hidden">
+  <section class="relative px-6 pb-16 overflow-hidden">
     <div class="relative max-w-5xl mx-auto text-center">
       <h2 id="faq" class="text-3xl md:text-4xl font-extrabold mb-4">
         En savoir plus
       </h2>
       <div class="h-[3px] w-24 bg-id-postur-dark mx-auto mb-6"></div>
 
-      <!-- Bloc FAQ -->
       <div class="space-y-6 text-left">
-        <!-- Question 1 -->
-        <details class="group bg-white border border-gray-200 p-6 transition">
-          <summary
-            class="flex items-center justify-between cursor-pointer list-none"
-          >
-            <h3 class="text-lg font-semibold">
-              Combien de temps dure une étude posturale ?
-            </h3>
-            <span
-              class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
-              >+</span
-            >
-          </summary>
-          <p class="mt-4 leading-relaxed">
-            Une étude posturale complète dure <strong>2 heures</strong>, et
-            <strong>1h30 pour les moins de 15 ans</strong>. Si vous avez déjà
-            réalisé une étude posturale, nous disposons déjà de vos mesures, ce
-            qui nous permet de régler votre nouveau vélo en
-            <strong>30 minutes</strong>.
-          </p>
-        </details>
-
-        <!-- Question 2 -->
-        <details class="group bg-white border border-gray-200 p-6 transition">
-          <summary
-            class="flex items-center justify-between cursor-pointer list-none"
-          >
-            <h3 class="text-lg font-semibold">
-              Quelle est le prix d'une étude posturale à Rennes ?
-            </h3>
-            <span
-              class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
-              >+</span
-            >
-          </summary>
-          <p>
-            Le jour du rendez-vous, venez avec le vélo que vous souhaitez
-            régler, votre <strong>tenue complète</strong>, ainsi que vos
-            <strong>chaussures</strong> et vos <strong>cales</strong>.
-          </p>
-        </details>
-
-        <!-- Question 3 -->
-        <details class="group bg-white border border-gray-200 p-6 transition">
-          <summary
-            class="flex items-center justify-between cursor-pointer list-none"
-          >
-            <h3 class="text-lg font-semibold">
-              Avec quel équipement dois-je venir ?
-            </h3>
-            <span
-              class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
-              >+</span
-            >
-          </summary>
-          <p class="mt-4 leading-relaxed">
-            Le jour du rendez-vous, venez accompagné du vélo que vous souhaitez
-            régler, de votre tenue complète ainsi que de votre paire de
-            chaussures et de vos cales.
-          </p>
-        </details>
+        {
+          faqItems.map((item) => (
+            <details class="group bg-white border border-gray-200 p-6 transition">
+              <summary class="flex items-center justify-between cursor-pointer list-none">
+                <h3 class="text-lg font-semibold">{item.question}</h3>
+                <span class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none">
+                  +
+                </span>
+              </summary>
+              <p class="mt-4 leading-relaxed">{item.answer}</p>
+            </details>
+          ))
+        }
       </div>
     </div>
   </section>

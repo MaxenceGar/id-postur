@@ -1,23 +1,125 @@
+---
+/**
+ * « Études posturales » ouvre l'étape de tri : le cycliste dit d'abord s'il
+ * est déjà venu, puis ne voit que les deux formules qui le concernent.
+ * Sans ce filtre, des créneaux sont réservés au mauvais tarif.
+ * La page vitrine /etudes-posturales reste accessible depuis /reserver,
+ * la home et le footer.
+ */
+const liens = [
+  { href: "/reserver", label: "Études posturales", actifSur: ["/etudes-posturales"] },
+  { href: "/cales", label: "Réglage des cales" },
+  { href: "/choix-nouveau-velo", label: "Choix d'un vélo" },
+  { href: "/rendez-vous-divers", label: "Rendez-vous divers" },
+];
+
+const chemin = Astro.url.pathname.replace(/\/$/, "") || "/";
+const estActif = (lien: (typeof liens)[number]) =>
+  chemin === lien.href ||
+  chemin.startsWith(`${lien.href}/`) ||
+  (lien.actifSur ?? []).includes(chemin);
+---
+
 <header class="bg-white shadow-sm sticky top-0 z-50">
   <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-    <a href="/"
-      ><img
+    <a href="/" aria-label="Retour à l'accueil ID Postur">
+      <img
         src="/images/LOGO-ID-POSTUR.webp"
-        alt="Photo de client"
-        class="w-32 h-auto object-cover"
-        loading="lazy"
-      /></a
-    >
+        alt="Logo ID Postur"
+        width="128"
+        height="43"
+        class="w-32 h-auto object-contain"
+      />
+    </a>
 
-    <!-- Menu burger mobile -->
-    <button class="text-gray-700">
+    <!-- Navigation desktop -->
+    <nav aria-label="Navigation principale" class="hidden lg:block">
+      <ul class="flex items-center gap-6">
+        {
+          liens.map((lien) => (
+            <li>
+              <a
+                href={lien.href}
+                aria-current={estActif(lien) ? "page" : undefined}
+                class:list={[
+                  "text-sm font-medium transition hover:text-id-postur-dark",
+                  estActif(lien)
+                    ? "text-id-postur-dark"
+                    : "text-gray-700",
+                ]}
+              >
+                {lien.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-3">
       <a
-        href="#formules"
-        rel="nofollow"
-        class="inline-block bg-id-postur-dark hover:bg-id-postur text-white font-semibold py-3 px-4 transition"
+        href="/reserver"
+        class="hidden sm:inline-block bg-id-postur-dark hover:bg-id-postur text-white font-semibold py-3 px-4 transition"
       >
         Prendre rendez-vous
       </a>
-    </button>
+
+      <!-- Menu mobile : disclosure natif, sans JavaScript -->
+      <details class="lg:hidden group relative">
+        <summary
+          class="list-none cursor-pointer p-2 text-gray-700"
+          aria-label="Ouvrir le menu"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="28"
+            height="28"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            aria-hidden="true"
+          >
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </summary>
+        <nav
+          aria-label="Navigation mobile"
+          class="absolute right-0 top-full mt-2 w-64 bg-white shadow-lg border border-gray-200 z-50"
+        >
+          <ul class="flex flex-col py-2">
+            {
+              liens.map((lien) => (
+                <li>
+                  <a
+                    href={lien.href}
+                    aria-current={estActif(lien) ? "page" : undefined}
+                    class:list={[
+                      "block px-4 py-3 text-sm font-medium hover:bg-gray-50",
+                      estActif(lien)
+                        ? "text-id-postur-dark"
+                        : "text-gray-700",
+                    ]}
+                  >
+                    {lien.label}
+                  </a>
+                </li>
+              ))
+            }
+            <li class="px-4 py-3 sm:hidden">
+              <a
+                href="/reserver"
+                class="block text-center bg-id-postur-dark hover:bg-id-postur text-white font-semibold py-3 px-4 transition"
+              >
+                Prendre rendez-vous
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </details>
+    </div>
   </div>
 </header>

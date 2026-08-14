@@ -1,0 +1,65 @@
+---
+import {
+  ETUDES_POSTURALES,
+  PRESTATIONS_COURTES,
+  PRIX_ENTREE_ETUDE,
+  formatPrix,
+} from "../data/tarifs";
+
+export interface Props {
+  /** Slug de la prestation à ne pas afficher (celle de la page courante). */
+  exclude?: string;
+  title?: string;
+}
+
+const { exclude, title = "Les autres prestations ID Postur" } = Astro.props;
+
+/** Une seule carte pour les études posturales : elles partagent la même page. */
+const etude = ETUDES_POSTURALES[0];
+
+const liens = [
+  {
+    href: etude.page,
+    title: "Étude posturale 3D et 2D",
+    description:
+      "L'analyse complète de votre position sur le vélo, en 3D ou en 2D, pour gagner en confort et en performance.",
+    prix: `à partir de ${formatPrix(PRIX_ENTREE_ETUDE)}`,
+    duree: `${ETUDES_POSTURALES[1].duration} à ${etude.duration}`,
+  },
+  ...PRESTATIONS_COURTES.filter((p) => p.slug !== exclude).map((p) => ({
+    href: p.page,
+    title: p.title,
+    description: p.description,
+    prix: formatPrix(p.price),
+    duree: p.duration,
+  })),
+];
+---
+
+<section class="py-16">
+  <div class="container mx-auto px-2 md:px-5">
+    <h2 class="text-xl md:text-4xl font-bold">{title}</h2>
+    <div class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-4 rounded-full"></div>
+
+    <div class="grid gap-8 md:grid-cols-3 py-10">
+      {
+        liens.map((lien) => (
+          <a
+            href={lien.href}
+            class="block bg-white border border-gray-200 p-6 hover:border-id-postur-dark transition"
+          >
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">
+              {lien.title}
+            </h3>
+            <p class="text-sm text-gray-500 mb-4">{lien.description}</p>
+            <p class="text-2xl font-bold text-gray-900">{lien.prix}</p>
+            <p class="text-sm text-gray-700">⏱ {lien.duree}</p>
+            <span class="inline-block mt-4 text-sm font-semibold text-id-postur-dark">
+              En savoir plus →
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>

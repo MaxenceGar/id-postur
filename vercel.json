@@ -1,0 +1,25 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    {
+      "source": "/premiere-ou-nouvelle",
+      "destination": "/etudes-posturales",
+      "permanent": true
+    },
+    {
+      "source": "/etude-posturale-ou-cales",
+      "destination": "/etudes-posturales",
+      "permanent": true
+    },
+    {
+      "source": "/nouveau-velo-ou-reglage",
+      "destination": "/etudes-posturales",
+      "permanent": true
+    },
+    {
+      "source": "/etude-posturale",
+      "destination": "/etudes-posturales",
+      "permanent": true
+    }
+  ]
+}

@@ -1,0 +1,305 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import "../styles/global.css";
+import {
+  COMPARATIF_3D_2D,
+  EQUIPES_3D,
+  FORMATS_ETUDE,
+  OFFRES_PARTICULIERES,
+  POUR_QUI_2D,
+  POUR_QUI_3D,
+  REGLE_DEJA_CLIENT,
+  formatPrix,
+  getPrestation,
+} from "../data/tarifs";
+
+const troisD = getPrestation("etude-posturale-3d");
+const deuxD = getPrestation("etude-posturale-2d");
+const troisDClient = getPrestation("etude-posturale-3d-deja-client");
+const deuxDClient = getPrestation("etude-posturale-2d-deja-client");
+
+const afficherPourQui = POUR_QUI_3D.length > 0 && POUR_QUI_2D.length > 0;
+
+const faqItems = [
+  {
+    question: "Quelle est la différence de durée entre une étude 3D et une 2D ?",
+    answer: `L'étude posturale 3D dure ${troisD.duration} et l'étude posturale 2D ${deuxD.duration}. La séance 3D laisse donc davantage de temps sur le vélo et sur les réglages.`,
+  },
+  {
+    question: "Quel est l'écart de prix entre l'étude 3D et l'étude 2D ?",
+    answer: `L'étude posturale 3D coûte ${formatPrix(troisD.price)} et l'étude posturale 2D ${formatPrix(deuxD.price)}, soit ${formatPrix(troisD.price - deuxD.price)} d'écart. Pour un cycliste déjà venu chez ID Postur, les tarifs passent à ${formatPrix(troisDClient.price)} en 3D et ${formatPrix(deuxDClient.price)} en 2D.`,
+  },
+  {
+    question: "L'étude 2D convient-elle à un vélo de chrono ou de triathlon ?",
+    answer:
+      "Non. Les positions de chrono et de triathlon ne sont pas prises en charge par l'analyse 2D : elles nécessitent l'étude posturale 3D. L'étude 2D reste disponible pour la route, le VTT et le gravel.",
+  },
+  {
+    question: "Pourquoi éviter les vêtements réfléchissants en 3D ?",
+    answer:
+      "Les matières réfléchissantes perturbent la captation du système d'analyse 3D. Prévoyez donc une tenue de vélo classique pour ce format. Pour l'étude 2D, cette contrainte ne s'applique pas.",
+  },
+  {
+    question: "Qui utilise l'analyse posturale 3D ?",
+    answer: `L'analyse 3D est la technologie employée par de grandes équipes du World Tour — ${EQUIPES_3D.join(", ")} — pour les études posturales de leurs coureurs. Chez ID Postur, elle est proposée à tous les cyclistes, quel que soit le niveau.`,
+  },
+  {
+    question: "Existe-t-il un tarif pour les moins de 15 ans ?",
+    answer: `Oui. ${OFFRES_PARTICULIERES.map((o) => `${o.title} : ${formatPrix(o.price)} pour ${o.duration}`).join(". ")}. Cette formule utilise la technologie d'analyse 2D, à tarif unique : la croissance modifiant les mesures, l'étude est refaite entièrement à chaque visite.`,
+  },
+  {
+    question: "Puis-je passer de la 2D à la 3D plus tard ?",
+    answer: `Oui. Si vous avez déjà réalisé une étude chez ID Postur, quel qu'en soit le format, vous bénéficiez ensuite du tarif réduit : ${formatPrix(troisDClient.price)} pour une étude 3D et ${formatPrix(deuxDClient.price)} pour une étude 2D.`,
+  },
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqItems.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: { "@type": "Answer", text: item.answer },
+  })),
+};
+---
+
+<BaseLayout
+  title="Étude posturale 3D ou 2D : quelle différence ? | ID Postur"
+  description={`Étude posturale 3D (${formatPrix(troisD.price)}, ${troisD.duration}) ou 2D (${formatPrix(deuxD.price)}, ${deuxD.duration}) à Rennes : durées, tarifs, prérequis et comparatif pour choisir le format adapté à votre pratique.`}
+  ogImage="/images/id-postur-img-1.webp"
+>
+  <script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(faqSchema)}
+    slot="head"
+  />
+
+  <!-- HERO -->
+  <section class="bg-gray-50 py-16 md:py-24">
+    <div class="container mx-auto px-5 max-w-4xl text-center">
+      <h1 class="text-3xl md:text-4xl font-bold">
+        Étude posturale 3D ou 2D : quelle différence ?
+      </h1>
+      <div
+        class="h-[3px] w-24 bg-id-postur-dark mx-auto mt-4 mb-6 rounded-full"
+      >
+      </div>
+      <p class="text-gray-700 leading-relaxed">
+        ID Postur propose deux formats d'étude posturale à Rennes : la <strong
+          >3D</strong
+        >, la plus complète, et la <strong>2D</strong>, plus courte. Les deux se
+        déroulent sur votre propre vélo, mais ne couvrent pas les mêmes
+        disciplines : les vélos de chrono et de triathlon relèvent
+        exclusivement de la 3D. Cette page vous aide à choisir le format adapté
+        à votre pratique et à votre budget.
+      </p>
+    </div>
+  </section>
+
+  <!-- BLOCS ALTERNÉS 3D / 2D -->
+  {
+    FORMATS_ETUDE.map((format) => (
+      <section class="container mx-auto px-5 py-16" id={format.ancre}>
+        <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-10 items-center">
+          <div class:list={[format.imageADroite ? "md:order-1" : "md:order-2"]}>
+            <h2 class="text-2xl md:text-3xl font-bold">{format.titre}</h2>
+            <div class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-4 rounded-full" />
+            <p class="text-lg font-semibold text-id-postur-dark mb-4">
+              {format.accroche}
+            </p>
+            {format.paragraphes.map((paragraphe) => (
+              <p class="text-gray-700 leading-relaxed mb-4">{paragraphe}</p>
+            ))}
+            <ul class="text-sm text-gray-600 space-y-1 mb-6">
+              <li class="font-medium text-gray-700">À apporter :</li>
+              {format.prestation.equipment.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+            <a
+              href="/reserver"
+              class="inline-flex justify-center items-center px-6 py-3 bg-id-postur-dark text-white font-semibold hover:opacity-90 transition"
+            >
+              Réserver une étude {format.titre.includes("3D") ? "3D" : "2D"}
+            </a>
+          </div>
+          <div class:list={[format.imageADroite ? "md:order-2" : "md:order-1"]}>
+            <img
+              src={format.image}
+              alt={format.imageAlt}
+              width="800"
+              height="600"
+              loading="lazy"
+              class="w-full h-auto object-cover shadow-sm"
+            />
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  <!--
+    ÉQUIPES — on énonce uniquement que ces équipes utilisent l'analyse 3D.
+    Aucune affirmation d'un lien avec ID Postur, aucun logo : une citation
+    textuelle n'engage que ce qu'elle dit.
+  -->
+  <section class="border-y border-gray-200 bg-white py-14">
+    <div class="container mx-auto px-5 max-w-4xl text-center">
+      <h2 class="text-2xl md:text-3xl font-bold mb-4">
+        L'analyse 3D, la référence du peloton professionnel
+      </h2>
+      <div class="h-[3px] w-24 bg-id-postur-dark mx-auto mb-6 rounded-full">
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-8">
+        C'est la technologie retenue par les plus grandes équipes du World Tour
+        pour réaliser les études posturales de leurs coureurs. Un niveau de
+        précision pensé pour la compétition, accessible à tous les cyclistes
+        chez ID Postur.
+      </p>
+      <ul class="flex flex-wrap justify-center gap-4">
+        {
+          EQUIPES_3D.map((equipe) => (
+            <li class="border border-gray-200 bg-gray-50 px-6 py-3 text-sm font-semibold text-gray-800">
+              {equipe}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- TABLEAU COMPARATIF -->
+  <section class="bg-gray-50 py-16">
+    <div class="container mx-auto px-5 max-w-4xl">
+      <h2 class="text-2xl md:text-3xl font-bold">
+        Étude 3D et étude 2D en un coup d'œil
+      </h2>
+      <div class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-10 rounded-full"></div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse bg-white min-w-125">
+          <thead>
+            <tr class="border-b-2 border-gray-200">
+              <th class="p-4 font-semibold text-gray-700"></th>
+              <th class="p-4 font-semibold text-id-postur-dark">Étude 3D</th>
+              <th class="p-4 font-semibold text-gray-900">Étude 2D</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              COMPARATIF_3D_2D.map((ligne) => (
+                <tr class="border-b border-gray-100 align-top">
+                  <th class="p-4 font-medium text-gray-700 text-sm">
+                    {ligne.critere}
+                  </th>
+                  <td class="p-4 text-sm text-gray-700">{ligne.troisD}</td>
+                  <td class="p-4 text-sm text-gray-700">{ligne.deuxD}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <p class="text-sm text-gray-600 mt-6">{REGLE_DEJA_CLIENT}</p>
+    </div>
+  </section>
+
+  <!-- COMMENT CHOISIR (rendu seulement si le contenu est renseigné) -->
+  {
+    afficherPourQui && (
+      <section class="container mx-auto px-5 py-16">
+        <div class="max-w-5xl mx-auto">
+          <h2 class="text-2xl md:text-3xl font-bold">
+            Comment choisir entre les deux ?
+          </h2>
+          <div class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-10 rounded-full" />
+
+          <div class="grid md:grid-cols-2 gap-8">
+            <div class="border-2 border-id-postur-dark bg-white p-6">
+              <h3 class="text-xl font-semibold mb-4">Choisissez la 3D si…</h3>
+              <ul class="space-y-2 text-sm text-gray-700">
+                {POUR_QUI_3D.map((raison) => (
+                  <li>• {raison}</li>
+                ))}
+              </ul>
+            </div>
+            <div class="border border-gray-200 bg-white p-6">
+              <h3 class="text-xl font-semibold mb-4">Choisissez la 2D si…</h3>
+              <ul class="space-y-2 text-sm text-gray-700">
+                {POUR_QUI_2D.map((raison) => (
+                  <li>• {raison}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- CTA -->
+  <section class="container mx-auto px-5 py-16">
+    <div
+      class="max-w-4xl mx-auto border-2 border-id-postur-dark bg-white p-8 text-center"
+    >
+      <h2 class="text-2xl md:text-3xl font-bold mb-4">
+        Prêt à réserver votre étude posturale ?
+      </h2>
+      <p class="text-gray-700 mb-6">
+        Indiquez si vous êtes déjà venu chez ID Postur, puis choisissez votre
+        format et votre créneau.
+      </p>
+      <a
+        href="/reserver"
+        class="inline-flex justify-center items-center px-8 py-3 bg-id-postur-dark text-white font-semibold hover:opacity-90 transition"
+      >
+        Prendre rendez-vous
+      </a>
+      <p class="text-sm text-gray-600 mt-4">
+        Ou par téléphone au <a
+          href="tel:0607167323"
+          class="text-id-postur-dark font-semibold">06 07 16 73 23</a
+        >
+      </p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="bg-gray-50 py-16">
+    <div class="container mx-auto px-5 max-w-4xl">
+      <h2 class="text-2xl md:text-3xl font-bold text-center mb-4">
+        Questions fréquentes sur la 3D et la 2D
+      </h2>
+      <div class="h-[3px] w-24 bg-id-postur-dark mx-auto mb-10 rounded-full">
+      </div>
+
+      <div class="space-y-6">
+        {
+          faqItems.map((item) => (
+            <details class="group bg-white border border-gray-200 p-6 transition">
+              <summary class="flex items-center justify-between cursor-pointer list-none">
+                <h3 class="text-lg font-semibold">{item.question}</h3>
+                <span class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none">
+                  +
+                </span>
+              </summary>
+              <p class="mt-4 text-gray-700 leading-relaxed">{item.answer}</p>
+            </details>
+          ))
+        }
+      </div>
+
+      <p class="text-center text-sm text-gray-600 mt-10">
+        <a
+          href="/etudes-posturales"
+          class="text-id-postur-dark font-semibold underline hover:opacity-80"
+        >
+          Voir toutes les formules d'étude posturale et leurs tarifs
+        </a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,64 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import "../../styles/global.css";
+import Formulecomponent from "../../components/formulecomponent.astro";
+import { ETUDES_DEJA_CLIENT } from "../../data/tarifs";
+
+/** Étape finale du parcours de réservation — noindex, cf. /reserver. */
+---
+
+<BaseLayout
+  title="Étude posturale – tarif client existant | ID Postur"
+  description="Formules d'étude posturale 3D et 2D au tarif réduit, réservées aux cyclistes déjà venus chez ID Postur."
+  noindex={true}
+>
+  <section class="container mx-auto px-5 py-16 md:py-24">
+    <div class="max-w-4xl mx-auto">
+      <nav aria-label="Fil d'ariane" class="mb-8 text-sm text-gray-500">
+        <a href="/reserver" class="hover:text-id-postur-dark underline"
+          >Réserver</a
+        > <span aria-hidden="true">›</span> Déjà client
+      </nav>
+
+      <h1 class="text-3xl md:text-4xl font-bold">
+        Votre nouvelle étude posturale
+      </h1>
+      <div class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-6 rounded-full"></div>
+      <p class="text-gray-700 mb-6 max-w-2xl">
+        Nous disposons déjà de vos mesures : vous bénéficiez du tarif réduit,
+        sans limite de temps depuis votre première étude.
+      </p>
+
+      <div
+        class="border-l-4 border-id-postur-dark bg-gray-50 p-4 mb-12 max-w-2xl"
+      >
+        <p class="text-sm text-gray-800">
+          <strong>Réservé aux cyclistes déjà venus chez ID Postur.</strong> Si vous
+          n'avez jamais réalisé d'étude posturale ici, réservez plutôt une
+          <a
+            href="/reserver/premiere-etude"
+            class="text-id-postur-dark font-semibold underline hover:opacity-80"
+            >première étude posturale</a
+          > : le protocole et la durée ne sont pas les mêmes.
+        </p>
+      </div>
+
+      <div class="grid gap-8 md:grid-cols-2">
+        {
+          ETUDES_DEJA_CLIENT.map((prestation, index) => (
+            <Formulecomponent prestation={prestation} highlight={index === 0} />
+          ))
+        }
+      </div>
+
+      <div class="mt-12 text-center text-sm text-gray-600">
+        <p>
+          Un doute sur votre situation ? Appelez-nous au <a
+            href="tel:0607167323"
+            class="text-id-postur-dark font-semibold">06 07 16 73 23</a
+          > avant de bloquer un créneau.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

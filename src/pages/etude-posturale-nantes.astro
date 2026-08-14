@@ -1,57 +1,63 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import "../styles/global.css";
+import {
+  ETUDES_POSTURALES,
+  REGLE_DEJA_CLIENT,
+  formatPrix,
+  getPrestation,
+} from "../data/tarifs";
+
+const troisD = getPrestation("etude-posturale-3d");
+const deuxD = getPrestation("etude-posturale-2d");
+const troisDClient = getPrestation("etude-posturale-3d-deja-client");
+const deuxDClient = getPrestation("etude-posturale-2d-deja-client");
+
+const faqItems = [
+  {
+    question: "Combien de temps faut-il pour venir à ID Postur depuis Nantes ?",
+    answer:
+      "Comptez environ 1h15 de route depuis Nantes centre jusqu'à ID Postur, situé à La Mézière (35520) au nord-ouest de Rennes. Le trajet s'effectue principalement par la N137, une 2x2 voies gratuite. Un parking est disponible sur place.",
+  },
+  {
+    question:
+      "Peut-on faire l'étude posturale sur une journée aller-retour depuis Nantes ?",
+    answer: `Oui, c'est le cas le plus fréquent pour les cyclistes nantais. L'étude posturale 3D dure ${troisD.duration} et l'étude posturale 2D ${deuxD.duration}. Avec le trajet aller-retour, comptez environ 6h sur la journée en 3D, et 4h en 2D. Nous adaptons les horaires (ouverture matinale ou fin de journée) pour faciliter votre venue.`,
+  },
+  {
+    question:
+      "Combien coûte une étude posturale à Rennes pour un cycliste nantais ?",
+    answer: `L'étude posturale 3D coûte ${formatPrix(troisD.price)} et l'étude posturale 2D ${formatPrix(deuxD.price)}. Si vous avez déjà réalisé une étude chez ID Postur, les tarifs sont respectivement de ${formatPrix(troisDClient.price)} et ${formatPrix(deuxDClient.price)}. Aucun surcoût géographique pour les cyclistes venant de Nantes.`,
+  },
+  {
+    question:
+      "Pourquoi venir à ID Postur plutôt que chez un bike fitter à Nantes ?",
+    answer:
+      "ID Postur est équipé de la technologie IDmatch BikeLab, un système d'analyse de référence en Europe, encore rare dans l'ouest de la France. Romain Hardy, fondateur, est un ancien cycliste professionnel, ce qui apporte une expertise terrain unique. Le centre a réalisé plus de 800 études posturales et accompagné 25+ athlètes professionnels, avec 62 avis 5/5 sur Google.",
+  },
+  {
+    question: "Dois-je venir avec mon propre vélo depuis Nantes ?",
+    answer:
+      "Oui, l'étude posturale se fait obligatoirement sur votre vélo afin de garantir des réglages adaptés à votre morphologie, vos composants et votre pratique. Prévoyez également votre tenue complète (cuissard, maillot), vos chaussures, vos cales et les pièces spécifiques à votre vélo. Pour l'étude 3D, évitez les vêtements réfléchissants : ils perturbent la captation.",
+  },
+];
 
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  mainEntity: [
-    {
-      "@type": "Question",
-      name: "Combien de temps faut-il pour venir à ID Postur depuis Nantes ?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Comptez environ 1h15 de route depuis Nantes centre jusqu'à ID Postur, situé à La Mézière (35520) au nord-ouest de Rennes. Le trajet s'effectue principalement par la N137, une 2x2 voies gratuite. Un parking est disponible sur place.",
-      },
+  mainEntity: faqItems.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.answer,
     },
-    {
-      "@type": "Question",
-      name: "Peut-on faire l'étude posturale sur une journée aller-retour depuis Nantes ?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Oui, c'est le cas le plus fréquent pour les cyclistes nantais. L'étude posturale complète dure 2 heures. Avec le trajet aller-retour, prévoyez environ 5h au total sur la journée. Nous adaptons les horaires (ouverture matinale ou fin de journée) pour faciliter votre venue.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Combien coûte une étude posturale à Rennes pour un cycliste nantais ?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "L'étude posturale complète coûte 250€ pour un vélo, 300€ pour deux vélos de la même discipline et 350€ pour deux vélos de disciplines différentes. Pour les moins de 15 ans, le tarif est de 120€. Aucun surcoût géographique pour les cyclistes venant de Nantes.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Pourquoi venir à ID Postur plutôt que chez un bike fitter à Nantes ?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "ID Postur est équipé de la technologie IDmatch BikeLab, un système d'analyse 3D de référence en Europe, encore rare dans l'ouest de la France. Romain Hardy, fondateur, est un ancien cycliste professionnel, ce qui apporte une expertise terrain unique. Le centre a réalisé plus de 800 études posturales et accompagné 25+ athlètes professionnels, avec 62 avis 5/5 sur Google.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Dois-je venir avec mon propre vélo depuis Nantes ?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Oui, l'étude posturale se fait obligatoirement sur votre vélo afin de garantir des réglages adaptés à votre morphologie, vos composants et votre pratique. Prévoyez également votre tenue complète (cuissard, maillot), vos chaussures, vos cales et les pièces spécifiques à votre vélo.",
-      },
-    },
-  ],
+  })),
 };
 
 const datePublished = "2026-04-22";
-const dateModified = "2026-04-22";
-const dateHumanReadable = "22 avril 2026";
+const dateModified = "2026-08-11";
+const dateHumanReadable = "11 août 2026";
 
 const serviceSchema = {
   "@context": "https://schema.org",
@@ -67,13 +73,15 @@ const serviceSchema = {
     sameAs: "https://fr.wikipedia.org/wiki/Nantes",
   },
   description:
-    "Étude posturale complète pour cyclistes nantais avec la technologie IDmatch BikeLab. Analyse 3D sans marqueurs, réglages précis du vélo et optimisation de la position.",
-  offers: {
+    "Étude posturale pour cyclistes nantais avec la technologie IDmatch BikeLab. Analyse 3D ou 2D, réglages précis du vélo et optimisation de la position.",
+  offers: ETUDES_POSTURALES.map((prestation) => ({
     "@type": "Offer",
-    price: "250",
+    name: prestation.title,
+    price: String(prestation.price),
     priceCurrency: "EUR",
     availability: "https://schema.org/InStock",
-  },
+    url: "https://id-postur.fr/etude-posturale-nantes",
+  })),
   url: "https://id-postur.fr/etude-posturale-nantes",
   datePublished,
   dateModified,
@@ -104,7 +112,7 @@ const personSchema = {
 
 <BaseLayout
   title="Étude posturale à Nantes | Bike fitting IDmatch — ID Postur"
-  description="Étude posturale cycliste à Nantes : analyse 3D IDmatch BikeLab par Romain Hardy, ex-cycliste pro. 62 avis 5/5 Google. Route, VTT, Gravel, Triathlon. Dès 120€."
+  description={`Étude posturale cycliste à Nantes : analyse IDmatch BikeLab par Romain Hardy, ex-cycliste pro. 62 avis 5/5 Google. Route, VTT, gravel, chrono. 3D ${formatPrix(troisD.price)} ou 2D ${formatPrix(deuxD.price)}.`}
   ogImage="/images/id-postur-img-1.webp"
 >
   <script
@@ -200,8 +208,7 @@ const personSchema = {
       </a>
 
       <a
-        href="https://calendly.com/idpostur/etude-posturale-complete"
-        rel="nofollow"
+        href="#tarifs"
         class="inline-block px-6 py-3 bg-id-postur-dark text-white font-semibold hover:opacity-90 transition duration-300"
       >
         Prendre rendez-vous
@@ -300,8 +307,9 @@ const personSchema = {
           </h3>
           <p class="text-gray-700 leading-relaxed mb-4">
             Pour les cyclistes nantais, la majorité des études posturales se
-            font sur une journée aller-retour. Avec 2h d'étude sur place et 2x
-            1h15 de route, comptez environ 5h au total.
+            font sur une journée aller-retour. Avec {troisD.duration} d'étude
+            sur place en 3D — ou {deuxD.duration} en 2D — et 2x 1h15 de route,
+            comptez environ 6h au total en 3D, 4h en 2D.
           </p>
           <p class="text-gray-700 leading-relaxed">
             Nous adaptons les créneaux en début ou fin de journée pour éviter
@@ -325,10 +333,10 @@ const personSchema = {
       <div class="h-[3px] w-24 bg-id-postur-dark mb-10 rounded-full"></div>
 
       <p class="mb-8 text-gray-700 leading-relaxed">
-        Une étude posturale complète chez ID Postur dure <strong
-          >2 heures</strong
-        > et couvre l'ensemble des paramètres qui influent sur votre position et
-        votre rendement.
+        Une étude posturale chez ID Postur dure <strong>{troisD.duration}</strong
+        > en 3D et <strong>{deuxD.duration}</strong> en 2D. Dans les deux cas, elle
+        couvre l'ensemble des paramètres qui influent sur votre position et votre
+        rendement.
       </p>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -417,7 +425,7 @@ const personSchema = {
             <p class="text-sm text-gray-700">
               Position CLM / aérodynamique optimisée pour les épreuves
               triathlon et Ironman. Gains en watts et en confort sur partie
-              vélo.
+              vélo. Ces positions relèvent de l'étude 3D.
             </p>
           </div>
         </div>
@@ -446,8 +454,8 @@ const personSchema = {
           <div>
             <h3 class="font-semibold mb-1">Jeunes cyclistes en croissance</h3>
             <p class="text-sm text-gray-700">
-              Tarif réduit (120€) pour les moins de 15 ans. Protocole adapté
-              aux morphologies en évolution.
+              Protocole adapté aux morphologies en évolution, avec des repères
+              à réévaluer au fil de la croissance.
             </p>
           </div>
         </div>
@@ -466,40 +474,43 @@ const personSchema = {
   </section>
 
   <!-- TARIFS -->
-  <section class="container mx-auto px-5 py-16">
+  <section class="container mx-auto px-5 py-16" id="tarifs">
     <div class="max-w-5xl mx-auto">
       <h2 class="text-3xl md:text-4xl font-bold mb-4">
         Tarifs pour une étude posturale
       </h2>
-      <div class="h-[3px] w-24 bg-id-postur-dark mb-10 rounded-full"></div>
+      <div class="h-[3px] w-24 bg-id-postur-dark mb-6 rounded-full"></div>
+      <p class="mb-10 text-gray-700 leading-relaxed">
+        Deux formats au choix : la 3D pour toutes les disciplines, chrono et
+        triathlon compris, la 2D pour la route, le VTT et le gravel. {
+          REGLE_DEJA_CLIENT
+        }
+      </p>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div class="bg-white border-2 border-id-postur-dark p-6 text-center">
-          <h3 class="font-semibold mb-2">Étude complète</h3>
-          <p class="text-3xl font-bold text-id-postur-dark mb-2">250€</p>
-          <p class="text-sm text-gray-600">1 vélo · 2h</p>
-        </div>
-        <div class="bg-white border border-gray-200 p-6 text-center">
-          <h3 class="font-semibold mb-2">2 vélos — même discipline</h3>
-          <p class="text-3xl font-bold text-id-postur-dark mb-2">300€</p>
-          <p class="text-sm text-gray-600">2h15</p>
-        </div>
-        <div class="bg-white border border-gray-200 p-6 text-center">
-          <h3 class="font-semibold mb-2">2 vélos — disciplines différentes</h3>
-          <p class="text-3xl font-bold text-id-postur-dark mb-2">350€</p>
-          <p class="text-sm text-gray-600">3h</p>
-        </div>
-        <div class="bg-white border border-gray-200 p-6 text-center">
-          <h3 class="font-semibold mb-2">Jeune cycliste (-15 ans)</h3>
-          <p class="text-3xl font-bold text-id-postur-dark mb-2">120€</p>
-          <p class="text-sm text-gray-600">1h</p>
-        </div>
+        {
+          ETUDES_POSTURALES.map((prestation, index) => (
+            <div
+              class:list={[
+                "bg-white p-6 text-center",
+                index === 0
+                  ? "border-2 border-id-postur-dark"
+                  : "border border-gray-200",
+              ]}
+            >
+              <h3 class="font-semibold mb-2">{prestation.title}</h3>
+              <p class="text-3xl font-bold text-id-postur-dark mb-2">
+                {formatPrix(prestation.price)}
+              </p>
+              <p class="text-sm text-gray-600">{prestation.duration}</p>
+            </div>
+          ))
+        }
       </div>
 
       <div class="text-center mt-8">
         <a
-          href="https://calendly.com/idpostur/etude-posturale-complete"
-          rel="nofollow"
+          href="/reserver"
           class="inline-block px-8 py-3 bg-id-postur-dark text-white font-semibold hover:opacity-90 transition duration-300"
         >
           Réserver mon étude posturale
@@ -526,114 +537,19 @@ const personSchema = {
       </div>
 
       <div class="space-y-6">
-        <details class="group bg-white border border-gray-200 p-6 transition">
-          <summary
-            class="flex items-center justify-between cursor-pointer list-none"
-          >
-            <h3 class="text-lg font-semibold">
-              Combien de temps faut-il pour venir à ID Postur depuis Nantes ?
-            </h3>
-            <span
-              class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
-              >+</span
-            >
-          </summary>
-          <p class="mt-4 text-gray-700 leading-relaxed">
-            Comptez environ <strong>1h15 de route</strong> depuis Nantes centre
-            jusqu'à ID Postur, situé à La Mézière (35520) au nord-ouest de
-            Rennes. Le trajet s'effectue principalement par la N137, une 2x2
-            voies gratuite. Un parking est disponible sur place.
-          </p>
-        </details>
-
-        <details class="group bg-white border border-gray-200 p-6 transition">
-          <summary
-            class="flex items-center justify-between cursor-pointer list-none"
-          >
-            <h3 class="text-lg font-semibold">
-              Peut-on faire l'étude posturale sur une journée aller-retour depuis
-              Nantes ?
-            </h3>
-            <span
-              class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
-              >+</span
-            >
-          </summary>
-          <p class="mt-4 text-gray-700 leading-relaxed">
-            Oui, c'est le cas le plus fréquent pour les cyclistes nantais.
-            L'étude posturale complète dure <strong>2 heures</strong>. Avec le
-            trajet aller-retour, prévoyez environ 5h au total sur la journée.
-            Nous adaptons les horaires (ouverture matinale ou fin de journée)
-            pour faciliter votre venue.
-          </p>
-        </details>
-
-        <details class="group bg-white border border-gray-200 p-6 transition">
-          <summary
-            class="flex items-center justify-between cursor-pointer list-none"
-          >
-            <h3 class="text-lg font-semibold">
-              Combien coûte une étude posturale à Rennes pour un cycliste nantais
-              ?
-            </h3>
-            <span
-              class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
-              >+</span
-            >
-          </summary>
-          <p class="mt-4 text-gray-700 leading-relaxed">
-            L'étude posturale complète coûte <strong>250€</strong> pour un
-            vélo, <strong>300€</strong> pour deux vélos de la même discipline et
-            <strong>350€</strong> pour deux vélos de disciplines différentes.
-            Pour les moins de 15 ans, le tarif est de <strong>120€</strong>.
-            Aucun surcoût géographique pour les cyclistes venant de Nantes.
-          </p>
-        </details>
-
-        <details class="group bg-white border border-gray-200 p-6 transition">
-          <summary
-            class="flex items-center justify-between cursor-pointer list-none"
-          >
-            <h3 class="text-lg font-semibold">
-              Pourquoi venir à ID Postur plutôt que chez un bike fitter à Nantes ?
-            </h3>
-            <span
-              class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
-              >+</span
-            >
-          </summary>
-          <p class="mt-4 text-gray-700 leading-relaxed">
-            ID Postur est équipé de la technologie <strong
-              >IDmatch BikeLab</strong
-            >, un système d'analyse 3D de référence en Europe, encore rare dans
-            l'ouest de la France. Romain Hardy, fondateur, est un ancien
-            cycliste professionnel, ce qui apporte une expertise terrain unique.
-            Le centre a réalisé plus de <strong>800 études posturales</strong>
-            et accompagné <strong>25+ athlètes professionnels</strong>, avec
-            <strong>62 avis 5/5</strong> sur Google.
-          </p>
-        </details>
-
-        <details class="group bg-white border border-gray-200 p-6 transition">
-          <summary
-            class="flex items-center justify-between cursor-pointer list-none"
-          >
-            <h3 class="text-lg font-semibold">
-              Dois-je venir avec mon propre vélo depuis Nantes ?
-            </h3>
-            <span
-              class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none"
-              >+</span
-            >
-          </summary>
-          <p class="mt-4 text-gray-700 leading-relaxed">
-            Oui, l'étude posturale se fait obligatoirement sur votre vélo afin
-            de garantir des réglages adaptés à votre morphologie, vos composants
-            et votre pratique. Prévoyez également votre tenue complète
-            (cuissard, maillot), vos chaussures, vos cales et les pièces
-            spécifiques à votre vélo.
-          </p>
-        </details>
+        {
+          faqItems.map((item) => (
+            <details class="group bg-white border border-gray-200 p-6 transition">
+              <summary class="flex items-center justify-between cursor-pointer list-none">
+                <h3 class="text-lg font-semibold">{item.question}</h3>
+                <span class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none">
+                  +
+                </span>
+              </summary>
+              <p class="mt-4 text-gray-700 leading-relaxed">{item.answer}</p>
+            </details>
+          ))
+        }
       </div>
     </div>
   </section>
