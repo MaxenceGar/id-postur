@@ -1,4 +1,6 @@
 @import "tailwindcss";
+/* Bricolage Grotesque (variable, graisses 200-800 + axe opsz) : corps de texte. */
+@import '@fontsource-variable/bricolage-grotesque/opsz.css';
 @import '@fontsource/poppins/100.css';
 @import '@fontsource/poppins/200.css';
 @import '@fontsource/poppins/300.css';
@@ -17,6 +19,15 @@
 
 @theme {
   --font-id-postur: 'Poppins', sans-serif;
+  /* Police par défaut de tout le site (corps de texte). */
+  --font-sans: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Corps de texte en Bricolage Grotesque (via --font-sans), titres en Poppins. */
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-id-postur);
+  }
 }
 
 @keyframes marquee {
