@@ -152,9 +152,31 @@ details[open] > .faq-reponse {
   animation: faq-open 0.25s ease-out;
 }
 
+/* FAQ : dépliage fluide de la hauteur à l'ouverture/fermeture du <details>.
+ * interpolate-size permet d'animer vers height:auto ; ::details-content cible
+ * le contenu du <details> hors <summary>. Navigateurs non compatibles :
+ * ouverture instantanée, comme avant — simple amélioration progressive. */
+:root {
+  interpolate-size: allow-keywords;
+}
+details:has(> .faq-reponse)::details-content {
+  opacity: 0;
+  block-size: 0;
+  overflow-y: clip;
+  transition:
+    content-visibility 0.3s allow-discrete,
+    opacity 0.3s ease-out,
+    block-size 0.3s ease-out;
+}
+details:has(> .faq-reponse)[open]::details-content {
+  opacity: 1;
+  block-size: auto;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .nav-link::after { transition: none; }
   details[open] > .faq-reponse { animation: none; }
+  details:has(> .faq-reponse)::details-content { transition: none; }
   .btn-fleche::after { transition: none; }
   .btn-fleche:hover::after,
   .declenche-fleche:hover .btn-fleche::after { animation: none; }

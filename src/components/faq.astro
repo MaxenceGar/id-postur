@@ -26,6 +26,22 @@ const faqItems = [
     answer:
       "Absolument. ID Postur propose des cartes cadeaux personnalisées. Contactez-nous sur Instagram ou directement à ID Postur, 112 route du Meuble, La Mézière.",
   },
+  {
+    question: "Pourquoi faire une étude posturale vélo ?",
+    answer:
+      "Une position mal réglée provoque des douleurs (genoux, dos, cervicales, mains ou pieds) et fait perdre de la puissance. L'étude posturale analyse votre position sur votre propre vélo pour régler la hauteur et le recul de selle, le cintre, la potence et les cales : plus de confort, moins de blessures et un meilleur rendement, que vous soyez débutant ou compétiteur.",
+  },
+  {
+    question: "Où se déroule l'étude posturale, près de Rennes ?",
+    answer:
+      "Le studio ID Postur se trouve au 112 route du Meuble à La Mézière, à une quinzaine de minutes au nord de Rennes, avec un accès facile depuis toute l'Ille-et-Vilaine. Les rendez-vous se prennent en ligne, du lundi au vendredi de 9h à 19h.",
+  },
+  {
+    question:
+      "L'étude posturale convient-elle au VTT, au gravel ou au triathlon ?",
+    answer:
+      "Oui. L'étude posturale s'adapte à chaque discipline : route, VTT, gravel, et aussi chrono et triathlon avec l'étude 3D — le seul format qui prend en charge ces positions spécifiques. Les réglages tiennent compte des exigences propres à votre pratique.",
+  },
 ];
 
 const faqSchema = {
@@ -48,26 +64,46 @@ const faqSchema = {
   set:html={JSON.stringify(faqSchema)}
 />
 
-<section class="relative py-28 px-6 overflow-hidden">
-  <div class="relative max-w-5xl mx-auto text-center">
-    <h2 id="faq" class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">
-      Foire aux questions
-    </h2>
-    <div class="h-[3px] w-24 bg-id-postur-dark mx-auto mb-6"></div>
+<section class="relative py-28 px-6 overflow-hidden bg-white">
+  <div
+    class="relative max-w-5xl mx-auto grid gap-10 lg:grid-cols-[2fr_3fr] text-left"
+  >
+    <!-- Bloc d'intro : au-dessus des questions sur mobile, à gauche sur desktop -->
+    <div class="lg:sticky lg:top-28">
+      <h2
+        id="faq"
+        class="text-[35px] leading-[normal] font-extrabold text-gray-900 mb-4"
+      >
+        Vos questions sur l'étude posturale vélo à Rennes
+      </h2>
+      <div class="h-[3px] w-24 bg-id-postur-dark mb-6"></div>
+      <p class="text-[14px] text-gray-600 leading-[1.7] mb-8">
+        Vous ne trouvez pas votre réponse ? Appelez-nous au 06 07 16 73 23 ou
+        écrivez-nous, on vous répond rapidement.
+      </p>
+      <a
+        href="/reserver"
+        class="btn-fleche inline-block bg-[#FCFAF8] text-[#1C1B1A] text-[14px] font-semibold py-3 px-6 border border-[#DBD7CF] transition duration-200 motion-safe:active:scale-[0.98]"
+      >
+        Prendre rendez-vous
+      </a>
+    </div>
 
-    <div class="space-y-6 text-left">
+    <div class="space-y-2.5 lg:space-y-5 text-left">
       {
         faqItems.map((item) => (
-          <details class="group bg-white border border-[#EBE6E7] p-2.5 transition-colors duration-200 hover:border-id-postur-dark/40 open:border-id-postur-dark/40">
+          <details class="group bg-[#FCFAF8] border border-[#EBE6E7] p-2.5 transition-colors duration-200 hover:border-id-postur-dark/40 open:border-id-postur-dark/40">
             <summary class="flex items-center justify-between cursor-pointer list-none">
               <h3 class="text-[15px] font-semibold text-gray-900">
                 {item.question}
               </h3>
-              <span class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none">
+              <span class="text-[#4A4843] transition-transform duration-300 group-open:rotate-45 text-xl leading-none select-none">
                 +
               </span>
             </summary>
-            <p class="faq-reponse mt-4 text-gray-600 leading-relaxed">{item.answer}</p>
+            <p class="faq-reponse mt-4 text-gray-600 leading-relaxed text-[13px]">
+              {item.answer}
+            </p>
           </details>
         ))
       }
