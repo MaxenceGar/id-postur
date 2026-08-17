@@ -1,37 +1,130 @@
-<section class="px-4 md:px-2 max-w-4xl mx-auto text-black">
-  <details class="group">
-    <summary
-      class="cursor-pointer text-xl font-extrabold text-black hover:text-gray-700 select-none"
+---
+/**
+ * Bloc de texte SEO de bas de page.
+ *
+ * Le texte est toujours présent dans le DOM (Google le lit en entier) mais
+ * affiché tronqué, avec un dégradé blanc qui fond la coupure. Le bouton
+ * « Voir plus / Voir moins » repose sur une case à cocher cachée : zéro
+ * JavaScript, conforme au reste du site.
+ */
+---
+
+<section class="px-4 md:px-2 max-w-4xl mx-auto py-16 text-black">
+  <h2 class="text-2xl font-extrabold text-gray-900 mb-4">
+    En savoir plus sur l’étude posturale cycliste
+  </h2>
+  <div class="h-[3px] w-24 bg-id-postur-dark mb-6"></div>
+
+  <input type="checkbox" id="seo-voir-plus" class="seo-toggle sr-only" />
+
+  <div class="seo-texte text-[14px] leading-[1.7] text-[#4A4843]">
+    <p>
+      Une <strong>étude posturale cycliste</strong> permet d’analyser avec précision
+      la position du cycliste afin d’optimiser le confort, la performance et la
+      prévention des blessures. Chez <strong>ID Postur</strong>, chaque séance
+      repose sur une méthodologie scientifique tenant compte de votre
+      morphologie, de votre pratique (route, VTT, gravel, triathlon) et de vos
+      éventuelles douleurs.
+    </p>
+
+    <p class="mt-4">
+      Une <strong>étude posturale vélo</strong> apporte des bénéfices immédiats
+      : meilleure stabilité, augmentation du transfert de puissance et réduction
+      des tensions dans le dos, les genoux ou les cervicales. Grâce à la technologie
+      de capture de mouvement STT utilisée dans notre centre, nous obtenons des
+      mesures fiables permettant un positionnement précis et personnalisé.
+    </p>
+
+    <p class="mt-4">
+      Qu’il s’agisse d’un cycliste débutant ou confirmé, réaliser une
+      <strong>étude posturale pour cycliste</strong> est essentiel pour progresser
+      sans douleur. Nos réglages incluent la hauteur de selle, le recul, la potence,
+      la position des cales et l’ajustement global de la posture. Nous accompagnons
+      chaque cycliste pour améliorer durablement son confort et ses performances
+      sur le vélo.
+    </p>
+  </div>
+
+  <label
+    for="seo-voir-plus"
+    class="seo-label mt-6 inline-flex items-center gap-2 cursor-pointer select-none bg-[#FCFAF8] border border-[#DBD7CF] text-[#1C1B1A] text-[14px] font-semibold py-3 px-6 transition duration-200 motion-safe:active:scale-[0.98]"
+  >
+    <span class="voir-plus">Voir plus</span>
+    <span class="voir-moins">Voir moins</span>
+    <svg
+      class="chevron w-4 h-4"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
     >
-      En savoir plus sur l’étude posturale cycliste
-    </summary>
-
-    <div class="mt-4 text-base leading-relaxed">
-      <p>
-        Une <strong>étude posturale cycliste</strong> permet d’analyser avec précision
-        la position du cycliste afin d’optimiser le confort, la performance et la
-        prévention des blessures. Chez <strong>ID Postur</strong>, chaque séance
-        repose sur une méthodologie scientifique tenant compte de votre
-        morphologie, de votre pratique (route, VTT, gravel, triathlon) et de vos
-        éventuelles douleurs.
-      </p>
-
-      <p class="mt-4">
-        Une <strong>étude posturale vélo</strong> apporte des bénéfices immédiats
-        : meilleure stabilité, augmentation du transfert de puissance et réduction
-        des tensions dans le dos, les genoux ou les cervicales. Grâce à la technologie
-        de capture de mouvement STT utilisée dans notre centre, nous obtenons des
-        mesures fiables permettant un positionnement précis et personnalisé.
-      </p>
-
-      <p class="mt-4">
-        Qu’il s’agisse d’un cycliste débutant ou confirmé, réaliser une
-        <strong>étude posturale pour cycliste</strong> est essentiel pour progresser
-        sans douleur. Nos réglages incluent la hauteur de selle, le recul, la potence,
-        la position des cales et l’ajustement global de la posture. Nous accompagnons
-        chaque cycliste pour améliorer durablement son confort et ses performances
-        sur le vélo.
-      </p>
-    </div>
-  </details>
+      <path d="M6 9l6 6 6-6"></path>
+    </svg>
+  </label>
 </section>
+
+<style>
+  /* Replié : hauteur limitée, dégradé blanc qui fond la coupure du texte. */
+  .seo-texte {
+    position: relative;
+    max-height: 10.5rem;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+  .seo-texte::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 5rem;
+    background: linear-gradient(to top, white, rgba(255, 255, 255, 0));
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  /* Déplié : hauteur libre, dégradé effacé.
+   * L'animation vers max-content fonctionne grâce à interpolate-size
+   * (défini dans global.css) ; ailleurs, dépliage instantané. */
+  .seo-toggle:checked ~ .seo-texte {
+    max-height: max-content;
+  }
+  .seo-toggle:checked ~ .seo-texte::after {
+    opacity: 0;
+  }
+
+  /* Bascule du libellé et rotation du chevron. */
+  .voir-moins {
+    display: none;
+  }
+  .seo-toggle:checked ~ .seo-label .voir-plus {
+    display: none;
+  }
+  .seo-toggle:checked ~ .seo-label .voir-moins {
+    display: inline;
+  }
+  .chevron {
+    transition: transform 0.3s ease;
+  }
+  .seo-toggle:checked ~ .seo-label .chevron {
+    transform: rotate(180deg);
+  }
+
+  /* La case est masquée (sr-only) mais reste focusable au clavier. */
+  .seo-toggle:focus-visible ~ .seo-label {
+    outline: 2px solid var(--color-id-postur-dark);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .seo-texte,
+    .seo-texte::after,
+    .chevron {
+      transition: none;
+    }
+  }
+</style>
