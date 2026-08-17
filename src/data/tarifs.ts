@@ -67,7 +67,7 @@ const DISCIPLINES_2D = "Route, VTT et gravel";
 export const EQUIPES_3D = [
   "Ineos",
   "Team Visma | Lease a Bike",
-  "SN Cycling Team",
+  "NSN Cycling Team",
 ];
 
 /** Formulation unique de la règle « déjà client », réutilisée partout. */

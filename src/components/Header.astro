@@ -7,7 +7,11 @@
  * la home et le footer.
  */
 const liens = [
-  { href: "/reserver", label: "Études posturales", actifSur: ["/etudes-posturales"] },
+  {
+    href: "/reserver",
+    label: "Études posturales",
+    actifSur: ["/etudes-posturales"],
+  },
   { href: "/cales", label: "Réglage des cales" },
   { href: "/choix-nouveau-velo", label: "Choix d'un vélo" },
   { href: "/rendez-vous-divers", label: "Rendez-vous divers" },
@@ -43,9 +47,7 @@ const estActif = (lien: (typeof liens)[number]) =>
                 aria-current={estActif(lien) ? "page" : undefined}
                 class:list={[
                   "nav-link text-sm font-medium transition hover:text-id-postur-dark",
-                  estActif(lien)
-                    ? "text-id-postur-dark"
-                    : "text-gray-700",
+                  estActif(lien) ? "text-id-postur-dark" : "text-gray-700",
                 ]}
               >
                 {lien.label}
@@ -59,7 +61,7 @@ const estActif = (lien: (typeof liens)[number]) =>
     <div class="flex items-center gap-3">
       <a
         href="/reserver"
-        class="btn-fleche hidden sm:inline-block bg-id-postur-dark text-white font-semibold py-3 px-4 transition duration-200 motion-safe:active:scale-[0.98]"
+        class="btn-fleche text-[14px] hidden sm:inline-block bg-id-postur-dark text-white font-semibold py-3 px-4 transition duration-200 motion-safe:active:scale-[0.98]"
       >
         Prendre rendez-vous
       </a>
@@ -99,9 +101,7 @@ const estActif = (lien: (typeof liens)[number]) =>
                     aria-current={estActif(lien) ? "page" : undefined}
                     class:list={[
                       "block px-4 py-3 text-sm font-medium hover:bg-gray-50",
-                      estActif(lien)
-                        ? "text-id-postur-dark"
-                        : "text-gray-700",
+                      estActif(lien) ? "text-id-postur-dark" : "text-gray-700",
                     ]}
                   >
                     {lien.label}
