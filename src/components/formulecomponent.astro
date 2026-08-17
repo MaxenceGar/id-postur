@@ -42,8 +42,10 @@ const externe = href.startsWith("http");
 
 <div
   class:list={[
-    "relative flex flex-col h-full bg-white shadow-sm",
-    highlight ? "border-2 border-id-postur-dark" : "border border-gray-200",
+    "relative flex flex-col h-full bg-white shadow-sm transition-all duration-200 hover:shadow-lg motion-safe:hover:-translate-y-1",
+    highlight
+      ? "border-2 border-id-postur-dark"
+      : "border border-gray-200 hover:border-id-postur-dark/40",
   ]}
 >
   <div
@@ -83,7 +85,7 @@ const externe = href.startsWith("http");
             href={href}
             rel={externe ? "nofollow noopener" : undefined}
             target={externe ? "_blank" : undefined}
-            class="cursor-pointer w-full inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-[#C00201] border border-[#C00201] bg-white hover:bg-[#C00201]/5 transition"
+            class="cursor-pointer w-full inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-[#C00201] border border-[#C00201] bg-white hover:bg-[#C00201]/5 transition duration-200 motion-safe:active:scale-[0.98]"
           >
             {ctaLabel}
           </a>

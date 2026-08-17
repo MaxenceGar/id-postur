@@ -64,7 +64,7 @@ const choix = [
             <a
               href={option.href}
               class:list={[
-                "flex flex-col bg-white p-8 transition hover:shadow-md",
+                "declenche-fleche flex flex-col bg-white p-8 transition-all duration-200 hover:shadow-lg motion-safe:hover:-translate-y-1 motion-safe:active:scale-[0.99]",
                 option.principal
                   ? "border-2 border-id-postur-dark"
                   : "border border-gray-200 hover:border-id-postur-dark",
@@ -79,7 +79,7 @@ const choix = [
               <p class="text-lg font-bold text-gray-900 mb-6">
                 {option.tarifs}
               </p>
-              <span class="mt-auto inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-white bg-id-postur-dark hover:bg-id-postur transition">
+              <span class="btn-fleche mt-auto inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-white bg-id-postur-dark transition">
                 Voir les formules
               </span>
             </a>

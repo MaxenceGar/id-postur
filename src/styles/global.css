@@ -85,6 +85,81 @@
 }
 
 
+/* ---------------------------------------------------------------------------
+ * Micro-interactions
+ * Une seule personnalité de mouvement : ~200 ms, sorties douces, rouge en
+ * signature. Les effets par utilitaires Tailwind (hover:-translate-y,
+ * active:scale…) sont préfixés motion-safe: dans les composants ; ici ne
+ * vivent que ceux qui exigent du CSS (pseudo-éléments, contenu des <details>).
+ * ------------------------------------------------------------------------ */
+
+/* Lien de nav : soulignement qui se dessine de gauche à droite. */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 2px;
+  background: var(--color-id-postur-dark);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.2s ease-out;
+}
+.nav-link:hover::after,
+.nav-link[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+
+/* CTA : flèche qui surgit à droite du texte au survol, avec un petit rebond.
+ * Le SVG est appliqué en masque : la flèche prend la couleur du texte.
+ * .declenche-fleche sur un parent (ex. une carte cliquable) déclenche la
+ * flèche du bouton qu'il contient quand on survole n'importe où sur la carte. */
+@keyframes fleche-bump {
+  0%   { opacity: 0; transform: translateX(-8px); }
+  60%  { opacity: 1; transform: translateX(3px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+.btn-fleche::after {
+  content: "";
+  display: inline-block;
+  vertical-align: -0.25em;
+  width: 0;
+  height: 1.2em;
+  background-color: currentColor;
+  mask: url("/icon/arrow.svg") no-repeat center / contain;
+  -webkit-mask: url("/icon/arrow.svg") no-repeat center / contain;
+  opacity: 0;
+  transition: width 0.2s ease-out, margin-left 0.2s ease-out;
+}
+.btn-fleche:hover::after,
+.declenche-fleche:hover .btn-fleche::after {
+  width: 1.2em;
+  margin-left: 0.5rem;
+  opacity: 1;
+  animation: fleche-bump 0.3s ease-out both;
+}
+
+/* FAQ : la réponse glisse en place à l'ouverture du <details>. */
+@keyframes faq-open {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: none; }
+}
+details[open] > .faq-reponse {
+  animation: faq-open 0.25s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-link::after { transition: none; }
+  details[open] > .faq-reponse { animation: none; }
+  .btn-fleche::after { transition: none; }
+  .btn-fleche:hover::after,
+  .declenche-fleche:hover .btn-fleche::after { animation: none; }
+}
+
 .btn-funnel {
   background-color: #c00000;
   padding: 10px;
