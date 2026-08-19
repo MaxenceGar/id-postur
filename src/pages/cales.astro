@@ -83,7 +83,7 @@ const serviceSchema = {
     class="w-full h-96 relative bg-[url('/images/id-postur-cales.webp')] bg-cover bg-center flex items-center justify-center bg-black/50 bg-blend-overlay"
   >
     <div class="grid grid-cols-1 text-white px-4">
-      <h1 class="text-3xl md:text-4xl font-bold text-center">
+      <h1 class="text-center">
         Réglage des cales vélo à Rennes
       </h1>
       <div
@@ -110,7 +110,7 @@ const serviceSchema = {
 
   <section class="py-16">
     <div class="container px-5 mx-auto">
-      <h2 class="text-xl md:text-4xl font-bold">Le réglage des cales</h2>
+      <h2>Le réglage des cales</h2>
       <div class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-10 rounded-full"></div>
       <div class="max-w-md">
         <Formulecomponent prestation={cales} highlight />
@@ -122,7 +122,7 @@ const serviceSchema = {
 
   <section class="relative px-6 pb-16 overflow-hidden">
     <div class="relative max-w-5xl mx-auto text-center">
-      <h2 id="faq" class="text-3xl md:text-4xl font-extrabold mb-4">
+      <h2 id="faq" class="mb-4">
         En savoir plus
       </h2>
       <div class="h-[3px] w-24 bg-id-postur-dark mx-auto mb-6"></div>
@@ -132,7 +132,7 @@ const serviceSchema = {
           faqItems.map((item) => (
             <details class="group bg-white border border-gray-200 p-6 transition">
               <summary class="flex items-center justify-between cursor-pointer list-none">
-                <h3 class="text-lg font-semibold">{item.question}</h3>
+                <h3>{item.question}</h3>
                 <span class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none">
                   +
                 </span>
