@@ -40,18 +40,19 @@ const offres = [
 ];
 ---
 
-<section class="bg-[#FCFAF8] py-16 border-y border-[#ECE9E3]" id="formules">
+<section class="bg-papier py-16 md:py-[104px] border-y border-hairline" id="formules">
   <div class="container mx-auto px-5">
     <div class="lg:w-full mb-6 lg:mb-10">
-      <h2 class="mb-3 text-gray-900">
+      <p class="kicker text-label mb-4">Prestations</p>
+      <h2 class="mb-3 text-encre">
         Votre posture entre de bonnes mains
       </h2>
-      <div class="h-1 w-24 bg-id-postur-dark"></div>
+      <div class="h-1 w-24 bg-rouge"></div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div
-        class="flex flex-col border-id-postur-dark border-2 bg-white overflow-hidden"
+        class="flex flex-col bg-white border border-hairline rounded-xs shadow-carte overflow-hidden"
       >
         <img
           src={offres[0].image}
@@ -62,7 +63,7 @@ const offres = [
         <div class="flex flex-col flex-1 px-4 pt-5 pb-6 text-center">
           <h3 class="mb-3">{offres[0].titre}</h3>
           <p
-            class="flex-1 mb-4 text-sm text-left leading-relaxed text-gray-700"
+            class="flex-1 mb-4 text-sm text-left leading-relaxed text-corps"
           >
             Une analyse réalisée avec la technologie de capture de mouvement <strong
               >STT</strong
@@ -74,17 +75,17 @@ const offres = [
             La 3D couvre toutes les disciplines, chrono et triathlon compris ;
             la 2D s'adresse à la route, au VTT et au gravel.
           </p>
-          <p class="mb-4 text-sm font-semibold text-gray-900">
+          <p class="text-data text-encre mb-4">
             {offres[0].tarif}
           </p>
           <a
-            class="self-center inline-block px-6 py-2 btn-fleche bg-id-postur-dark text-white font-medium transition duration-200 motion-safe:active:scale-[0.98] cursor-pointer"
+            class="self-center btn-primaire btn-fleche"
             href={offres[0].href}
           >
             Prendre rendez-vous
           </a>
           <a
-            class="mt-3 text-sm text-id-postur-dark underline hover:opacity-80"
+            class="mt-3 text-sm text-rouge underline hover:opacity-80"
             href="/etude-posturale-3d-ou-2d"
           >
             Quelle différence entre la 3D et la 2D ?
@@ -93,7 +94,7 @@ const offres = [
       </div>
 
       <div
-        class="flex flex-col border-id-postur-dark border-2 bg-white overflow-hidden"
+        class="flex flex-col bg-white border border-hairline rounded-xs shadow-carte overflow-hidden"
       >
         <img
           src={offres[1].image}
@@ -104,7 +105,7 @@ const offres = [
         <div class="flex flex-col flex-1 px-4 pt-5 pb-6 text-center">
           <h3 class="mb-3">{offres[1].titre}</h3>
           <p
-            class="flex-1 mb-4 text-sm text-left leading-relaxed text-gray-700"
+            class="flex-1 mb-4 text-sm text-left leading-relaxed text-corps"
           >
             Nous réglons vos cales au millimètre près pour améliorer
             l'alignement de vos membres, assurer un pédalage fluide et prévenir
@@ -112,11 +113,11 @@ const offres = [
             <br /><br />
             Une connexion parfaite entre vous et votre vélo pour un rendement maximal.
           </p>
-          <p class="mb-4 text-sm font-semibold text-gray-900">
+          <p class="text-data text-encre mb-4">
             {offres[1].tarif}
           </p>
           <a
-            class="self-center inline-block px-6 py-2 btn-fleche bg-id-postur-dark text-white font-medium transition duration-200 motion-safe:active:scale-[0.98] cursor-pointer"
+            class="self-center btn-primaire btn-fleche"
             href={offres[1].href}
           >
             Prendre rendez-vous
@@ -125,7 +126,7 @@ const offres = [
       </div>
 
       <div
-        class="flex flex-col border-id-postur-dark border-2 bg-white overflow-hidden"
+        class="flex flex-col bg-white border border-hairline rounded-xs shadow-carte overflow-hidden"
       >
         <img
           src={offres[2].image}
@@ -136,7 +137,7 @@ const offres = [
         <div class="flex flex-col flex-1 px-4 pt-5 pb-6 text-center">
           <h3 class="mb-3">{offres[2].titre}</h3>
           <p
-            class="flex-1 mb-4 text-sm text-left leading-relaxed text-gray-700"
+            class="flex-1 mb-4 text-sm text-left leading-relaxed text-corps"
           >
             Vous hésitez avant d'acheter un nouveau vélo ? <strong
               >ID Postur</strong
@@ -145,11 +146,11 @@ const offres = [
             <br /><br />
             Un rendez-vous court pour sécuriser votre investissement.
           </p>
-          <p class="mb-4 text-sm font-semibold text-gray-900">
+          <p class="text-data text-encre mb-4">
             {offres[2].tarif}
           </p>
           <a
-            class="self-center inline-block px-6 py-2 btn-fleche bg-id-postur-dark text-white font-medium transition duration-200 motion-safe:active:scale-[0.98] cursor-pointer"
+            class="self-center btn-primaire btn-fleche"
             href={offres[2].href}
           >
             Prendre rendez-vous
@@ -158,7 +159,7 @@ const offres = [
       </div>
 
       <div
-        class="flex flex-col border-id-postur-dark border-2 bg-white overflow-hidden"
+        class="flex flex-col bg-white border border-hairline rounded-xs shadow-carte overflow-hidden"
       >
         <img
           src={offres[3].image}
@@ -169,7 +170,7 @@ const offres = [
         <div class="flex flex-col flex-1 px-4 pt-5 pb-6 text-center">
           <h3 class="mb-3">{offres[3].titre}</h3>
           <p
-            class="flex-1 mb-4 text-sm text-left leading-relaxed text-gray-700"
+            class="flex-1 mb-4 text-sm text-left leading-relaxed text-corps"
           >
             Besoin d'une petite révision, d'un <strong>micro-réglage</strong> ou
             d'un <strong>conseil ponctuel</strong> ?
@@ -177,11 +178,11 @@ const offres = [
             Un créneau court pour répondre à un besoin précis, sans passer par une
             étude complète.
           </p>
-          <p class="mb-4 text-sm font-semibold text-gray-900">
+          <p class="text-data text-encre mb-4">
             {offres[3].tarif}
           </p>
           <a
-            class="self-center inline-block px-6 py-2 btn-fleche bg-id-postur-dark text-white font-medium transition duration-200 motion-safe:active:scale-[0.98] cursor-pointer"
+            class="self-center btn-primaire btn-fleche"
             href={offres[3].href}
           >
             Prendre rendez-vous
@@ -190,12 +191,12 @@ const offres = [
       </div>
     </div>
     <div
-      class="border-id-postur-dark border-2 text-center mt-4 overflow-hidden bg-white"
+      class="border border-hairline rounded-xs shadow-carte text-center mt-4 overflow-hidden bg-white"
     >
       <p class="py-4 px-4 text-base text-center">
         Vous pouvez aussi prendre rendez-vous par téléphone au <a
           href="tel:0607167323"
-          class="text-id-postur-dark font-bold">06 07 16 73 23</a
+          class="text-rouge font-bold">06 07 16 73 23</a
         >
       </p>
     </div>
@@ -204,10 +205,10 @@ const offres = [
 
 <section class="container mx-auto px-5 sm:px-6 lg:px-8 py-12">
   <div class="lg:w-full mb-6 lg:mb-10">
-    <h2 class="mb-3 text-gray-900">
+    <h2 class="mb-3 text-encre">
       Pour en savoir plus sur ID Postur avant de prendre rendez-vous 👇
     </h2>
-    <div class="h-1 w-24 bg-id-postur-dark"></div>
+    <div class="h-1 w-24 bg-rouge"></div>
   </div>
   <div class="flex flex-col md:flex-row justify-center items-stretch gap-8">
     <div class="w-full md:w-1/2">

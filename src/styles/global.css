@@ -1,42 +1,58 @@
 @import "tailwindcss";
-/* Archivo (variable, graisses 100-900) : titres et corps de texte. */
+/* Archivo (variable, graisses 100-900) : seule police du site. */
 @import '@fontsource-variable/archivo';
-/* JetBrains Mono (variable, graisses 100-800) : étiquettes et données. */
-@import '@fontsource-variable/jetbrains-mono';
 
+/* ---------------------------------------------------------------------------
+ * Palette — direction artistique ID Postur. Aucune autre couleur autorisée.
+ * Le rouge est un accent, jamais une masse : CTA, liens, quelques mots en fin
+ * de titre, chiffres clés, petits marqueurs. Jamais plus de ~5% d'un écran.
+ * ------------------------------------------------------------------------ */
 @theme {
-  --color-id-postur: #F80000;
-  --color-id-postur-dark: #c00000;
-  --color-bermuda: #78dcca;
-}
+  --color-rouge: #C00000;          /* accent */
+  --color-rouge-profond: #9A0303;  /* hover des éléments rouges */
+  --color-encre: #1C1B1A;          /* titres, texte fort */
+  --color-corps: #4A4843;          /* texte courant */
+  --color-gris: #6E6B66;           /* texte secondaire */
+  --color-gris-clair: #A3A099;     /* labels, placeholders */
+  --color-hairline: #ECE9E3;       /* bordures */
+  --color-hairline-2: #DBD7CF;     /* bordures appuyées */
+  --color-papier: #FBFAF8;         /* fond de page */
 
-@theme {
-  /* Police par défaut de tout le site (titres + corps). */
+  /* Police unique du site. */
   --font-sans: 'Archivo Variable', ui-sans-serif, system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+
+  /* Ombre unique, très diffuse, réservée aux cartes. */
+  --shadow-carte: 0 1px 2px rgba(28, 27, 26, 0.04), 0 10px 30px rgba(28, 27, 26, 0.05);
 }
 
 /* ---------------------------------------------------------------------------
  * Système typographique — source unique des règles texte du site.
  *
- * Style       Police          Weight  Desktop  Mobile  Interligne  Interlettre
- * H1          Archivo         650     56px     38px    106%        -2,5%
- * H2          Archivo         650     36px     28px    112%        -2%
- * H3          Archivo         600     20px     20px    130%        -1%
- * Body        Archivo         400     16px     16px    170%        0
- * Body Small  Archivo         400     14,5px   14,5px  165%        0
- * Label       JetBrains Mono  500     11px     11px    150%        +16%
- * Data        JetBrains Mono  600     22px     20px    120%        0
+ * Style       Weight  Desktop  Mobile  Interligne  Interlettre
+ * H1          650     56px     38px    106%        -2,5%
+ * H2          650     36px     28px    112%        -2%
+ * H3          600     20px     20px    130%        -1%
+ * Body        400     16px     16px    170%        0
+ * Body Small  400     14,5px   14,5px  165%        0
+ * Label       500     11px     11px    150%        +16% + MAJUSCULES
+ * Data        600     22px     20px    120%        0
  *
+ * Titres en bas de casse — jamais tout en majuscules, graisse max 700.
  * H1→H3 et Body s'appliquent automatiquement aux balises ; Body Small,
  * Label et Data s'utilisent via .text-body-small, .text-label, .text-data.
- * Une classe utilitaire posée sur une balise garde le dernier mot.
+ * Un kicker (.kicker, Label précédé d'un point carré rouge) introduit
+ * chaque section au-dessus du H2.
  * ------------------------------------------------------------------------ */
 @layer base {
   body {
+    background-color: var(--color-papier);
+    color: var(--color-corps);
     font-size: 1rem;          /* 16px */
     font-weight: 400;
     line-height: 1.7;
+  }
+  h1, h2, h3 {
+    color: var(--color-encre);
   }
   h1 {
     font-size: 2.375rem;      /* 38px mobile */
@@ -69,20 +85,78 @@
     line-height: 1.65;
   }
   .text-label {
-    font-family: var(--font-mono);
     font-size: 0.6875rem;     /* 11px */
     font-weight: 500;
     line-height: 1.5;
     letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-gris);
   }
   .text-data {
-    font-family: var(--font-mono);
     font-size: 1.25rem;       /* 20px mobile */
     font-weight: 600;
     line-height: 1.2;
   }
   @media (min-width: 768px) {
     .text-data { font-size: 1.375rem; }  /* 22px desktop */
+  }
+
+  /* Boutons DA. Le primaire s'accompagne en général de .btn-fleche
+   * (flèche → après le libellé). Radius 2px partout, jamais plus. */
+  .btn-primaire {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-rouge);
+    color: #fff;
+    padding: 14px 26px;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.2;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-out, transform 0.15s ease-out;
+  }
+  .btn-primaire:hover {
+    background-color: var(--color-rouge-profond);
+  }
+  .btn-secondaire {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    color: var(--color-encre);
+    border: 1px solid var(--color-hairline-2);
+    padding: 14px 26px;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.2;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: border-color 0.2s ease-out, background-color 0.2s ease-out, transform 0.15s ease-out;
+  }
+  .btn-secondaire:hover {
+    border-color: var(--color-gris-clair);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .btn-primaire:active,
+    .btn-secondaire:active {
+      transform: scale(0.98);
+    }
+  }
+
+  /* Kicker : Label précédé d'un point carré rouge, au-dessus d'un H2. */
+  .kicker {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+  }
+  .kicker::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    flex-shrink: 0;
+    background-color: var(--color-rouge);
   }
 }
 
@@ -171,7 +245,7 @@
   right: 0;
   bottom: -4px;
   height: 2px;
-  background: var(--color-id-postur-dark);
+  background: var(--color-rouge);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.2s ease-out;
@@ -181,33 +255,25 @@
   transform: scaleX(1);
 }
 
-/* CTA : flèche qui surgit à droite du texte au survol, avec un petit rebond.
- * Le SVG est appliqué en masque : la flèche prend la couleur du texte.
- * .declenche-fleche sur un parent (ex. une carte cliquable) déclenche la
- * flèche du bouton qu'il contient quand on survole n'importe où sur la carte. */
-@keyframes fleche-bump {
-  0%   { opacity: 0; transform: translateX(-8px); }
-  60%  { opacity: 1; transform: translateX(3px); }
-  100% { opacity: 1; transform: translateX(0); }
-}
+/* CTA : flèche → toujours visible après le libellé (DA), qui glisse
+ * légèrement vers la droite au survol. Le SVG est appliqué en masque :
+ * la flèche prend la couleur du texte. .declenche-fleche sur un parent
+ * (ex. une carte cliquable) anime la flèche du bouton qu'il contient. */
 .btn-fleche::after {
   content: "";
   display: inline-block;
   vertical-align: -0.25em;
-  width: 0;
-  height: 1.2em;
+  width: 1.1em;
+  height: 1.1em;
+  margin-left: 0.5rem;
   background-color: currentColor;
   mask: url("/icon/arrow.svg") no-repeat center / contain;
   -webkit-mask: url("/icon/arrow.svg") no-repeat center / contain;
-  opacity: 0;
-  transition: width 0.2s ease-out, margin-left 0.2s ease-out;
+  transition: transform 0.2s ease-out;
 }
 .btn-fleche:hover::after,
 .declenche-fleche:hover .btn-fleche::after {
-  width: 1.2em;
-  margin-left: 0.5rem;
-  opacity: 1;
-  animation: fleche-bump 0.3s ease-out both;
+  transform: translateX(3px);
 }
 
 /* FAQ : la réponse glisse en place à l'ouverture du <details>. */
@@ -245,19 +311,4 @@ details:has(> .faq-reponse)[open]::details-content {
   details[open] > .faq-reponse { animation: none; }
   details:has(> .faq-reponse)::details-content { transition: none; }
   .btn-fleche::after { transition: none; }
-  .btn-fleche:hover::after,
-  .declenche-fleche:hover .btn-fleche::after { animation: none; }
-}
-
-.btn-funnel {
-  background-color: #c00000;
-  padding: 10px;
-  color: white;
-  font-weight: 600;
-}
-
-.h2-funnel {
-  font-size: var(--text-4xl); /* 2.25rem (36px) */ 
-  line-height: var(--text-4xl--line-height); /* calc(2.5 / 2.25) */
-  font-weight: 700;
 }

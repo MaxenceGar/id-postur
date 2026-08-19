@@ -49,10 +49,10 @@ const choix = [
         Étude posturale : quelle est votre situation ?
       </h1>
       <div
-        class="h-[3px] w-24 bg-id-postur-dark mx-auto mt-4 mb-6 rounded-full"
+        class="h-[3px] w-24 bg-rouge mx-auto mt-4 mb-6 rounded-full"
       >
       </div>
-      <p class="text-center text-gray-700 max-w-2xl mx-auto mb-12">
+      <p class="text-center text-corps max-w-2xl mx-auto mb-12">
         Une seule question avant de choisir votre créneau : êtes-vous déjà venu
         chez ID Postur ? Vous ne verrez ensuite que les formules qui vous
         concernent, au bon tarif.
@@ -64,22 +64,22 @@ const choix = [
             <a
               href={option.href}
               class:list={[
-                "declenche-fleche flex flex-col bg-white p-8 transition-all duration-200 hover:shadow-lg motion-safe:hover:-translate-y-1 motion-safe:active:scale-[0.99]",
+                "declenche-fleche flex flex-col p-8 rounded-xs shadow-carte transition-all duration-200 motion-safe:hover:-translate-y-1 motion-safe:active:scale-[0.99]",
                 option.principal
-                  ? "border-2 border-id-postur-dark"
-                  : "border border-gray-200 hover:border-id-postur-dark",
+                  ? "border border-rouge/35 bg-rouge/5"
+                  : "border border-hairline bg-white hover:border-rouge/35",
               ]}
             >
-              <h2 class="text-gray-900 mb-3">
+              <h2 class="text-encre mb-3">
                 {option.titre}
               </h2>
-              <p class="text-sm text-gray-600 flex-1 mb-6">
+              <p class="text-sm text-corps flex-1 mb-6">
                 {option.description}
               </p>
-              <p class="text-lg font-bold text-gray-900 mb-6">
+              <p class="text-lg font-bold text-encre mb-6">
                 {option.tarifs}
               </p>
-              <span class="btn-fleche mt-auto inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-white bg-id-postur-dark transition">
+              <span class="btn-primaire btn-fleche mt-auto">
                 Voir les formules
               </span>
             </a>
@@ -87,26 +87,26 @@ const choix = [
         }
       </div>
 
-      <div class="mt-12 border border-gray-200 bg-gray-50 p-6 text-center">
-        <p class="text-gray-800 font-semibold mb-2">
+      <div class="mt-12 border border-hairline bg-papier p-6 text-center">
+        <p class="text-encre font-semibold mb-2">
           Vous hésitez encore entre la 3D et la 2D ?
         </p>
-        <p class="text-sm text-gray-600 mb-4">
+        <p class="text-sm text-corps mb-4">
           Durées, tarifs, prérequis : le comparatif complet des deux formats
           est sur une page dédiée.
         </p>
         <a
           href="/etude-posturale-3d-ou-2d"
-          class="inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-[#C00201] border border-[#C00201] bg-white hover:bg-[#C00201]/5 transition"
+          class="inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-rouge border border-rouge bg-white hover:bg-rouge/5 transition"
         >
           Comparer l'étude 3D et l'étude 2D
         </a>
       </div>
 
-      <p class="mt-8 text-center text-sm text-gray-600">
+      <p class="mt-8 text-center text-sm text-corps">
         Un doute sur votre situation ? Appelez-nous au <a
           href="tel:0607167323"
-          class="text-id-postur-dark font-semibold">06 07 16 73 23</a
+          class="text-rouge font-semibold">06 07 16 73 23</a
         >, nous vérifions ensemble avant de bloquer un créneau.
       </p>
     </div>

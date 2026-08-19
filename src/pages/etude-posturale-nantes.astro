@@ -140,7 +140,7 @@ const personSchema = {
         Étude posturale à Nantes
       </h1>
       <div
-        class="h-[3px] w-24 bg-id-postur-dark mx-auto mt-4 mb-6 rounded-full"
+        class="h-[3px] w-24 bg-rouge mx-auto mt-4 mb-6 rounded-full"
       >
       </div>
       <p class="text-center max-w-3xl mx-auto text-base md:text-lg">
@@ -153,8 +153,8 @@ const personSchema = {
 
   <!-- BYLINE -->
   <div class="container mx-auto px-5 pt-6 max-w-5xl">
-    <p class="text-sm text-gray-500 text-center">
-      Par <strong class="text-gray-700">Romain Hardy</strong>, ex-cycliste
+    <p class="text-sm text-gris text-center">
+      Par <strong class="text-corps">Romain Hardy</strong>, ex-cycliste
       professionnel et fondateur d'ID Postur · <time datetime={dateModified}
         >Mis à jour le {dateHumanReadable}</time
       >
@@ -171,7 +171,7 @@ const personSchema = {
         target="_blank"
         rel="noopener"
         aria-label="Voir nos 62 avis Google, note 5 sur 5"
-        class="group inline-flex items-center gap-3 bg-white border border-gray-200 pl-3 pr-4 py-2 shadow-sm hover:shadow-md hover:border-gray-300 transition-all"
+        class="group inline-flex items-center gap-3 bg-white border border-hairline pl-3 pr-4 py-2 shadow-sm hover:shadow-md hover:border-hairline-2 transition-all"
       >
         <svg
           class="w-5 h-5 shrink-0"
@@ -197,19 +197,19 @@ const personSchema = {
           ></path>
         </svg>
         <span class="flex items-center gap-1.5">
-          <span class="font-semibold text-gray-900">5,0</span>
+          <span class="font-semibold text-encre">5,0</span>
           <span
             class="text-amber-400 text-base leading-none tracking-tighter"
             aria-hidden="true">★★★★★</span
           >
         </span>
-        <span class="text-gray-300" aria-hidden="true">|</span>
-        <span class="text-sm text-gray-600">62 avis Google</span>
+        <span class="text-gris-clair" aria-hidden="true">|</span>
+        <span class="text-sm text-corps">62 avis Google</span>
       </a>
 
       <a
         href="#tarifs"
-        class="inline-block px-6 py-3 bg-id-postur-dark text-white font-semibold hover:opacity-90 transition duration-300"
+        class="btn-primaire btn-fleche"
       >
         Prendre rendez-vous
       </a>
@@ -222,9 +222,9 @@ const personSchema = {
       <h2 class="mb-4">
         Pourquoi les cyclistes nantais viennent chez ID Postur ?
       </h2>
-      <div class="h-[3px] w-24 bg-id-postur-dark mb-10 rounded-full"></div>
+      <div class="h-[3px] w-24 bg-rouge mb-10 rounded-full"></div>
 
-      <p class="mb-10 leading-relaxed text-gray-700">
+      <p class="mb-10 leading-relaxed text-corps">
         À Nantes, la pratique cycliste est riche : cyclotourisme le long de la
         Loire, triathlon sur le bassin nantais, VTT dans la forêt du Gâvre,
         sorties route vers le vignoble ou le littoral. Mais pour optimiser
@@ -236,9 +236,9 @@ const personSchema = {
       </p>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="border-l-4 border-id-postur-dark pl-6">
+        <div class="border-l-4 border-rouge pl-6">
           <h3 class="mb-3">Technologie STT 3DMA</h3>
-          <p class="text-sm text-gray-700 leading-relaxed">
+          <p class="text-sm text-corps leading-relaxed">
             Capture optique 3D par marqueurs, avec une précision inférieure au
             millimètre — la technologie d'analyse utilisée par de grandes
             équipes du World Tour. Mesure en temps réel de vos angles
@@ -247,22 +247,22 @@ const personSchema = {
             France.
           </p>
         </div>
-        <div class="border-l-4 border-id-postur-dark pl-6">
+        <div class="border-l-4 border-rouge pl-6">
           <h3 class="mb-3">
             Un ex-cycliste professionnel
           </h3>
-          <p class="text-sm text-gray-700 leading-relaxed">
+          <p class="text-sm text-corps leading-relaxed">
             Romain Hardy, fondateur d'ID Postur, a couru au plus haut niveau
             professionnel. Cette expérience terrain nourrit chaque étude
             posturale : il sait ce que ressent un cycliste fatigué à la 4ᵉ heure
             d'une sortie ou sur un final de course.
           </p>
         </div>
-        <div class="border-l-4 border-id-postur-dark pl-6">
+        <div class="border-l-4 border-rouge pl-6">
           <h3 class="mb-3">
             62 avis 5/5 sur Google
           </h3>
-          <p class="text-sm text-gray-700 leading-relaxed">
+          <p class="text-sm text-corps leading-relaxed">
             Une note maximale sur plus de 60 avis, signe d'une prestation
             constante. Les cyclistes qui viennent de loin (Nantes, Saint-Malo,
             Angers) mentionnent souvent que le trajet valait le déplacement.
@@ -273,17 +273,17 @@ const personSchema = {
   </section>
 
   <!-- TRAJET DEPUIS NANTES -->
-  <section class="bg-gray-50 py-16">
+  <section class="bg-papier py-16">
     <div class="container mx-auto px-5 max-w-5xl">
       <h2 class="mb-4">
         Venir à ID Postur depuis Nantes
       </h2>
-      <div class="h-[3px] w-24 bg-id-postur-dark mb-10 rounded-full"></div>
+      <div class="h-[3px] w-24 bg-rouge mb-10 rounded-full"></div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
         <div>
           <h3 class="mb-4">Le trajet en pratique</h3>
-          <ul class="space-y-3 text-gray-700 leading-relaxed">
+          <ul class="space-y-3 text-corps leading-relaxed">
             <li>
               <strong>Distance :</strong> environ 110 km depuis Nantes centre.
             </li>
@@ -307,18 +307,18 @@ const personSchema = {
           <h3 class="mb-4">
             Organiser votre venue depuis Nantes
           </h3>
-          <p class="text-gray-700 leading-relaxed mb-4">
+          <p class="text-corps leading-relaxed mb-4">
             Pour les cyclistes nantais, la majorité des études posturales se
             font sur une journée aller-retour. Avec {troisD.duration} d'étude
             sur place en 3D — ou {deuxD.duration} en 2D — et 2x 1h15 de route,
             comptez environ 6h au total en 3D, 4h en 2D.
           </p>
-          <p class="text-gray-700 leading-relaxed">
+          <p class="text-corps leading-relaxed">
             Nous adaptons les créneaux en début ou fin de journée pour éviter
             les heures de pointe entre Nantes et Rennes. N'hésitez pas à nous
             appeler au <a
               href="tel:0607167323"
-              class="text-id-postur-dark font-semibold">06 07 16 73 23</a
+              class="text-rouge font-semibold">06 07 16 73 23</a
             > pour trouver ensemble le meilleur horaire.
           </p>
         </div>
@@ -332,9 +332,9 @@ const personSchema = {
       <h2 class="mb-4">
         Ce que comprend votre étude posturale
       </h2>
-      <div class="h-[3px] w-24 bg-id-postur-dark mb-10 rounded-full"></div>
+      <div class="h-[3px] w-24 bg-rouge mb-10 rounded-full"></div>
 
-      <p class="mb-8 text-gray-700 leading-relaxed">
+      <p class="mb-8 text-corps leading-relaxed">
         Une étude posturale chez ID Postur dure <strong>{troisD.duration}</strong
         > en 3D et <strong>{deuxD.duration}</strong> en 2D. Dans les deux cas, elle
         couvre l'ensemble des paramètres qui influent sur votre position et votre
@@ -342,41 +342,41 @@ const personSchema = {
       </p>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div class="bg-white border border-gray-200 p-6">
+        <div class="bg-white border border-hairline p-6">
           <h3 class="mb-3">
             1. Entretien et analyse de l'historique
           </h3>
-          <p class="text-sm text-gray-700 leading-relaxed">
+          <p class="text-sm text-corps leading-relaxed">
             Discussion sur votre pratique, vos objectifs, vos éventuelles
             douleurs, votre matériel actuel et l'historique de blessures. Étape
             cruciale pour contextualiser les réglages.
           </p>
         </div>
-        <div class="bg-white border border-gray-200 p-6">
+        <div class="bg-white border border-hairline p-6">
           <h3 class="mb-3">
             2. Analyse biomécanique 3D
           </h3>
-          <p class="text-sm text-gray-700 leading-relaxed">
+          <p class="text-sm text-corps leading-relaxed">
             Mesures STT 3DMA en conditions dynamiques : flexions, appuis,
             symétrie, alignement des genoux et du bassin. Données précises et
             reproductibles.
           </p>
         </div>
-        <div class="bg-white border border-gray-200 p-6">
+        <div class="bg-white border border-hairline p-6">
           <h3 class="mb-3">
             3. Réglages et ajustements
           </h3>
-          <p class="text-sm text-gray-700 leading-relaxed">
+          <p class="text-sm text-corps leading-relaxed">
             Hauteur et recul de selle, cockpit, cales, potence : nous ajustons
             l'ensemble de votre vélo en direct, en validant chaque modification
             sur les courbes de pédalage.
           </p>
         </div>
-        <div class="bg-white border border-gray-200 p-6">
+        <div class="bg-white border border-hairline p-6">
           <h3 class="mb-3">
             4. Synthèse et suivi
           </h3>
-          <p class="text-sm text-gray-700 leading-relaxed">
+          <p class="text-sm text-corps leading-relaxed">
             Remise d'un compte-rendu avec toutes vos mesures. Possibilité de
             revenir pour ajuster un nouveau vélo ou une nouvelle discipline —
             tarif préférentiel pour les clients existants.
@@ -387,7 +387,7 @@ const personSchema = {
       <div class="mt-10 text-center">
         <a
           href="/etudes-posturales"
-          class="inline-block text-id-postur-dark font-semibold underline hover:opacity-80"
+          class="inline-block text-rouge font-semibold underline hover:opacity-80"
         >
           Voir tous les détails de l'étude posturale →
         </a>
@@ -396,14 +396,14 @@ const personSchema = {
   </section>
 
   <!-- POUR QUELS CYCLISTES NANTAIS -->
-  <section class="bg-gray-50 py-16">
+  <section class="bg-papier py-16">
     <div class="container mx-auto px-5 max-w-5xl">
       <h2 class="mb-4">
         Pour quels cyclistes de la région nantaise ?
       </h2>
-      <div class="h-[3px] w-24 bg-id-postur-dark mb-10 rounded-full"></div>
+      <div class="h-[3px] w-24 bg-rouge mb-10 rounded-full"></div>
 
-      <p class="mb-8 text-gray-700 leading-relaxed">
+      <p class="mb-8 text-corps leading-relaxed">
         ID Postur accueille tous les profils de cyclistes — du pratiquant
         occasionnel à l'athlète professionnel. Voici quelques cas concrets
         rencontrés chez les cyclistes de la région nantaise :
@@ -414,7 +414,7 @@ const personSchema = {
           <span class="text-2xl shrink-0">🚴</span>
           <div>
             <h3 class="mb-1">Cyclistes route</h3>
-            <p class="text-sm text-gray-700">
+            <p class="text-sm text-corps">
               Pour les sorties longues vers le vignoble, la côte ou les
               cyclosportives. L'étude élimine les douleurs aux lombaires et aux
               genoux sur les sorties de 4-5h.
@@ -425,7 +425,7 @@ const personSchema = {
           <span class="text-2xl shrink-0">🏁</span>
           <div>
             <h3 class="mb-1">Triathlètes nantais</h3>
-            <p class="text-sm text-gray-700">
+            <p class="text-sm text-corps">
               Position CLM / aérodynamique optimisée pour les épreuves
               triathlon et Ironman. Gains en watts et en confort sur partie
               vélo. Ces positions relèvent de l'étude 3D.
@@ -436,7 +436,7 @@ const personSchema = {
           <span class="text-2xl shrink-0">🌲</span>
           <div>
             <h3 class="mb-1">VTTistes (forêt du Gâvre, Ancenis)</h3>
-            <p class="text-sm text-gray-700">
+            <p class="text-sm text-corps">
               Réglage adapté aux positions dynamiques, montées techniques et
               longues descentes. Précision sur la cale et la hauteur de selle.
             </p>
@@ -446,7 +446,7 @@ const personSchema = {
           <span class="text-2xl shrink-0">🛣️</span>
           <div>
             <h3 class="mb-1">Gravel & cyclotouristes Loire</h3>
-            <p class="text-sm text-gray-700">
+            <p class="text-sm text-corps">
               Position hybride route/VTT pour les sorties au long cours. Confort
               et rendement sur terrain mixte.
             </p>
@@ -456,7 +456,7 @@ const personSchema = {
           <span class="text-2xl shrink-0">🎯</span>
           <div>
             <h3 class="mb-1">Jeunes cyclistes en croissance</h3>
-            <p class="text-sm text-gray-700">
+            <p class="text-sm text-corps">
               Protocole adapté aux morphologies en évolution, avec des repères
               à réévaluer au fil de la croissance.
             </p>
@@ -466,7 +466,7 @@ const personSchema = {
           <span class="text-2xl shrink-0">🏆</span>
           <div>
             <h3 class="mb-1">Compétiteurs et élites</h3>
-            <p class="text-sm text-gray-700">
+            <p class="text-sm text-corps">
               25+ athlètes professionnels accompagnés. Réglages au dixième de
               millimètre pour gagner en puissance et en endurance.
             </p>
@@ -482,8 +482,8 @@ const personSchema = {
       <h2 class="mb-4">
         Tarifs pour une étude posturale
       </h2>
-      <div class="h-[3px] w-24 bg-id-postur-dark mb-6 rounded-full"></div>
-      <p class="mb-10 text-gray-700 leading-relaxed">
+      <div class="h-[3px] w-24 bg-rouge mb-6 rounded-full"></div>
+      <p class="mb-10 text-corps leading-relaxed">
         Deux formats au choix : la 3D pour toutes les disciplines, chrono et
         triathlon compris, la 2D pour la route, le VTT et le gravel. {
           REGLE_DEJA_CLIENT
@@ -497,15 +497,15 @@ const personSchema = {
               class:list={[
                 "bg-white p-6 text-center",
                 index === 0
-                  ? "border-2 border-id-postur-dark"
-                  : "border border-gray-200",
+                  ? "border-2 border-rouge"
+                  : "border border-hairline",
               ]}
             >
               <h3 class="mb-2">{prestation.title}</h3>
-              <p class="text-3xl font-bold text-id-postur-dark mb-2">
+              <p class="text-3xl font-bold text-rouge mb-2">
                 {formatPrix(prestation.price)}
               </p>
-              <p class="text-sm text-gray-600">{prestation.duration}</p>
+              <p class="text-sm text-corps">{prestation.duration}</p>
             </div>
           ))
         }
@@ -514,14 +514,14 @@ const personSchema = {
       <div class="text-center mt-8">
         <a
           href="/reserver"
-          class="inline-block px-8 py-3 bg-id-postur-dark text-white font-semibold hover:opacity-90 transition duration-300"
+          class="btn-primaire btn-fleche"
         >
           Réserver mon étude posturale
         </a>
-        <p class="text-sm text-gray-600 mt-3">
+        <p class="text-sm text-corps mt-3">
           Ou par téléphone au <a
             href="tel:0607167323"
-            class="text-id-postur-dark font-semibold">06 07 16 73 23</a
+            class="text-rouge font-semibold">06 07 16 73 23</a
           >
         </p>
       </div>
@@ -529,27 +529,27 @@ const personSchema = {
   </section>
 
   <!-- FAQ NANTES -->
-  <section class="bg-gray-50 py-16">
+  <section class="bg-papier py-16">
     <div class="container mx-auto px-5 max-w-4xl">
       <h2 class="text-center mb-4">
         Questions fréquentes des cyclistes nantais
       </h2>
       <div
-        class="h-[3px] w-24 bg-id-postur-dark mx-auto mb-10 rounded-full"
+        class="h-[3px] w-24 bg-rouge mx-auto mb-10 rounded-full"
       >
       </div>
 
       <div class="space-y-6">
         {
           faqItems.map((item) => (
-            <details class="group bg-white border border-gray-200 p-6 transition">
+            <details class="group bg-white border border-hairline rounded-xs p-6 transition">
               <summary class="flex items-center justify-between cursor-pointer list-none">
                 <h3>{item.question}</h3>
-                <span class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none">
+                <span class="text-rouge transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none">
                   +
                 </span>
               </summary>
-              <p class="mt-4 text-gray-700 leading-relaxed">{item.answer}</p>
+              <p class="mt-4 text-corps leading-relaxed">{item.answer}</p>
             </details>
           ))
         }
@@ -558,7 +558,7 @@ const personSchema = {
   </section>
 
   <!-- À PROPOS DE L'EXPERT -->
-  <section class="bg-white py-16 border-t border-gray-100">
+  <section class="bg-white py-16 border-t border-hairline">
     <div class="container mx-auto px-5 max-w-4xl">
       <div class="flex flex-col md:flex-row items-center gap-8">
         <img
@@ -571,14 +571,14 @@ const personSchema = {
           <h2 class="mb-3">
             Par Romain Hardy, fondateur d'ID Postur
           </h2>
-          <p class="text-gray-700 leading-relaxed mb-3">
+          <p class="text-corps leading-relaxed mb-3">
             <strong>Ancien cycliste professionnel</strong>, Romain Hardy a couru
             plusieurs saisons au plus haut niveau avant de se reconvertir dans
             l'étude posturale. Formé à la technologie de capture de mouvement <strong
               >STT</strong
             >, il a fondé ID Postur en 2023 à La Mézière, près de Rennes.
           </p>
-          <p class="text-gray-700 leading-relaxed">
+          <p class="text-corps leading-relaxed">
             Plus de <strong>800 études posturales</strong> réalisées,
             <strong>25+ athlètes professionnels</strong> accompagnés, et une
             note de <strong>5/5 sur 62 avis Google</strong>. Son expérience
@@ -593,33 +593,33 @@ const personSchema = {
   <!-- LIENS INTERNES -->
   <section class="container mx-auto px-5 py-16 max-w-5xl">
     <h2 class="mb-4">Aller plus loin</h2>
-    <div class="h-[3px] w-24 bg-id-postur-dark mb-10 rounded-full"></div>
+    <div class="h-[3px] w-24 bg-rouge mb-10 rounded-full"></div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       <a
         href="/etudes-posturales"
-        class="block p-6 border border-gray-200 hover:border-id-postur-dark transition"
+        class="block p-6 border border-hairline hover:border-rouge transition"
       >
         <h3 class="mb-2">Étude posturale détaillée</h3>
-        <p class="text-sm text-gray-700">
+        <p class="text-sm text-corps">
           Découvrez toutes les formules et le déroulé complet.
         </p>
       </a>
       <a
         href="/cales"
-        class="block p-6 border border-gray-200 hover:border-id-postur-dark transition"
+        class="block p-6 border border-hairline hover:border-rouge transition"
       >
         <h3 class="mb-2">Réglage des cales</h3>
-        <p class="text-sm text-gray-700">
+        <p class="text-sm text-corps">
           Positionnement précis des cales pour cyclistes déjà venus.
         </p>
       </a>
       <a
         href="/choix-nouveau-velo"
-        class="block p-6 border border-gray-200 hover:border-id-postur-dark transition"
+        class="block p-6 border border-hairline hover:border-rouge transition"
       >
         <h3 class="mb-2">Aide au choix d'un nouveau vélo</h3>
-        <p class="text-sm text-gray-700">
+        <p class="text-sm text-corps">
           Avant l'achat, validez la taille et l'ergonomie de votre futur vélo.
         </p>
       </a>

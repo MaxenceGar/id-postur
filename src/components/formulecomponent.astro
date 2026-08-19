@@ -42,40 +42,40 @@ const externe = href.startsWith("http");
 
 <div
   class:list={[
-    "relative flex flex-col h-full bg-white shadow-sm transition-all duration-200 hover:shadow-lg motion-safe:hover:-translate-y-1",
+    "relative flex flex-col h-full rounded-xs shadow-carte transition-all duration-200 motion-safe:hover:-translate-y-1",
     highlight
-      ? "border-2 border-id-postur-dark"
-      : "border border-gray-200 hover:border-id-postur-dark/40",
+      ? "border border-rouge/35 bg-rouge/5"
+      : "border border-hairline bg-white hover:border-rouge/35",
   ]}
 >
   <div
-    class="absolute -top-3 left-4 inline-flex items-center bg-[#C00201] px-3 py-1 text-xs font-semibold text-white shadow"
+    class="absolute -top-3 left-4 inline-flex items-center text-label text-rouge rounded-xs border border-rouge/35 bg-white px-3 py-[5px]"
   >
     {baseline}
   </div>
   <div class="p-6 flex-1 flex flex-col">
-    <h3 class="text-gray-900 mb-2">
+    <h3 class="text-encre mb-2">
       {title}
     </h3>
-    <p class="text-sm text-gray-500 mb-4">
+    <p class="text-sm text-gris mb-4">
       {description}
     </p>
     <div class="mb-4">
-      <span class="text-3xl font-bold text-gray-900">{formatPrix(price)}</span>
+      <span class="text-data text-encre">{formatPrix(price)}</span>
     </div>
-    <p class="text-sm font-medium text-gray-700 mb-1">
+    <p class="text-sm font-medium text-corps mb-1">
       ⏱ Durée : <span class="font-semibold">{duration}</span>
     </p>
-    <p class="text-sm text-gray-700 mb-4">
+    <p class="text-sm text-corps mb-4">
       Disciplines : <span class="font-semibold">{disciplines}</span>
     </p>
-    <ul class="text-sm text-gray-600 space-y-1 mb-4">
-      <li class="font-medium text-gray-700">Équipement à apporter :</li>
+    <ul class="text-sm text-corps space-y-1 mb-4">
+      <li class="font-medium text-corps">Équipement à apporter :</li>
       {equipment.map((item) => <li>{item}</li>)}
     </ul>
     {
       note && (
-        <p class="text-sm text-id-postur-dark font-medium mb-4">{note}</p>
+        <p class="text-sm text-rouge font-medium mb-4">{note}</p>
       )
     }
     {
@@ -85,7 +85,7 @@ const externe = href.startsWith("http");
             href={href}
             rel={externe ? "nofollow noopener" : undefined}
             target={externe ? "_blank" : undefined}
-            class="cursor-pointer w-full inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-[#C00201] border border-[#C00201] bg-white hover:bg-[#C00201]/5 transition duration-200 motion-safe:active:scale-[0.98]"
+            class="btn-secondaire btn-fleche w-full"
           >
             {ctaLabel}
           </a>

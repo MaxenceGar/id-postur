@@ -9,15 +9,16 @@
  */
 ---
 
-<section class="px-4 md:px-2 max-w-4xl mx-auto py-16 text-black">
-  <h2 class="text-gray-900 mb-4">
+<section class="px-4 md:px-2 max-w-4xl mx-auto py-16 md:py-[104px] text-encre">
+  <p class="kicker text-label mb-4">Pour aller plus loin</p>
+  <h2 class="text-encre mb-4">
     En savoir plus sur l’étude posturale cycliste
   </h2>
-  <div class="h-[3px] w-24 bg-id-postur-dark mb-6"></div>
+  <div class="h-[3px] w-24 bg-rouge mb-6"></div>
 
   <input type="checkbox" id="seo-voir-plus" class="seo-toggle sr-only" />
 
-  <div class="seo-texte text-[14px] leading-[1.7] text-[#4A4843]">
+  <div class="seo-texte text-[14px] leading-[1.7] text-corps">
     <p>
       Une <strong>étude posturale cycliste</strong> permet d’analyser avec précision
       la position du cycliste afin d’optimiser le confort, la performance et la
@@ -47,7 +48,7 @@
 
   <label
     for="seo-voir-plus"
-    class="seo-label mt-6 inline-flex items-center gap-2 cursor-pointer select-none bg-[#FCFAF8] border border-[#DBD7CF] text-[#1C1B1A] text-[14px] font-semibold py-3 px-6 transition duration-200 motion-safe:active:scale-[0.98]"
+    class="seo-label btn-secondaire mt-6 gap-2 select-none"
   >
     <span class="voir-plus">Voir plus</span>
     <span class="voir-moins">Voir moins</span>
@@ -82,7 +83,7 @@
     right: 0;
     bottom: 0;
     height: 5rem;
-    background: linear-gradient(to top, white, rgba(255, 255, 255, 0));
+    background: linear-gradient(to top, var(--color-papier), rgba(251, 250, 248, 0));
     transition: opacity 0.3s ease;
     pointer-events: none;
   }
@@ -116,7 +117,7 @@
 
   /* La case est masquée (sr-only) mais reste focusable au clavier. */
   .seo-toggle:focus-visible ~ .seo-label {
-    outline: 2px solid var(--color-id-postur-dark);
+    outline: 2px solid var(--color-rouge);
     outline-offset: 2px;
   }
 

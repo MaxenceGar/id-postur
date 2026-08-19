@@ -46,8 +46,8 @@ const estActif = (lien: (typeof liens)[number]) =>
                 href={lien.href}
                 aria-current={estActif(lien) ? "page" : undefined}
                 class:list={[
-                  "nav-link text-sm font-medium transition hover:text-id-postur-dark",
-                  estActif(lien) ? "text-id-postur-dark" : "text-gray-700",
+                  "nav-link text-sm font-medium transition hover:text-rouge",
+                  estActif(lien) ? "text-rouge" : "text-corps",
                 ]}
               >
                 {lien.label}
@@ -61,7 +61,7 @@ const estActif = (lien: (typeof liens)[number]) =>
     <div class="flex items-center gap-3">
       <a
         href="/reserver"
-        class="btn-fleche text-[14px] hidden sm:inline-block bg-id-postur-dark text-white font-semibold py-3 px-4 transition duration-200 motion-safe:active:scale-[0.98]"
+        class="btn-primaire btn-fleche hidden sm:inline-flex"
       >
         Prendre rendez-vous
       </a>
@@ -69,7 +69,7 @@ const estActif = (lien: (typeof liens)[number]) =>
       <!-- Menu mobile : disclosure natif, sans JavaScript -->
       <details class="lg:hidden group relative">
         <summary
-          class="list-none cursor-pointer p-2 text-gray-700"
+          class="list-none cursor-pointer p-2 text-corps"
           aria-label="Ouvrir le menu"
         >
           <svg
@@ -90,7 +90,7 @@ const estActif = (lien: (typeof liens)[number]) =>
         </summary>
         <nav
           aria-label="Navigation mobile"
-          class="absolute right-0 top-full mt-2 w-64 bg-white shadow-lg border border-gray-200 z-50"
+          class="absolute right-0 top-full mt-2 w-64 bg-white shadow-lg border border-hairline z-50"
         >
           <ul class="flex flex-col py-2">
             {
@@ -100,8 +100,8 @@ const estActif = (lien: (typeof liens)[number]) =>
                     href={lien.href}
                     aria-current={estActif(lien) ? "page" : undefined}
                     class:list={[
-                      "block px-4 py-3 text-sm font-medium hover:bg-gray-50",
-                      estActif(lien) ? "text-id-postur-dark" : "text-gray-700",
+                      "block px-4 py-3 text-sm font-medium hover:bg-papier",
+                      estActif(lien) ? "text-rouge" : "text-corps",
                     ]}
                   >
                     {lien.label}
@@ -112,7 +112,7 @@ const estActif = (lien: (typeof liens)[number]) =>
             <li class="px-4 py-3 sm:hidden">
               <a
                 href="/reserver"
-                class="btn-fleche block text-center bg-id-postur-dark text-white font-semibold py-3 px-4 transition duration-200 motion-safe:active:scale-[0.98]"
+                class="btn-primaire btn-fleche w-full"
               >
                 Prendre rendez-vous
               </a>

@@ -39,22 +39,22 @@ const liens = [
 <section class="py-16">
   <div class="container mx-auto px-2 md:px-5">
     <h2>{title}</h2>
-    <div class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-4 rounded-full"></div>
+    <div class="h-[3px] w-24 bg-rouge mt-4 mb-4 rounded-full"></div>
 
     <div class="grid gap-8 md:grid-cols-3 py-10">
       {
         liens.map((lien) => (
           <a
             href={lien.href}
-            class="block bg-white border border-gray-200 p-6 hover:border-id-postur-dark transition"
+            class="block bg-white border border-hairline p-6 hover:border-rouge transition"
           >
-            <h3 class="text-gray-900 mb-2">
+            <h3 class="text-encre mb-2">
               {lien.title}
             </h3>
-            <p class="text-sm text-gray-500 mb-4">{lien.description}</p>
-            <p class="text-2xl font-bold text-gray-900">{lien.prix}</p>
-            <p class="text-sm text-gray-700">⏱ {lien.duree}</p>
-            <span class="inline-block mt-4 text-sm font-semibold text-id-postur-dark">
+            <p class="text-sm text-gris mb-4">{lien.description}</p>
+            <p class="text-2xl font-bold text-encre">{lien.prix}</p>
+            <p class="text-sm text-corps">⏱ {lien.duree}</p>
+            <span class="inline-block mt-4 text-sm font-semibold text-rouge">
               En savoir plus →
             </span>
           </a>

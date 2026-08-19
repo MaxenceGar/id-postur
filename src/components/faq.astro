@@ -64,23 +64,24 @@ const faqSchema = {
   set:html={JSON.stringify(faqSchema)}
 />
 
-<section class="relative py-28 px-6 overflow-hidden bg-white">
+<section class="relative py-16 md:py-[104px] md:py-[104px] px-6 overflow-hidden bg-white">
   <div
     class="relative max-w-5xl mx-auto grid gap-10 lg:grid-cols-[2fr_3fr] text-left"
   >
     <!-- Bloc d'intro : au-dessus des questions sur mobile, à gauche sur desktop -->
     <div class="lg:sticky lg:top-28">
-      <h2 id="faq" class="text-gray-900 mb-4">
+      <p class="kicker text-label mb-4">FAQ</p>
+      <h2 id="faq" class="text-encre mb-4">
         Vos questions sur l'étude posturale vélo à Rennes
       </h2>
-      <div class="h-[3px] w-24 bg-id-postur-dark mb-6"></div>
-      <p class="text-[16px] text-[#4A4843] leading-[1.7] mb-8">
+      <div class="h-[3px] w-24 bg-rouge mb-6"></div>
+      <p class="text-[16px] text-corps leading-[1.7] mb-8">
         Vous ne trouvez pas votre réponse ? Appelez-nous au 06 07 16 73 23 ou
         écrivez-nous, on vous répond rapidement.
       </p>
       <a
         href="/reserver"
-        class="btn-fleche inline-block bg-[#FCFAF8] text-[#1C1B1A] text-[14px] font-semibold py-3 px-6 border border-[#DBD7CF] transition duration-200 motion-safe:active:scale-[0.98]"
+        class="btn-secondaire btn-fleche"
       >
         Prendre rendez-vous
       </a>
@@ -89,16 +90,16 @@ const faqSchema = {
     <div class="space-y-2.5 lg:space-y-5 text-left">
       {
         faqItems.map((item) => (
-          <details class="group bg-[#FCFAF8] border border-[#EBE6E7] p-2.5 transition-colors duration-200 hover:border-id-postur-dark/40 open:border-id-postur-dark/40">
+          <details class="group bg-papier border border-hairline rounded-xs p-2.5 transition-colors duration-200 hover:border-rouge/35 open:border-rouge/35">
             <summary class="flex items-center justify-between cursor-pointer list-none">
-              <h3 class="text-gray-900">
+              <h3 class="text-encre">
                 {item.question}
               </h3>
-              <span class="text-[#4A4843] transition-transform duration-300 group-open:rotate-45 text-xl leading-none select-none">
+              <span class="text-corps transition-transform duration-300 group-open:rotate-45 text-xl leading-none select-none">
                 +
               </span>
             </summary>
-            <p class="faq-reponse mt-4 text-gray-600 leading-relaxed text-[13px]">
+            <p class="faq-reponse mt-4 text-corps leading-relaxed text-[13px]">
               {item.answer}
             </p>
           </details>

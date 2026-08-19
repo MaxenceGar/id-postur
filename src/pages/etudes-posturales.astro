@@ -112,7 +112,7 @@ const serviceSchema = {
         Étude posturale vélo à Rennes
       </h1>
       <div
-        class="h-[3px] w-24 bg-id-postur-dark mx-auto mt-4 mb-10 rounded-full"
+        class="h-[3px] w-24 bg-rouge mx-auto mt-4 mb-10 rounded-full"
       >
       </div>
       <p class="text-center max-w-4xl mx-auto pb-4">
@@ -125,7 +125,7 @@ const serviceSchema = {
       </p>
       <div class="inline-block mx-auto">
         <a
-          class="text-center inline-block px-6 py-2 bg-id-postur-dark text-white font-medium hover:opacity-90 transition duration-300 cursor-pointer"
+          class="btn-primaire btn-fleche"
           href="#formules"
         >
           Voir les tarifs
@@ -134,14 +134,14 @@ const serviceSchema = {
     </div>
   </div>
 
-  <section class="bg-gray-50 py-16">
+  <section class="bg-papier py-16">
     <div class="container mx-auto px-5 max-w-4xl text-center">
       <h2>
         Étude posturale 3D ou 2D : laquelle choisir ?
       </h2>
-      <div class="h-[3px] w-24 bg-id-postur-dark mx-auto mt-4 mb-6 rounded-full">
+      <div class="h-[3px] w-24 bg-rouge mx-auto mt-4 mb-6 rounded-full">
       </div>
-      <p class="text-gray-700 mb-6">
+      <p class="text-corps mb-6">
         Les deux formats se déroulent sur votre propre vélo. Ils se distinguent
         par les disciplines couvertes — le chrono et le triathlon demandent la
         3D — ainsi que par leur durée et leur tarif :
@@ -150,7 +150,7 @@ const serviceSchema = {
       </p>
       <a
         href="/etude-posturale-3d-ou-2d"
-        class="inline-flex justify-center items-center px-6 py-3 bg-id-postur-dark text-white font-semibold hover:opacity-90 transition"
+        class="btn-primaire btn-fleche"
       >
         Voir le comparatif détaillé
       </a>
@@ -162,7 +162,7 @@ const serviceSchema = {
       <h2>
         Il s'agit de votre première étude posturale chez ID Postur ?
       </h2>
-      <div class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-4 rounded-full"></div>
+      <div class="h-[3px] w-24 bg-rouge mt-4 mb-4 rounded-full"></div>
       <p class="block md:max-w-4xl">
         Deux formats au choix. L'étude 3D couvre toutes les disciplines, y
         compris les vélos de chrono et de triathlon ; l'étude 2D s'adresse à la
@@ -188,7 +188,7 @@ const serviceSchema = {
   <section class="py-16">
     <div class="container px-2 md:px-5 mx-auto">
       <h2>Offre particulière</h2>
-      <div class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-4 rounded-full"></div>
+      <div class="h-[3px] w-24 bg-rouge mt-4 mb-4 rounded-full"></div>
       <p class="block md:max-w-4xl">
         Une formule à tarif unique pour les jeunes cyclistes, réalisée avec la
         technologie d'analyse 2D sur une séance d'1h30. Le tarif reste le même
@@ -210,12 +210,12 @@ const serviceSchema = {
     </div>
   </section>
 
-  <section class="bg-gray-50 py-16">
+  <section class="bg-papier py-16">
     <div class="container px-2 md:px-5 mx-auto">
       <h2>
         Vous avez déjà réalisé une étude chez ID Postur ?
       </h2>
-      <div class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-4 rounded-full"></div>
+      <div class="h-[3px] w-24 bg-rouge mt-4 mb-4 rounded-full"></div>
       <p class="block md:max-w-4xl">
         {REGLE_DEJA_CLIENT} Ce tarif réduit s'applique sans limite de temps depuis
         votre première étude.
@@ -233,11 +233,11 @@ const serviceSchema = {
         }
       </div>
 
-      <p class="text-sm text-gray-700">
+      <p class="text-sm text-corps">
         Vous venez de Nantes ou de sa région ? Consultez notre page dédiée aux
         <a
           href="/etude-posturale-nantes"
-          class="text-id-postur-dark font-semibold underline hover:opacity-80"
+          class="text-rouge font-semibold underline hover:opacity-80"
         >
           cyclistes nantais</a
         > : trajet, organisation de la journée et tarifs.
@@ -250,7 +250,7 @@ const serviceSchema = {
       <h2>
         Besoin d'un réglage ponctuel plutôt que d'une étude complète ?
       </h2>
-      <div class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-4 rounded-full"></div>
+      <div class="h-[3px] w-24 bg-rouge mt-4 mb-4 rounded-full"></div>
       <p class="block md:max-w-4xl">
         Pour un réglage de cales, un avis avant l'achat d'un vélo ou une
         vérification rapide, ID Postur propose des rendez-vous courts de 20
@@ -262,17 +262,17 @@ const serviceSchema = {
           PRESTATIONS_COURTES.map((prestation) => (
             <a
               href={prestation.page}
-              class="block bg-white border border-gray-200 p-6 hover:border-id-postur-dark transition"
+              class="block bg-white border border-hairline p-6 hover:border-rouge transition"
             >
-              <h3 class="text-gray-900 mb-2">
+              <h3 class="text-encre mb-2">
                 {prestation.title}
               </h3>
-              <p class="text-sm text-gray-500 mb-4">{prestation.description}</p>
-              <p class="text-2xl font-bold text-gray-900">
+              <p class="text-sm text-gris mb-4">{prestation.description}</p>
+              <p class="text-2xl font-bold text-encre">
                 {formatPrix(prestation.price)}
               </p>
-              <p class="text-sm text-gray-700">⏱ {prestation.duration}</p>
-              <span class="inline-block mt-4 text-sm font-semibold text-id-postur-dark">
+              <p class="text-sm text-corps">⏱ {prestation.duration}</p>
+              <span class="inline-block mt-4 text-sm font-semibold text-rouge">
                 En savoir plus →
               </span>
             </a>
@@ -287,15 +287,15 @@ const serviceSchema = {
       <h2 id="faq" class="mb-4">
         En savoir plus
       </h2>
-      <div class="h-[3px] w-24 bg-id-postur-dark mx-auto mb-6"></div>
+      <div class="h-[3px] w-24 bg-rouge mx-auto mb-6"></div>
 
       <div class="space-y-6 text-left">
         {
           faqItems.map((item) => (
-            <details class="group bg-white border border-gray-200 p-6 transition">
+            <details class="group bg-white border border-hairline rounded-xs p-6 transition">
               <summary class="flex items-center justify-between cursor-pointer list-none">
                 <h3>{item.question}</h3>
-                <span class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none">
+                <span class="text-rouge transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none">
                   +
                 </span>
               </summary>

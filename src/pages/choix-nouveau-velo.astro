@@ -83,7 +83,7 @@ const serviceSchema = {
         Choisissez votre nouveau vélo en toute confiance
       </h1>
       <div
-        class="h-[3px] w-24 bg-id-postur-dark mx-auto mt-4 mb-10 rounded-full"
+        class="h-[3px] w-24 bg-rouge mx-auto mt-4 mb-10 rounded-full"
       >
       </div>
       <p class="text-center max-w-4xl mx-auto pb-4">
@@ -100,7 +100,7 @@ const serviceSchema = {
       <h2>
         Un rendez-vous court pour sécuriser votre achat
       </h2>
-      <div class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-10 rounded-full"></div>
+      <div class="h-[3px] w-24 bg-rouge mt-4 mb-10 rounded-full"></div>
       <div class="max-w-md">
         <Formulecomponent prestation={choix} highlight />
       </div>
@@ -114,15 +114,15 @@ const serviceSchema = {
       <h2 id="faq" class="mb-4">
         En savoir plus
       </h2>
-      <div class="h-[3px] w-24 bg-id-postur-dark mx-auto mb-6"></div>
+      <div class="h-[3px] w-24 bg-rouge mx-auto mb-6"></div>
 
       <div class="space-y-6 text-left">
         {
           faqItems.map((item) => (
-            <details class="group bg-white border border-gray-200 p-6 transition">
+            <details class="group bg-white border border-hairline rounded-xs p-6 transition">
               <summary class="flex items-center justify-between cursor-pointer list-none">
                 <h3>{item.question}</h3>
-                <span class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none">
+                <span class="text-rouge transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none">
                   +
                 </span>
               </summary>

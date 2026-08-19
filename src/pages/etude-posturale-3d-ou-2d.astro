@@ -77,16 +77,16 @@ const faqSchema = {
   />
 
   <!-- HERO -->
-  <section class="bg-gray-50 py-16 md:py-24">
+  <section class="bg-papier py-16 md:py-24">
     <div class="container mx-auto px-5 max-w-4xl text-center">
       <h1>
         Étude posturale 3D ou 2D : quelle différence ?
       </h1>
       <div
-        class="h-[3px] w-24 bg-id-postur-dark mx-auto mt-4 mb-6 rounded-full"
+        class="h-[3px] w-24 bg-rouge mx-auto mt-4 mb-6 rounded-full"
       >
       </div>
-      <p class="text-gray-700 leading-relaxed">
+      <p class="text-corps leading-relaxed">
         ID Postur propose deux formats d'étude posturale à Rennes : la <strong
           >3D</strong
         >, la plus complète, et la <strong>2D</strong>, plus courte. Les deux se
@@ -105,22 +105,22 @@ const faqSchema = {
         <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-10 items-center">
           <div class:list={[format.imageADroite ? "md:order-1" : "md:order-2"]}>
             <h2>{format.titre}</h2>
-            <div class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-4 rounded-full" />
-            <p class="text-lg font-semibold text-id-postur-dark mb-4">
+            <div class="h-[3px] w-24 bg-rouge mt-4 mb-4 rounded-full" />
+            <p class="text-lg font-semibold text-rouge mb-4">
               {format.accroche}
             </p>
             {format.paragraphes.map((paragraphe) => (
-              <p class="text-gray-700 leading-relaxed mb-4">{paragraphe}</p>
+              <p class="text-corps leading-relaxed mb-4">{paragraphe}</p>
             ))}
-            <ul class="text-sm text-gray-600 space-y-1 mb-6">
-              <li class="font-medium text-gray-700">À apporter :</li>
+            <ul class="text-sm text-corps space-y-1 mb-6">
+              <li class="font-medium text-corps">À apporter :</li>
               {format.prestation.equipment.map((item) => (
                 <li>{item}</li>
               ))}
             </ul>
             <a
               href="/reserver"
-              class="inline-flex justify-center items-center px-6 py-3 bg-id-postur-dark text-white font-semibold hover:opacity-90 transition"
+              class="btn-primaire btn-fleche"
             >
               Réserver une étude {format.titre.includes("3D") ? "3D" : "2D"}
             </a>
@@ -145,14 +145,14 @@ const faqSchema = {
     Aucune affirmation d'un lien avec ID Postur, aucun logo : une citation
     textuelle n'engage que ce qu'elle dit.
   -->
-  <section class="border-y border-gray-200 bg-white py-14">
+  <section class="border-y border-hairline bg-white py-14">
     <div class="container mx-auto px-5 max-w-4xl text-center">
       <h2 class="mb-4">
         L'analyse 3D, la référence du peloton professionnel
       </h2>
-      <div class="h-[3px] w-24 bg-id-postur-dark mx-auto mb-6 rounded-full">
+      <div class="h-[3px] w-24 bg-rouge mx-auto mb-6 rounded-full">
       </div>
-      <p class="text-gray-700 leading-relaxed mb-8">
+      <p class="text-corps leading-relaxed mb-8">
         C'est la technologie retenue par les plus grandes équipes du World Tour
         pour réaliser les études posturales de leurs coureurs. Un niveau de
         précision pensé pour la compétition, accessible à tous les cyclistes
@@ -161,7 +161,7 @@ const faqSchema = {
       <ul class="flex flex-wrap justify-center gap-4">
         {
           EQUIPES_3D.map((equipe) => (
-            <li class="border border-gray-200 bg-gray-50 px-6 py-3 text-sm font-semibold text-gray-800">
+            <li class="border border-hairline bg-papier px-6 py-3 text-sm font-semibold text-encre">
               {equipe}
             </li>
           ))
@@ -171,31 +171,31 @@ const faqSchema = {
   </section>
 
   <!-- TABLEAU COMPARATIF -->
-  <section class="bg-gray-50 py-16">
+  <section class="bg-papier py-16">
     <div class="container mx-auto px-5 max-w-4xl">
       <h2>
         Étude 3D et étude 2D en un coup d'œil
       </h2>
-      <div class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-10 rounded-full"></div>
+      <div class="h-[3px] w-24 bg-rouge mt-4 mb-10 rounded-full"></div>
 
       <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse bg-white min-w-125">
           <thead>
-            <tr class="border-b-2 border-gray-200">
-              <th class="p-4 font-semibold text-gray-700"></th>
-              <th class="p-4 font-semibold text-id-postur-dark">Étude 3D</th>
-              <th class="p-4 font-semibold text-gray-900">Étude 2D</th>
+            <tr class="border-b-2 border-hairline">
+              <th class="p-4 font-semibold text-corps"></th>
+              <th class="p-4 font-semibold text-rouge">Étude 3D</th>
+              <th class="p-4 font-semibold text-encre">Étude 2D</th>
             </tr>
           </thead>
           <tbody>
             {
               COMPARATIF_3D_2D.map((ligne) => (
-                <tr class="border-b border-gray-100 align-top transition-colors duration-200 hover:bg-gray-50">
-                  <th class="p-4 font-medium text-gray-700 text-sm">
+                <tr class="border-b border-hairline align-top transition-colors duration-200 hover:bg-papier">
+                  <th class="p-4 font-medium text-corps text-sm">
                     {ligne.critere}
                   </th>
-                  <td class="p-4 text-sm text-gray-700">{ligne.troisD}</td>
-                  <td class="p-4 text-sm text-gray-700">{ligne.deuxD}</td>
+                  <td class="p-4 text-sm text-corps">{ligne.troisD}</td>
+                  <td class="p-4 text-sm text-corps">{ligne.deuxD}</td>
                 </tr>
               ))
             }
@@ -203,7 +203,7 @@ const faqSchema = {
         </table>
       </div>
 
-      <p class="text-sm text-gray-600 mt-6">{REGLE_DEJA_CLIENT}</p>
+      <p class="text-sm text-corps mt-6">{REGLE_DEJA_CLIENT}</p>
     </div>
   </section>
 
@@ -215,20 +215,20 @@ const faqSchema = {
           <h2>
             Comment choisir entre les deux ?
           </h2>
-          <div class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-10 rounded-full" />
+          <div class="h-[3px] w-24 bg-rouge mt-4 mb-10 rounded-full" />
 
           <div class="grid md:grid-cols-2 gap-8">
-            <div class="border-2 border-id-postur-dark bg-white p-6">
+            <div class="border-2 border-rouge bg-white p-6">
               <h3 class="mb-4">Choisissez la 3D si…</h3>
-              <ul class="space-y-2 text-sm text-gray-700">
+              <ul class="space-y-2 text-sm text-corps">
                 {POUR_QUI_3D.map((raison) => (
                   <li>• {raison}</li>
                 ))}
               </ul>
             </div>
-            <div class="border border-gray-200 bg-white p-6">
+            <div class="border border-hairline bg-white p-6">
               <h3 class="mb-4">Choisissez la 2D si…</h3>
-              <ul class="space-y-2 text-sm text-gray-700">
+              <ul class="space-y-2 text-sm text-corps">
                 {POUR_QUI_2D.map((raison) => (
                   <li>• {raison}</li>
                 ))}
@@ -243,59 +243,59 @@ const faqSchema = {
   <!-- CTA -->
   <section class="container mx-auto px-5 py-16">
     <div
-      class="max-w-4xl mx-auto border-2 border-id-postur-dark bg-white p-8 text-center"
+      class="max-w-4xl mx-auto border-2 border-rouge bg-white p-8 text-center"
     >
       <h2 class="mb-4">
         Prêt à réserver votre étude posturale ?
       </h2>
-      <p class="text-gray-700 mb-6">
+      <p class="text-corps mb-6">
         Indiquez si vous êtes déjà venu chez ID Postur, puis choisissez votre
         format et votre créneau.
       </p>
       <a
         href="/reserver"
-        class="inline-flex justify-center items-center px-8 py-3 bg-id-postur-dark text-white font-semibold hover:opacity-90 transition"
+        class="btn-primaire btn-fleche"
       >
         Prendre rendez-vous
       </a>
-      <p class="text-sm text-gray-600 mt-4">
+      <p class="text-sm text-corps mt-4">
         Ou par téléphone au <a
           href="tel:0607167323"
-          class="text-id-postur-dark font-semibold">06 07 16 73 23</a
+          class="text-rouge font-semibold">06 07 16 73 23</a
         >
       </p>
     </div>
   </section>
 
   <!-- FAQ -->
-  <section class="bg-gray-50 py-16">
+  <section class="bg-papier py-16">
     <div class="container mx-auto px-5 max-w-4xl">
       <h2 class="text-center mb-4">
         Questions fréquentes sur la 3D et la 2D
       </h2>
-      <div class="h-[3px] w-24 bg-id-postur-dark mx-auto mb-10 rounded-full">
+      <div class="h-[3px] w-24 bg-rouge mx-auto mb-10 rounded-full">
       </div>
 
       <div class="space-y-6">
         {
           faqItems.map((item) => (
-            <details class="group bg-white border border-[#EBE6E7] p-2.5 transition-colors duration-200 hover:border-id-postur-dark/40 open:border-id-postur-dark/40">
+            <details class="group bg-white border border-hairline rounded-xs p-2.5 transition-colors duration-200 hover:border-rouge/35 open:border-rouge/35">
               <summary class="flex items-center justify-between cursor-pointer list-none">
                 <h3>{item.question}</h3>
-                <span class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none">
+                <span class="text-rouge transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none">
                   +
                 </span>
               </summary>
-              <p class="faq-reponse mt-4 text-gray-700 leading-relaxed">{item.answer}</p>
+              <p class="faq-reponse mt-4 text-corps leading-relaxed">{item.answer}</p>
             </details>
           ))
         }
       </div>
 
-      <p class="text-center text-sm text-gray-600 mt-10">
+      <p class="text-center text-sm text-corps mt-10">
         <a
           href="/etudes-posturales"
-          class="text-id-postur-dark font-semibold underline hover:opacity-80"
+          class="text-rouge font-semibold underline hover:opacity-80"
         >
           Voir toutes les formules d'étude posturale et leurs tarifs
         </a>
