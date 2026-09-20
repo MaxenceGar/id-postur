@@ -103,7 +103,7 @@ export const RESEAUX = [
  */
 export const AVIS_GOOGLE = {
   note: "5.0",
-  nombre: 78,
+  nombre: 82,
   url: FICHE_GOOGLE,
 } as const;
 
