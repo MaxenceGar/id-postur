@@ -3,6 +3,8 @@ import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import SpeedInsights from "@vercel/speed-insights/astro";
+import { construireGraphe, noeudFilAriane } from "../lib/schema";
+import type { NoeudSchema, Question } from "../lib/schema";
 
 interface Props {
   title?: string;
@@ -10,6 +12,16 @@ interface Props {
   ogImage?: string;
   ogType?: "website" | "article" | "profile";
   noindex?: boolean;
+  /**
+   * Questions/réponses affichées sur la page. Passer ici la MÊME liste que
+   * celle rendue à l'écran : le layout en fait un FAQPage, ce qui garantit
+   * que le balisage ne peut pas diverger du contenu visible.
+   */
+  faq?: Question[];
+  /** Nœuds JSON-LD supplémentaires (Service, Person…), cf. src/lib/schema.ts. */
+  schema?: NoeudSchema[];
+  datePublished?: string;
+  dateModified?: string;
 }
 
 const {
@@ -18,62 +30,32 @@ const {
   ogImage = "/images/id-postur-interieur-og.jpg",
   ogType = "website",
   noindex = false,
+  faq,
+  schema = [],
+  datePublished,
+  dateModified,
 } = Astro.props;
 
 const siteOrigin = (Astro.site?.href ?? "https://id-postur.fr/").replace(/\/$/, "");
 const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://id-postur.fr/").href;
 const ogImageAbsolute = ogImage.startsWith("http") ? ogImage : `${siteOrigin}${ogImage}`;
 
-const localBusinessSchema = {
-  "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "@id": "https://id-postur.fr/#business",
-  name: "ID Postur",
-  image: "https://id-postur.fr/images/id-postur-interieur-og.jpg",
-  logo: "https://id-postur.fr/images/LOGO-ID-POSTUR.webp",
-  description:
-    "Étude posturale et optimisation de la posture cycliste à Rennes. Analyse posturale, réglages vélo et optimisation des cales.",
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "112 Route du Meuble",
-    addressLocality: "La Mézière",
-    postalCode: "35520",
-    addressRegion: "Bretagne",
-    addressCountry: "FR",
-  },
-  geo: {
-    "@type": "GeoCoordinates",
-    latitude: 48.2183,
-    longitude: -1.7867,
-  },
-  url: "https://id-postur.fr",
-  telephone: "+33607167323",
-  email: "idpostur@gmail.com",
-  priceRange: "€€",
-  areaServed: [
-    { "@type": "City", name: "Rennes" },
-    { "@type": "AdministrativeArea", name: "Ille-et-Vilaine" },
-  ],
-  openingHoursSpecification: [
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      opens: "09:00",
-      closes: "19:00",
-    },
-  ],
-  sameAs: [
-    "https://www.instagram.com/idpostur/",
-    "https://www.facebook.com/profile.php?id=100090578517497",
-  ],
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "5.0",
-    reviewCount: "62",
-    bestRating: "5",
-    worstRating: "1",
-  },
-};
+/**
+ * Un seul bloc JSON-LD par page, sous forme de `@graph` : entreprise, site,
+ * fondateur, page courante, fil d'Ariane, puis les nœuds propres à la page.
+ * Voir src/lib/schema.ts pour le détail du modèle.
+ */
+const graphe = construireGraphe({
+  url: canonical,
+  name: title,
+  description,
+  image: ogImageAbsolute,
+  faq,
+  datePublished,
+  dateModified,
+  filAriane: noeudFilAriane(Astro.url.pathname),
+  noeuds: schema,
+});
 ---
 
 <html lang="fr">
@@ -98,7 +80,7 @@ const localBusinessSchema = {
       name="robots"
       content={noindex ? "noindex, nofollow" : "index, follow"}
     />
-    <meta name="author" content="ID Postur" />
+    <meta name="author" content="Romain Hardy — ID Postur" />
 
     <!-- OpenGraph -->
     <meta property="og:site_name" content="ID Postur" />
@@ -132,11 +114,11 @@ const localBusinessSchema = {
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="theme-color" content="#ffffff" />
 
-    <!-- Schema JSON-LD SEO LocalBusiness -->
+    <!-- Données structurées : graphe unique (cf. src/lib/schema.ts) -->
     <script
       is:inline
       type="application/ld+json"
-      set:html={JSON.stringify(localBusinessSchema)}
+      set:html={JSON.stringify(graphe)}
     />
 
     <slot name="head" />

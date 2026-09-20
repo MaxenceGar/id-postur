@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import "../styles/global.css";
+import { ENTREPRISE } from "../data/entreprise";
 ---
 
 <BaseLayout
@@ -17,18 +18,18 @@ import "../styles/global.css";
     <p>
       <strong>ID Postur</strong><br />
       Propriétaire : Romain Hardy<br />
-      Adresse : 112 Route du Meuble, 35520 La Mézière, France<br />
+      Adresse : {ENTREPRISE.adresse.rue}, {ENTREPRISE.adresse.codePostal} {ENTREPRISE.adresse.ville}, France<br />
       Email : <a
-        href="mailto:idpostur@gmail.com"
-        class="text-id-postur-dark underline">idpostur@gmail.com</a
+        href={`mailto:${ENTREPRISE.email}`}
+        class="text-id-postur-dark underline">{ENTREPRISE.email}</a
       >
     </p>
 
     <p class="mt-4">
       Responsable de publication : Romain Hardy<br />
       Webmaster : Romain Hardy –
-      <a href="mailto:idpostur@gmail.com" class="text-id-postur-dark underline"
-        >idpostur@gmail.com</a
+      <a href={`mailto:${ENTREPRISE.email}`} class="text-id-postur-dark underline"
+        >{ENTREPRISE.email}</a
       >
     </p>
 
@@ -78,8 +79,8 @@ import "../styles/global.css";
     <p>
       Le responsable du traitement des données est :<br />
       <strong>Romain Hardy</strong> –
-      <a href="mailto:idpostur@gmail.com" class="text-id-postur-dark underline"
-        >idpostur@gmail.com</a
+      <a href={`mailto:${ENTREPRISE.email}`} class="text-id-postur-dark underline"
+        >{ENTREPRISE.email}</a
       >
     </p>
 
@@ -115,8 +116,8 @@ import "../styles/global.css";
     </ul>
     <p class="mt-3">
       Pour exercer vos droits :
-      <a href="mailto:idpostur@gmail.com" class="text-id-postur-dark underline"
-        >idpostur@gmail.com</a
+      <a href={`mailto:${ENTREPRISE.email}`} class="text-id-postur-dark underline"
+        >{ENTREPRISE.email}</a
       >
     </p>
     <p class="mt-2">

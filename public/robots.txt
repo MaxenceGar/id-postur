@@ -1,4 +1,85 @@
+# ID Postur — https://id-postur.fr
+# Site vitrine statique : tout est public et indexable.
+# Les pages sans valeur en résultat de recherche (parcours /reserver) portent
+# une balise meta noindex et sont exclues du sitemap ; elles restent
+# explorables pour que les moteurs puissent lire cette balise.
+
 User-agent: *
+Allow: /
+
+# ---------------------------------------------------------------------------
+# Moteurs de réponse et assistants IA
+#
+# Ces agents sont autorisés explicitement, et pas seulement couverts par la
+# règle générique ci-dessus : plusieurs d'entre eux cherchent d'abord une
+# section à leur nom, et une absence de mention est parfois traitée comme une
+# zone grise. Les nommer lève toute ambiguïté.
+#
+# Deux familles à distinguer :
+#  - les robots d'entraînement (GPTBot, ClaudeBot, Google-Extended…), qui
+#    constituent les corpus des modèles ;
+#  - les robots de recherche en direct (OAI-SearchBot, Claude-SearchBot,
+#    PerplexityBot…), qui vont chercher une page au moment où un utilisateur
+#    pose une question. Ce sont eux qui conditionnent la citation du site
+#    dans une réponse, et ils ne doivent jamais être bloqués.
+# ---------------------------------------------------------------------------
+
+# OpenAI — ChatGPT
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Anthropic — Claude
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+# Google — AI Overviews et Gemini
+User-agent: Google-Extended
+Allow: /
+
+# Microsoft — Copilot et Bing
+User-agent: bingbot
+Allow: /
+
+# Apple — Siri et Apple Intelligence
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# Meta AI
+User-agent: meta-externalagent
+Allow: /
+
+# Amazon — Alexa
+User-agent: Amazonbot
+Allow: /
+
+# Mistral
+User-agent: MistralAI-User
+Allow: /
+
+# Common Crawl — corpus utilisé par de nombreux modèles
+User-agent: CCBot
 Allow: /
 
 Sitemap: https://id-postur.fr/sitemap-index.xml

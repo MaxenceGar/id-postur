@@ -11,6 +11,8 @@ import {
   formatPrix,
   getPrestation,
 } from "../data/tarifs";
+import { noeudService } from "../lib/schema";
+import { SITE_URL } from "../data/entreprise";
 
 const troisD = getPrestation("etude-posturale-3d");
 const deuxD = getPrestation("etude-posturale-2d");
@@ -49,61 +51,27 @@ const faqItems = [
   },
 ];
 
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: faqItems.map((item) => ({
-    "@type": "Question",
-    name: item.question,
-    acceptedAnswer: {
-      "@type": "Answer",
-      text: item.answer,
-    },
-  })),
-};
-
-const serviceSchema = {
-  "@context": "https://schema.org",
-  "@type": "Service",
-  name: "Étude posturale cycliste",
-  serviceType: "Bike fitting",
-  provider: { "@id": "https://id-postur.fr/#business" },
-  areaServed: [
-    { "@type": "City", name: "Rennes" },
-    { "@type": "AdministrativeArea", name: "Ille-et-Vilaine" },
-  ],
-  description:
-    "Étude posturale pour cyclistes à Rennes : analyse 3D ou 2D et réglage précis du vélo. Route, VTT, gravel, chrono.",
-  url: "https://id-postur.fr/etudes-posturales",
-  offers: [...ETUDES_POSTURALES, ...OFFRES_PARTICULIERES].map((prestation) => ({
-    "@type": "Offer",
-    name: prestation.title,
-    price: String(prestation.price),
-    priceCurrency: "EUR",
-    availability: "https://schema.org/InStock",
-    url: "https://id-postur.fr/etudes-posturales",
-  })),
-};
+const services = [
+  noeudService({
+    id: "etude-posturale",
+    name: "Étude posturale cycliste",
+    serviceType: "Bike fitting",
+    description:
+      "Étude posturale pour cyclistes à Rennes : analyse par capture de mouvement STT en 3D ou en 2D, puis réglage complet du vélo. Route, VTT, gravel, chrono et triathlon.",
+    page: "/etudes-posturales",
+    prestations: [...ETUDES_POSTURALES, ...OFFRES_PARTICULIERES],
+    image: `${SITE_URL}/images/id-postur-img-1.webp`,
+  }),
+];
 ---
 
 <BaseLayout
   title="Étude posturale vélo à Rennes – 3D et 2D | ID Postur"
   description={`Étude posturale pour cyclistes à Rennes : analyse 3D (${formatPrix(troisD.price)}) ou 2D (${formatPrix(deuxD.price)}) avec la technologie STT. Route, VTT, gravel, chrono. Tarif réduit dès ${formatPrix(PRIX_REDUIT_ETUDE)} pour les clients déjà venus.`}
   ogImage="/images/id-postur-img-1.webp"
+  faq={faqItems}
+  schema={services}
 >
-  <script
-    is:inline
-    type="application/ld+json"
-    set:html={JSON.stringify(faqSchema)}
-    slot="head"
-  />
-  <script
-    is:inline
-    type="application/ld+json"
-    set:html={JSON.stringify(serviceSchema)}
-    slot="head"
-  />
-
   <div
     class="w-full h-96 relative bg-[url('/images/id-postur-img-1.webp')] bg-cover bg-center flex items-center justify-center bg-black/50 bg-blend-overlay"
   >

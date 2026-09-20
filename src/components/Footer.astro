@@ -1,12 +1,28 @@
+---
+import { ENTREPRISE, RESEAUX } from "../data/entreprise";
+
+/**
+ * Le footer porte le NAP (Name / Address / Phone) affiché sur toutes les
+ * pages. Il lit src/data/entreprise.ts, exactement comme le JSON-LD : la
+ * cohérence entre balisage et contenu visible est un critère de référencement
+ * local, et une adresse écrite différemment ici brouillerait le signal.
+ */
+const [instagram, facebook] = RESEAUX;
+---
+
 <footer class="bg-[#FCFAF8] mt-20 border-t border-[#ECE9E3]">
   <div
     class="w-full py-8 px-8 m:py-16 md:px-16 mx-auto grid grid-cols-1 md:grid-cols-3"
   >
     <div class="justify-center">
       <h4 class="font-extrabold text-2xl pb-2">Adresse :</h4>
-      <p>112 Rte du Meuble <br /> 35520 La Mézière</p>
-      <a href="mailto:idpostur@gmail.com"><p>Mail : idpostur@gmail.com</p></a>
-      <a href="tel:0607167323"><p class="pb-4">Tel : 06 07 16 73 23</p></a>
+      <p>{ENTREPRISE.adresse.rue} <br /> {ENTREPRISE.adresse.codePostal} {ENTREPRISE.adresse.ville}</p>
+      <a href={`mailto:${ENTREPRISE.email}`}
+        ><p>Mail : {ENTREPRISE.email}</p></a
+      >
+      <a href={`tel:${ENTREPRISE.telephone}`}
+        ><p class="pb-4">Tel : {ENTREPRISE.telephoneAffiche}</p></a
+      >
       <h4 class="font-extrabold text-2xl pb-2">Horaires :</h4>
       <p>Du lundi au vendredi</p>
       <p class="pb-2">De 9h à 19h00</p>
@@ -16,7 +32,7 @@
     </div>
     <div>
       <img
-        src="../images/LOGO-ID-POSTUR.webp"
+        src={ENTREPRISE.logo}
         alt="Logo ID Postur"
         class="hidden md:block md:w-48 md:mx-auto md:items-center"
         loading="lazy"
@@ -26,6 +42,7 @@
       <h4 class="font-extrabold text-2xl pb-2">Liens :</h4>
       <div class="grid grid-cols-1">
         <a href="/etudes-posturales">Études posturales</a>
+        <a href="/etude-posturale-3d-ou-2d">Étude 3D ou 2D ?</a>
         <a href="/cales">Réglage des cales</a>
         <a href="/choix-nouveau-velo">Choix d'un nouveau vélo</a>
         <a href="/rendez-vous-divers">Rendez-vous divers</a>
@@ -33,7 +50,7 @@
       </div>
       <h4 class="font-extrabold text-2xl pb-2">Réseaux Sociaux :</h4>
       <div class="flex gap-6 md:justify-end">
-        <a href="https://www.instagram.com/idpostur/">
+        <a href={instagram}>
           <img
             src="/icon/instagram.svg"
             alt="Logo Instagram"
@@ -41,7 +58,7 @@
             height="30px"
           />
         </a>
-        <a href="https://www.facebook.com/profile.php?id=100090578517497">
+        <a href={facebook}>
           <img
             src="/icon/facebook.svg"
             alt="Logo Facebook"

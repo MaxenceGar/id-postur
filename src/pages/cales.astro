@@ -4,6 +4,8 @@ import "../styles/global.css";
 import Formulecomponent from "../components/formulecomponent.astro";
 import AutresPrestations from "../components/autres-prestations.astro";
 import { formatPrix, getPrestation } from "../data/tarifs";
+import { noeudService } from "../lib/schema";
+import { SITE_URL } from "../data/entreprise";
 
 const cales = getPrestation("reglage-cales");
 
@@ -28,56 +30,27 @@ const faqItems = [
   },
 ];
 
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: faqItems.map((item) => ({
-    "@type": "Question",
-    name: item.question,
-    acceptedAnswer: { "@type": "Answer", text: item.answer },
-  })),
-};
-
-const serviceSchema = {
-  "@context": "https://schema.org",
-  "@type": "Service",
-  name: "Réglage des cales de vélo",
-  serviceType: "Réglage des cales cycliste",
-  provider: { "@id": "https://id-postur.fr/#business" },
-  areaServed: [
-    { "@type": "City", name: "Rennes" },
-    { "@type": "AdministrativeArea", name: "Ille-et-Vilaine" },
-  ],
-  description:
-    "Réglage des cales de vélo à Rennes, au millimètre près. Positionnement précis pour route, VTT, gravel et chrono.",
-  url: "https://id-postur.fr/cales",
-  offers: {
-    "@type": "Offer",
-    price: String(cales.price),
-    priceCurrency: "EUR",
-    availability: "https://schema.org/InStock",
-    url: "https://id-postur.fr/cales",
-  },
-};
+const services = [
+  noeudService({
+    id: "reglage-cales",
+    name: "Réglage des cales de vélo",
+    serviceType: "Réglage des cales cycliste",
+    description:
+      "Réglage des cales de vélo à Rennes, au millimètre près. Positionnement précis pour la route, le VTT, le gravel et le chrono.",
+    page: "/cales",
+    prestations: [cales],
+    image: `${SITE_URL}/images/id-postur-cales.webp`,
+  }),
+];
 ---
 
 <BaseLayout
   title="Réglage des cales vélo à Rennes | ID Postur"
   description={`Réglage professionnel des cales de vélo à Rennes, au millimètre près. Positionnement précis pour route, VTT, gravel et chrono. ${formatPrix(cales.price)} pour ${cales.duration}.`}
   ogImage="/images/id-postur-cales.webp"
+  faq={faqItems}
+  schema={services}
 >
-  <script
-    is:inline
-    type="application/ld+json"
-    set:html={JSON.stringify(faqSchema)}
-    slot="head"
-  />
-  <script
-    is:inline
-    type="application/ld+json"
-    set:html={JSON.stringify(serviceSchema)}
-    slot="head"
-  />
 
   <div
     class="w-full h-96 relative bg-[url('/images/id-postur-cales.webp')] bg-cover bg-center flex items-center justify-center bg-black/50 bg-blend-overlay"

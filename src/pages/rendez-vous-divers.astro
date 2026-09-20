@@ -4,6 +4,8 @@ import "../styles/global.css";
 import Formulecomponent from "../components/formulecomponent.astro";
 import AutresPrestations from "../components/autres-prestations.astro";
 import { formatPrix, getPrestation } from "../data/tarifs";
+import { noeudService } from "../lib/schema";
+import { SITE_URL } from "../data/entreprise";
 
 const rdv = getPrestation("rendez-vous-divers");
 
@@ -24,56 +26,27 @@ const faqItems = [
   },
 ];
 
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: faqItems.map((item) => ({
-    "@type": "Question",
-    name: item.question,
-    acceptedAnswer: { "@type": "Answer", text: item.answer },
-  })),
-};
-
-const serviceSchema = {
-  "@context": "https://schema.org",
-  "@type": "Service",
-  name: "Rendez-vous vélo ponctuel",
-  serviceType: "Réglage vélo",
-  provider: { "@id": "https://id-postur.fr/#business" },
-  areaServed: [
-    { "@type": "City", name: "Rennes" },
-    { "@type": "AdministrativeArea", name: "Ille-et-Vilaine" },
-  ],
-  description:
-    "Rendez-vous court à Rennes pour un micro-réglage, une vérification rapide ou un conseil technique sur votre vélo.",
-  url: "https://id-postur.fr/rendez-vous-divers",
-  offers: {
-    "@type": "Offer",
-    price: String(rdv.price),
-    priceCurrency: "EUR",
-    availability: "https://schema.org/InStock",
-    url: "https://id-postur.fr/rendez-vous-divers",
-  },
-};
+const services = [
+  noeudService({
+    id: "rendez-vous-divers",
+    name: "Rendez-vous vélo ponctuel",
+    serviceType: "Réglage vélo",
+    description:
+      "Rendez-vous court à Rennes pour un micro-réglage, une vérification rapide ou un conseil technique sur votre vélo.",
+    page: "/rendez-vous-divers",
+    prestations: [rdv],
+    image: `${SITE_URL}/images/id-postur-interieur-og.jpg`,
+  }),
+];
 ---
 
 <BaseLayout
   title="Rendez-vous vélo à Rennes – Révision et micro-réglage | ID Postur"
   description={`Besoin d'une vérification rapide, d'un micro-réglage ou d'un conseil technique sur votre vélo ? ID Postur propose à Rennes un rendez-vous de ${rdv.duration} à ${formatPrix(rdv.price)}.`}
   ogImage="/images/id-postur-interieur-og.jpg"
+  faq={faqItems}
+  schema={services}
 >
-  <script
-    is:inline
-    type="application/ld+json"
-    set:html={JSON.stringify(faqSchema)}
-    slot="head"
-  />
-  <script
-    is:inline
-    type="application/ld+json"
-    set:html={JSON.stringify(serviceSchema)}
-    slot="head"
-  />
 
   <div
     class="w-full h-96 relative bg-[url('/images/id-postur-interieur.webp')] bg-cover bg-center flex items-center justify-center bg-black/50 bg-blend-overlay"

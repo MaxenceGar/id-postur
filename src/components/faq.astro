@@ -1,68 +1,14 @@
 ---
 import "../styles/global.css";
-import { formatPrix, getPrestation } from "../data/tarifs";
+import { FAQ_ACCUEIL } from "../data/faq";
+import { ENTREPRISE } from "../data/entreprise";
 
-const troisD = getPrestation("etude-posturale-3d");
-const deuxD = getPrestation("etude-posturale-2d");
-const cales = getPrestation("reglage-cales");
-
-/** Une seule source pour la FAQ visible et le JSON-LD FAQPage. */
-const faqItems = [
-  {
-    question: "Combien de temps dure une étude posturale ?",
-    answer: `L'étude posturale 3D dure ${troisD.duration} et l'étude posturale 2D ${deuxD.duration}. Le réglage seul de vos cales dure ${cales.duration}.`,
-  },
-  {
-    question: "Quelle est la différence de prix entre les formules ?",
-    answer: `L'étude posturale 3D coûte ${formatPrix(troisD.price)} et l'étude posturale 2D ${formatPrix(deuxD.price)}. Si vous avez déjà réalisé une étude chez ID Postur, un tarif réduit s'applique. Les rendez-vous courts (réglage des cales, choix d'un nouveau vélo, réglage ponctuel) sont à ${formatPrix(cales.price)}.`,
-  },
-  {
-    question: "Dois-je venir avec mon propre vélo ?",
-    answer:
-      "Oui, l'étude est effectuée sur votre vélo pour garantir des réglages adaptés à votre morphologie, vos composants et votre pratique (route, VTT, gravel, chrono). Prévoyez également votre tenue complète.",
-  },
-  {
-    question: "Puis-je offrir une séance à un proche ?",
-    answer:
-      "Absolument. ID Postur propose des cartes cadeaux personnalisées. Contactez-nous sur Instagram ou directement à ID Postur, 112 route du Meuble, La Mézière.",
-  },
-  {
-    question: "Pourquoi faire une étude posturale vélo ?",
-    answer:
-      "Une position mal réglée provoque des douleurs (genoux, dos, cervicales, mains ou pieds) et fait perdre de la puissance. L'étude posturale analyse votre position sur votre propre vélo pour régler la hauteur et le recul de selle, le cintre, la potence et les cales : plus de confort, moins de blessures et un meilleur rendement, que vous soyez débutant ou compétiteur.",
-  },
-  {
-    question: "Où se déroule l'étude posturale, près de Rennes ?",
-    answer:
-      "Le studio ID Postur se trouve au 112 route du Meuble à La Mézière, à une quinzaine de minutes au nord de Rennes, avec un accès facile depuis toute l'Ille-et-Vilaine. Les rendez-vous se prennent en ligne, du lundi au vendredi de 9h à 19h.",
-  },
-  {
-    question:
-      "L'étude posturale convient-elle au VTT, au gravel ou au triathlon ?",
-    answer:
-      "Oui. L'étude posturale s'adapte à chaque discipline : route, VTT, gravel, et aussi chrono et triathlon avec l'étude 3D — le seul format qui prend en charge ces positions spécifiques. Les réglages tiennent compte des exigences propres à votre pratique.",
-  },
-];
-
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: faqItems.map((item) => ({
-    "@type": "Question",
-    name: item.question,
-    acceptedAnswer: {
-      "@type": "Answer",
-      text: item.answer,
-    },
-  })),
-};
+/**
+ * La liste vit dans src/data/faq.ts : BaseLayout la reçoit aussi via la prop
+ * `faq` de la page d'accueil pour générer le balisage FAQPage. Une seule
+ * source, donc aucun risque que le balisage diverge de l'affichage.
+ */
 ---
-
-<script
-  is:inline
-  type="application/ld+json"
-  set:html={JSON.stringify(faqSchema)}
-/>
 
 <section class="relative py-28 px-6 overflow-hidden bg-white">
   <div
@@ -75,7 +21,7 @@ const faqSchema = {
       </h2>
       <div class="h-[3px] w-24 bg-id-postur-dark mb-6"></div>
       <p class="text-[16px] text-[#4A4843] leading-[1.7] mb-8">
-        Vous ne trouvez pas votre réponse ? Appelez-nous au 06 07 16 73 23 ou
+        Vous ne trouvez pas votre réponse ? Appelez-nous au {ENTREPRISE.telephoneAffiche} ou
         écrivez-nous, on vous répond rapidement.
       </p>
       <a
@@ -88,7 +34,7 @@ const faqSchema = {
 
     <div class="space-y-2.5 lg:space-y-5 text-left">
       {
-        faqItems.map((item) => (
+        FAQ_ACCUEIL.map((item) => (
           <details class="group bg-[#FCFAF8] border border-[#EBE6E7] p-2.5 transition-colors duration-200 hover:border-id-postur-dark/40 open:border-id-postur-dark/40">
             <summary class="flex items-center justify-between cursor-pointer list-none">
               <h3 class="text-[15px] font-semibold text-gray-900">

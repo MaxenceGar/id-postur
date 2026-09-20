@@ -4,6 +4,8 @@ import "../styles/global.css";
 import Formulecomponent from "../components/formulecomponent.astro";
 import AutresPrestations from "../components/autres-prestations.astro";
 import { formatPrix, getPrestation } from "../data/tarifs";
+import { noeudService } from "../lib/schema";
+import { SITE_URL } from "../data/entreprise";
 
 const choix = getPrestation("choix-nouveau-velo");
 const etude3D = getPrestation("etude-posturale-3d");
@@ -24,56 +26,27 @@ const faqItems = [
   },
 ];
 
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: faqItems.map((item) => ({
-    "@type": "Question",
-    name: item.question,
-    acceptedAnswer: { "@type": "Answer", text: item.answer },
-  })),
-};
-
-const serviceSchema = {
-  "@context": "https://schema.org",
-  "@type": "Service",
-  name: "Aide au choix d'un nouveau vélo",
-  serviceType: "Conseil à l'achat vélo",
-  provider: { "@id": "https://id-postur.fr/#business" },
-  areaServed: [
-    { "@type": "City", name: "Rennes" },
-    { "@type": "AdministrativeArea", name: "Ille-et-Vilaine" },
-  ],
-  description:
-    "Validation de la taille et de l'ergonomie d'un vélo avant l'achat, à Rennes.",
-  url: "https://id-postur.fr/choix-nouveau-velo",
-  offers: {
-    "@type": "Offer",
-    price: String(choix.price),
-    priceCurrency: "EUR",
-    availability: "https://schema.org/InStock",
-    url: "https://id-postur.fr/choix-nouveau-velo",
-  },
-};
+const services = [
+  noeudService({
+    id: "choix-nouveau-velo",
+    name: "Aide au choix d'un nouveau vélo",
+    serviceType: "Conseil à l'achat vélo",
+    description:
+      "Validation de la taille et de l'ergonomie d'un vélo avant l'achat, à Rennes, par un spécialiste de l'étude posturale.",
+    page: "/choix-nouveau-velo",
+    prestations: [choix],
+    image: `${SITE_URL}/images/id-postur-img-1.webp`,
+  }),
+];
 ---
 
 <BaseLayout
   title="Choisir son nouveau vélo à Rennes – Conseil avant achat | ID Postur"
   description={`Hésitation avant d'acheter un nouveau vélo ? ID Postur valide à Rennes la taille et l'ergonomie idéales avant l'achat. Rendez-vous de ${choix.duration} à ${formatPrix(choix.price)}.`}
   ogImage="/images/id-postur-img-1.webp"
+  faq={faqItems}
+  schema={services}
 >
-  <script
-    is:inline
-    type="application/ld+json"
-    set:html={JSON.stringify(faqSchema)}
-    slot="head"
-  />
-  <script
-    is:inline
-    type="application/ld+json"
-    set:html={JSON.stringify(serviceSchema)}
-    slot="head"
-  />
 
   <div
     class="w-full h-96 relative bg-[url('/images/id-postur-img-1.webp')] bg-cover bg-center flex items-center justify-center bg-black/50 bg-blend-overlay"

@@ -8,9 +8,41 @@ import Confiances from "../components/confiances.astro";
 import Partenaires from "../components/partenaires.astro";
 import Formule from "../components/formule.astro";
 import SEO from "../components/seo.astro";
+import { FAQ_ACCUEIL } from "../data/faq";
+import { ETUDES_POSTURALES, OFFRES_PARTICULIERES, PRESTATIONS_COURTES } from "../data/tarifs";
+import { noeudService } from "../lib/schema";
+import { SITE_URL } from "../data/entreprise";
+
+/**
+ * L'accueil expose les deux familles de prestations. Les `Offer` sont
+ * générées depuis src/data/tarifs.ts : les prix du balisage sont, par
+ * construction, ceux affichés dans la section Formules.
+ */
+const services = [
+  noeudService({
+    id: "etude-posturale",
+    name: "Étude posturale cycliste",
+    serviceType: "Bike fitting",
+    description:
+      "Analyse de la position du cycliste sur son vélo par capture de mouvement STT, en 3D ou en 2D, suivie du réglage complet du vélo. Route, VTT, gravel, chrono et triathlon.",
+    page: "/etudes-posturales",
+    prestations: [...ETUDES_POSTURALES, ...OFFRES_PARTICULIERES],
+    image: `${SITE_URL}/images/id-postur-img-1.webp`,
+  }),
+  noeudService({
+    id: "rendez-vous-courts",
+    name: "Réglages et conseils vélo",
+    serviceType: "Réglage vélo",
+    description:
+      "Rendez-vous courts : réglage des cales au millimètre, validation de la taille d'un vélo avant l'achat et micro-réglages ponctuels.",
+    page: "/cales",
+    prestations: PRESTATIONS_COURTES,
+    image: `${SITE_URL}/images/id-postur-cales.webp`,
+  }),
+];
 ---
 
-<BaseLayout>
+<BaseLayout faq={FAQ_ACCUEIL} schema={services}>
   <!-- Sections normales -->
   <Hero />
   <Chiffres />

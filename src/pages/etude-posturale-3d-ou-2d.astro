@@ -3,6 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import "../styles/global.css";
 import {
   COMPARATIF_3D_2D,
+  ETUDES_POSTURALES,
   EQUIPES_3D,
   FORMATS_ETUDE,
   OFFRES_PARTICULIERES,
@@ -12,6 +13,8 @@ import {
   formatPrix,
   getPrestation,
 } from "../data/tarifs";
+import { noeudService } from "../lib/schema";
+import { ENTREPRISE, SITE_URL } from "../data/entreprise";
 
 const troisD = getPrestation("etude-posturale-3d");
 const deuxD = getPrestation("etude-posturale-2d");
@@ -53,29 +56,27 @@ const faqItems = [
   },
 ];
 
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: faqItems.map((item) => ({
-    "@type": "Question",
-    name: item.question,
-    acceptedAnswer: { "@type": "Answer", text: item.answer },
-  })),
-};
+const services = [
+  noeudService({
+    id: "etude-posturale-formats",
+    name: "Étude posturale cycliste — formats 3D et 2D",
+    serviceType: "Bike fitting",
+    description:
+      "Les deux formats d'étude posturale proposés par ID Postur à Rennes : capture optique 3D (STT 3DMA, toutes disciplines) et analyse vidéo 2D (STT 2DMA, route, VTT et gravel).",
+    page: "/etude-posturale-3d-ou-2d",
+    prestations: [...ETUDES_POSTURALES, ...OFFRES_PARTICULIERES],
+    image: `${SITE_URL}/images/id-postur-img-1.webp`,
+  }),
+];
 ---
 
 <BaseLayout
   title="Étude posturale 3D ou 2D : quelle différence ? | ID Postur"
   description={`Étude posturale 3D (${formatPrix(troisD.price)}, ${troisD.duration}) ou 2D (${formatPrix(deuxD.price)}, ${deuxD.duration}) à Rennes : durées, tarifs, prérequis et comparatif pour choisir le format adapté à votre pratique.`}
   ogImage="/images/id-postur-img-1.webp"
+  faq={faqItems}
+  schema={services}
 >
-  <script
-    is:inline
-    type="application/ld+json"
-    set:html={JSON.stringify(faqSchema)}
-    slot="head"
-  />
-
   <!-- HERO -->
   <section class="bg-gray-50 py-16 md:py-24">
     <div class="container mx-auto px-5 max-w-4xl text-center">
@@ -260,8 +261,8 @@ const faqSchema = {
       </a>
       <p class="text-sm text-gray-600 mt-4">
         Ou par téléphone au <a
-          href="tel:0607167323"
-          class="text-id-postur-dark font-semibold">06 07 16 73 23</a
+          href={`tel:${ENTREPRISE.telephone}`}
+          class="text-id-postur-dark font-semibold">{ENTREPRISE.telephoneAffiche}</a
         >
       </p>
     </div>

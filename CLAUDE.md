@@ -13,7 +13,7 @@ Fiche de référence pour travailler vite et juste sur ce site. **Priorité : SE
 - **Localisation** : 112 Route du Meuble, 35520 La Mézière (près de Rennes), Bretagne, France.
 - **Zone** : Rennes + Ille-et-Vilaine.
 - **Langue** : Français uniquement (`lang="fr"`, `og:locale=fr_FR`).
-- **Contact** : idpostur@gmail.com / +33 6 58 37 33 03 (JSON-LD) — **⚠ incohérence** : le footer affiche `06 07 16 73 23`, le JSON-LD a `+33658373303`. À vérifier lors d'une prochaine édition.
+- **Contact** : idpostur@gmail.com / 06 07 16 73 23 (`+33607167323`). Affichage et JSON-LD lisent tous deux [entreprise.ts](src/data/entreprise.ts) — plus d'incohérence possible. ⚠ Un ancien numéro `06 58 37 33 03` traînait dans la doc : confirmer auprès de Romain lequel est le bon.
 - **Horaires** : Lun–Ven 9h–19h.
 - **Réseaux** : Instagram (@idpostur), Facebook.
 - **CTA principal** : "Prendre rendez-vous" (Calendly externe).
@@ -48,96 +48,109 @@ npm run preview   # preview prod localement
 
 ## 3. Arborescence
 
-### Pages — [src/pages/](src/pages/) (8 pages)
+### Données — [src/data/](src/data/) ⭐ sources uniques de vérité
+| Fichier | Contenu |
+|---|---|
+| [tarifs.ts](src/data/tarifs.ts) | Prestations : prix, durées, équipement, disciplines, liens Calendly, contenu de la page comparative. |
+| [entreprise.ts](src/data/entreprise.ts) | Identité : NAP, géo, horaires, avis Google, fondateur, zone desservie, expertises, libellés du fil d'Ariane, `@id` JSON-LD. |
+| [faq.ts](src/data/faq.ts) | Questions de la page d'accueil, partagées entre l'affichage et le balisage FAQPage. |
+
+**Règle** : aucun prix, aucune durée, aucune donnée de contact et aucun nombre d'avis ne s'écrit en dur dans un `.astro`. On importe depuis `src/data/`. C'est ce qui garantit que le contenu visible et le JSON-LD ne peuvent pas diverger — exigence explicite de Google.
+
+### Schéma — [src/lib/schema.ts](src/lib/schema.ts)
+Constructeurs des nœuds JSON-LD. Le site émet **un seul bloc `application/ld+json` par page**, sous forme de `@graph`. Voir §4.
+
+### Pages — [src/pages/](src/pages/) (8 pages + 1 endpoint)
 | URL | Fichier | Rôle | Indexée |
 |---|---|---|---|
 | `/` | [index.astro](src/pages/index.astro) | Accueil (hero, chiffres, formules, avis, FAQ, bloc SEO) | ✅ |
-| `/etudes-posturales` | [etudes-posturales.astro](src/pages/etudes-posturales.astro) | Détail étude posturale | ✅ |
-| `/cales` | [cales.astro](src/pages/cales.astro) | Détail réglage des cales | ✅ |
+| `/etudes-posturales` | [etudes-posturales.astro](src/pages/etudes-posturales.astro) | Page principale : formats 3D et 2D, tarifs | ✅ |
+| `/etude-posturale-3d-ou-2d` | [etude-posturale-3d-ou-2d.astro](src/pages/etude-posturale-3d-ou-2d.astro) | Comparatif des deux formats | ✅ |
+| `/etude-posturale-nantes` | [etude-posturale-nantes.astro](src/pages/etude-posturale-nantes.astro) | Landing locale Nantes (byline + dates) | ✅ |
+| `/cales` | [cales.astro](src/pages/cales.astro) | Réglage des cales | ✅ |
+| `/choix-nouveau-velo` | [choix-nouveau-velo.astro](src/pages/choix-nouveau-velo.astro) | Conseil avant achat | ✅ |
+| `/rendez-vous-divers` | [rendez-vous-divers.astro](src/pages/rendez-vous-divers.astro) | Rendez-vous court | ✅ |
 | `/mentions-legales` | [mentions-legales.astro](src/pages/mentions-legales.astro) | Mentions légales / RGPD | ✅ |
-| `/etude-posturale-ou-cales` | [etude-posturale-ou-cales.astro](src/pages/etude-posturale-ou-cales.astro) | Choix du service | ❌ noindex |
-| `/premiere-ou-nouvelle` | [premiere-ou-nouvelle.astro](src/pages/premiere-ou-nouvelle.astro) | 1re fois vs client existant | ❌ noindex |
-| `/etude-posturale` | [etude-posturale.astro](src/pages/etude-posturale.astro) | Flow 1re étude (tarifs) | ❌ noindex |
-| `/nouveau-velo-ou-reglage` | [nouveau-velo-ou-reglage.astro](src/pages/nouveau-velo-ou-reglage.astro) | Flow client existant | ❌ noindex |
+| `/reserver` | [reserver/index.astro](src/pages/reserver/index.astro) | Aiguillage réservation | ❌ noindex |
+| `/reserver/premiere-etude` | [reserver/premiere-etude.astro](src/pages/reserver/premiere-etude.astro) | Créneaux première étude | ❌ noindex |
+| `/reserver/deja-client` | [reserver/deja-client.astro](src/pages/reserver/deja-client.astro) | Créneaux tarif réduit | ❌ noindex |
+| `/llms.txt` | [llms.txt.ts](src/pages/llms.txt.ts) | Fiche de synthèse pour les moteurs de réponse IA, **générée** depuis `src/data/` | — |
 
 ### Layouts — [src/layouts/](src/layouts/)
-- [BaseLayout.astro](src/layouts/BaseLayout.astro) — **Layout unique** (head, SEO, JSON-LD, Header, Footer, Speed Insights).
+- [BaseLayout.astro](src/layouts/BaseLayout.astro) — layout unique. Props : `title`, `description`, `ogImage`, `ogType`, `noindex`, `faq`, `schema`, `datePublished`, `dateModified`. Assemble le `@graph` JSON-LD.
 
 ### Composants — [src/components/](src/components/) (100% `.astro`, aucun JSX)
-**Sections de page** : [hero.astro](src/components/hero.astro) (contient le H1 de la home), [chiffres.astro](src/components/chiffres.astro) (reveal via IntersectionObserver), [qui.astro](src/components/qui.astro), [formule.astro](src/components/formule.astro), [faq.astro](src/components/faq.astro) (inclut FAQPage JSON-LD), [confiances.astro](src/components/confiances.astro), [confiance-tabs.astro](src/components/confiance-tabs.astro), [partenaires.astro](src/components/partenaires.astro), [avis.astro](src/components/avis.astro), [seo.astro](src/components/seo.astro).
+**Sections** : [hero.astro](src/components/hero.astro) (H1 de la home), [chiffres.astro](src/components/chiffres.astro), [qui.astro](src/components/qui.astro), [formule.astro](src/components/formule.astro), [faq.astro](src/components/faq.astro), [confiances.astro](src/components/confiances.astro), [partenaires.astro](src/components/partenaires.astro), [avis.astro](src/components/avis.astro), [seo.astro](src/components/seo.astro), [autres-prestations.astro](src/components/autres-prestations.astro).
 
 **UI** : [Header.astro](src/components/Header.astro), [Footer.astro](src/components/Footer.astro), [Button.astro](src/components/Button.astro), [formulecomponent.astro](src/components/formulecomponent.astro), [Textwithimage.astro](src/components/Textwithimage.astro), [Textwithimages.astro](src/components/Textwithimages.astro), [maps.astro](src/components/maps.astro).
 
 ### Public — [public/](public/)
-- [robots.txt](public/robots.txt)
-- Favicon : `id-postur-favicon.png`
-- Images dans `public/images/` (majoritairement `.webp`)
-- PDF : `id-postur-carte-cadeau.pdf`
-- Icônes : `public/icon/` (instagram.svg, facebook.svg)
-- **⚠ Manque** : `manifest.json` référencé dans BaseLayout mais fichier absent.
+- [robots.txt](public/robots.txt) — autorise explicitement les crawlers IA (voir §4.3)
+- Favicon : `id-postur-favicon.png` · Images dans `public/images/` (majoritairement `.webp`) · Icônes dans `public/icon/`
 
 ### Config
-- [astro.config.mjs](astro.config.mjs) — minimaliste, plugins Tailwind + React.
-- [tsconfig.json](tsconfig.json) — strict + JSX React.
+- [astro.config.mjs](astro.config.mjs) — Tailwind + sitemap (filtre les pages noindex via `NOINDEX_PATHS`).
+- [tsconfig.json](tsconfig.json) — strict.
 
 ---
 
 ## 4. SEO — état des lieux & plan d'action ⭐
 
-### 4.1 Ce qui est en place ✅
+### 4.1 Architecture des données structurées ⭐
 
-**Fondations :**
-- **BaseLayout paramétrable** ([BaseLayout.astro](src/layouts/BaseLayout.astro)) : props `title`, `description`, `ogImage`, `ogType`, `noindex`. Canonical auto-généré.
-- **OG absolue** (URL image complète), Twitter card avec title/desc/image.
-- **JSON-LD LocalBusiness complet** : adresse, géo, téléphone (+33607167323), email, priceRange, areaServed (Rennes + Ille-et-Vilaine), openingHoursSpecification (Lun–Ven 9h–19h), sameAs (Instagram + Facebook), @id stable.
-- **JSON-LD FAQPage** sur /, /etudes-posturales, /cales (rich snippets Google).
-- **Sitemap auto** via `@astrojs/sitemap` → `/sitemap-index.xml`, n'inclut QUE les pages indexables (filter exclut les noindex).
-- **robots.txt** corrigé : pointe vers `https://id-postur.fr/sitemap-index.xml`.
-- **URLs propres** : slugs français, tirets, minuscules.
-- **Vercel Speed Insights** dans BaseLayout (plus de doublon).
+**Un seul bloc JSON-LD par page**, en `@graph`, généré par [BaseLayout.astro](src/layouts/BaseLayout.astro) via [src/lib/schema.ts](src/lib/schema.ts).
 
-**Par page :**
-| URL | Indexable | H1 | Title personnalisé |
-|---|---|---|---|
-| `/` | ✅ | "Étude posturale à Rennes" | ✅ défaut |
-| `/prestations` | ✅ | "Nos prestations vélo à Rennes" | ✅ |
-| `/etudes-posturales` | ✅ | "Étude posturale vélo à Rennes" | ✅ |
-| `/cales` | ✅ | "Réglage des cales vélo à Rennes" | ✅ |
-| `/mentions-legales` | ✅ | "Mentions légales – ID Postur" | ✅ |
-| `/etude-posturale` | ❌ noindex | H1 ajouté | ✅ |
-| `/etude-posturale-ou-cales` | ❌ noindex | H1 ajouté | ✅ |
-| `/premiere-ou-nouvelle` | ❌ noindex | H1 ajouté | ✅ |
-| `/nouveau-velo-ou-reglage` | ❌ noindex | H1 ajouté | ✅ |
-| `/funnel-etude` | ❌ noindex | (React) | ✅ |
+Nœuds présents sur **toutes** les pages :
+| Nœud | `@id` | Rôle |
+|---|---|---|
+| `LocalBusiness` + `SportsActivityLocation` | `#business` | L'établissement : NAP, géo, horaires, `hasMap`, `areaServed`, `knowsAbout`, `aggregateRating` |
+| `WebSite` | `#website` | Rattache chaque page à une publication identifiée |
+| `Person` | `#romain-hardy` | Le fondateur — principal actif E-E-A-T, lié par `founder` / `worksFor` / `author` |
+| `WebPage` | `<url>#page` | La page : `isPartOf`, `about`, `author`, `publisher`, `primaryImageOfPage`, `breadcrumb` |
+| `BreadcrumbList` | `<url>#fil-ariane` | Généré automatiquement depuis `LIBELLES_FIL_ARIANE` (absent sur `/`) |
 
-**Noindex** : pages de navigation/tunnel et doublons — évite le duplicate content avec `/prestations` et `/etudes-posturales`.
+Nœuds ajoutés par la page via la prop `schema` : `Service` (+ `Offer` construites depuis `tarifs.ts`).
+Quand la page passe `faq`, son `WebPage` porte aussi le type `FAQPage` et expose les `Question` en `mainEntity`.
 
-### 4.2 ⚠ Dette SEO restante
+**Ajouter une page** → rien à faire pour le JSON-LD de base. Passer `faq={...}` si elle a une FAQ visible, `schema={[noeudService({...})]}` si elle vend une prestation, et ajouter son libellé dans `LIBELLES_FIL_ARIANE`.
 
-1. **Duplicate content** : `/prestations`, `/etudes-posturales` et `/etude-posturale` (noindex) ont beaucoup de contenu identique (mêmes formules). Décider une hiérarchie claire (ex: `/prestations` = hub, `/etudes-posturales` = page longue focus keyword, supprimer `/etude-posturale`).
-2. **Incohérences de données** entre pages :
-   - Ajustement nouveau vélo : 100€ (prestations) vs 80€ (nouveau-velo-ou-reglage)
-   - Deux vélos deux disciplines : 2h (prestations) vs 3h (etude-posturale)
-   - Offert pendant "4 mois" (prestations) vs "6 mois" (nouveau-velo-ou-reglage / etudes-posturales)
-3. **Astro Image non utilisé** : tous les `<img>` sont natifs → pas de srcset, dimensions manquantes → CLS. Migration vers `<Image />` de `astro:assets`.
-4. **Compresser** `carte-cadeau.png` (1.9 Mo) et PDF carte cadeau (1.9 Mo).
-5. **Service / Offer JSON-LD** pour chaque prestation (prix, durée) → rich results.
-6. **BreadcrumbList JSON-LD** — pas urgent (pas de navigation hiérarchique profonde).
-7. **Téléphone JSON-LD** : aligné sur `+33607167323` (numéro du footer) — à vérifier si c'est bien le numéro actuel.
-8. **Opportunités long-tail** non exploitées : pages "étude posturale triathlon Rennes", "bike fitting VTT Rennes", "réglage cales route", etc.
-9. **Header a du HTML invalide** : un `<a>` à l'intérieur d'un `<button>` ([Header.astro:13-21](src/components/Header.astro#L13-L21)).
-10. **Footer.astro:45-46** : attribut `width` dupliqué sur icône Facebook (devrait être `height`).
+**Ne jamais** ajouter une balise `<script type="application/ld+json">` dans une page : tout passe par la prop `schema`.
 
-### 4.4 Ciblage mots-clés (état actuel)
+### 4.2 Fondations SEO en place ✅
+
+- **BaseLayout paramétrable**, canonical auto-généré, OG absolue, Twitter card.
+- **Sitemap auto** (`/sitemap-index.xml`), n'inclut que les pages indexables.
+- **URLs canoniques cohérentes** : la forme avec slash final (`/cales/`) est utilisée par la balise canonical, le sitemap ET tous les `@id` JSON-LD — sinon les références du graphe ne se résolvent pas (helper `canonique()` dans `entreprise.ts`).
+- **NAP unifié** : adresse, téléphone et email viennent tous de `entreprise.ts`, affichage comme balisage.
+- **Avis Google** : une seule constante `AVIS_GOOGLE.nombre` pilote le hero, la page Nantes et l'`aggregateRating`.
+
+### 4.3 Visibilité sur les moteurs de réponse IA
+
+- **[/llms.txt](src/pages/llms.txt.ts)** — généré au build depuis `src/data/`. Résume l'activité, les prestations avec prix et durées, les pages du site, les infos pratiques et une section « à ne pas confondre » (IDmatch abandonné, pas de prestation à distance).
+- **[robots.txt](public/robots.txt)** — autorise nommément GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, Claude-SearchBot, Claude-User, PerplexityBot, Perplexity-User, Google-Extended, Applebot-Extended, meta-externalagent, Amazonbot, MistralAI-User, CCBot. ⚠ Ne jamais bloquer les robots de **recherche en direct** (OAI-SearchBot, Claude-SearchBot, PerplexityBot) : ce sont eux qui conditionnent la citation du site dans une réponse.
+- **`knowsAbout`** sur l'entreprise et sur le fondateur : dit explicitement sur quoi l'entité fait autorité.
+
+### 4.4 ⚠ Dette SEO restante
+
+1. **`aggregateRating` auto-déclaré** : Google n'affiche pas d'étoiles pour un avis qu'une entreprise publie sur elle-même (règle « self-serving reviews »). Conservé pour Bing et les moteurs IA, mais ne produira pas de rich snippet Google. Les étoiles viennent de la fiche Google Business.
+2. **Rich snippet FAQ supprimé par Google** depuis août 2023 (réservé aux sites institutionnels/santé). Le balisage reste utile pour les moteurs de réponse IA — ne pas investir davantage dessus.
+3. **`dateModified` absent** sauf sur `/etude-posturale-nantes`. À renseigner page par page lors des prochaines mises à jour de contenu (signal de fraîcheur).
+4. **Astro Image non utilisé** : tous les `<img>` sont natifs → pas de srcset, dimensions manquantes → CLS. Migration vers `<Image />` de `astro:assets`.
+5. **Compresser** `carte-cadeau` (PNG et PDF, ~1.9 Mo chacun).
+6. **Header : HTML invalide** — un `<a>` à l'intérieur d'un `<button>` ([Header.astro](src/components/Header.astro)).
+7. **Opportunités long-tail** non exploitées : « bike fitting VTT Rennes », « réglage cales route », « douleur genou vélo »…
+8. **Pas de page 404 personnalisée** (`src/pages/404.astro` absent).
+
+### 4.5 Ciblage mots-clés
 - **Principaux** : `étude posturale`, `Rennes`, `cycliste`, `vélo`, `réglage cales`, `bike fitting`.
 - **Secondaires** : `route`, `VTT`, `gravel`, `triathlon`, `confort`, `performance`, `STT`, `capture de mouvement 3D`, `douleurs vélo`, `position cycliste`.
 
-### 4.5 Checklist rapide avant chaque nouvelle page
+### 4.6 Checklist rapide avant chaque nouvelle page
 - [ ] H1 unique, ciblé mot-clé
 - [ ] `title` (<60 car.) + `description` (<160 car.) propres à la page
-- [ ] Canonical
-- [ ] OG image (URL absolue)
-- [ ] JSON-LD approprié (Service, FAQPage, etc.)
+- [ ] Libellé ajouté dans `LIBELLES_FIL_ARIANE` ([entreprise.ts](src/data/entreprise.ts))
+- [ ] `faq={...}` si la page a une FAQ visible, `schema={[noeudService({...})]}` si elle vend une prestation
+- [ ] Aucune balise `ld+json` écrite à la main, aucun prix ni contact en dur
 - [ ] Hiérarchie H1→H2→H3 cohérente
 - [ ] `alt` descriptif sur chaque image
 - [ ] Liens internes entrants + sortants
@@ -150,8 +163,7 @@ npm run preview   # preview prod localement
 - **Astro** : fichiers `.astro` avec frontmatter `---`, import en haut.
 - **Pas de Tailwind config file** : Tailwind 4 utilise CSS-first via `@theme` dans [global.css](src/styles/global.css).
 - **Couleurs perso** : utiliser `id-postur` (rouge) et `id-postur-dark`.
-- **React** : uniquement quand interactivité nécessaire (Funnel), sinon Astro natif.
-- **Animations** : `motion` avec `client:visible` pour ne pas hydrater à l'entrée.
+- **Pas de React ni de Motion** : le site est 100% statique, 0 JS généré. Animations en CSS natif.
 - **Images** : préférer `.webp`, toujours avec `alt` et `loading="lazy"`.
 - **CTA Calendly** : lien externe, ajouter `rel="nofollow noopener"` + `target="_blank"`.
 
@@ -160,20 +172,19 @@ npm run preview   # preview prod localement
 ## 6. Tâches fréquentes — raccourcis
 
 - **Ajouter une page** : créer `src/pages/ma-page.astro`, wrapper avec `<BaseLayout>`, définir H1 unique et meta propres (quand le layout supportera les props).
-- **Ajouter une prestation** : modifier [formule.astro](src/components/formule.astro) + [prestations.astro](src/pages/prestations.astro) + (idéalement) ajouter un JSON-LD `Service`.
+- **Ajouter / modifier une prestation** : [tarifs.ts](src/data/tarifs.ts) uniquement. Les pages, les FAQ et les `Offer` JSON-LD suivent.
+- **Modifier un prix, une durée, un horaire, le téléphone, le nombre d'avis** : [tarifs.ts](src/data/tarifs.ts) ou [entreprise.ts](src/data/entreprise.ts). Jamais dans un `.astro`.
 - **Modifier SEO global** : [BaseLayout.astro](src/layouts/BaseLayout.astro).
-- **Modifier le JSON-LD LocalBusiness** : [BaseLayout.astro:62-88](src/layouts/BaseLayout.astro#L62-L88).
+- **Modifier le JSON-LD** : [entreprise.ts](src/data/entreprise.ts) pour les valeurs, [schema.ts](src/lib/schema.ts) pour la structure des nœuds.
 - **Modifier le header/nav** : [Header.astro](src/components/Header.astro).
 - **Modifier le footer** (tel, email, horaires) : [Footer.astro](src/components/Footer.astro).
-- **Modifier la FAQ** : [faq.astro](src/components/faq.astro) (⚠ ajouter le JSON-LD FAQPage en même temps).
-- **Modifier le funnel** : [Funnel.jsx](src/components/Funnel.jsx).
+- **Modifier la FAQ d'accueil** : [faq.ts](src/data/faq.ts) — le FAQPage suit automatiquement.
+- **Modifier le parcours de réservation** : [src/pages/reserver/](src/pages/reserver/).
 
 ---
 
 ## 7. Dette technique connue
 
 - Pas de gestion d'erreur 404 personnalisée (`src/pages/404.astro` absent).
-- Incohérences de prix/durées entre `/etudes-posturales`, `/etude-posturale` et `/nouveau-velo-ou-reglage` (voir section SEO §4.2).
 - HTML invalide dans [Header.astro](src/components/Header.astro) (`<a>` dans `<button>`).
-- Aucune carte Google Maps intégrée (piste d'amélioration SEO local à étudier).
 - Dossier `src/assets/` contient des SVG potentiellement orphelins (`astro.svg`, `background.svg`, `svg-test.svg`) — à vérifier avant suppression.

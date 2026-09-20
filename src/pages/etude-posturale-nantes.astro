@@ -7,6 +7,8 @@ import {
   formatPrix,
   getPrestation,
 } from "../data/tarifs";
+import { noeudService } from "../lib/schema";
+import { AVIS_GOOGLE, CHIFFRES, ENTREPRISE, SITE_URL } from "../data/entreprise";
 
 const troisD = getPrestation("etude-posturale-3d");
 const deuxD = getPrestation("etude-posturale-2d");
@@ -32,8 +34,7 @@ const faqItems = [
   {
     question:
       "Pourquoi venir à ID Postur plutôt que chez un bike fitter à Nantes ?",
-    answer:
-      "ID Postur est équipé de la technologie de capture de mouvement STT (3DMA), un système d'analyse de référence en Europe, encore rare dans l'ouest de la France. Romain Hardy, fondateur, est un ancien cycliste professionnel, ce qui apporte une expertise terrain unique. Le centre a réalisé plus de 800 études posturales et accompagné 25+ athlètes professionnels, avec 62 avis 5/5 sur Google.",
+    answer: `ID Postur est équipé de la technologie de capture de mouvement STT (3DMA), un système d'analyse de référence en Europe, encore rare dans l'ouest de la France. Romain Hardy, fondateur, est un ancien cycliste professionnel, ce qui apporte une expertise terrain unique. Le centre a réalisé plus de ${CHIFFRES.etudes.replace("+", "")} études posturales et accompagné ${CHIFFRES.pros} athlètes professionnels, avec ${AVIS_GOOGLE.nombre} avis 5/5 sur Google.`,
   },
   {
     question: "Dois-je venir avec mon propre vélo depuis Nantes ?",
@@ -42,95 +43,38 @@ const faqItems = [
   },
 ];
 
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: faqItems.map((item) => ({
-    "@type": "Question",
-    name: item.question,
-    acceptedAnswer: {
-      "@type": "Answer",
-      text: item.answer,
-    },
-  })),
-};
-
 const datePublished = "2026-04-22";
 const dateModified = "2026-08-11";
 const dateHumanReadable = "11 août 2026";
 
-const serviceSchema = {
-  "@context": "https://schema.org",
-  "@type": "Service",
-  name: "Étude posturale cycliste STT 3DMA",
-  serviceType: "Bike fitting",
-  provider: {
-    "@id": "https://id-postur.fr/#business",
-  },
-  areaServed: {
-    "@type": "City",
-    name: "Nantes",
-    sameAs: "https://fr.wikipedia.org/wiki/Nantes",
-  },
-  description:
-    "Étude posturale pour cyclistes nantais avec la technologie de capture de mouvement STT. Analyse 3D ou 2D, réglages précis du vélo et optimisation de la position.",
-  offers: ETUDES_POSTURALES.map((prestation) => ({
-    "@type": "Offer",
-    name: prestation.title,
-    price: String(prestation.price),
-    priceCurrency: "EUR",
-    availability: "https://schema.org/InStock",
-    url: "https://id-postur.fr/etude-posturale-nantes",
-  })),
-  url: "https://id-postur.fr/etude-posturale-nantes",
-  datePublished,
-  dateModified,
-};
-
-const personSchema = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "@id": "https://id-postur.fr/#romain-hardy",
-  name: "Romain Hardy",
-  jobTitle:
-    "Fondateur d'ID Postur, expert en étude posturale cycliste",
-  description:
-    "Ancien cycliste professionnel, fondateur d'ID Postur (2023). Spécialiste de l'analyse posturale avec la technologie de capture de mouvement STT. 800+ études posturales réalisées, 25+ athlètes professionnels accompagnés.",
-  worksFor: {
-    "@id": "https://id-postur.fr/#business",
-  },
-  image: "https://id-postur.fr/images/romain-hardy.jpg",
-  knowsAbout: [
-    "Étude posturale cycliste",
-    "Bike fitting",
-    "STT 3DMA",
-    "Cyclisme professionnel",
-    "Position sur le vélo",
-  ],
-};
+/**
+ * Le nœud Person de Romain Hardy n'est plus déclaré ici : il fait partie du
+ * graphe commun généré par BaseLayout, et il est donc présent sur toutes les
+ * pages avec le même `@id`.
+ */
+const services = [
+  noeudService({
+    id: "etude-posturale-nantes",
+    name: "Étude posturale cycliste pour les Nantais",
+    serviceType: "Bike fitting",
+    description:
+      "Étude posturale pour cyclistes nantais avec la technologie de capture de mouvement STT, à 1h15 de Nantes. Analyse 3D ou 2D, réglages précis du vélo et optimisation de la position.",
+    page: "/etude-posturale-nantes",
+    prestations: [...ETUDES_POSTURALES],
+    image: `${SITE_URL}/images/id-postur-img-1.webp`,
+  }),
+];
 ---
 
 <BaseLayout
   title="Étude posturale à Nantes | Bike fitting 3D — ID Postur"
-  description={`Étude posturale cycliste à Nantes : capture de mouvement 3D STT par Romain Hardy, ex-cycliste pro. 62 avis 5/5 Google. Route, VTT, gravel, chrono. 3D ${formatPrix(troisD.price)} ou 2D ${formatPrix(deuxD.price)}.`}
+  description={`Étude posturale cycliste à Nantes : capture de mouvement 3D STT par Romain Hardy, ex-cycliste pro. ${AVIS_GOOGLE.nombre} avis 5/5 Google. Route, VTT, gravel, chrono. 3D ${formatPrix(troisD.price)} ou 2D ${formatPrix(deuxD.price)}.`}
   ogImage="/images/id-postur-img-1.webp"
+  faq={faqItems}
+  schema={services}
+  datePublished={datePublished}
+  dateModified={dateModified}
 >
-  <script
-    is:inline
-    type="application/ld+json"
-    set:html={JSON.stringify(faqSchema)}
-  />
-  <script
-    is:inline
-    type="application/ld+json"
-    set:html={JSON.stringify(serviceSchema)}
-  />
-  <script
-    is:inline
-    type="application/ld+json"
-    set:html={JSON.stringify(personSchema)}
-  />
-
   <!-- HERO -->
   <div
     class="w-full h-96 relative bg-[url('/images/id-postur-img-1.webp')] bg-cover bg-center flex items-center justify-center bg-black/50 bg-blend-overlay"
@@ -146,7 +90,7 @@ const personSchema = {
       <p class="text-center max-w-3xl mx-auto text-base md:text-lg">
         Cyclistes nantais, optimisez votre position sur le vélo avec la capture
         de mouvement <strong>STT 3DMA</strong
-        > — à 1h15 de Nantes. 800+ études réalisées, 62 avis 5/5 sur Google.
+        > — à 1h15 de Nantes. {CHIFFRES.etudes} études réalisées, {AVIS_GOOGLE.nombre} avis 5/5 sur Google.
       </p>
     </div>
   </div>
@@ -170,7 +114,7 @@ const personSchema = {
         href="https://www.google.com/maps?cid=9269044768465958318"
         target="_blank"
         rel="noopener"
-        aria-label="Voir nos 62 avis Google, note 5 sur 5"
+        aria-label={`Voir nos ${AVIS_GOOGLE.nombre} avis Google, note 5 sur 5`}
         class="group inline-flex items-center gap-3 bg-white border border-gray-200 pl-3 pr-4 py-2 shadow-sm hover:shadow-md hover:border-gray-300 transition-all"
       >
         <svg
@@ -204,7 +148,7 @@ const personSchema = {
           >
         </span>
         <span class="text-gray-300" aria-hidden="true">|</span>
-        <span class="text-sm text-gray-600">62 avis Google</span>
+        <span class="text-sm text-gray-600">{AVIS_GOOGLE.nombre} avis Google</span>
       </a>
 
       <a
@@ -260,7 +204,7 @@ const personSchema = {
         </div>
         <div class="border-l-4 border-id-postur-dark pl-6">
           <h3 class="text-xl font-semibold mb-3">
-            62 avis 5/5 sur Google
+            {AVIS_GOOGLE.nombre} avis 5/5 sur Google
           </h3>
           <p class="text-sm text-gray-700 leading-relaxed">
             Une note maximale sur plus de 60 avis, signe d'une prestation
@@ -295,7 +239,7 @@ const personSchema = {
               Rennes, sortie La Mézière.
             </li>
             <li>
-              <strong>Adresse :</strong> 112 Route du Meuble, 35520 La Mézière
+              <strong>Adresse :</strong> {ENTREPRISE.adresse.rue}, {ENTREPRISE.adresse.codePostal} {ENTREPRISE.adresse.ville}
               (au nord-ouest de Rennes).
             </li>
             <li>
@@ -317,8 +261,8 @@ const personSchema = {
             Nous adaptons les créneaux en début ou fin de journée pour éviter
             les heures de pointe entre Nantes et Rennes. N'hésitez pas à nous
             appeler au <a
-              href="tel:0607167323"
-              class="text-id-postur-dark font-semibold">06 07 16 73 23</a
+              href={`tel:${ENTREPRISE.telephone}`}
+              class="text-id-postur-dark font-semibold">{ENTREPRISE.telephoneAffiche}</a
             > pour trouver ensemble le meilleur horaire.
           </p>
         </div>
@@ -520,8 +464,8 @@ const personSchema = {
         </a>
         <p class="text-sm text-gray-600 mt-3">
           Ou par téléphone au <a
-            href="tel:0607167323"
-            class="text-id-postur-dark font-semibold">06 07 16 73 23</a
+            href={`tel:${ENTREPRISE.telephone}`}
+            class="text-id-postur-dark font-semibold">{ENTREPRISE.telephoneAffiche}</a
           >
         </p>
       </div>
@@ -581,7 +525,7 @@ const personSchema = {
           <p class="text-gray-700 leading-relaxed">
             Plus de <strong>800 études posturales</strong> réalisées,
             <strong>25+ athlètes professionnels</strong> accompagnés, et une
-            note de <strong>5/5 sur 62 avis Google</strong>. Son expérience
+            note de <strong>5/5 sur {AVIS_GOOGLE.nombre} avis Google</strong>. Son expérience
             terrain de coureur pro nourrit chaque réglage : il sait ce que
             ressent un cycliste à la 4ᵉ heure d'une sortie.
           </p>
