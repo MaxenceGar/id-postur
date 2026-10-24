@@ -3,22 +3,22 @@
   "trailingSlash": true,
   "redirects": [
     {
-      "source": "/premiere-ou-nouvelle",
+      "source": "/premiere-ou-nouvelle/",
       "destination": "/etudes-posturales/",
       "permanent": true
     },
     {
-      "source": "/etude-posturale-ou-cales",
+      "source": "/etude-posturale-ou-cales/",
       "destination": "/etudes-posturales/",
       "permanent": true
     },
     {
-      "source": "/nouveau-velo-ou-reglage",
+      "source": "/nouveau-velo-ou-reglage/",
       "destination": "/etudes-posturales/",
       "permanent": true
     },
     {
-      "source": "/etude-posturale",
+      "source": "/etude-posturale/",
       "destination": "/etudes-posturales/",
       "permanent": true
     }
