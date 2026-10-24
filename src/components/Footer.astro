@@ -1,5 +1,6 @@
 ---
 import { ENTREPRISE, RESEAUX } from "../data/entreprise";
+import { GA4_ID } from "../data/analytics";
 
 /**
  * Le footer porte le NAP (Name / Address / Phone) affiché sur toutes les
@@ -47,6 +48,17 @@ const [instagram, facebook] = RESEAUX;
         <a href="/choix-nouveau-velo">Choix d'un nouveau vélo</a>
         <a href="/rendez-vous-divers">Rendez-vous divers</a>
         <a href="/mentions-legales">Mentions légales</a>
+        {
+          GA4_ID && (
+            <button
+              type="button"
+              data-gerer-cookies
+              class="cursor-pointer text-left md:text-right"
+            >
+              Gérer les cookies
+            </button>
+          )
+        }
       </div>
       <h4 class="font-extrabold text-2xl pb-2">Réseaux Sociaux :</h4>
       <div class="flex gap-6 md:justify-end">

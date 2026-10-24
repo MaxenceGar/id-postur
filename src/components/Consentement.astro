@@ -1,0 +1,174 @@
+---
+import {
+  GA4_ID,
+  CLE_CONSENTEMENT,
+  DUREE_CONSENTEMENT_JOURS,
+} from "../data/analytics";
+
+/**
+ * GA4 + bandeau de consentement, en Consent Mode v2 « basique » :
+ * gtag.js n'est chargé qu'APRÈS un clic sur « Accepter ». Avant ça, aucune
+ * requête ne part vers Google (le mode « avancé », qui envoie des pings sans
+ * cookie avant le choix, n'est pas jugé conforme par la CNIL).
+ *
+ * Les conversions sont suivies par un seul écouteur de clics délégué : il
+ * reconnaît les liens Calendly, tel:, mailto:, la carte cadeau et les réseaux
+ * sociaux, sans avoir à annoter chaque composant.
+ */
+const actif = GA4_ID !== "";
+---
+
+{
+  actif && (
+    <div
+      id="bandeau-cookies"
+      role="dialog"
+      aria-labelledby="bandeau-cookies-titre"
+      aria-describedby="bandeau-cookies-texte"
+      hidden
+      class="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-xl border border-[#ECE9E3] bg-white p-5 shadow-lg md:left-6 md:right-auto md:mx-0"
+    >
+      <p id="bandeau-cookies-titre" class="font-id-postur font-semibold text-gray-900 mb-1">
+        Mesure d'audience
+      </p>
+      <p id="bandeau-cookies-texte" class="text-sm text-gray-600 mb-4">
+        Nous utilisons Google Analytics pour savoir combien de personnes
+        visitent le site et quelles pages les intéressent. Rien n'est mesuré
+        sans votre accord.{" "}
+        <a href="/mentions-legales/#cookies" class="underline text-id-postur-dark">
+          En savoir plus
+        </a>
+      </p>
+      <div class="grid grid-cols-2 gap-3">
+        <button
+          type="button"
+          data-consentement="refuse"
+          class="cursor-pointer px-4 py-2.5 text-sm font-semibold text-[#C00201] border border-[#C00201] bg-white hover:bg-[#C00201]/5 transition duration-200"
+        >
+          Refuser
+        </button>
+        <button
+          type="button"
+          data-consentement="accepte"
+          class="cursor-pointer px-4 py-2.5 text-sm font-semibold text-[#C00201] border border-[#C00201] bg-white hover:bg-[#C00201]/5 transition duration-200"
+        >
+          Accepter
+        </button>
+      </div>
+    </div>
+  )
+}
+
+{
+  actif && (
+    <script
+      is:inline
+      define:vars={{
+        ga4Id: GA4_ID,
+        cle: CLE_CONSENTEMENT,
+        dureeJours: DUREE_CONSENTEMENT_JOURS,
+      }}
+    >
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      window.gtag = gtag;
+
+      gtag("consent", "default", {
+        analytics_storage: "denied",
+        ad_storage: "denied",
+        ad_user_data: "denied",
+        ad_personalization: "denied",
+      });
+
+      const bandeau = document.getElementById("bandeau-cookies");
+      let mesureActive = false;
+
+      function lireChoix() {
+        try {
+          const choix = JSON.parse(localStorage.getItem(cle) || "null");
+          const ageJours = (Date.now() - choix.date) / 86400000;
+          return ageJours < dureeJours ? choix.valeur : null;
+        } catch {
+          return null;
+        }
+      }
+
+      function enregistrerChoix(valeur) {
+        try {
+          localStorage.setItem(cle, JSON.stringify({ valeur, date: Date.now() }));
+        } catch {}
+      }
+
+      function activerMesure() {
+        if (mesureActive) return;
+        mesureActive = true;
+        gtag("consent", "update", { analytics_storage: "granted" });
+        gtag("js", new Date());
+        gtag("config", ga4Id);
+        const script = document.createElement("script");
+        script.async = true;
+        script.src = "https://www.googletagmanager.com/gtag/js?id=" + ga4Id;
+        document.head.appendChild(script);
+      }
+
+      /** Retrait du consentement : on efface les cookies _ga posés par GA4. */
+      function effacerCookiesGa() {
+        const domaine = location.hostname.replace(/^www\./, "");
+        document.cookie.split(";").forEach((c) => {
+          const nom = c.split("=")[0].trim();
+          if (!nom.startsWith("_ga")) return;
+          for (const d of ["", domaine, "." + domaine]) {
+            document.cookie =
+              nom + "=; Max-Age=0; path=/" + (d ? "; domain=" + d : "");
+          }
+        });
+      }
+
+      const choix = lireChoix();
+      if (choix === "accepte") activerMesure();
+      else if (choix === null) bandeau.hidden = false;
+
+      document.addEventListener("click", (e) => {
+        const bouton = e.target.closest("[data-consentement]");
+        if (bouton) {
+          const valeur = bouton.dataset.consentement;
+          enregistrerChoix(valeur);
+          bandeau.hidden = true;
+          if (valeur === "accepte") activerMesure();
+          else if (mesureActive) {
+            effacerCookiesGa();
+            location.reload();
+          }
+          return;
+        }
+
+        if (e.target.closest("[data-gerer-cookies]")) {
+          bandeau.hidden = false;
+          bandeau.querySelector("button").focus();
+          return;
+        }
+
+        if (!mesureActive) return;
+        const lien = e.target.closest("a[href]");
+        if (!lien) return;
+        const href = lien.getAttribute("href");
+
+        if (href.includes("calendly.com")) {
+          const prestation = new URL(href).pathname.split("/").filter(Boolean).pop();
+          gtag("event", "prise_rdv", { prestation, link_url: href });
+        } else if (href.startsWith("tel:")) {
+          gtag("event", "clic_telephone");
+        } else if (href.startsWith("mailto:")) {
+          gtag("event", "clic_email");
+        } else if (href.includes("carte-cadeau") && href.endsWith(".pdf")) {
+          gtag("event", "telechargement_carte_cadeau");
+        } else if (/instagram\.com|facebook\.com/.test(href)) {
+          const reseau = href.includes("instagram") ? "instagram" : "facebook";
+          gtag("event", "clic_reseau_social", { reseau });
+        }
+      });
+    </script>
+  )
+}
