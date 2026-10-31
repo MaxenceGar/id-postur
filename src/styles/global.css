@@ -205,3 +205,37 @@ details:has(> .faq-reponse)[open]::details-content {
   line-height: var(--text-4xl--line-height); /* calc(2.5 / 2.25) */
   font-weight: 700;
 }
+/* Réservation « déjà client » : le bouton Calendly n'apparaît qu'une fois la
+ * case #confirmation-deja-client cochée. CSS seul, aucun JS. Navigateurs sans
+ * :has() : le bouton reste visible, comme avant — rien n'est bloqué. */
+.cta-attente {
+  display: none;
+}
+@supports selector(:has(*)) {
+  .cta-verrouille .cta-attente {
+    display: block;
+  }
+  .cta-verrouille > a {
+    display: none;
+  }
+  body:has(#confirmation-deja-client:checked) .cta-verrouille .cta-attente {
+    display: none;
+  }
+  body:has(#confirmation-deja-client:checked) .cta-verrouille > a {
+    display: inline-flex;
+  }
+}
+
+/* Hero : la vidéo en boucle cède la place à son image fixe quand le visiteur
+ * a demandé à réduire les animations. */
+.hero-media-fixe {
+  display: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-media video {
+    display: none;
+  }
+  .hero-media-fixe {
+    display: block;
+  }
+}

@@ -1,115 +1,1264 @@
 ---
-import { ENTREPRISE } from "../../data/entreprise";
+import { ENTREPRISE, FICHE_GOOGLE } from "../../data/entreprise";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import "../../styles/global.css";
+import { BESOINS, CALCOM, RESULTATS } from "../../data/parcours";
 import { formatPrix, getPrestation } from "../../data/tarifs";
 
 /**
- * Étape de tri avant la réservation.
+ * Parcours de réservation pas à pas.
  *
- * Elle existe pour une raison métier : sans elle, des cyclistes réservent
- * le créneau « déjà client » alors qu'ils viennent pour la première fois
- * (et l'inverse), ce qui bloque un créneau au mauvais tarif.
- * Page volontairement en noindex : elle n'a aucune valeur en résultat
- * de recherche et ferait doublon avec /etudes-posturales.
+ * Une question par écran (besoin → format → déjà client → vélo → option),
+ * puis un récapitulatif avec le seul lien Calendly qui correspond aux
+ * réponses. Il remplace l'ancienne étape de tri « nouveau / déjà client » :
+ * des cyclistes réservaient le créneau « déjà client » sans l'être.
+ *
+ * Tout le contenu est rendu ici (données dans src/data/parcours.ts) ; le
+ * petit script en bas ne fait qu'afficher le bon écran. Sans JS, le
+ * <noscript> renvoie vers les anciennes pages de réservation.
+ * Page en noindex : aucune valeur en résultat de recherche.
  */
 
-const troisD = getPrestation("etude-posturale-3d");
-const deuxD = getPrestation("etude-posturale-2d");
-const troisDClient = getPrestation("etude-posturale-3d-deja-client");
-const deuxDClient = getPrestation("etude-posturale-2d-deja-client");
+const etude3D = getPrestation("etude-posturale-3d");
+const etude2D = getPrestation("etude-posturale-2d");
 
-const choix = [
+/** Icônes au trait (24×24), dans l'esprit du reste du site. */
+const ICONES: Record<string, string> = {
+  etude:
+    '<path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="7.5" r="1.5"/><path d="M12 10v4.5M9 12.5l3-1.5 3 1.5M10 18l2-3.5 2 3.5"/>',
+  velo:
+    '<circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3 4-3 2 3h2"/>',
+  cible:
+    '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/>',
+  cle: '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"/>',
+  prolongateurs: '<path d="M3 5v14M21 12H7M15 18l6-6-6-6"/>',
+  regle:
+    '<path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2M11.5 9.5l2-2M8.5 6.5l2-2M17.5 15.5l2-2"/>',
+  oui: '<path d="M20 6 9 17l-5-5"/>',
+  non: '<path d="M18 6 6 18M6 6l12 12"/>',
+  aide: '<circle cx="12" cy="12" r="9"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01"/>',
+  studio:
+    '<path d="M3 21h18M5 21V7l7-4 7 4v14"/><circle cx="9" cy="16" r="2"/><circle cx="15" cy="16" r="2"/><path d="M9 16l3-4 3 4"/>',
+  selle: '<path d="M4 9c0-2 3-3 8-3s8 1 8 3-4 3-8 3-8-1-8-3Z"/><path d="M12 12v8M9 20h6"/>',
+  chrono: '<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M10 2h4"/>',
+};
+
+/** Les choix d'une étape : [valeur, titre, détail, icône]. */
+type Choix = { valeur: string; titre: string; detail?: string; icone?: string; badge?: string };
+
+const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] = [
   {
-    href: "/reserver/premiere-etude",
-    titre: "C'est ma première étude posturale chez ID Postur",
-    description:
-      "Vous n'avez jamais réalisé d'étude posturale chez ID Postur. Nous partons de zéro : entretien, mesures complètes et réglages.",
-    tarifs: `${formatPrix(troisD.price)} en 3D · ${formatPrix(deuxD.price)} en 2D`,
-    principal: true,
+    id: "format",
+    question: "Quel format d'étude ?",
+    aide: "Les deux se font avec la capture de mouvement STT. La 3D est la plus complète.",
+    choix: [
+      {
+        valeur: "3d",
+        titre: "Étude 3D",
+        detail: `${etude3D.duration} · à partir de ${formatPrix(etude3D.price)} · toutes disciplines, chrono et triathlon compris`,
+        badge: "3D",
+      },
+      {
+        valeur: "2d",
+        titre: "Étude 2D",
+        detail: `${etude2D.duration} · à partir de ${formatPrix(etude2D.price)} · route, VTT et gravel`,
+        badge: "2D",
+      },
+      {
+        valeur: "aide",
+        titre: "Je ne sais pas, aidez-moi à choisir",
+        icone: "aide",
+      },
+    ],
   },
   {
-    href: "/reserver/deja-client",
-    titre: "J'ai déjà réalisé une étude posturale chez ID Postur",
-    description:
-      "Nous avons déjà vos mesures en base. Vous bénéficiez du tarif réduit, sans limite de temps depuis votre première étude.",
-    tarifs: `${formatPrix(troisDClient.price)} en 3D · ${formatPrix(deuxDClient.price)} en 2D`,
-    principal: false,
+    id: "aide-chrono",
+    question: "Roulez-vous en chrono ou en triathlon ?",
+    choix: [
+      { valeur: "oui", titre: "Oui", detail: "Vélo de chrono ou de triathlon", icone: "chrono" },
+      { valeur: "non", titre: "Non", detail: "Route, VTT ou gravel", icone: "velo" },
+    ],
+  },
+  {
+    id: "aide-route",
+    question: "Les deux formats vous conviennent",
+    aide: "La 3D analyse votre position dans les trois plans : elle repère aussi les asymétries gauche/droite et les désalignements des genoux ou du bassin. La 2D, en vue latérale, va à l'essentiel en moins de temps.",
+    choix: [
+      {
+        valeur: "3d",
+        titre: "Je choisis la 3D",
+        detail: `L'analyse la plus complète · ${etude3D.duration}`,
+        badge: "3D",
+      },
+      {
+        valeur: "2d",
+        titre: "Je choisis la 2D",
+        detail: `Plus courte · ${etude2D.duration}`,
+        badge: "2D",
+      },
+    ],
+  },
+  {
+    id: "client",
+    question: "Avez-vous déjà fait une étude posturale complète chez ID Postur ?",
+    aide: "Ne compte pas : une étude faite ailleurs, un réglage de cales, un conseil d'achat ou un rendez-vous court.",
+    choix: [
+      { valeur: "non", titre: "Non, c'est ma première", detail: "Nous partons de zéro", icone: "non" },
+      { valeur: "oui", titre: "Oui, je suis déjà venu", detail: "Tarif client : nous avons déjà vos mesures", icone: "oui" },
+    ],
+  },
+  {
+    id: "velo",
+    question: "Sur quel vélo ?",
+    choix: [
+      { valeur: "velo", titre: "Sur mon vélo", detail: "On règle votre position sur votre vélo actuel", icone: "velo" },
+      {
+        valeur: "studio",
+        titre: "Sur le vélo du studio",
+        detail: "Pour définir la taille exacte de votre futur vélo, avant de l'acheter",
+        icone: "studio",
+      },
+    ],
+  },
+  {
+    id: "selle",
+    question: "Ajouter la cartographie de pression de selle ?",
+    aide: "Le capteur Velometrik montre comment votre poids se répartit sur la selle : utile en cas d'inconfort ou pour choisir une selle.",
+    choix: [
+      { valeur: "avec", titre: "Oui, avec la pression de selle", detail: "+30 €", icone: "selle" },
+      { valeur: "sans", titre: "Non merci", detail: "L'étude 2D seule", icone: "non" },
+    ],
+  },
+  {
+    id: "client-court",
+    question: "Avez-vous déjà fait une étude posturale complète chez ID Postur ?",
+    aide: "Ce rendez-vous court part des mesures de votre étude : il est réservé aux cyclistes déjà passés chez ID Postur.",
+    choix: [
+      { valeur: "oui", titre: "Oui, je suis déjà venu", icone: "oui" },
+      { valeur: "non", titre: "Non, pas encore", icone: "non" },
+    ],
+  },
+  {
+    id: "mise-en-position",
+    question: "Votre étude était en 3D ou en 2D ?",
+    aide: "On reporte sur votre nouveau vélo la position mesurée lors de votre étude.",
+    choix: [
+      { valeur: "3d", titre: "En 3D", badge: "3D" },
+      { valeur: "2d", titre: "En 2D", badge: "2D" },
+    ],
   },
 ];
+
 ---
 
 <BaseLayout
-  title="Réserver une étude posturale | ID Postur"
-  description="Choisissez votre situation pour accéder aux formules d'étude posturale qui vous correspondent."
+  title="Prendre rendez-vous | ID Postur"
+  description="Quelques questions pour trouver la prestation ID Postur qui vous correspond, au bon tarif, et réserver votre créneau."
   noindex={true}
 >
-  <section class="container mx-auto px-5 py-16 md:py-24">
-    <div class="max-w-4xl mx-auto">
-      <h1 class="text-3xl md:text-4xl font-bold text-center">
-        Étude posturale : quelle est votre situation ?
-      </h1>
-      <div
-        class="h-[3px] w-24 bg-id-postur-dark mx-auto mt-4 mb-6 rounded-full"
-      >
+  <section class="bg-[#f4f4f4] min-h-[80vh] py-10 md:py-16">
+    <div class="container mx-auto px-5 max-w-3xl" id="parcours">
+      <!-- Progression -->
+      <div class="mb-8">
+        <div class="flex items-center justify-between text-sm text-gray-500 mb-2">
+          <button
+            type="button"
+            data-retour
+            class="inline-flex items-center gap-1 font-semibold text-gray-700 hover:text-id-postur-dark disabled:invisible"
+          >
+            <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
+            Retour
+          </button>
+          <span data-compteur>Étape 1</span>
+        </div>
+        <div class="h-2 bg-[#e4e4e4] rounded-full overflow-hidden">
+          <div data-barre class="h-full bg-id-postur-dark rounded-full transition-[width] duration-500 ease-out" style="width: 8%"></div>
+        </div>
       </div>
-      <p class="text-center text-gray-700 max-w-2xl mx-auto mb-12">
-        Une seule question avant de choisir votre créneau : êtes-vous déjà venu
-        chez ID Postur ? Vous ne verrez ensuite que les formules qui vous
-        concernent, au bon tarif.
-      </p>
 
-      <div class="grid gap-8 md:grid-cols-2">
-        {
-          choix.map((option) => (
-            <a
-              href={option.href}
-              class:list={[
-                "declenche-fleche flex flex-col bg-white p-8 transition-all duration-200 hover:shadow-lg motion-safe:hover:-translate-y-1 motion-safe:active:scale-[0.99]",
-                option.principal
-                  ? "border-2 border-id-postur-dark"
-                  : "border border-gray-200 hover:border-id-postur-dark",
-              ]}
-            >
-              <h2 class="text-xl font-semibold text-gray-900 mb-3">
-                {option.titre}
-              </h2>
-              <p class="text-sm text-gray-600 flex-1 mb-6">
-                {option.description}
+      <!-- Étape 1 : besoin -->
+      <section class="etape" data-etape="besoin">
+        <p class="text-sm font-semibold uppercase tracking-wider text-id-postur-dark mb-2">Prendre rendez-vous</p>
+        <h1 class="etape-titre text-3xl md:text-4xl font-bold text-gray-900 mb-3" tabindex="-1">
+          Que souhaitez-vous faire ?
+        </h1>
+        <p class="text-gray-600 mb-8">
+          Quelques questions et vous saurez exactement quoi réserver, au bon tarif.
+        </p>
+        <div class="grid gap-4 sm:grid-cols-2">
+          {
+            BESOINS.map((b) => (
+              <button type="button" class="choix" data-choix={b.id} data-libelle={b.titre}>
+                <span class="choix-icone">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" set:html={ICONES[b.icone]} />
+                </span>
+                <span class="flex-1 text-left">
+                  <span class="block font-semibold text-gray-900">{b.titre}</span>
+                  <span class="block text-sm text-gray-600 mt-1">{b.detail}</span>
+                  {b.clientsSeulement && (
+                    <span class="inline-block mt-2 text-xs font-semibold text-gray-500 border border-gray-300 px-2 py-0.5">
+                      Réservé aux clients ID Postur
+                    </span>
+                  )}
+                </span>
+              </button>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- Étapes suivantes -->
+      {
+        ETAPES.map((etape) => (
+          <section class="etape" data-etape={etape.id} hidden>
+            <h2 class="etape-titre text-3xl md:text-4xl font-bold text-gray-900 mb-3" tabindex="-1">
+              {etape.question}
+            </h2>
+            {etape.aide && <p class="text-gray-600 mb-8 max-w-2xl">{etape.aide}</p>}
+            {!etape.aide && <div class="mb-8" />}
+            <div class="grid gap-4 sm:grid-cols-2">
+              {etape.choix.map((c, i) => (
+                <button
+                  type="button"
+                  class:list={["choix", etape.choix.length === 3 && i === 2 && "sm:col-span-2"]}
+                  data-choix={c.valeur}
+                  data-libelle={c.titre}
+                >
+                  {c.badge ? (
+                    <span class="choix-icone font-extrabold text-lg">{c.badge}</span>
+                  ) : (
+                    c.icone && (
+                      <span class="choix-icone">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" set:html={ICONES[c.icone]} />
+                      </span>
+                    )
+                  )}
+                  <span class="flex-1 text-left">
+                    <span class="block font-semibold text-gray-900">{c.titre}</span>
+                    {c.detail && <span class="block text-sm text-gray-600 mt-1">{c.detail}</span>}
+                  </span>
+                </button>
+              ))}
+            </div>
+            {etape.id === "format" && (
+              <p class="mt-6 text-sm text-gray-600">
+                Pour un cycliste de moins de 15 ans,{" "}
+                <button type="button" class="text-id-postur-dark font-semibold underline hover:opacity-80" data-aller-resultat="etude-moins-15">
+                  voir l'étude dédiée
+                </button>
+                .
               </p>
-              <p class="text-lg font-bold text-gray-900 mb-6">
-                {option.tarifs}
+            )}
+          </section>
+        ))
+      }
+
+      <!-- Refus : rendez-vous court sans étude préalable -->
+      <section class="etape" data-etape="refus" hidden>
+        <h2 class="etape-titre text-3xl md:text-4xl font-bold text-gray-900 mb-3" tabindex="-1">
+          Commençons par votre étude posturale
+        </h2>
+        <p class="text-gray-600 mb-8 max-w-2xl">
+          Ce rendez-vous s'appuie sur les mesures de votre étude : il est réservé aux cyclistes déjà passés chez ID Postur. Bonne nouvelle, l'étude règle aussi ce point.
+        </p>
+        <div class="grid gap-4 sm:grid-cols-2">
+          <button type="button" class="choix" data-choix="etude" data-libelle="Commencer par une étude">
+            <span class="choix-icone">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" set:html={ICONES.etude} />
+            </span>
+            <span class="flex-1 text-left">
+              <span class="block font-semibold text-gray-900">Réserver une étude posturale</span>
+              <span class="block text-sm text-gray-600 mt-1">En 3D ou en 2D, sur votre vélo</span>
+            </span>
+          </button>
+          <button type="button" class="choix" data-choix="etude-studio" data-libelle="Étude sur le vélo du studio">
+            <span class="choix-icone">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" set:html={ICONES.studio} />
+            </span>
+            <span class="flex-1 text-left">
+              <span class="block font-semibold text-gray-900">Vous achetez un vélo ?</span>
+              <span class="block text-sm text-gray-600 mt-1">Faites votre étude sur le vélo du studio pour connaître la taille exacte à acheter</span>
+            </span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Récapitulatifs : un par combinaison de réponses -->
+      {
+        RESULTATS.map((r) => (
+          <section class="etape" data-etape={`resultat-${r.id}`} data-resultat hidden>
+            <p class="text-sm font-semibold uppercase tracking-wider text-id-postur-dark mb-2">Votre rendez-vous</p>
+            <h2 class="etape-titre text-3xl md:text-4xl font-bold text-gray-900 mb-2" tabindex="-1">
+              {r.titre}
+            </h2>
+            <p class="text-gray-600 mb-6">{r.pourQui}</p>
+
+            <div class="bg-white border-2 border-id-postur-dark p-6 md:p-8 shadow-sm">
+              <div class="flex flex-wrap items-end gap-x-8 gap-y-3 mb-6">
+                <p class="text-5xl font-extrabold text-gray-900">{r.prix}</p>
+                <p class="text-gray-700"><span class="text-gray-500">Durée</span><br /><strong>{r.duree}</strong></p>
+                {r.disciplines && (
+                  <p class="text-gray-700"><span class="text-gray-500">Disciplines</span><br /><strong>{r.disciplines}</strong></p>
+                )}
+              </div>
+
+              <p class="text-sm font-semibold text-gray-900 mb-2">À apporter</p>
+              <ul class="text-sm text-gray-700 space-y-1 mb-4">
+                {r.aApporter.map((a) => (
+                  <li class="flex gap-2">
+                    <svg viewBox="0 0 24 24" class="w-4 h-4 mt-0.5 shrink-0 text-id-postur-dark" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+                    {a}
+                  </li>
+                ))}
+              </ul>
+              {r.note && <p class="text-sm text-id-postur-dark font-medium mb-6">{r.note}</p>}
+
+              <p class="text-xs text-gray-500 mb-3" data-recap></p>
+
+              {/* Le calendrier (unique, plus bas) vient se loger ici quand
+                  ce récapitulatif s'affiche. */}
+              <div
+                data-slot-calendrier
+                data-slug={r.calcomSlug}
+                data-duree={r.dureeMinutes}
+                data-titre={r.titre}
+                data-calendly={r.lien ?? ""}
+              ></div>
+            </div>
+
+            {r.aConfirmer && (
+              <p class="mt-4 text-sm bg-[#FFF7E0] border border-[#F2C94C] text-gray-800 px-4 py-3">
+                <strong>Prototype, à confirmer avec Romain :</strong> {r.aConfirmer}
               </p>
-              <span class="btn-fleche mt-auto inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-white bg-id-postur-dark transition">
-                Voir les formules
+            )}
+
+            <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-gray-600">
+              <button type="button" data-recommencer class="font-semibold text-id-postur-dark underline hover:opacity-80">
+                Recommencer
+              </button>
+              <span>
+                Une question ? Appelez le{" "}
+                <a href={`tel:${ENTREPRISE.telephone}`} class="text-id-postur-dark font-semibold">{ENTREPRISE.telephoneAffiche}</a>
               </span>
+            </div>
+          </section>
+        ))
+      }
+
+      <!--
+        Calendrier de réservation intégré : un seul exemplaire, déplacé dans
+        le récapitulatif affiché. Source Cal.com, ou démo tant que le compte
+        n'est pas renseigné (CALCOM.username dans src/data/parcours.ts).
+      -->
+      <div id="calendrier" class="mt-8 pt-8 border-t border-[#e4e4e4]" hidden>
+        <!-- 1. Jour et heure -->
+        <div data-cal-etape="creneau">
+          <p class="font-semibold text-gray-900 mb-4">Choisissez votre créneau</p>
+          <div class="grid gap-6 md:grid-cols-[minmax(0,1fr)_14rem]">
+            <!-- Mois -->
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <button type="button" class="cal-fleche" data-cal-mois-nav="-1" aria-label="Mois précédent">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
+                </button>
+                <p class="font-semibold text-gray-900 capitalize" data-cal-mois-titre aria-live="polite"></p>
+                <button type="button" class="cal-fleche" data-cal-mois-nav="1" aria-label="Mois suivant">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg>
+                </button>
+              </div>
+              <div class="grid grid-cols-7 gap-1 text-center text-xs font-semibold text-gray-500 mb-1" aria-hidden="true">
+                <span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span>
+              </div>
+              <div class="grid grid-cols-7 gap-1" data-cal-mois role="group" aria-label="Jours du mois"></div>
+            </div>
+            <!-- Horaires du jour choisi -->
+            <div>
+              <p class="text-sm font-semibold text-gray-900 mb-3 first-letter:uppercase" data-cal-jour-titre></p>
+              <div class="grid grid-cols-3 md:grid-cols-2 gap-2 md:max-h-[22rem] md:overflow-y-auto md:pr-1" data-cal-heures role="group" aria-label="Horaires disponibles"></div>
+            </div>
+          </div>
+          <p class="text-sm text-gray-500" data-cal-message aria-live="polite"></p>
+        </div>
+
+        <!-- 2. Coordonnées -->
+        <form data-cal-etape="coordonnees" hidden class="space-y-4" novalidate>
+          <div class="flex items-center justify-between gap-4 bg-[#f4f4f4] px-4 py-3">
+            <p class="text-sm"><span class="text-gray-500">Votre créneau</span><br /><strong class="text-gray-900" data-cal-resume></strong></p>
+            <button type="button" data-cal-changer class="text-sm font-semibold text-id-postur-dark underline shrink-0">Changer</button>
+          </div>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <label class="block text-sm font-medium text-gray-900">
+              Prénom et nom
+              <input name="nom" required autocomplete="name" class="cal-champ" />
+            </label>
+            <label class="block text-sm font-medium text-gray-900">
+              Téléphone
+              <input name="telephone" type="tel" required autocomplete="tel" inputmode="tel" class="cal-champ" />
+            </label>
+          </div>
+          <label class="block text-sm font-medium text-gray-900">
+            E-mail
+            <input name="email" type="email" required autocomplete="email" class="cal-champ" />
+          </label>
+          <label class="block text-sm font-medium text-gray-900">
+            Une précision pour Romain ? <span class="font-normal text-gray-500">(facultatif)</span>
+            <textarea name="message" rows="3" class="cal-champ" placeholder="Douleur, objectif, type de vélo…"></textarea>
+          </label>
+          <p class="text-xs text-gray-500">
+            Vos coordonnées servent uniquement à organiser votre rendez-vous.
+            <a href="/mentions-legales" class="underline">En savoir plus</a>
+          </p>
+          <p class="text-sm text-id-postur-dark font-medium" data-cal-erreur aria-live="assertive"></p>
+          <button
+            type="submit"
+            class="btn-fleche w-full inline-flex justify-center items-center px-6 py-4 text-base font-semibold text-white bg-id-postur-dark transition duration-200 motion-safe:active:scale-[0.98] disabled:opacity-60"
+          >
+            Confirmer mon rendez-vous
+          </button>
+        </form>
+
+        <!-- 3. Confirmation -->
+        <div data-cal-etape="confirmation" hidden class="text-center py-4">
+          <div class="cal-coche mx-auto mb-5" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+          </div>
+          <p class="text-2xl font-bold text-gray-900 mb-1" tabindex="-1" data-cal-titre-confirmation>C'est réservé !</p>
+          <p class="text-gray-700 mb-1" data-cal-resume-final></p>
+          <p class="text-sm text-gray-500 mb-6">
+            {ENTREPRISE.adresse.rue}, {ENTREPRISE.adresse.codePostal} {ENTREPRISE.adresse.ville}
+          </p>
+          <p class="text-sm text-gray-600 mb-6" data-cal-email-info></p>
+          <div class="flex flex-col sm:flex-row justify-center gap-3">
+            <button type="button" data-cal-ics class="inline-flex justify-center items-center px-5 py-3 text-sm font-semibold text-white bg-id-postur-dark">
+              Ajouter à mon agenda
+            </button>
+            <a href={FICHE_GOOGLE} target="_blank" rel="noopener" class="inline-flex justify-center items-center px-5 py-3 text-sm font-semibold text-id-postur-dark border-2 border-id-postur-dark">
+              Voir l'itinéraire
             </a>
-          ))
-        }
+          </div>
+        </div>
+
+        <p data-cal-demo hidden class="mt-6 text-sm bg-[#FFF7E0] border border-[#F2C94C] text-gray-800 px-4 py-3">
+          <strong>Démo :</strong> créneaux factices, aucun rendez-vous n'est réellement pris. Ils viendront de l'agenda de Romain une fois son compte Cal.com branché.
+        </p>
       </div>
 
-      <div class="mt-12 border border-gray-200 bg-gray-50 p-6 text-center">
-        <p class="text-gray-800 font-semibold mb-2">
-          Vous hésitez encore entre la 3D et la 2D ?
+      <noscript>
+        <p class="mt-8 text-gray-700">
+          Réservez directement :
+          <a href="/reserver/premiere-etude" class="text-id-postur-dark font-semibold underline">première étude posturale</a>
+          ·
+          <a href="/reserver/deja-client" class="text-id-postur-dark font-semibold underline">déjà client</a>
+          · ou appelez le {ENTREPRISE.telephoneAffiche}.
         </p>
-        <p class="text-sm text-gray-600 mb-4">
-          Durées, tarifs, prérequis : le comparatif complet des deux formats
-          est sur une page dédiée.
-        </p>
-        <a
-          href="/etude-posturale-3d-ou-2d"
-          class="inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-[#C00201] border border-[#C00201] bg-white hover:bg-[#C00201]/5 transition"
-        >
-          Comparer l'étude 3D et l'étude 2D
-        </a>
-      </div>
-
-      <p class="mt-8 text-center text-sm text-gray-600">
-        Un doute sur votre situation ? Appelez-nous au <a
-          href={`tel:${ENTREPRISE.telephone}`}
-          class="text-id-postur-dark font-semibold">{ENTREPRISE.telephoneAffiche}</a
-        >, nous vérifions ensemble avant de bloquer un créneau.
-      </p>
+      </noscript>
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  /* Sans JS, seule la première question s'affiche, avec les liens du
+     <noscript> en dessous. */
+  .choix {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    width: 100%;
+    padding: 1.25rem;
+    background: white;
+    border: 2px solid #e4e4e4;
+    text-align: left;
+    cursor: pointer;
+    transition:
+      border-color 0.2s,
+      box-shadow 0.2s,
+      transform 0.2s;
+  }
+  .choix:hover,
+  .choix:focus-visible {
+    border-color: var(--color-id-postur-dark);
+    box-shadow: 0 10px 24px -12px rgb(0 0 0 / 0.25);
+    outline: none;
+  }
+  .choix:active {
+    transform: scale(0.98);
+  }
+  /* Le titre reçoit le focus à chaque question (lecteurs d'écran) : pas
+     besoin du cadre de focus, ce n'est pas un élément cliquable. */
+  .etape-titre:focus {
+    outline: none;
+  }
+  .choix-icone {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 3rem;
+    height: 3rem;
+    color: var(--color-id-postur-dark);
+    background: rgb(192 0 0 / 0.07);
+  }
+  .choix-icone svg {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+  .etape-entree {
+    animation: etape-entree 0.35s ease-out both;
+  }
+  .etape-retour {
+    animation: etape-retour 0.35s ease-out both;
+  }
+  @keyframes etape-entree {
+    from {
+      opacity: 0;
+      transform: translateX(24px);
+    }
+  }
+  @keyframes etape-retour {
+    from {
+      opacity: 0;
+      transform: translateX(-24px);
+    }
+  }
+  .resultat-entree {
+    animation: resultat-entree 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+  }
+  @keyframes resultat-entree {
+    from {
+      opacity: 0;
+      transform: translateY(16px) scale(0.98);
+    }
+  }
+  /* Calendrier : jours et heures sont créés par le script, d'où :global. */
+  :global(.cal-jour) {
+    aspect-ratio: 1;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  :global(.cal-jour:disabled) {
+    border-color: transparent;
+    background: transparent;
+    font-weight: 400;
+    color: #b5b5b5;
+    cursor: default;
+  }
+  :global(.cal-jour[data-aujourdhui]) {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  :global(.cal-jour),
+  :global(.cal-heure) {
+    padding: 0.6rem 0.25rem;
+    background: white;
+    border: 2px solid #e4e4e4;
+    text-align: center;
+    cursor: pointer;
+    transition:
+      border-color 0.15s,
+      background-color 0.15s,
+      color 0.15s;
+  }
+  :global(.cal-jour:hover:not(:disabled)),
+  :global(.cal-heure:hover) {
+    border-color: var(--color-id-postur-dark);
+  }
+  :global(.cal-jour[aria-pressed="true"]),
+  :global(.cal-heure[aria-pressed="true"]) {
+    background: var(--color-id-postur-dark);
+    border-color: var(--color-id-postur-dark);
+    color: white;
+  }
+  :global(.cal-heure) {
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  :global(.cal-apparition) {
+    animation: etape-entree 0.3s ease-out both;
+  }
+  .cal-fleche {
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 2px solid #e4e4e4;
+    background: white;
+  }
+  .cal-fleche:hover:not(:disabled) {
+    border-color: var(--color-id-postur-dark);
+  }
+  .cal-fleche:disabled {
+    opacity: 0.35;
+  }
+  .cal-fleche svg {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+  .cal-champ {
+    display: block;
+    width: 100%;
+    margin-top: 0.35rem;
+    padding: 0.7rem 0.85rem;
+    font-weight: 400;
+    background: white;
+    border: 2px solid #e4e4e4;
+  }
+  .cal-champ:focus {
+    outline: none;
+    border-color: var(--color-id-postur-dark);
+  }
+  .cal-champ[aria-invalid="true"] {
+    border-color: var(--color-id-postur-dark);
+    background: rgb(192 0 0 / 0.04);
+  }
+  .cal-coche {
+    display: grid;
+    place-items: center;
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 9999px;
+    color: white;
+    background: #1f9d55;
+    animation: cal-coche 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.4) both;
+  }
+  .cal-coche svg {
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+  @keyframes cal-coche {
+    from {
+      transform: scale(0.4);
+      opacity: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :global(.cal-apparition),
+    .cal-coche {
+      animation: none;
+    }
+    .etape-entree,
+    .etape-retour,
+    .resultat-entree {
+      animation: none;
+    }
+    .choix {
+      transition: none;
+    }
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const racine = document.getElementById("parcours");
+    const barre = racine.querySelector("[data-barre]");
+    const compteur = racine.querySelector("[data-compteur]");
+    const boutonRetour = racine.querySelector("[data-retour]");
+
+    /** Réponses en cours, et pile des écrans pour le bouton retour. */
+    let reponses = {};
+    let pile = [];
+    const libelles = [];
+
+    const CLIENTS_SEULEMENT = ["nouveau-velo", "cales", "micro-reglage", "prolongateurs", "taille-velo"];
+    const RESULTAT_COURT = {
+      cales: "client-cales",
+      "micro-reglage": "client-micro-reglage",
+      prolongateurs: "client-prolongateurs",
+      "taille-velo": "client-taille-velo",
+    };
+
+    /** Mesure GA4, seulement si le visiteur a accepté (gtag.js chargé). */
+    function mesurer(etape, choix) {
+      if (window.google_tag_data && typeof window.gtag === "function") {
+        window.gtag("event", "parcours_reservation", { etape, choix });
+      }
+    }
+
+    /** Après le vélo : option selle en 2D, récapitulatif en 3D (selle comprise). */
+    function apresVelo() {
+      return reponses.format === "3d" ? `resultat-etude-3d-${reponses.velo}` : "selle";
+    }
+
+    /** Après le format : on saute ce qui est déjà connu (cas d'un refus). */
+    function apresFormat() {
+      const r = reponses;
+      if (r.client !== "non") return "client";
+      return r.velo ? apresVelo() : "velo";
+    }
+
+    /** Écran suivant selon l'écran courant et la réponse. */
+    function suivant(etape, choix) {
+      const r = reponses;
+      switch (etape) {
+        case "besoin":
+          r.besoin = choix;
+          return CLIENTS_SEULEMENT.includes(choix) ? "client-court" : "format";
+        case "format":
+          if (choix === "aide") return "aide-chrono";
+          r.format = choix;
+          return apresFormat();
+        case "aide-chrono":
+          if (choix === "oui") {
+            r.format = "3d";
+            return apresFormat();
+          }
+          return "aide-route";
+        case "aide-route":
+          r.format = choix;
+          return apresFormat();
+        case "client":
+          r.client = choix;
+          if (choix === "oui") return `resultat-client-etude-${r.format}`;
+          return "velo";
+        case "velo":
+          r.velo = choix;
+          return apresVelo();
+        case "selle":
+          return `resultat-etude-2d-${r.velo}${choix === "avec" ? "-selle" : ""}`;
+        case "client-court":
+          if (choix === "non") return "refus";
+          if (r.besoin === "nouveau-velo") return "mise-en-position";
+          return `resultat-${RESULTAT_COURT[r.besoin]}`;
+        case "mise-en-position":
+          return `resultat-client-mise-en-position-${choix}`;
+        case "refus":
+          // Il vient de dire qu'il n'est pas client : on ne repose pas la question.
+          reponses = { besoin: "etude", client: "non" };
+          if (choix === "etude-studio") reponses.velo = "studio";
+          return "format";
+      }
+    }
+
+    /** Questions qui restent après l'écran `id`, d'après ce qu'on sait déjà. */
+    function restantes(id) {
+      const r = reponses;
+      const apresClient = () =>
+        r.client === "oui" ? 0 : (r.velo ? 0 : 1) + (r.format === "2d" ? 1 : 0);
+      switch (id) {
+        case "besoin":
+          return 3;
+        case "format":
+        case "aide-chrono":
+        case "aide-route":
+          return (r.client ? 0 : 1) + apresClient();
+        case "client":
+          return (r.velo ? 0 : 1) + (r.format === "2d" ? 1 : 0);
+        case "velo":
+          return r.format === "2d" ? 1 : 0;
+        case "client-court":
+          return r.besoin === "nouveau-velo" ? 1 : 0;
+        case "refus":
+          return 1 + (r.velo ? 0 : 1);
+        default:
+          return 0;
+      }
+    }
+
+    function afficher(id, sens = "avant") {
+      const cible = racine.querySelector(`[data-etape="${id}"]`);
+      if (!cible) return;
+      racine.querySelectorAll(".etape").forEach((e) => {
+        e.hidden = e !== cible;
+        e.classList.remove("etape-entree", "etape-retour", "resultat-entree");
+      });
+      const estResultat = cible.hasAttribute("data-resultat");
+      void cible.offsetWidth; // relance l'animation
+      cible.classList.add(estResultat ? "resultat-entree" : sens === "avant" ? "etape-entree" : "etape-retour");
+
+      const n = pile.length + 1;
+      const total = n + restantes(id);
+      const pourcent = estResultat ? 100 : Math.round((n / (total + 1)) * 100);
+      barre.style.width = Math.max(8, pourcent) + "%";
+      compteur.textContent = estResultat ? "Votre rendez-vous" : `Étape ${n} sur ${total}`;
+      boutonRetour.disabled = pile.length === 0;
+
+      if (estResultat) {
+        const recap = cible.querySelector("[data-recap]");
+        if (recap) recap.textContent = "Vos réponses : " + libelles.join(" · ");
+        // Le calendrier (script plus bas) vient se placer dans ce récapitulatif.
+        racine.dispatchEvent(
+          new CustomEvent("parcours:resultat", { detail: { section: cible, libelles: [...libelles] } }),
+        );
+      }
+      const titre = cible.querySelector(".etape-titre");
+      if (titre && sens !== "init") titre.focus({ preventScroll: true });
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function courant() {
+      return racine.querySelector(".etape:not([hidden])").dataset.etape;
+    }
+
+    function avancer(vers, choix, libelle) {
+      if (!racine.querySelector(`[data-etape="${vers}"]`)) {
+        console.error("[parcours] écran introuvable :", vers);
+        return;
+      }
+      const depuis = courant();
+      pile.push({ ecran: depuis, reponses: { ...reponses }, nbLibelles: libelles.length });
+      if (libelle) libelles.push(libelle);
+      mesurer(depuis, choix);
+      history.pushState({ parcours: pile.length }, "");
+      afficher(vers, "avant");
+    }
+
+    function reculer() {
+      const precedent = pile.pop();
+      if (!precedent) return;
+      reponses = precedent.reponses;
+      libelles.length = precedent.nbLibelles;
+      afficher(precedent.ecran, "retour");
+    }
+
+    racine.addEventListener("click", (e) => {
+      const bouton = e.target.closest("[data-choix]");
+      if (bouton) {
+        const etape = courant();
+        const choix = bouton.dataset.choix;
+        avancer(suivant(etape, choix), choix, bouton.dataset.libelle);
+        return;
+      }
+      const direct = e.target.closest("[data-aller-resultat]");
+      if (direct) {
+        avancer(`resultat-${direct.dataset.allerResultat}`, direct.dataset.allerResultat, "Moins de 15 ans");
+        return;
+      }
+      if (e.target.closest("[data-retour]")) {
+        history.back();
+        return;
+      }
+      if (e.target.closest("[data-recommencer]")) {
+        reponses = {};
+        pile = [];
+        libelles.length = 0;
+        history.replaceState(null, "");
+        afficher("besoin", "retour");
+      }
+    });
+
+    // Le bouton « précédent » du navigateur recule d'une question.
+    window.addEventListener("popstate", () => {
+      if (pile.length) reculer();
+    });
+
+    // Lien profond depuis le site : /reserver?besoin=etude démarre à l'étape 2.
+    const besoin = new URLSearchParams(location.search).get("besoin");
+    const carte = besoin && racine.querySelector(`[data-etape="besoin"] [data-choix="${CSS.escape(besoin)}"]`);
+    if (carte) {
+      avancer(suivant("besoin", besoin), besoin, carte.dataset.libelle);
+    } else {
+      afficher("besoin", "init");
+    }
+  })();
+</script>
+
+<script
+  is:inline
+  define:vars={{
+    calcom: CALCOM,
+    lieu: `${ENTREPRISE.nom}, ${ENTREPRISE.adresse.rue}, ${ENTREPRISE.adresse.codePostal} ${ENTREPRISE.adresse.ville}`,
+    telephone: { lien: ENTREPRISE.telephone, affiche: ENTREPRISE.telephoneAffiche },
+  }}
+>
+  (() => {
+    const racine = document.getElementById("parcours");
+    const cal = document.getElementById("calendrier");
+    const demo = !calcom.username;
+    const API = "https://api.cal.com/v2";
+    /** Jusqu'où on laisse réserver ; Romain peut le restreindre dans Cal.com. */
+    const MOIS_MAX = 6;
+
+    const el = (sel) => cal.querySelector(sel);
+    const etapes = {
+      creneau: el('[data-cal-etape="creneau"]'),
+      coordonnees: el('[data-cal-etape="coordonnees"]'),
+      confirmation: el('[data-cal-etape="confirmation"]'),
+    };
+    const zoneMois = el("[data-cal-mois]");
+    const titreMois = el("[data-cal-mois-titre]");
+    const titreJour = el("[data-cal-jour-titre]");
+    const zoneHeures = el("[data-cal-heures]");
+    const message = el("[data-cal-message]");
+    const form = etapes.coordonnees;
+    const erreur = el("[data-cal-erreur]");
+    el("[data-cal-demo]").hidden = !demo;
+
+    /**
+     * Prestation en cours ; créneaux de tous les mois déjà chargés
+     * ("AAAA-MM-JJ" → [{ start }]) ; mois affiché (1er du mois) ; choix.
+     */
+    let presta = null;
+    let creneaux = {};
+    let moisCharges = new Set();
+    let mois = null;
+    let jour = null;
+    let choisi = null;
+    /** Ignore les réponses d'un chargement dépassé (navigation rapide). */
+    let jeton = 0;
+
+    const fmtMois = new Intl.DateTimeFormat("fr-FR", { month: "long", year: "numeric" });
+    const fmtLong = new Intl.DateTimeFormat("fr-FR", { weekday: "long", day: "numeric", month: "long" });
+    const dateDe = (iso) => new Date(iso.slice(0, 10) + "T12:00:00");
+    const heureDe = (iso) => iso.slice(11, 16).replace(":", "h");
+    const resume = () =>
+      `${fmtLong.format(dateDe(choisi.start))} à ${heureDe(choisi.start)} · ${presta.titre}`;
+    const ymd = (d) =>
+      `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+    const debutMois = (d) => new Date(d.getFullYear(), d.getMonth(), 1);
+    const decaler = (d, n) => new Date(d.getFullYear(), d.getMonth() + n, 1);
+    /** Premier mois réservable : celui de demain (le 31, c'est déjà le suivant). */
+    const premierMois = () => {
+      const demain = new Date();
+      demain.setDate(demain.getDate() + 1);
+      return debutMois(demain);
+    };
+    const dernierMois = () => decaler(premierMois(), MOIS_MAX - 1);
+    const datesDuMois = (m) => Object.keys(creneaux).filter((d) => d.startsWith(ymd(m).slice(0, 7))).sort();
+
+    function mesurer(nom, params) {
+      if (window.google_tag_data && typeof window.gtag === "function") window.gtag("event", nom, params);
+    }
+
+    function montrer(nom) {
+      Object.entries(etapes).forEach(([cle, e]) => {
+        e.hidden = cle !== nom;
+      });
+      etapes[nom].classList.remove("cal-apparition");
+      void etapes[nom].offsetWidth;
+      etapes[nom].classList.add("cal-apparition");
+    }
+
+    /* ---------- Source des créneaux ---------- */
+
+    /**
+     * Démo : lun.–ven., 9h–19h, toutes les 30 min ; environ un créneau sur
+     * trois déjà pris, et quelques journées complètes.
+     */
+    function creneauxDemo(duree, debut, fin) {
+      const res = {};
+      const demain = new Date();
+      demain.setDate(demain.getDate() + 1);
+      const melange = (texte) => {
+        let h = 2166136261;
+        for (const c of texte) h = Math.imul(h ^ c.charCodeAt(0), 16777619) >>> 0;
+        return h >>> 8;
+      };
+      for (const d = new Date(debut); d <= fin; d.setDate(d.getDate() + 1)) {
+        if (d < demain || d.getDay() === 0 || d.getDay() === 6) continue;
+        const date = ymd(d);
+        if (melange(date) % 6 === 0) continue;
+        const liste = [];
+        for (let m = 9 * 60; m + duree <= 19 * 60; m += 30) {
+          const hh = String(Math.floor(m / 60)).padStart(2, "0");
+          const mm = String(m % 60).padStart(2, "0");
+          if (melange(date + hh + mm) % 3 !== 0) liste.push({ start: `${date}T${hh}:${mm}:00` });
+        }
+        if (liste.length) res[date] = liste;
+      }
+      return res;
+    }
+
+    async function chargerCreneaux(debut, fin) {
+      if (demo) return creneauxDemo(presta.duree, debut, fin);
+      const params = new URLSearchParams({
+        eventTypeSlug: presta.slug,
+        username: calcom.username,
+        start: ymd(debut),
+        end: ymd(fin),
+        timeZone: calcom.timeZone,
+      });
+      const r = await fetch(`${API}/slots?${params}`, { headers: { "cal-api-version": "2024-09-04" } });
+      if (!r.ok) throw new Error("slots " + r.status);
+      return (await r.json()).data || {};
+    }
+
+    /** Charge un mois entier, une seule fois. */
+    async function chargerMois(m) {
+      const cle = ymd(m).slice(0, 7);
+      if (moisCharges.has(cle)) return;
+      const fin = new Date(m.getFullYear(), m.getMonth() + 1, 0);
+      Object.assign(creneaux, await chargerCreneaux(new Date(m), fin));
+      moisCharges.add(cle);
+    }
+
+    async function reserver(donnees) {
+      if (demo) {
+        await new Promise((ok) => setTimeout(ok, 900));
+        return;
+      }
+      const r = await fetch(`${API}/bookings`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "cal-api-version": "2026-02-25" },
+        body: JSON.stringify({
+          start: new Date(choisi.start).toISOString(),
+          eventTypeSlug: presta.slug,
+          username: calcom.username,
+          attendee: {
+            name: donnees.nom,
+            email: donnees.email,
+            phoneNumber: telephoneInternational(donnees.telephone),
+            timeZone: calcom.timeZone,
+            language: "fr",
+          },
+          // Les réponses vont aussi dans la note : c'est elle que Romain voit
+          // dans son agenda et dans l'e-mail (les metadata restent invisibles).
+          bookingFieldsResponses: {
+            notes: [donnees.message?.trim(), `Parcours : ${presta.libelles.join(" · ")}`]
+              .filter(Boolean)
+              .join("\n\n"),
+          },
+          metadata: { reponses: presta.libelles.join(" · ").slice(0, 500), source: "id-postur.fr" },
+        }),
+      });
+      if (!r.ok) {
+        const detail = await r.json().catch(() => null);
+        const e = new Error(detail?.error?.message || "booking " + r.status);
+        e.status = r.status;
+        // Seul ce cas justifie de renvoyer le client au calendrier.
+        e.creneauPris = r.status === 409 || /not available|no longer available|already (has|booked)/i.test(e.message);
+        throw e;
+      }
+    }
+
+    /** 06 12 34 56 78 → +33612345678 (Cal.com exige le format international). */
+    function telephoneInternational(saisie) {
+      const chiffres = saisie.replace(/[^\d+]/g, "");
+      if (/^0\d{9}$/.test(chiffres)) return "+33" + chiffres.slice(1);
+      if (/^0033\d{9}$/.test(chiffres)) return "+" + chiffres.slice(2);
+      return chiffres;
+    }
+
+    /* ---------- Affichage ---------- */
+
+    function afficherMois() {
+      titreMois.textContent = fmtMois.format(mois);
+      cal.querySelector('[data-cal-mois-nav="-1"]').disabled = mois <= premierMois();
+      cal.querySelector('[data-cal-mois-nav="1"]').disabled = mois >= dernierMois();
+      const aujourdhui = ymd(new Date());
+      const cases = [];
+      // Grille du lundi au dimanche : cases vides avant le 1er du mois.
+      for (let i = 0; i < (mois.getDay() + 6) % 7; i++) cases.push(document.createElement("span"));
+      const nbJours = new Date(mois.getFullYear(), mois.getMonth() + 1, 0).getDate();
+      for (let n = 1; n <= nbJours; n++) {
+        const date = ymd(new Date(mois.getFullYear(), mois.getMonth(), n));
+        const dispo = creneaux[date]?.length || 0;
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "cal-jour";
+        b.dataset.jour = date;
+        b.textContent = n;
+        b.disabled = !dispo;
+        b.setAttribute("aria-pressed", String(date === jour));
+        b.setAttribute(
+          "aria-label",
+          `${fmtLong.format(dateDe(date))}${dispo ? ` · ${dispo} créneaux` : " · indisponible"}`,
+        );
+        if (date === aujourdhui) b.dataset.aujourdhui = "";
+        cases.push(b);
+      }
+      zoneMois.replaceChildren(...cases);
+    }
+
+    function afficherHeures() {
+      const liste = (jour && creneaux[jour]) || [];
+      titreJour.textContent = jour ? fmtLong.format(dateDe(jour)) : "";
+      zoneHeures.replaceChildren(
+        ...liste.map((c) => {
+          const b = document.createElement("button");
+          b.type = "button";
+          b.className = "cal-heure cal-apparition";
+          b.dataset.start = c.start;
+          b.textContent = heureDe(c.start);
+          return b;
+        }),
+      );
+      message.textContent = jour ? "" : "Aucune disponibilité ce mois-ci : essayez le mois suivant.";
+    }
+
+    function enPanne() {
+      // Cal.com injoignable : on retombe sur Calendly s'il existe, sinon le téléphone.
+      message.innerHTML = presta.calendly
+        ? `Le calendrier ne répond pas. <a class="underline font-semibold text-id-postur-dark" target="_blank" rel="nofollow noopener" href="${presta.calendly}">Réserver sur Calendly</a>`
+        : "Le calendrier ne répond pas. Appelez-nous pour réserver.";
+    }
+
+    /** Affiche le mois `m` ; sélectionne son premier jour libre si besoin. */
+    async function allerAuMois(m) {
+      const moi = ++jeton;
+      mois = m;
+      titreMois.textContent = fmtMois.format(mois);
+      zoneMois.style.opacity = "0.4";
+      try {
+        await chargerMois(mois);
+      } catch {
+        if (moi === jeton) enPanne();
+        return;
+      } finally {
+        if (moi === jeton) zoneMois.style.opacity = "";
+      }
+      if (moi !== jeton) return;
+      if (!jour || !jour.startsWith(ymd(mois).slice(0, 7)) || !creneaux[jour]) jour = datesDuMois(mois)[0] || null;
+      afficherMois();
+      afficherHeures();
+    }
+
+    async function ouvrir(section, libelles) {
+      const slot = section.querySelector("[data-slot-calendrier]");
+      if (!slot) return;
+      presta = {
+        slug: slot.dataset.slug,
+        duree: Number(slot.dataset.duree),
+        titre: slot.dataset.titre,
+        calendly: slot.dataset.calendly,
+        libelles,
+      };
+      slot.appendChild(cal);
+      cal.hidden = false;
+      creneaux = {};
+      moisCharges = new Set();
+      jour = null;
+      choisi = null;
+      form.reset();
+      erreur.textContent = "";
+      montrer("creneau");
+      zoneHeures.replaceChildren();
+      titreJour.textContent = "";
+      message.textContent = "Chargement des disponibilités…";
+      // On ouvre directement sur le premier mois qui a de la place.
+      let depart = premierMois();
+      try {
+        for (let k = 0; k < MOIS_MAX; k++) {
+          const m = decaler(premierMois(), k);
+          await chargerMois(m);
+          if (datesDuMois(m).length) {
+            depart = m;
+            break;
+          }
+        }
+      } catch {
+        enPanne();
+        return;
+      }
+      if (!Object.keys(creneaux).length) {
+        mois = depart;
+        afficherMois();
+        message.textContent = "Aucun créneau disponible pour le moment. Appelez-nous, on trouve une solution.";
+        return;
+      }
+      await allerAuMois(depart);
+    }
+
+    /* ---------- Interactions ---------- */
+
+    racine.addEventListener("parcours:resultat", (e) => ouvrir(e.detail.section, e.detail.libelles));
+
+    cal.addEventListener("click", (e) => {
+      const nav = e.target.closest("[data-cal-mois-nav]");
+      if (nav) {
+        allerAuMois(decaler(mois, Number(nav.dataset.calMoisNav)));
+        return;
+      }
+      const j = e.target.closest(".cal-jour");
+      if (j) {
+        jour = j.dataset.jour;
+        afficherMois();
+        afficherHeures();
+        // Sur mobile, les horaires sont sous le mois : on les fait apparaître.
+        if (window.innerWidth < 768) zoneHeures.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        return;
+      }
+      const h = e.target.closest(".cal-heure");
+      if (h) {
+        choisi = { start: h.dataset.start };
+        el("[data-cal-resume]").textContent = resume();
+        montrer("coordonnees");
+        form.querySelector("input").focus({ preventScroll: true });
+        mesurer("parcours_reservation", { etape: "creneau", choix: presta.slug });
+        return;
+      }
+      if (e.target.closest("[data-cal-changer]")) {
+        montrer("creneau");
+        return;
+      }
+      if (e.target.closest("[data-cal-ics]")) telechargerIcs();
+    });
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      erreur.textContent = "";
+      let valide = true;
+      for (const champ of form.querySelectorAll("[required]")) {
+        const ok = champ.checkValidity() && champ.value.trim() !== "";
+        champ.setAttribute("aria-invalid", String(!ok));
+        if (!ok && valide) champ.focus();
+        valide = valide && ok;
+      }
+      if (!valide) {
+        erreur.textContent = "Merci de compléter votre nom, votre téléphone et un e-mail valide.";
+        return;
+      }
+      const donnees = Object.fromEntries(new FormData(form));
+      const bouton = form.querySelector('[type="submit"]');
+      bouton.disabled = true;
+      bouton.textContent = "Réservation en cours…";
+      try {
+        await reserver(donnees);
+        el("[data-cal-resume-final]").textContent = resume();
+        el("[data-cal-email-info]").textContent = demo
+          ? "Démo : aucun e-mail n'a été envoyé."
+          : `Un e-mail de confirmation vient de partir à ${donnees.email}.`;
+        montrer("confirmation");
+        el("[data-cal-titre-confirmation]").focus({ preventScroll: true });
+        const compteur = racine.querySelector("[data-compteur]");
+        if (compteur) compteur.textContent = "Rendez-vous confirmé";
+        mesurer("rdv_confirme", { prestation: presta.slug, mode: demo ? "demo" : "calcom" });
+      } catch (err) {
+        console.error("[réservation]", err.message);
+        if (err.creneauPris) {
+          // Créneau pris entre-temps : retour au calendrier rechargé, avec
+          // le message affiché LÀ (celui du formulaire serait masqué).
+          creneaux = {};
+          moisCharges = new Set();
+          montrer("creneau");
+          await allerAuMois(mois);
+          message.textContent = "Ce créneau vient d'être pris. Choisissez-en un autre.";
+        } else {
+          erreur.innerHTML = `La réservation n'a pas abouti. Réessayez dans un instant, ou appelez-nous au <a class="underline" href="tel:${telephone.lien}">${telephone.affiche}</a>.`;
+        }
+      } finally {
+        bouton.disabled = false;
+        bouton.textContent = "Confirmer mon rendez-vous";
+      }
+    });
+
+    /** Fichier .ics pour ajouter le rendez-vous à l'agenda du client. */
+    function telechargerIcs() {
+      const debut = choisi.start.slice(0, 16).replace(/[-:]/g, "") + "00";
+      const d = new Date(choisi.start.slice(0, 19));
+      d.setMinutes(d.getMinutes() + presta.duree);
+      const fin =
+        ymd(d).replace(/-/g, "") +
+        "T" +
+        String(d.getHours()).padStart(2, "0") +
+        String(d.getMinutes()).padStart(2, "0") +
+        "00";
+      const ics = [
+        "BEGIN:VCALENDAR",
+        "VERSION:2.0",
+        "PRODID:-//ID Postur//Reservation//FR",
+        "BEGIN:VEVENT",
+        `UID:${debut}-${presta.slug}@id-postur.fr`,
+        `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, "").slice(0, 15)}Z`,
+        `DTSTART;TZID=${calcom.timeZone}:${debut}`,
+        `DTEND;TZID=${calcom.timeZone}:${fin}`,
+        `SUMMARY:ID Postur · ${presta.titre}`,
+        `LOCATION:${lieu.replace(/,/g, "\\,")}`,
+        "END:VEVENT",
+        "END:VCALENDAR",
+      ].join("\r\n");
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(new Blob([ics], { type: "text/calendar" }));
+      a.download = "rendez-vous-id-postur.ics";
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    }
+  })();
+</script>

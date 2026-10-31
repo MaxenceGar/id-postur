@@ -30,16 +30,48 @@ import { ETUDES_DEJA_CLIENT } from "../../data/tarifs";
         sans limite de temps depuis votre première étude.
       </p>
 
-      <div
-        class="border-l-4 border-id-postur-dark bg-gray-50 p-4 mb-12 max-w-2xl"
-      >
-        <p class="text-sm text-gray-800">
-          <strong>Réservé aux cyclistes déjà venus chez ID Postur.</strong> Si vous
-          n'avez jamais réalisé d'étude posturale ici, réservez plutôt une
+      <!--
+        Garde-fou : des cyclistes qui venaient pour la première fois
+        réservaient ce créneau au tarif réduit. Les boutons de réservation
+        restent masqués tant que la case n'est pas cochée (CSS seul,
+        cf. .cta-verrouille dans global.css).
+      -->
+      <div class="border-2 border-id-postur-dark bg-white p-6 mb-12 max-w-2xl">
+        <h2 class="text-lg font-semibold text-gray-900 mb-3">
+          Avant de réserver, vérifions votre situation
+        </h2>
+        <p class="text-sm text-gray-700 mb-3">
+          Le tarif réduit est réservé aux cyclistes qui ont déjà réalisé une
+          <strong>étude posturale complète (3D ou 2D) chez ID Postur</strong>, à
+          La Mézière.
+        </p>
+        <p class="text-sm text-gray-700 mb-5">
+          <strong>Ne compte pas :</strong> une étude posturale faite ailleurs, un
+          réglage de cales, un conseil avant l'achat d'un vélo ou un rendez-vous
+          court.
+        </p>
+
+        <label
+          for="confirmation-deja-client"
+          class="flex items-start gap-3 cursor-pointer bg-gray-50 border border-gray-200 p-4 has-[:checked]:border-id-postur-dark has-[:checked]:bg-id-postur/5"
+        >
+          <input
+            type="checkbox"
+            id="confirmation-deja-client"
+            class="mt-0.5 size-5 shrink-0 accent-[#C00201]"
+          />
+          <span class="text-sm font-semibold text-gray-900">
+            Je confirme avoir déjà réalisé une étude posturale complète chez ID
+            Postur.
+          </span>
+        </label>
+
+        <p class="text-sm text-gray-700 mt-5">
+          Ce n'est pas votre cas ?
           <a
             href="/reserver/premiere-etude"
             class="text-id-postur-dark font-semibold underline hover:opacity-80"
-            >première étude posturale</a
+            >Réservez une première étude posturale</a
           > : le protocole et la durée ne sont pas les mêmes.
         </p>
       </div>
@@ -47,7 +79,11 @@ import { ETUDES_DEJA_CLIENT } from "../../data/tarifs";
       <div class="grid gap-8 md:grid-cols-2">
         {
           ETUDES_DEJA_CLIENT.map((prestation, index) => (
-            <Formulecomponent prestation={prestation} highlight={index === 0} />
+            <Formulecomponent
+              prestation={prestation}
+              highlight={index === 0}
+              verrouille
+            />
           ))
         }
       </div>

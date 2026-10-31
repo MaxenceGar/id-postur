@@ -80,7 +80,7 @@ import { AVIS_GOOGLE, ENTREPRISE, FICHE_GOOGLE } from "../data/entreprise";
       </a>
 
       <div class="mb-3">
-        <a href="#formules" rel="nofollow">
+        <a href="/reserver">
           <p
             class="btn-fleche px-6 py-3 bg-id-postur-dark text-white text-center transition duration-200 motion-safe:active:scale-[0.98]"
           >
@@ -90,16 +90,31 @@ import { AVIS_GOOGLE, ENTREPRISE, FICHE_GOOGLE } from "../data/entreprise";
       </div>
     </div>
 
-    <!-- Image -->
-    <div class="relative h-full w-full animate-fade-in-right">
+    <!-- Vidéo : muette, en boucle, sans contrôles. Avec « réduire les
+         animations » activé, l'image fixe la remplace (cf. .hero-media). -->
+    <div class="hero-media relative h-full w-full animate-fade-in-right">
+      <video
+        class="w-full h-auto aspect-video object-cover"
+        width="1280"
+        height="720"
+        poster="/images/hero-etude-posturale-poster.webp"
+        autoplay
+        muted
+        loop
+        playsinline
+        disablepictureinpicture
+        preload="auto"
+        aria-label="Séance d'étude posturale chez ID Postur : examen sur table, réglage du vélo et analyse du pédalage par capture de mouvement"
+      >
+        <source src="/videos/hero-etude-posturale.mp4" type="video/mp4" />
+      </video>
       <img
-        src="/images/id-postur-interieur.webp"
-        alt="Studio d'analyse posturale ID Postur : home-trainer, table et mur de selles"
-        width="1536"
-        height="1024"
-        class="object-cover"
-        loading="eager"
-        fetchpriority="high"
+        class="hero-media-fixe w-full h-auto aspect-video object-cover"
+        src="/images/hero-etude-posturale-poster.webp"
+        alt="Romain Hardy examine une cycliste allongée sur la table, dans le studio ID Postur"
+        width="1280"
+        height="720"
+        loading="lazy"
       />
     </div>
   </div>

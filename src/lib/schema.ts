@@ -73,7 +73,7 @@ export const noeudEntreprise = (): NoeudSchema => ({
   },
   image: [
     absolu(ENTREPRISE.image),
-    absolu("/images/id-postur-img-1.webp"),
+    absolu("/images/etude-posturale-3d-capture.webp"),
     absolu("/images/id-postur-interieur.webp"),
   ],
   telephone: ENTREPRISE.telephone,

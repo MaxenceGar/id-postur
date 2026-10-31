@@ -35,7 +35,7 @@ const services = [
       "Rendez-vous court à Rennes pour un micro-réglage, une vérification rapide ou un conseil technique sur votre vélo.",
     page: "/rendez-vous-divers",
     prestations: [rdv],
-    image: `${SITE_URL}/images/id-postur-interieur-og.jpg`,
+    image: `${SITE_URL}/images/rendez-vous-ajustement-selle.webp`,
   }),
 ];
 ---
@@ -43,13 +43,13 @@ const services = [
 <BaseLayout
   title="Rendez-vous vélo à Rennes – Révision et micro-réglage | ID Postur"
   description={`Besoin d'une vérification rapide, d'un micro-réglage ou d'un conseil technique sur votre vélo ? ID Postur propose à Rennes un rendez-vous de ${rdv.duration} à ${formatPrix(rdv.price)}.`}
-  ogImage="/images/id-postur-interieur-og.jpg"
+  ogImage="/images/rendez-vous-ajustement-selle.webp"
   faq={faqItems}
   schema={services}
 >
 
   <div
-    class="w-full h-96 relative bg-[url('/images/id-postur-interieur.webp')] bg-cover bg-center flex items-center justify-center bg-black/50 bg-blend-overlay"
+    class="w-full h-96 relative bg-[url('/images/rendez-vous-ajustement-selle.webp')] bg-cover bg-center flex items-center justify-center bg-black/50 bg-blend-overlay"
   >
     <div class="grid grid-cols-1 text-white px-4">
       <h1 class="text-3xl md:text-4xl font-bold text-center">

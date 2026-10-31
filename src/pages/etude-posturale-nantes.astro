@@ -61,7 +61,7 @@ const services = [
       "Étude posturale pour cyclistes nantais avec la technologie de capture de mouvement STT, à 1h15 de Nantes. Analyse 3D ou 2D, réglages précis du vélo et optimisation de la position.",
     page: "/etude-posturale-nantes",
     prestations: [...ETUDES_POSTURALES],
-    image: `${SITE_URL}/images/id-postur-img-1.webp`,
+    image: `${SITE_URL}/images/etude-posturale-reglage-genou.webp`,
   }),
 ];
 ---
@@ -69,7 +69,7 @@ const services = [
 <BaseLayout
   title="Étude posturale à Nantes | Bike fitting 3D — ID Postur"
   description={`Étude posturale cycliste à Nantes : capture de mouvement 3D STT par Romain Hardy, ex-cycliste pro. ${AVIS_GOOGLE.nombre} avis 5/5 Google. Route, VTT, gravel, chrono. 3D ${formatPrix(troisD.price)} ou 2D ${formatPrix(deuxD.price)}.`}
-  ogImage="/images/id-postur-img-1.webp"
+  ogImage="/images/etude-posturale-reglage-genou.webp"
   faq={faqItems}
   schema={services}
   datePublished={datePublished}
@@ -77,7 +77,7 @@ const services = [
 >
   <!-- HERO -->
   <div
-    class="w-full h-96 relative bg-[url('/images/id-postur-img-1.webp')] bg-cover bg-center flex items-center justify-center bg-black/50 bg-blend-overlay"
+    class="w-full h-96 relative bg-[url('/images/etude-posturale-reglage-genou.webp')] bg-cover bg-center flex items-center justify-center bg-black/50 bg-blend-overlay"
   >
     <div class="grid grid-cols-1 text-white px-4 max-w-5xl mx-auto">
       <h1 class="text-3xl md:text-5xl font-bold text-center">
@@ -506,8 +506,10 @@ const services = [
     <div class="container mx-auto px-5 max-w-4xl">
       <div class="flex flex-col md:flex-row items-center gap-8">
         <img
-          src="/images/romain-hardy.jpg"
-          alt="Romain Hardy, ex-cycliste professionnel et fondateur d'ID Postur"
+          src="/images/romain-hardy-studio.webp"
+          width="640"
+          height="640"
+          alt="Romain Hardy, ex-cycliste professionnel et fondateur d'ID Postur, dans son studio"
           class="w-40 h-40 object-cover rounded-full shrink-0 shadow-md"
           loading="lazy"
         />

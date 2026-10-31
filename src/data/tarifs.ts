@@ -368,7 +368,7 @@ export const FORMATS_ETUDE: FormatEtude[] = [
       "L'analyse couvre les trois plans du mouvement : elle révèle aussi les asymétries gauche/droite et les désalignements latéraux — genoux, bassin — invisibles sur une vue 2D. C'est aussi le seul format ouvert aux vélos de chrono et de triathlon : ces positions très spécifiques ne peuvent pas être analysées en 2D.",
       "Le rendez-vous se fait sur votre propre vélo, avec votre tenue complète, vos chaussures et vos cales. Seule contrainte : évitez les vêtements réfléchissants, qui perturbent la captation des marqueurs.",
     ],
-    image: "/images/id-postur-img-1.webp",
+    image: "/images/etude-posturale-3d-capture.webp",
     imageAlt:
       "Analyse posturale 3D d'un cycliste sur son vélo chez ID Postur à Rennes",
     imageADroite: true,
@@ -382,7 +382,7 @@ export const FORMATS_ETUDE: FormatEtude[] = [
       "L'étude posturale 2D est un format plus court, sur une séance d'1h30. Elle s'appuie sur la technologie d'analyse vidéo STT 2DMA : une captation haute résolution de votre pédalage en vue latérale, avec plus de 50 mesures automatiques de bike fitting et des références par discipline. Elle s'adresse aux cyclistes route, VTT et gravel, et se déroule elle aussi sur votre propre vélo.",
       "Les prérequis sont identiques : votre vélo, votre tenue complète, vos chaussures et vos cales, sans contrainte sur les vêtements réfléchissants. En revanche, les vélos de chrono et de triathlon ne peuvent pas être pris en charge dans ce format : leur position demande l'analyse 3D.",
     ],
-    image: "/images/id-postur-img-2.webp",
+    image: "/images/etude-posturale-2d-analyse-video.webp",
     imageAlt:
       "Étude posturale 2D d'un cycliste chez ID Postur près de Rennes",
     imageADroite: false,

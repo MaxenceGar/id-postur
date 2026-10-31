@@ -26,7 +26,7 @@ const actif = GA4_ID !== "";
       aria-labelledby="bandeau-cookies-titre"
       aria-describedby="bandeau-cookies-texte"
       hidden
-      class="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-xl border border-[#ECE9E3] bg-white p-5 shadow-lg md:left-6 md:right-auto md:mx-0"
+      class="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-xl border border-[#e4e4e4] bg-white p-5 shadow-lg md:left-6 md:right-auto md:mx-0"
     >
       <p id="bandeau-cookies-titre" class="font-id-postur font-semibold text-gray-900 mb-1">
         Mesure d'audience
@@ -126,9 +126,13 @@ const actif = GA4_ID !== "";
         });
       }
 
+      // La mesure ne tourne que sur le vrai site : ni prod.id-postur.fr (démo client),
+      // ni les aperçus Vercel, ni localhost ne viennent fausser les statistiques.
+      const surLeVraiSite = location.hostname === "id-postur.fr";
+
       const choix = lireChoix();
-      if (choix === "accepte") activerMesure();
-      else if (choix === null) bandeau.hidden = false;
+      if (choix === "accepte" && surLeVraiSite) activerMesure();
+      else if (choix === null && surLeVraiSite) bandeau.hidden = false;
 
       document.addEventListener("click", (e) => {
         const bouton = e.target.closest("[data-consentement]");
@@ -136,7 +140,7 @@ const actif = GA4_ID !== "";
           const valeur = bouton.dataset.consentement;
           enregistrerChoix(valeur);
           bandeau.hidden = true;
-          if (valeur === "accepte") activerMesure();
+          if (valeur === "accepte" && surLeVraiSite) activerMesure();
           else if (mesureActive) {
             effacerCookiesGa();
             location.reload();

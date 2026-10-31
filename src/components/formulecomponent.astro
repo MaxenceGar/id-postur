@@ -14,6 +14,11 @@ export interface Props {
   /** Destination du bouton, si différente du lien Calendly de la prestation. */
   ctaHref?: string;
   ctaLabel?: string;
+  /**
+   * Verrouille le bouton tant qu'une case de confirmation de la page n'est
+   * pas cochée (CSS seul, voir `.cta-verrouille` dans global.css).
+   */
+  verrouille?: boolean;
 }
 
 const {
@@ -22,6 +27,7 @@ const {
   cta = true,
   ctaHref,
   ctaLabel = "Prendre rendez-vous",
+  verrouille = false,
 } = Astro.props;
 const {
   baseline,
@@ -80,7 +86,12 @@ const externe = href.startsWith("http");
     }
     {
       cta && (
-        <div class="mt-auto">
+        <div class:list={["mt-auto", verrouille && "cta-verrouille"]}>
+          {verrouille && (
+            <p class="cta-attente text-sm text-center text-gray-500 border border-dashed border-gray-300 px-4 py-2.5">
+              Confirmez d'abord votre situation ci-dessus
+            </p>
+          )}
           <a
             href={href}
             rel={externe ? "nofollow noopener" : undefined}

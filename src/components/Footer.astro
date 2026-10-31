@@ -1,6 +1,14 @@
 ---
-import { ENTREPRISE, RESEAUX } from "../data/entreprise";
+import {
+  AVIS_GOOGLE,
+  ENTREPRISE,
+  FICHE_GOOGLE,
+  FONDATEUR,
+  RESEAUX,
+} from "../data/entreprise";
 import { GA4_ID } from "../data/analytics";
+import instagramSvg from "../../public/icon/instagram.svg?raw";
+import facebookSvg from "../../public/icon/facebook.svg?raw";
 
 /**
  * Le footer porte le NAP (Name / Address / Phone) affiché sur toutes les
@@ -9,84 +17,155 @@ import { GA4_ID } from "../data/analytics";
  * local, et une adresse écrite différemment ici brouillerait le signal.
  */
 const [instagram, facebook] = RESEAUX;
+
+const prestations = [
+  { href: "/etudes-posturales", label: "Études posturales" },
+  { href: "/etude-posturale-3d-ou-2d", label: "Étude 3D ou 2D\u00a0?" },
+  { href: "/cales", label: "Réglage des cales" },
+  { href: "/choix-nouveau-velo", label: "Choix d'un nouveau vélo" },
+  { href: "/rendez-vous-divers", label: "Rendez-vous divers" },
+  { href: "/etude-posturale-nantes", label: "Étude posturale près de Nantes" },
+];
+
+/** Sur les pages de réservation, l'appel « Prendre rendez-vous » tournerait en rond. */
+const afficherAppel = !Astro.url.pathname.startsWith("/reserver");
+
+const lien = "text-gray-400 hover:text-white transition-colors";
+const titre = "text-xs font-semibold uppercase tracking-[0.14em] text-white mb-5";
 ---
 
-<footer class="bg-[#FCFAF8] mt-20 border-t border-[#ECE9E3]">
-  <div
-    class="w-full py-8 px-8 m:py-16 md:px-16 mx-auto grid grid-cols-1 md:grid-cols-3"
-  >
-    <div class="justify-center">
-      <h4 class="font-extrabold text-2xl pb-2">Adresse :</h4>
-      <p>{ENTREPRISE.adresse.rue} <br /> {ENTREPRISE.adresse.codePostal} {ENTREPRISE.adresse.ville}</p>
-      <a href={`mailto:${ENTREPRISE.email}`}
-        ><p>Mail : {ENTREPRISE.email}</p></a
-      >
-      <a href={`tel:${ENTREPRISE.telephone}`}
-        ><p class="pb-4">Tel : {ENTREPRISE.telephoneAffiche}</p></a
-      >
-      <h4 class="font-extrabold text-2xl pb-2">Horaires :</h4>
-      <p>Du lundi au vendredi</p>
-      <p class="pb-2">De 9h à 19h00</p>
-      <p class="md:block hidden">
-        © {new Date().getFullYear()} ID Postur — Tous droits réservés.
-      </p>
+<footer class="bg-[#141414] text-gray-400">
+  <!-- Appel à l'action -->
+  {afficherAppel && (
+  <div class="border-b border-white/10">
+    <div
+      class="container mx-auto px-5 py-12 md:py-16 flex flex-col md:flex-row md:items-center md:justify-between gap-8"
+    >
+      <div class="max-w-xl">
+        <p class="text-3xl md:text-4xl font-bold text-white leading-tight">
+          Prêt à trouver votre position idéale&nbsp;?
+        </p>
+        <p class="mt-3 text-gray-400">
+          Quelques questions et vous saurez exactement quoi réserver.
+        </p>
+      </div>
+      <div class="flex flex-col sm:flex-row sm:items-center gap-4 shrink-0">
+        <a
+          href="/reserver"
+          class="btn-fleche inline-flex justify-center items-center px-7 py-3.5 bg-id-postur-dark text-white font-semibold hover:bg-id-postur transition-colors"
+        >
+          Prendre rendez-vous
+        </a>
+        <a href={`tel:${ENTREPRISE.telephone}`} class={`${lien} text-sm text-center`}>
+          ou appelez le <span class="font-semibold text-white">{ENTREPRISE.telephoneAffiche}</span>
+        </a>
+      </div>
     </div>
+  </div>
+  )}
+
+  <!-- Colonnes -->
+  <div
+    class="container mx-auto px-5 py-14 grid gap-12 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_0.8fr]"
+  >
     <div>
       <img
         src={ENTREPRISE.logo}
-        alt="Logo ID Postur"
-        class="hidden md:block md:w-48 md:mx-auto md:items-center"
+        alt="ID Postur"
+        width="1335"
+        height="622"
+        class="w-36 h-auto brightness-0 invert"
         loading="lazy"
       />
+      <p class="mt-5 text-sm leading-relaxed max-w-xs">
+        Étude posturale et bike fitting près de Rennes, par {FONDATEUR.nom},
+        ex-cycliste professionnel.
+      </p>
+      <a
+        href={FICHE_GOOGLE}
+        target="_blank"
+        rel="noopener"
+        class="mt-5 inline-flex items-center gap-2 text-sm group"
+        aria-label={`${AVIS_GOOGLE.nombre} avis Google, note 5 sur 5`}
+      >
+        <span class="text-amber-400 tracking-tighter" aria-hidden="true">★★★★★</span>
+        <span class="text-white font-semibold">5,0</span>
+        <span class="group-hover:text-white transition-colors">· {AVIS_GOOGLE.nombre} avis Google</span>
+      </a>
+      <div class="mt-6 flex gap-3">
+        <a
+          href={instagram}
+          target="_blank"
+          rel="noopener"
+          aria-label="ID Postur sur Instagram"
+          class="grid place-items-center w-10 h-10 border border-white/15 text-gray-300 hover:text-white hover:border-white/40 transition-colors [&_svg]:w-4 [&_svg]:h-4"
+          set:html={instagramSvg}
+        />
+        <a
+          href={facebook}
+          target="_blank"
+          rel="noopener"
+          aria-label="ID Postur sur Facebook"
+          class="grid place-items-center w-10 h-10 border border-white/15 text-gray-300 hover:text-white hover:border-white/40 transition-colors [&_svg]:w-4 [&_svg]:h-4"
+          set:html={facebookSvg}
+        />
+      </div>
     </div>
-    <div class="text-left md:text-right">
-      <h4 class="font-extrabold text-2xl pb-2">Liens :</h4>
-      <div class="grid grid-cols-1">
-        <a href="/etudes-posturales">Études posturales</a>
-        <a href="/etude-posturale-3d-ou-2d">Étude 3D ou 2D ?</a>
-        <a href="/cales">Réglage des cales</a>
-        <a href="/choix-nouveau-velo">Choix d'un nouveau vélo</a>
-        <a href="/rendez-vous-divers">Rendez-vous divers</a>
-        <a href="/mentions-legales">Mentions légales</a>
+
+    <nav aria-label="Prestations">
+      <p class={titre}>Prestations</p>
+      <ul class="space-y-3 text-sm">
+        {prestations.map((p) => (
+          <li><a href={p.href} class={lien}>{p.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <div>
+      <p class={titre}>Le studio</p>
+      <address class="not-italic space-y-3 text-sm">
+        <a href={FICHE_GOOGLE} target="_blank" rel="noopener" class={`${lien} block`}>
+          {ENTREPRISE.adresse.rue}<br />
+          {ENTREPRISE.adresse.codePostal} {ENTREPRISE.adresse.ville}
+        </a>
+        <p>{ENTREPRISE.horaires.affiches}</p>
+        <a href={`tel:${ENTREPRISE.telephone}`} class={`${lien} block`}>
+          {ENTREPRISE.telephoneAffiche}
+        </a>
+        <a href={`mailto:${ENTREPRISE.email}`} class={`${lien} block`}>
+          {ENTREPRISE.email}
+        </a>
+      </address>
+    </div>
+
+    <nav aria-label="Informations">
+      <p class={titre}>Infos</p>
+      <ul class="space-y-3 text-sm">
+        <li><a href="/reserver" class={lien}>Prendre rendez-vous</a></li>
+        <li><a href="/id-postur-carte-cadeau.pdf" class={lien}>Carte cadeau</a></li>
+        <li><a href="/mentions-legales" class={lien}>Mentions légales</a></li>
         {
           GA4_ID && (
-            <button
-              type="button"
-              data-gerer-cookies
-              class="cursor-pointer text-left md:text-right"
-            >
-              Gérer les cookies
-            </button>
+            <li>
+              <button type="button" data-gerer-cookies class={`${lien} cursor-pointer`}>
+                Gérer les cookies
+              </button>
+            </li>
           )
         }
-      </div>
-      <h4 class="font-extrabold text-2xl pb-2">Réseaux Sociaux :</h4>
-      <div class="flex gap-6 md:justify-end">
-        <a href={instagram}>
-          <img
-            src="/icon/instagram.svg"
-            alt="Logo Instagram"
-            width="30px"
-            height="30px"
-          />
-        </a>
-        <a href={facebook}>
-          <img
-            src="/icon/facebook.svg"
-            alt="Logo Facebook"
-            width="30px"
-            height="30px"
-          />
-        </a>
-      </div>
-    </div>
-    <p class="block md:hidden py-4">
-      © {new Date().getFullYear()} ID Postur — Tous droits réservés.
-    </p>
+      </ul>
+    </nav>
   </div>
-  <a href="https://www.maxence-garandel.fr/">
-    <div class="bg-[#041E18] text-white py-2 px-16">
-      Site réalisé par maxence-garandel.fr
+
+  <!-- Barre du bas -->
+  <div class="border-t border-white/10">
+    <div
+      class="container mx-auto px-5 py-6 flex flex-col sm:flex-row sm:justify-between gap-2 text-xs text-gray-500"
+    >
+      <p>© {new Date().getFullYear()} {ENTREPRISE.nom}. Tous droits réservés.</p>
+      <a href="https://www.maxence-garandel.fr/" class="hover:text-white transition-colors">
+        Site réalisé par maxence-garandel.fr
+      </a>
     </div>
-  </a>
+  </div>
 </footer>
