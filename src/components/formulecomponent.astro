@@ -50,12 +50,12 @@ const externe = href.startsWith("http");
   class:list={[
     "relative flex flex-col h-full bg-white shadow-sm transition-all duration-200 hover:shadow-lg motion-safe:hover:-translate-y-1",
     highlight
-      ? "border-2 border-id-postur-dark"
-      : "border border-gray-200 hover:border-id-postur-dark/40",
+      ? "border border-gray-900"
+      : "border border-gray-200 hover:border-gray-400",
   ]}
 >
   <div
-    class="absolute -top-3 left-4 inline-flex items-center bg-[#C00201] px-3 py-1 text-xs font-semibold text-white shadow"
+    class="absolute -top-3 left-4 inline-flex items-center bg-gray-900 px-3 py-1 text-xs font-semibold text-white"
   >
     {baseline}
   </div>
@@ -81,7 +81,7 @@ const externe = href.startsWith("http");
     </ul>
     {
       note && (
-        <p class="text-sm text-id-postur-dark font-medium mb-4">{note}</p>
+        <p class="text-sm text-gray-900 font-medium mb-4">{note}</p>
       )
     }
     {
@@ -96,7 +96,7 @@ const externe = href.startsWith("http");
             href={href}
             rel={externe ? "nofollow noopener" : undefined}
             target={externe ? "_blank" : undefined}
-            class="cursor-pointer w-full inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-[#C00201] border border-[#C00201] bg-white hover:bg-[#C00201]/5 transition duration-200 motion-safe:active:scale-[0.98]"
+            class="cursor-pointer w-full inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-gray-900 border border-gray-900 bg-white hover:bg-gray-50 transition duration-200 motion-safe:active:scale-[0.98]"
           >
             {ctaLabel}
           </a>

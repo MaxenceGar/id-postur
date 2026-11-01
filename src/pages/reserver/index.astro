@@ -156,7 +156,7 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
   description="Quelques questions pour trouver la prestation ID Postur qui vous correspond, au bon tarif, et réserver votre créneau."
   noindex={true}
 >
-  <section class="bg-[#f4f4f4] min-h-[80vh] py-10 md:py-16">
+  <section class="bg-[#f5f5f6] min-h-[80vh] py-10 md:py-16">
     <div class="container mx-auto px-5 max-w-3xl" id="parcours">
       <!-- Progression -->
       <div class="mb-8">
@@ -178,8 +178,8 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
 
       <!-- Étape 1 : besoin -->
       <section class="etape" data-etape="besoin">
-        <p class="text-sm font-semibold uppercase tracking-wider text-id-postur-dark mb-2">Prendre rendez-vous</p>
-        <h1 class="etape-titre text-3xl md:text-4xl font-bold text-gray-900 mb-3" tabindex="-1">
+        <p class="text-sm font-semibold uppercase tracking-wider text-gray-500 mb-2">Prendre rendez-vous</p>
+        <h1 class="etape-titre text-2xl md:text-3xl font-semibold text-gray-900 mb-3" tabindex="-1">
           Que souhaitez-vous faire ?
         </h1>
         <p class="text-gray-600 mb-8">
@@ -211,7 +211,7 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
       {
         ETAPES.map((etape) => (
           <section class="etape" data-etape={etape.id} hidden>
-            <h2 class="etape-titre text-3xl md:text-4xl font-bold text-gray-900 mb-3" tabindex="-1">
+            <h2 class="etape-titre text-2xl md:text-3xl font-semibold text-gray-900 mb-3" tabindex="-1">
               {etape.question}
             </h2>
             {etape.aide && <p class="text-gray-600 mb-8 max-w-2xl">{etape.aide}</p>}
@@ -225,7 +225,7 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
                   data-libelle={c.titre}
                 >
                   {c.badge ? (
-                    <span class="choix-icone font-extrabold text-lg">{c.badge}</span>
+                    <span class="choix-icone font-bold text-lg">{c.badge}</span>
                   ) : (
                     c.icone && (
                       <span class="choix-icone">
@@ -243,7 +243,7 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
             {etape.id === "format" && (
               <p class="mt-6 text-sm text-gray-600">
                 Pour un cycliste de moins de 15 ans,{" "}
-                <button type="button" class="text-id-postur-dark font-semibold underline hover:opacity-80" data-aller-resultat="etude-moins-15">
+                <button type="button" class="text-gray-900 font-semibold underline hover:opacity-80" data-aller-resultat="etude-moins-15">
                   voir l'étude dédiée
                 </button>
                 .
@@ -255,7 +255,7 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
 
       <!-- Refus : rendez-vous court sans étude préalable -->
       <section class="etape" data-etape="refus" hidden>
-        <h2 class="etape-titre text-3xl md:text-4xl font-bold text-gray-900 mb-3" tabindex="-1">
+        <h2 class="etape-titre text-2xl md:text-3xl font-semibold text-gray-900 mb-3" tabindex="-1">
           Commençons par votre étude posturale
         </h2>
         <p class="text-gray-600 mb-8 max-w-2xl">
@@ -287,15 +287,15 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
       {
         RESULTATS.map((r) => (
           <section class="etape" data-etape={`resultat-${r.id}`} data-resultat hidden>
-            <p class="text-sm font-semibold uppercase tracking-wider text-id-postur-dark mb-2">Votre rendez-vous</p>
-            <h2 class="etape-titre text-3xl md:text-4xl font-bold text-gray-900 mb-2" tabindex="-1">
+            <p class="text-sm font-semibold uppercase tracking-wider text-gray-500 mb-2">Votre rendez-vous</p>
+            <h2 class="etape-titre text-2xl md:text-3xl font-semibold text-gray-900 mb-2" tabindex="-1">
               {r.titre}
             </h2>
             <p class="text-gray-600 mb-6">{r.pourQui}</p>
 
-            <div class="bg-white border-2 border-id-postur-dark p-6 md:p-8 shadow-sm">
+            <div class="bg-white border border-gray-200 p-6 md:p-8 shadow-sm">
               <div class="flex flex-wrap items-end gap-x-8 gap-y-3 mb-6">
-                <p class="text-5xl font-extrabold text-gray-900">{r.prix}</p>
+                <p class="text-4xl font-semibold text-gray-900">{r.prix}</p>
                 <p class="text-gray-700"><span class="text-gray-500">Durée</span><br /><strong>{r.duree}</strong></p>
                 {r.disciplines && (
                   <p class="text-gray-700"><span class="text-gray-500">Disciplines</span><br /><strong>{r.disciplines}</strong></p>
@@ -306,12 +306,12 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
               <ul class="text-sm text-gray-700 space-y-1 mb-4">
                 {r.aApporter.map((a) => (
                   <li class="flex gap-2">
-                    <svg viewBox="0 0 24 24" class="w-4 h-4 mt-0.5 shrink-0 text-id-postur-dark" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+                    <svg viewBox="0 0 24 24" class="w-4 h-4 mt-0.5 shrink-0 text-gray-900" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
                     {a}
                   </li>
                 ))}
               </ul>
-              {r.note && <p class="text-sm text-id-postur-dark font-medium mb-6">{r.note}</p>}
+              {r.note && <p class="text-sm text-gray-900 font-medium mb-6">{r.note}</p>}
 
               <p class="text-xs text-gray-500 mb-3" data-recap></p>
 
@@ -333,12 +333,12 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
             )}
 
             <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-gray-600">
-              <button type="button" data-recommencer class="font-semibold text-id-postur-dark underline hover:opacity-80">
+              <button type="button" data-recommencer class="font-semibold text-gray-900 underline hover:opacity-80">
                 Recommencer
               </button>
               <span>
                 Une question ? Appelez le{" "}
-                <a href={`tel:${ENTREPRISE.telephone}`} class="text-id-postur-dark font-semibold">{ENTREPRISE.telephoneAffiche}</a>
+                <a href={`tel:${ENTREPRISE.telephone}`} class="text-gray-900 font-semibold">{ENTREPRISE.telephoneAffiche}</a>
               </span>
             </div>
           </section>
@@ -382,9 +382,9 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
 
         <!-- 2. Coordonnées -->
         <form data-cal-etape="coordonnees" hidden class="space-y-4" novalidate>
-          <div class="flex items-center justify-between gap-4 bg-[#f4f4f4] px-4 py-3">
+          <div class="flex items-center justify-between gap-4 bg-[#f5f5f6] px-4 py-3">
             <p class="text-sm"><span class="text-gray-500">Votre créneau</span><br /><strong class="text-gray-900" data-cal-resume></strong></p>
-            <button type="button" data-cal-changer class="text-sm font-semibold text-id-postur-dark underline shrink-0">Changer</button>
+            <button type="button" data-cal-changer class="text-sm font-semibold text-gray-900 underline shrink-0">Changer</button>
           </div>
           <div class="grid gap-4 sm:grid-cols-2">
             <label class="block text-sm font-medium text-gray-900">
@@ -408,7 +408,7 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
             Vos coordonnées servent uniquement à organiser votre rendez-vous.
             <a href="/mentions-legales" class="underline">En savoir plus</a>
           </p>
-          <p class="text-sm text-id-postur-dark font-medium" data-cal-erreur aria-live="assertive"></p>
+          <p class="text-sm text-gray-900 font-medium" data-cal-erreur aria-live="assertive"></p>
           <button
             type="submit"
             class="btn-fleche w-full inline-flex justify-center items-center px-6 py-4 text-base font-semibold text-white bg-id-postur-dark transition duration-200 motion-safe:active:scale-[0.98] disabled:opacity-60"
@@ -432,7 +432,7 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
             <button type="button" data-cal-ics class="inline-flex justify-center items-center px-5 py-3 text-sm font-semibold text-white bg-id-postur-dark">
               Ajouter à mon agenda
             </button>
-            <a href={FICHE_GOOGLE} target="_blank" rel="noopener" class="inline-flex justify-center items-center px-5 py-3 text-sm font-semibold text-id-postur-dark border-2 border-id-postur-dark">
+            <a href={FICHE_GOOGLE} target="_blank" rel="noopener" class="inline-flex justify-center items-center px-5 py-3 text-sm font-semibold text-gray-900 border border-gray-200">
               Voir l'itinéraire
             </a>
           </div>
@@ -446,9 +446,9 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
       <noscript>
         <p class="mt-8 text-gray-700">
           Réservez directement :
-          <a href="/reserver/premiere-etude" class="text-id-postur-dark font-semibold underline">première étude posturale</a>
+          <a href="/reserver/premiere-etude" class="text-gray-900 font-semibold underline">première étude posturale</a>
           ·
-          <a href="/reserver/deja-client" class="text-id-postur-dark font-semibold underline">déjà client</a>
+          <a href="/reserver/deja-client" class="text-gray-900 font-semibold underline">déjà client</a>
           · ou appelez le {ENTREPRISE.telephoneAffiche}.
         </p>
       </noscript>
@@ -466,7 +466,7 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
     width: 100%;
     padding: 1.25rem;
     background: white;
-    border: 2px solid #e4e4e4;
+    border: 1px solid #e4e4e4;
     text-align: left;
     cursor: pointer;
     transition:
@@ -476,7 +476,7 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
   }
   .choix:hover,
   .choix:focus-visible {
-    border-color: var(--color-id-postur-dark);
+    border-color: #141414;
     box-shadow: 0 10px 24px -12px rgb(0 0 0 / 0.25);
     outline: none;
   }
@@ -494,8 +494,8 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
     flex-shrink: 0;
     width: 3rem;
     height: 3rem;
-    color: var(--color-id-postur-dark);
-    background: rgb(192 0 0 / 0.07);
+    color: #141414;
+    background: #f5f5f6;
   }
   .choix-icone svg {
     width: 1.6rem;
@@ -549,7 +549,7 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
   :global(.cal-heure) {
     padding: 0.6rem 0.25rem;
     background: white;
-    border: 2px solid #e4e4e4;
+    border: 1px solid #e4e4e4;
     text-align: center;
     cursor: pointer;
     transition:
@@ -559,7 +559,7 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
   }
   :global(.cal-jour:hover:not(:disabled)),
   :global(.cal-heure:hover) {
-    border-color: var(--color-id-postur-dark);
+    border-color: #141414;
   }
   :global(.cal-jour[aria-pressed="true"]),
   :global(.cal-heure[aria-pressed="true"]) {
@@ -579,11 +579,11 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
     place-items: center;
     width: 2.25rem;
     height: 2.25rem;
-    border: 2px solid #e4e4e4;
+    border: 1px solid #e4e4e4;
     background: white;
   }
   .cal-fleche:hover:not(:disabled) {
-    border-color: var(--color-id-postur-dark);
+    border-color: #141414;
   }
   .cal-fleche:disabled {
     opacity: 0.35;
@@ -599,11 +599,11 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
     padding: 0.7rem 0.85rem;
     font-weight: 400;
     background: white;
-    border: 2px solid #e4e4e4;
+    border: 1px solid #e4e4e4;
   }
   .cal-champ:focus {
     outline: none;
-    border-color: var(--color-id-postur-dark);
+    border-color: #141414;
   }
   .cal-champ[aria-invalid="true"] {
     border-color: var(--color-id-postur-dark);
@@ -1076,7 +1076,7 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
     function enPanne() {
       // Cal.com injoignable : on retombe sur Calendly s'il existe, sinon le téléphone.
       message.innerHTML = presta.calendly
-        ? `Le calendrier ne répond pas. <a class="underline font-semibold text-id-postur-dark" target="_blank" rel="nofollow noopener" href="${presta.calendly}">Réserver sur Calendly</a>`
+        ? `Le calendrier ne répond pas. <a class="underline font-semibold text-gray-900" target="_blank" rel="nofollow noopener" href="${presta.calendly}">Réserver sur Calendly</a>`
         : "Le calendrier ne répond pas. Appelez-nous pour réserver.";
     }
 

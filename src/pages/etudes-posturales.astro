@@ -76,11 +76,11 @@ const services = [
     class="w-full h-96 relative bg-[url('/images/etudes-posturales-studio.webp')] bg-cover bg-center flex items-center justify-center bg-black/50 bg-blend-overlay"
   >
     <div class="grid grid-cols-1 text-white px-4">
-      <h1 class="text-3xl md:text-4xl font-bold text-center">
+      <h1 class="text-2xl md:text-3xl font-semibold text-center">
         Étude posturale vélo à Rennes
       </h1>
       <div
-        class="h-[3px] w-24 bg-id-postur-dark mx-auto mt-4 mb-10 rounded-full"
+        class="h-[2px] w-10 bg-id-postur-dark mx-auto mt-4 mb-10 rounded-full"
       >
       </div>
       <p class="text-center max-w-4xl mx-auto pb-4">
@@ -104,10 +104,10 @@ const services = [
 
   <section class="bg-gray-50 py-16">
     <div class="container mx-auto px-5 max-w-4xl text-center">
-      <h2 class="text-xl md:text-3xl font-bold">
+      <h2 class="text-xl md:text-3xl font-semibold">
         Étude posturale 3D ou 2D : laquelle choisir ?
       </h2>
-      <div class="h-[3px] w-24 bg-id-postur-dark mx-auto mt-4 mb-6 rounded-full">
+      <div class="h-[2px] w-10 bg-id-postur-dark mx-auto mt-4 mb-6 rounded-full">
       </div>
       <p class="text-gray-700 mb-6">
         Les deux formats se déroulent sur votre propre vélo. Ils se distinguent
@@ -127,10 +127,10 @@ const services = [
 
   <section class="py-16" id="formules">
     <div class="container px-2 md:px-5 mx-auto">
-      <h2 class="text-xl md:text-4xl font-bold">
+      <h2 class="text-xl md:text-3xl font-semibold">
         Il s'agit de votre première étude posturale chez ID Postur ?
       </h2>
-      <div class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-4 rounded-full"></div>
+      <div class="h-[2px] w-10 bg-id-postur-dark mt-4 mb-4 rounded-full"></div>
       <p class="block md:max-w-4xl">
         Deux formats au choix. L'étude 3D couvre toutes les disciplines, y
         compris les vélos de chrono et de triathlon ; l'étude 2D s'adresse à la
@@ -155,8 +155,8 @@ const services = [
 
   <section class="py-16">
     <div class="container px-2 md:px-5 mx-auto">
-      <h2 class="text-xl md:text-4xl font-bold">Offre particulière</h2>
-      <div class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-4 rounded-full"></div>
+      <h2 class="text-xl md:text-3xl font-semibold">Offre particulière</h2>
+      <div class="h-[2px] w-10 bg-id-postur-dark mt-4 mb-4 rounded-full"></div>
       <p class="block md:max-w-4xl">
         Une formule à tarif unique pour les jeunes cyclistes, réalisée avec la
         technologie d'analyse 2D sur une séance d'1h30. Le tarif reste le même
@@ -180,10 +180,10 @@ const services = [
 
   <section class="bg-gray-50 py-16">
     <div class="container px-2 md:px-5 mx-auto">
-      <h2 class="text-xl md:text-4xl font-bold">
+      <h2 class="text-xl md:text-3xl font-semibold">
         Vous avez déjà réalisé une étude chez ID Postur ?
       </h2>
-      <div class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-4 rounded-full"></div>
+      <div class="h-[2px] w-10 bg-id-postur-dark mt-4 mb-4 rounded-full"></div>
       <p class="block md:max-w-4xl">
         {REGLE_DEJA_CLIENT} Ce tarif réduit s'applique sans limite de temps depuis
         votre première étude.
@@ -205,7 +205,7 @@ const services = [
         Vous venez de Nantes ou de sa région ? Consultez notre page dédiée aux
         <a
           href="/etude-posturale-nantes"
-          class="text-id-postur-dark font-semibold underline hover:opacity-80"
+          class="text-gray-900 font-semibold underline hover:opacity-80"
         >
           cyclistes nantais</a
         > : trajet, organisation de la journée et tarifs.
@@ -215,10 +215,10 @@ const services = [
 
   <section class="py-16">
     <div class="container mx-auto px-2 md:px-5">
-      <h2 class="text-xl md:text-4xl font-bold">
+      <h2 class="text-xl md:text-3xl font-semibold">
         Besoin d'un réglage ponctuel plutôt que d'une étude complète ?
       </h2>
-      <div class="h-[3px] w-24 bg-id-postur-dark mt-4 mb-4 rounded-full"></div>
+      <div class="h-[2px] w-10 bg-id-postur-dark mt-4 mb-4 rounded-full"></div>
       <p class="block md:max-w-4xl">
         Pour un réglage de cales, un avis avant l'achat d'un vélo ou une
         vérification rapide, ID Postur propose des rendez-vous courts de 20
@@ -230,7 +230,7 @@ const services = [
           PRESTATIONS_COURTES.map((prestation) => (
             <a
               href={prestation.page}
-              class="block bg-white border border-gray-200 p-6 hover:border-id-postur-dark transition"
+              class="block bg-white border border-gray-200 p-6 hover:border-gray-400 transition"
             >
               <h3 class="text-xl font-semibold text-gray-900 mb-2">
                 {prestation.title}
@@ -240,7 +240,7 @@ const services = [
                 {formatPrix(prestation.price)}
               </p>
               <p class="text-sm text-gray-700">⏱ {prestation.duration}</p>
-              <span class="inline-block mt-4 text-sm font-semibold text-id-postur-dark">
+              <span class="inline-block mt-4 text-sm font-semibold text-gray-900">
                 En savoir plus →
               </span>
             </a>
@@ -252,10 +252,10 @@ const services = [
 
   <section class="relative px-6 pb-16 overflow-hidden">
     <div class="relative max-w-5xl mx-auto text-center">
-      <h2 id="faq" class="text-3xl md:text-4xl font-extrabold mb-4">
+      <h2 id="faq" class="text-2xl md:text-3xl font-semibold mb-4">
         En savoir plus
       </h2>
-      <div class="h-[3px] w-24 bg-id-postur-dark mx-auto mb-6"></div>
+      <div class="h-[2px] w-10 bg-id-postur-dark mx-auto mb-6"></div>
 
       <div class="space-y-6 text-left">
         {
@@ -263,7 +263,7 @@ const services = [
             <details class="group bg-white border border-gray-200 p-6 transition">
               <summary class="flex items-center justify-between cursor-pointer list-none">
                 <h3 class="text-lg font-semibold">{item.question}</h3>
-                <span class="text-id-postur transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none">
+                <span class="text-gray-400 transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none">
                   +
                 </span>
               </summary>

@@ -23,10 +23,11 @@
   --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
 }
 
-/* Corps de texte en Bricolage Grotesque (via --font-sans), titres en Poppins. */
+/* Corps de texte en Inter (via --font-sans), titres en Poppins semi-gras. */
 @layer base {
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-id-postur);
+    letter-spacing: -0.01em;
   }
 }
 
@@ -201,9 +202,9 @@ details:has(> .faq-reponse)[open]::details-content {
 }
 
 .h2-funnel {
-  font-size: var(--text-4xl); /* 2.25rem (36px) */ 
-  line-height: var(--text-4xl--line-height); /* calc(2.5 / 2.25) */
-  font-weight: 700;
+  font-size: var(--text-3xl); /* 1.875rem (30px) */
+  line-height: var(--text-3xl--line-height);
+  font-weight: 600;
 }
 /* Réservation « déjà client » : le bouton Calendly n'apparaît qu'une fois la
  * case #confirmation-deja-client cochée. CSS seul, aucun JS. Navigateurs sans
