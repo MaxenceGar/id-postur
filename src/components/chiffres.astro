@@ -1,59 +1,31 @@
 ---
-import "../styles/global.css";
+/** Bandeau de chiffres clés, juste sous le hero. */
+const chiffres = [
+  { valeur: "800+", libelle: "études posturales réalisées" },
+  { valeur: "25+", libelle: "athlètes professionnels accompagnés" },
+  { valeur: "3 ans", libelle: "d'expérience terrain et analyse" },
+  { valeur: "< 1 mm", libelle: "de précision en capture 3D" },
+];
 ---
 
-<!-- AVANTAGES / IMPACT -->
-<section id="avantages" class="relative py-28 px-6 overflow-hidden">
-  <div class="relative max-w-6xl mx-auto text-center">
-    <!-- Grille -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-10" data-chiffres>
-      <!-- Carte 1 -->
-      <div
-        class="chiffre-card group p-8 flex flex-col items-center relative overflow-hidden"
-      >
-        <div class="text-4xl font-semibold text-gray-900 mb-2">+800</div>
-        <p class="text-gray-700 font-medium">Études posturales réalisées</p>
-        <span class="mt-4 w-8 h-[2px] bg-gray-300 rounded-full"></span>
-      </div>
-
-      <!-- Carte 2 -->
-      <div
-        class="chiffre-card group p-8 flex flex-col items-center relative overflow-hidden"
-      >
-        <div class="text-4xl font-semibold text-gray-900 mb-2">+25</div>
-        <p class="text-gray-700 font-medium">
-          Athlètes professionnels accompagnés
-        </p>
-        <span class="mt-4 w-8 h-[2px] bg-gray-300 rounded-full"></span>
-      </div>
-
-      <!-- Carte 3 -->
-      <div
-        class="chiffre-card group p-8 flex flex-col items-center relative overflow-hidden"
-      >
-        <div class="text-4xl font-semibold text-gray-900 mb-2">+3 ans</div>
-        <p class="text-gray-700 font-medium">d'expérience terrain et analyse</p>
-        <span class="mt-4 w-8 h-[2px] bg-gray-300"></span>
-      </div>
-    </div>
-  </div>
+<section id="avantages" class="max-w-7xl mx-auto px-5 md:px-8 lg:px-10">
+  <dl class="grid grid-cols-2 lg:grid-cols-4 rounded-md border border-filet overflow-hidden">
+    {
+      chiffres.map((c, i) => (
+        <div
+          class:list={[
+            "flex flex-col-reverse gap-1.5 p-6 md:p-8 border-filet",
+            i % 2 === 1 && "border-l",
+            i >= 2 && "border-t lg:border-t-0",
+            i === 2 && "lg:border-l",
+          ]}
+        >
+          <dt class="text-[15px] text-encre-2">{c.libelle}</dt>
+          <dd class="font-id-postur text-4xl md:text-5xl font-semibold tracking-[-0.04em] text-encre">
+            {c.valeur}
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
 </section>
-
-<script>
-  const grid = document.querySelector<HTMLElement>("[data-chiffres]");
-  if (grid) {
-    const cards = grid.querySelectorAll<HTMLElement>(".chiffre-card");
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            cards.forEach((card) => card.classList.add("is-visible"));
-            observer.disconnect();
-          }
-        });
-      },
-      { threshold: 0.2 },
-    );
-    observer.observe(grid);
-  }
-</script>

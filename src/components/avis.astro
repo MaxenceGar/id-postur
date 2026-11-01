@@ -1,96 +1,103 @@
 ---
+import { AVIS_GOOGLE, ENTREPRISE, FICHE_GOOGLE } from "../data/entreprise";
 
-import '../styles/global.css'
+/** Extraits d'avis Google, partenaires et carte cadeau. */
+const avis = [
+  {
+    texte:
+      "J'ai repris le vélo cette saison et je ne me sentais pas bien sur mon ancien vélo (douleurs au genou et dos). J'ai donc décidé de faire une étude posturale avant de m'acheter un nouveau vélo.",
+    nom: "François D.",
+  },
+  {
+    texte:
+      "Très bon accueil, à l'écoute, disponible et un réglage précis des chaussures et des vélos au top. Prêt à affronter l'asphalte et la boue des cyclo-cross. Merci ID Postur",
+    nom: "Nicolas G.",
+  },
+  {
+    texte:
+      "Fin août, j'ai fait une étude posturale chez ID Postur, car je ressentais des douleurs à vélo et je ne savais pas si elles venaient de ma position ou de ma selle.",
+    nom: "Morgane A.",
+  },
+];
 
+const partenaires = [
+  { nom: "Équipe Vélo Plaiz", logo: "/images/logo-velo-plaiz.jpg" },
+  { nom: "CRE Compétition", logo: "/images/logo-cre.jpg" },
+  { nom: "Saint-Grégoire RMH", logo: "/images/logo-saint-gregoire.png" },
+];
 ---
 
-  <!-- Avis -->
-  <section class="py-24 px-6 bg-white">
-    <div class="max-w-6xl mx-auto text-center">
-      <h2 class="text-2xl md:text-3xl font-semibold text-gray-900 mb-4">
-        Ce qu’ils disent de nous
-      </h2>
-      <div class="h-[2px] w-10 bg-id-postur-dark mx-auto mb-6 rounded-full"></div>
-      <p class="text-gray-600 max-w-2xl mx-auto mb-12">
-        Découvrez les retours de nos clients qui ont transformé leur posture et
-        retrouvé un vrai confort au quotidien.
-      </p>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <!-- Avis 1 -->
-        <div
-          class="bg-gray-50 p-8 shadow hover:shadow-lg transition text-left flex flex-col justify-between"
-        >
-          <p class="text-gray-700 italic mb-6">
-            “J'ai repris le vélo cette saison et je ne me sentais 
-            pas bien sur mon ancien vélo (douleurs au genou et dos). 
-            J'ai donc décidé de faire une étude posturale avant de m'acheter un nouveau vélo.”
-          </p>
-          <div class="flex items-center gap-4 mt-auto">
-            <div class="flex flex-row justify-between w-full">
-              <div>
-                  <p class="font-semibold text-gray-900">Francois D.</p>
-              </div>
-              <div>
-                 <img
-                 class="w-9 h-auto"
-                 alt="logo google"
-                 src="../images/google-icon.jpeg"
-                 >
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Avis 2 -->
-        <div
-          class="bg-gray-50 p-8 shadow-sm border border-gray-200 text-left flex flex-col justify-between"
-        >
-          <p class="text-gray-700 italic mb-6">
-            “Très bon accueil, à l’écoute, disponible et un réglage précis 
-            des chaussures et des vélos au top. Prêt à affronter l’asphalte 
-            et là boue des cyclo cross. Merci ID Postur”
-          </p>
-          <div class="flex items-center gap-4 mt-auto">
-            <div class="flex flex-row justify-between w-full">
-              <div>
-                  <p class="font-semibold text-gray-900">Nicolas G.</p>
-              </div>
-              <div>
-                 <img
-                 class="w-9 h-auto"
-                 alt="logo google"
-                 src="../images/google-icon.jpeg"
-                 >
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Avis 3 -->
-        <div
-          class="bg-gray-50 p-8 shadow hover:shadow-lg transition text-left flex flex-col justify-between"
-        >
-          <p class="text-gray-700 italic mb-6">
-            “Fin août, j’ai fait une étude posturale chez ID Postur, 
-            car je ressentais des douleurs à vélo et je ne savais pas 
-            si elles venaient de ma position ou de ma selle.”
-          </p>
-          <div class="flex items-center gap-4 mt-auto">
-            <div class="flex flex-row justify-between w-full">
-              <div>
-                  <p class="font-semibold text-gray-900">Morgane A.</p>
-              </div>
-              <div>
-                 <img
-                 class="w-9 h-auto"
-                 alt="logo google"
-                 src="../images/google-icon.jpeg"
-                 >
-              </div>
-            </div>
-          </div>
-        </div>
+<section class="bg-brume">
+  <div class="max-w-7xl mx-auto px-5 md:px-8 lg:px-10 py-20 md:py-28 flex flex-col gap-12">
+    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+      <div class="flex flex-col gap-4">
+        <p class="pastille bg-white">Avis Google · 5,0</p>
+        <h2 class="text-4xl md:text-[3.25rem] leading-[1.04] tracking-[-0.035em]">
+          Ce qu'ils <span class="accent">disent</span> de nous.
+        </h2>
       </div>
+      <a
+        href={FICHE_GOOGLE}
+        target="_blank"
+        rel="noopener"
+        class="text-[17px] text-encre-2 hover:text-encre transition-colors"
+      >
+        Une note moyenne de 5,0 sur {AVIS_GOOGLE.nombre} avis Google <span aria-hidden="true">↗</span>
+      </a>
     </div>
-  </section>
+
+    <ul class="grid gap-5 md:grid-cols-3">
+      {
+        avis.map((a) => (
+          <li class="flex flex-col justify-between gap-6 rounded-md bg-white p-7 md:p-8">
+            <div class="flex flex-col gap-4">
+              <span class="text-amber-500 tracking-tight" aria-label="5 étoiles sur 5">★★★★★</span>
+              <blockquote class="text-[17px] leading-relaxed text-encre">« {a.texte} »</blockquote>
+            </div>
+            <p class="flex items-center justify-between border-t border-filet pt-4">
+              <span class="font-semibold text-encre">{a.nom}</span>
+              <span class="text-[13px] text-encre-3">Avis Google</span>
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="flex flex-wrap items-center gap-x-10 gap-y-5">
+      <p class="text-sm font-semibold text-encre-3">Partenaires</p>
+      {
+        partenaires.map((p) => (
+          <span class="flex items-center gap-3">
+            <img src={p.logo} alt={`Logo ${p.nom}`} width="40" height="40" loading="lazy" class="size-10 rounded object-contain bg-white p-1" />
+            <span class="font-id-postur text-lg font-semibold tracking-[-0.02em] text-encre-2">{p.nom}</span>
+          </span>
+        ))
+      }
+    </div>
+
+    <!-- Carte cadeau -->
+    <div class="flex flex-col md:flex-row md:items-center gap-8 rounded-md bg-white p-7 md:p-10">
+      <img
+        src="/images/carte-cadeau-id-postur.webp"
+        alt="Illustration de la carte cadeau ID Postur"
+        width="320"
+        height="200"
+        loading="lazy"
+        class="w-56 md:w-64 h-auto object-contain"
+      />
+      <div class="flex flex-col gap-3 grow">
+        <h3 class="text-2xl md:text-3xl tracking-[-0.03em]">
+          Offrez une <span class="accent">étude posturale</span>.
+        </h3>
+        <p class="text-[15px] leading-relaxed text-encre-2 max-w-xl">
+          Pour l'achat et le règlement de votre carte cadeau, contactez-nous par
+          e-mail ({ENTREPRISE.email}) ou en message privé sur Instagram
+          (@idpostur).
+        </p>
+      </div>
+      <a href="/id-postur-carte-cadeau.pdf" class="btn btn-noir shrink-0">
+        Télécharger la carte cadeau <span aria-hidden="true">↓</span>
+      </a>
+    </div>
+  </div>
+</section>

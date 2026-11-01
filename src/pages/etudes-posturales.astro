@@ -1,11 +1,13 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Formulecomponent from "../components/formulecomponent.astro";
-import "../styles/global.css";
+import PageHero from "../components/PageHero.astro";
+import FaqListe from "../components/FaqListe.astro";
+import AutresPrestations from "../components/autres-prestations.astro";
 import {
+  EQUIPES_3D,
   ETUDES_POSTURALES,
   OFFRES_PARTICULIERES,
-  PRESTATIONS_COURTES,
   PRIX_REDUIT_ETUDE,
   REGLE_DEJA_CLIENT,
   formatPrix,
@@ -20,7 +22,15 @@ const troisDClient = getPrestation("etude-posturale-3d-deja-client");
 const deuxDClient = getPrestation("etude-posturale-2d-deja-client");
 
 const premiereEtude = [troisD, deuxD];
-const dejaClient = [troisDClient, deuxDClient];
+const [moinsDe15] = OFFRES_PARTICULIERES;
+
+/** Ce que l'étude ajuste sur le vélo (repris du texte de présentation). */
+const reglages = [
+  { titre: "Hauteur de selle", texte: "Pour un pédalage efficace, sans tension dans les genoux.", image: "/images/rendez-vous-ajustement-selle.webp" },
+  { titre: "Recul de selle", texte: "L'équilibre entre transfert de puissance et confort du bassin.", image: "/images/etude-posturale-reglage-genou.webp" },
+  { titre: "Potence et cintre", texte: "Une position du buste tenable, sans tension dans le dos ni les cervicales.", image: "/images/etude-posturale-2d-analyse-video.webp" },
+  { titre: "Cales", texte: "L'alignement du pied, du genou et de la hanche, au millimètre.", image: "/images/reglage-cales-pedale.webp" },
+];
 
 /**
  * Une seule source pour la FAQ visible et le JSON-LD FAQPage :
@@ -72,73 +82,37 @@ const services = [
   faq={faqItems}
   schema={services}
 >
-  <div
-    class="w-full h-96 relative bg-[url('/images/etudes-posturales-studio.webp')] bg-cover bg-center flex items-center justify-center bg-black/50 bg-blend-overlay"
-  >
-    <div class="grid grid-cols-1 text-white px-4">
-      <h1 class="text-2xl md:text-3xl font-semibold text-center">
-        Étude posturale vélo à Rennes
-      </h1>
-      <div
-        class="h-[2px] w-10 bg-id-postur-dark mx-auto mt-4 mb-10 rounded-full"
-      >
-      </div>
-      <p class="text-center max-w-4xl mx-auto pb-4">
-        <span class="font-bold">ID Postur</span>, accompagné de la technologie
-        de capture de mouvement <span class="font-bold">STT</span
-        >, vous permet de trouver scientifiquement le réglage idéal pour votre
-        vélo. <span class="font-bold">Route, VTT, Gravel, Chrono</span> :
-        améliorez votre confort et vos performances en fonction de vos besoins
-        et de vos caractéristiques physiques.
-      </p>
-      <div class="inline-block mx-auto">
-        <a
-          class="text-center inline-block px-6 py-2 bg-id-postur-dark text-white font-medium hover:opacity-90 transition duration-300 cursor-pointer"
-          href="#formules"
-        >
-          Voir les tarifs
-        </a>
-      </div>
-    </div>
-  </div>
+  <PageHero
+    ariane="Études posturales"
+    pastille="Étude posturale à Rennes"
+    titre={["L'étude posturale, ", "en 3D ou en 2D", "."]}
+    intro="Avec la technologie de capture de mouvement STT, ID Postur trouve scientifiquement le réglage idéal de votre vélo. Route, VTT, gravel, chrono : plus de confort et de performance, selon vos besoins et votre morphologie."
+    image="/images/etudes-posturales-studio.webp"
+    alt="Studio d'étude posturale ID Postur avec un cycliste analysé en capture de mouvement"
+    puces={["Capture de mouvement STT Motio", "Précision < 1 mm en 3D", "50+ mesures automatiques en 2D"]}
+    ctas={[
+      { href: "#formules", label: "Voir les tarifs" },
+      { href: "/etude-posturale-3d-ou-2d", label: "3D ou 2D ?", secondaire: true },
+    ]}
+  />
 
-  <section class="bg-gray-50 py-16">
-    <div class="container mx-auto px-5 max-w-4xl text-center">
-      <h2 class="text-xl md:text-3xl font-semibold">
-        Étude posturale 3D ou 2D : laquelle choisir ?
-      </h2>
-      <div class="h-[2px] w-10 bg-id-postur-dark mx-auto mt-4 mb-6 rounded-full">
+  <section id="formules" class="bg-brume">
+    <div class="max-w-7xl mx-auto px-5 md:px-8 lg:px-10 py-20 md:py-28 flex flex-col gap-12">
+      <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+        <div class="flex flex-col gap-4">
+          <p class="pastille bg-white">Première étude chez ID Postur</p>
+          <h2 class="text-4xl md:text-[3.25rem] leading-[1.04] tracking-[-0.035em]">
+            Choisissez votre <span class="accent">format</span>.
+          </h2>
+        </div>
+        <p class="text-[17px] leading-relaxed text-encre-2 max-w-md">
+          Les deux se déroulent sur votre vélo, avec le même réglage complet à la
+          fin. Ils diffèrent par les disciplines couvertes, la durée et le tarif.
+          <a href="/etude-posturale-3d-ou-2d" class="font-medium text-encre underline underline-offset-4">Voir le comparatif détaillé</a>
+        </p>
       </div>
-      <p class="text-gray-700 mb-6">
-        Les deux formats se déroulent sur votre propre vélo. Ils se distinguent
-        par les disciplines couvertes — le chrono et le triathlon demandent la
-        3D — ainsi que par leur durée et leur tarif :
-        {troisD.duration} et {formatPrix(troisD.price)} en 3D, {deuxD.duration}
-        et {formatPrix(deuxD.price)} en 2D.
-      </p>
-      <a
-        href="/etude-posturale-3d-ou-2d"
-        class="inline-flex justify-center items-center px-6 py-3 bg-id-postur-dark text-white font-semibold hover:opacity-90 transition"
-      >
-        Voir le comparatif détaillé
-      </a>
-    </div>
-  </section>
 
-  <section class="py-16" id="formules">
-    <div class="container px-2 md:px-5 mx-auto">
-      <h2 class="text-xl md:text-3xl font-semibold">
-        Il s'agit de votre première étude posturale chez ID Postur ?
-      </h2>
-      <div class="h-[2px] w-10 bg-id-postur-dark mt-4 mb-4 rounded-full"></div>
-      <p class="block md:max-w-4xl">
-        Deux formats au choix. L'étude 3D couvre toutes les disciplines, y
-        compris les vélos de chrono et de triathlon ; l'étude 2D s'adresse à la
-        route, au VTT et au gravel. Dans les deux cas, venez avec votre vélo et
-        votre tenue complète.
-      </p>
-
-      <div class="grid gap-8 md:grid-cols-2 py-10 md:max-w-4xl">
+      <div class="grid gap-5 lg:grid-cols-2">
         {
           premiereEtude.map((prestation, index) => (
             <Formulecomponent
@@ -150,128 +124,92 @@ const services = [
           ))
         }
       </div>
-    </div>
-  </section>
 
-  <section class="py-16">
-    <div class="container px-2 md:px-5 mx-auto">
-      <h2 class="text-xl md:text-3xl font-semibold">Offre particulière</h2>
-      <div class="h-[2px] w-10 bg-id-postur-dark mt-4 mb-4 rounded-full"></div>
-      <p class="block md:max-w-4xl">
-        Une formule à tarif unique pour les jeunes cyclistes, réalisée avec la
-        technologie d'analyse 2D sur une séance d'1h30. Le tarif reste le même
-        à chaque visite : la croissance modifie les mesures, l'étude est donc
-        refaite entièrement.
-      </p>
+      <div class="flex flex-col lg:flex-row lg:items-center gap-6 rounded-md bg-rose p-7 md:p-8">
+        <div class="flex flex-col gap-2 grow">
+          <h2 class="text-2xl md:text-[1.75rem] tracking-[-0.03em]">Déjà venu chez ID Postur&nbsp;?</h2>
+          <p class="text-[15px] leading-relaxed text-encre-2 max-w-2xl">
+            {REGLE_DEJA_CLIENT} Ce tarif réduit s'applique sans limite de temps
+            depuis votre première étude.
+          </p>
+        </div>
+        <div class="flex gap-3">
+          {[troisDClient, deuxDClient].map((p) => (
+            <div class="flex flex-col rounded bg-white px-5 py-3">
+              <span class="text-[13px] text-encre-2">Étude {p.slug.includes("3d") ? "3D" : "2D"}</span>
+              <span class="font-id-postur text-2xl font-semibold tracking-[-0.03em] text-encre">{formatPrix(p.price)}</span>
+            </div>
+          ))}
+        </div>
+        <a href="/reserver/deja-client" class="btn btn-noir shrink-0">
+          Tarif déjà client <span aria-hidden="true">↗</span>
+        </a>
+      </div>
 
-      <div class="grid gap-8 md:grid-cols-2 py-10 md:max-w-4xl">
-        {
-          OFFRES_PARTICULIERES.map((prestation) => (
-            <Formulecomponent
-              prestation={prestation}
-              ctaHref="/reserver/premiere-etude"
-              ctaLabel="Réserver cette formule"
-            />
-          ))
-        }
+      <div class="flex flex-col md:flex-row md:items-center gap-6 rounded-md bg-white p-7 md:p-8">
+        <div class="flex flex-col gap-2 grow">
+          <p class="text-sm font-medium text-id-postur-dark">Offre particulière · {moinsDe15.baseline}</p>
+          <h2 class="text-2xl md:text-[1.75rem] tracking-[-0.03em]">{moinsDe15.title}</h2>
+          <p class="text-[15px] leading-relaxed text-encre-2 max-w-2xl">
+            Une formule à tarif unique pour les jeunes cyclistes, réalisée avec
+            la technologie d'analyse 2D sur une séance de {moinsDe15.duration}.
+            Le tarif reste le même à chaque visite : la croissance modifie les
+            mesures, l'étude est donc refaite entièrement.
+          </p>
+        </div>
+        <p class="font-id-postur text-4xl font-semibold tracking-[-0.04em] text-encre shrink-0">
+          {formatPrix(moinsDe15.price)} <span class="font-sans text-base font-medium tracking-normal text-encre-2">· {moinsDe15.duration}</span>
+        </p>
+        <a href="/reserver/premiere-etude" class="btn btn-contour shrink-0">Réserver cette formule</a>
       </div>
     </div>
   </section>
 
-  <section class="bg-gray-50 py-16">
-    <div class="container px-2 md:px-5 mx-auto">
-      <h2 class="text-xl md:text-3xl font-semibold">
-        Vous avez déjà réalisé une étude chez ID Postur ?
-      </h2>
-      <div class="h-[2px] w-10 bg-id-postur-dark mt-4 mb-4 rounded-full"></div>
-      <p class="block md:max-w-4xl">
-        {REGLE_DEJA_CLIENT} Ce tarif réduit s'applique sans limite de temps depuis
-        votre première étude.
-      </p>
-
-      <div class="grid gap-8 md:grid-cols-2 py-10 md:max-w-4xl">
-        {
-          dejaClient.map((prestation) => (
-            <Formulecomponent
-              prestation={prestation}
-              ctaHref="/reserver/deja-client"
-              ctaLabel="Réserver cette formule"
-            />
-          ))
-        }
+  <section class="max-w-7xl mx-auto px-5 md:px-8 lg:px-10 py-20 md:py-28 flex flex-col gap-12">
+    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+      <div class="flex flex-col gap-4">
+        <p class="pastille">Le réglage</p>
+        <h2 class="text-4xl md:text-[3.25rem] leading-[1.04] tracking-[-0.035em]">
+          Ce que l'on <span class="accent">ajuste</span> sur votre vélo.
+        </h2>
       </div>
-
-      <p class="text-sm text-gray-700">
-        Vous venez de Nantes ou de sa région ? Consultez notre page dédiée aux
-        <a
-          href="/etude-posturale-nantes"
-          class="text-gray-900 font-semibold underline hover:opacity-80"
-        >
-          cyclistes nantais</a
-        > : trajet, organisation de la journée et tarifs.
+      <p class="text-[17px] leading-relaxed text-encre-2 max-w-md">
+        Les mesures guident chaque réglage. Débutant ou confirmé, l'objectif est
+        le même : progresser sans douleur.
       </p>
     </div>
-  </section>
 
-  <section class="py-16">
-    <div class="container mx-auto px-2 md:px-5">
-      <h2 class="text-xl md:text-3xl font-semibold">
-        Besoin d'un réglage ponctuel plutôt que d'une étude complète ?
-      </h2>
-      <div class="h-[2px] w-10 bg-id-postur-dark mt-4 mb-4 rounded-full"></div>
-      <p class="block md:max-w-4xl">
-        Pour un réglage de cales, un avis avant l'achat d'un vélo ou une
-        vérification rapide, ID Postur propose des rendez-vous courts de 20
-        minutes.
+    <ul class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        reglages.map((r) => (
+          <li class="flex flex-col rounded-md border border-filet overflow-hidden">
+            <img src={r.image} alt="" width="500" height="360" loading="lazy" class="w-full aspect-[4/3] object-cover" />
+            <div class="flex flex-col gap-2 p-6">
+              <h3 class="text-xl tracking-[-0.025em]">{r.titre}</h3>
+              <p class="text-sm leading-relaxed text-encre-2">{r.texte}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="flex flex-col lg:flex-row lg:items-center gap-5 rounded-md bg-brume p-7">
+      <p class="font-id-postur text-xl font-semibold tracking-[-0.025em] text-encre grow max-w-md">
+        Les équipes professionnelles utilisent l'analyse 3D pour leurs études posturales.
       </p>
-
-      <div class="grid gap-8 md:grid-cols-3 py-10">
-        {
-          PRESTATIONS_COURTES.map((prestation) => (
-            <a
-              href={prestation.page}
-              class="block bg-white border border-gray-200 p-6 hover:border-gray-400 transition"
-            >
-              <h3 class="text-xl font-semibold text-gray-900 mb-2">
-                {prestation.title}
-              </h3>
-              <p class="text-sm text-gray-500 mb-4">{prestation.description}</p>
-              <p class="text-2xl font-bold text-gray-900">
-                {formatPrix(prestation.price)}
-              </p>
-              <p class="text-sm text-gray-700">⏱ {prestation.duration}</p>
-              <span class="inline-block mt-4 text-sm font-semibold text-gray-900">
-                En savoir plus →
-              </span>
-            </a>
-          ))
-        }
-      </div>
+      <ul class="flex flex-wrap gap-2.5">
+        {EQUIPES_3D.map((e) => <li class="rounded bg-white px-4 py-2.5 text-[15px] font-semibold text-encre">{e}</li>)}
+      </ul>
     </div>
+
+    <p class="text-[15px] text-encre-2">
+      Vous venez de Nantes ou de sa région&nbsp;? Consultez notre page dédiée aux
+      <a href="/etude-posturale-nantes" class="font-semibold text-encre underline underline-offset-4">cyclistes nantais</a>
+      : trajet, organisation de la journée et tarifs.
+    </p>
   </section>
 
-  <section class="relative px-6 pb-16 overflow-hidden">
-    <div class="relative max-w-5xl mx-auto text-center">
-      <h2 id="faq" class="text-2xl md:text-3xl font-semibold mb-4">
-        En savoir plus
-      </h2>
-      <div class="h-[2px] w-10 bg-id-postur-dark mx-auto mb-6"></div>
+  <AutresPrestations sansEtude title="Besoin d'un réglage ponctuel ?" />
 
-      <div class="space-y-6 text-left">
-        {
-          faqItems.map((item) => (
-            <details class="group bg-white border border-gray-200 p-6 transition">
-              <summary class="flex items-center justify-between cursor-pointer list-none">
-                <h3 class="text-lg font-semibold">{item.question}</h3>
-                <span class="text-gray-400 transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none">
-                  +
-                </span>
-              </summary>
-              <p class="mt-4 leading-relaxed">{item.answer}</p>
-            </details>
-          ))
-        }
-      </div>
-    </div>
-  </section>
+  <FaqListe items={faqItems} />
 </BaseLayout>

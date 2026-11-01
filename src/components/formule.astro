@@ -1,9 +1,10 @@
 ---
-import { ENTREPRISE } from "../data/entreprise";
 import { BESOINS } from "../data/parcours";
+import { formatPrix, getPrestation } from "../data/tarifs";
 
 const [etude, ...courts] = BESOINS;
-
+const troisD = getPrestation("etude-posturale-3d");
+const deuxD = getPrestation("etude-posturale-2d");
 /**
  * Porte d'entrée du parcours de réservation : chaque besoin ouvre /reserver
  * directement à la bonne question (?besoin=…). Le parcours se charge ensuite
@@ -11,113 +12,126 @@ const [etude, ...courts] = BESOINS;
  */
 ---
 
-<section class="bg-[#f5f5f6] py-16 border-y border-[#e4e4e4]" id="formules">
-  <div class="container mx-auto px-5">
-    <div class="lg:w-full mb-6 lg:mb-10">
-      <h2 class="sm:text-3xl text-2xl font-semibold title-font mb-3 text-gray-900">
-        Votre posture entre de bonnes mains
+<section id="formules" class="max-w-7xl mx-auto px-5 md:px-8 lg:px-10 py-20 md:py-28 flex flex-col gap-12">
+  <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+    <div class="flex flex-col gap-4">
+      <p class="pastille">Prestations</p>
+      <h2 class="text-4xl md:text-[3.25rem] leading-[1.04] tracking-[-0.035em]">
+        Que souhaitez-vous <span class="accent">faire</span>&nbsp;?
       </h2>
-      <div class="h-[2px] w-10 bg-id-postur-dark mb-4"></div>
-      <p class="text-gray-700">
-        Que souhaitez-vous faire ? Choisissez, on vous guide jusqu'au bon créneau.
-      </p>
     </div>
+    <p class="text-[17px] leading-relaxed text-encre-2 max-w-sm">
+      Choisissez votre besoin, on vous guide jusqu'au bon créneau. L'étude
+      posturale est ouverte à tous.
+    </p>
+  </div>
 
-    {/* L'étude posturale, ouverte à tous, en grand ; puis les rendez-vous
-        courts, réservés aux clients. */}
+  <div class="grid gap-5 lg:grid-cols-2">
+    <!-- Étude 3D, en grand -->
     <a
       href={`/reserver?besoin=${etude.id}`}
-      class="declenche-fleche group grid md:grid-cols-2 bg-white border border-gray-200 overflow-hidden transition-all duration-200 hover:shadow-lg motion-safe:hover:-translate-y-1"
+      class="group flex flex-col rounded-md bg-brume overflow-hidden"
     >
-      <img
-        src="/images/etude-posturale-3d-capture.webp"
-        alt="Étude posturale d'une cycliste sur home-trainer, analysée en capture de mouvement chez ID Postur"
-        class="object-cover w-full h-56 md:h-full"
-        loading="lazy"
-      />
-      <div class="flex flex-col justify-center p-6 md:p-10">
-        <h3 class="text-2xl md:text-3xl font-semibold text-gray-900 mb-3">{etude.titre}</h3>
-        <p class="text-gray-700 mb-6">{etude.detail} En 3D ou en 2D, avec la capture de mouvement STT.</p>
-        <span class="btn-fleche self-start px-6 py-3 bg-id-postur-dark text-white font-medium">
-          Je commence
-        </span>
+      <div class="overflow-hidden">
+        <img
+          src="/images/etude-posturale-3d-capture.webp"
+          alt="Étude posturale d'une cycliste sur home-trainer, analysée en capture de mouvement chez ID Postur"
+          width="1200"
+          height="660"
+          loading="lazy"
+          class="w-full aspect-[16/9] object-cover transition-transform duration-500 motion-safe:group-hover:scale-[1.03]"
+        />
+      </div>
+      <div class="flex flex-col gap-3 p-7 md:p-8">
+        <p class="pastille pastille-rose">La plus complète</p>
+        <h3 class="text-3xl md:text-[2.5rem] leading-[1.05] tracking-[-0.035em]">
+          Étude posturale <span class="accent">3D</span>
+        </h3>
+        <p class="text-base leading-relaxed text-encre-2 max-w-lg">
+          Capture optique dans les 3 plans, asymétries, pression de selle.
+          {troisD.disciplines}.
+        </p>
+        <div class="flex items-center justify-between gap-4 pt-2">
+          <p class="text-lg font-semibold text-encre">
+            {formatPrix(troisD.price)} · {troisD.duration}
+          </p>
+          <span class="btn btn-noir">Je commence <span aria-hidden="true">↗</span></span>
+        </div>
       </div>
     </a>
 
-    <h3 class="text-lg font-semibold text-gray-900 mt-10 mb-4">
-      Déjà client ID Postur ?
-    </h3>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+    <div class="flex flex-col gap-5">
+      <a
+        href={`/reserver?besoin=${etude.id}`}
+        class="group flex flex-col sm:flex-row sm:items-center gap-6 rounded-md bg-brume p-5"
+      >
+        <img
+          src="/images/etude-posturale-2d-analyse-video.webp"
+          alt="Analyse vidéo 2D de la position d'un cycliste"
+          width="400"
+          height="400"
+          loading="lazy"
+          class="w-full sm:w-48 aspect-[4/3] sm:aspect-square rounded object-cover"
+        />
+        <div class="flex flex-col gap-2.5">
+          <h3 class="text-[1.75rem] leading-tight tracking-[-0.03em]">
+            Étude posturale <span class="accent">2D</span>
+          </h3>
+          <p class="text-[15px] leading-relaxed text-encre-2">
+            Vue latérale, 50+ mesures automatiques. {deuxD.disciplines}.
+          </p>
+          <p class="font-semibold text-encre">
+            {formatPrix(deuxD.price)} · {deuxD.duration}
+          </p>
+        </div>
+      </a>
+
+      <a
+        href="/etude-posturale-3d-ou-2d"
+        class="sur-fond-sombre group flex grow flex-col justify-between gap-6 rounded-md bg-encre p-7 md:p-8"
+      >
+        <h3 class="text-[1.75rem] leading-tight tracking-[-0.03em] text-white max-w-sm">
+          3D ou 2D&nbsp;? <span class="accent">On vous aide</span> à choisir.
+        </h3>
+        <p class="text-[15px] leading-relaxed text-[#b4b4bc] max-w-md">
+          Triathlon, chrono, asymétrie ou douleur persistante : la 3D. Une
+          première position sur route ou en VTT : la 2D suffit souvent.
+        </p>
+        <span class="inline-flex items-center gap-2 text-[15px] font-medium text-white">
+          Comparer les deux formats
+          <span aria-hidden="true" class="transition-transform motion-safe:group-hover:translate-x-0.5 motion-safe:group-hover:-translate-y-0.5">↗</span>
+        </span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Rendez-vous courts, réservés aux clients -->
+  <div class="flex flex-col gap-5 pt-2">
+    <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+      <h3 class="text-2xl tracking-[-0.03em]">Déjà client ID Postur&nbsp;?</h3>
+      <p class="text-[15px] text-encre-2">
+        Rendez-vous courts, réservés aux cyclistes déjà venus en étude.
+      </p>
+    </div>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
       {
         courts.map((b) => (
           <a
             href={`/reserver?besoin=${b.id}`}
-            class="declenche-fleche group flex flex-col bg-white p-5 border border-gray-200 transition-all duration-200 hover:border-gray-400 hover:shadow-lg motion-safe:hover:-translate-y-1"
+            class="group flex flex-col justify-between gap-4 rounded-md border border-filet p-5 transition-colors hover:border-encre-3"
           >
-            <h4 class="font-semibold text-gray-900 mb-2">{b.titre}</h4>
-            <p class="text-sm text-gray-600 flex-1 mb-4">{b.detail}</p>
-            <span class="btn-fleche self-start text-sm font-semibold text-gray-900">
-              C'est parti
+            <span class="flex flex-col gap-2">
+              <span class="font-id-postur text-[17px] font-semibold leading-snug tracking-[-0.02em] text-encre">
+                {b.titre}
+              </span>
+              <span class="text-sm leading-relaxed text-encre-2">{b.detail}</span>
+            </span>
+            <span class="inline-flex items-center gap-1.5 text-sm font-medium text-id-postur-dark">
+              C'est parti <span aria-hidden="true">↗</span>
             </span>
           </a>
         ))
       }
-    </div>
-
-    <p class="mt-6 text-sm text-center text-gray-700">
-      <a
-        href="/etude-posturale-3d-ou-2d"
-        class="text-gray-900 font-semibold underline hover:opacity-80"
-        >Quelle différence entre la 3D et la 2D ?</a
-      >
-    </p>
-    <div
-      class="border-gray-200 border text-center mt-4 overflow-hidden bg-white"
-    >
-      <p class="py-4 px-4 text-base text-center">
-        Vous pouvez aussi prendre rendez-vous par téléphone au <a
-          href={`tel:${ENTREPRISE.telephone}`}
-          class="text-gray-900 font-bold">{ENTREPRISE.telephoneAffiche}</a
-        >
-      </p>
-    </div>
-  </div>
-</section>
-
-<section class="container mx-auto px-5 sm:px-6 lg:px-8 py-12">
-  <div class="lg:w-full mb-6 lg:mb-10">
-    <h2 class="sm:text-3xl text-2xl font-semibold title-font mb-3 text-gray-900">
-      Pour en savoir plus sur ID Postur avant de prendre rendez-vous
-    </h2>
-    <div class="h-[2px] w-10 bg-id-postur-dark"></div>
-  </div>
-  <div class="flex flex-col md:flex-row justify-center items-stretch gap-8">
-    <div class="w-full md:w-1/2">
-      <div class="aspect-video overflow-hidden shadow-2xl">
-        <iframe
-          class="w-full h-full"
-          src="https://www.youtube-nocookie.com/embed/5iGajrIt3I0?si=HbiRRXqWhc0Tr2tv"
-          title="Vidéo 1 : Aperçu des fonctionnalités ID Postur"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen
-          loading="lazy"
-        >
-        </iframe>
-      </div>
-    </div>
-
-    <div class="w-full md:w-1/2">
-      <div class="aspect-video overflow-hidden shadow-2xl">
-        <iframe
-          class="w-full h-full"
-          src="https://www.youtube-nocookie.com/embed/9cvgGC2bqQ0?si=DTMPE88Pc0eN6rET"
-          title="Vidéo 2 : Cas d'utilisation et bénéfices ID Postur"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen
-          loading="lazy"
-        >
-        </iframe>
-      </div>
     </div>
   </div>
 </section>

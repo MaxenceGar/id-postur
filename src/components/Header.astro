@@ -1,4 +1,6 @@
 ---
+import { ENTREPRISE } from "../data/entreprise";
+
 /**
  * « Études posturales » ouvre l'étape de tri : le cycliste dit d'abord s'il
  * est déjà venu, puis ne voit que les deux formules qui le concernent.
@@ -12,7 +14,7 @@ const liens = [
     label: "Études posturales",
     actifSur: ["/etudes-posturales"],
   },
-  { href: "/cales", label: "Réglage des cales" },
+  { href: "/cales", label: "Cales" },
   { href: "/choix-nouveau-velo", label: "Choix d'un vélo" },
   { href: "/rendez-vous-divers", label: "Rendez-vous divers" },
 ];
@@ -24,21 +26,21 @@ const estActif = (lien: (typeof liens)[number]) =>
   (lien.actifSur ?? []).includes(chemin);
 ---
 
-<header class="bg-white shadow-sm sticky top-0 z-50">
-  <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-    <a href="/" aria-label="Retour à l'accueil ID Postur">
+<header class="bg-white/95 backdrop-blur border-b border-filet sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-5 md:px-8 lg:px-10 py-3.5 flex items-center justify-between gap-6">
+    <a href="/" aria-label="Retour à l'accueil ID Postur" class="shrink-0">
       <img
         src="/images/LOGO-ID-POSTUR.webp"
         alt="Logo ID Postur"
         width="128"
         height="43"
-        class="w-32 h-auto object-contain"
+        class="w-28 h-auto object-contain"
       />
     </a>
 
-    <!-- Navigation desktop -->
+    <!-- Navigation desktop : onglets sur fond gris, l'onglet actif ressort en blanc. -->
     <nav aria-label="Navigation principale" class="hidden lg:block">
-      <ul class="flex items-center gap-6">
+      <ul class="flex items-center gap-1 p-1 rounded-md bg-brume">
         {
           liens.map((lien) => (
             <li>
@@ -46,8 +48,10 @@ const estActif = (lien: (typeof liens)[number]) =>
                 href={lien.href}
                 aria-current={estActif(lien) ? "page" : undefined}
                 class:list={[
-                  "nav-link text-sm font-medium transition hover:text-id-postur-dark",
-                  estActif(lien) ? "text-gray-900" : "text-gray-700",
+                  "block px-4 py-2 rounded text-sm font-medium transition-colors",
+                  estActif(lien)
+                    ? "bg-white text-encre shadow-[0_1px_4px_rgb(0_0_0/0.08)]"
+                    : "text-encre-2 hover:text-encre hover:bg-white/60",
                 ]}
               >
                 {lien.label}
@@ -58,24 +62,27 @@ const estActif = (lien: (typeof liens)[number]) =>
       </ul>
     </nav>
 
-    <div class="flex items-center gap-3">
+    <div class="flex items-center gap-4">
       <a
-        href="/reserver"
-        class="btn-fleche text-[14px] hidden sm:inline-block bg-id-postur-dark text-white font-semibold py-3 px-4 transition duration-200 motion-safe:active:scale-[0.98]"
+        href={`tel:${ENTREPRISE.telephone}`}
+        class="hidden xl:inline text-sm font-medium text-encre-2 hover:text-encre transition-colors"
       >
-        Prendre rendez-vous
+        {ENTREPRISE.telephoneAffiche}
+      </a>
+      <a href="/reserver" class="btn btn-noir hidden sm:inline-flex">
+        Prendre rendez-vous <span aria-hidden="true">↗</span>
       </a>
 
       <!-- Menu mobile : disclosure natif, sans JavaScript -->
       <details class="lg:hidden group relative">
         <summary
-          class="list-none cursor-pointer p-2 text-gray-700"
+          class="list-none cursor-pointer p-2 rounded text-encre hover:bg-brume"
           aria-label="Ouvrir le menu"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="28"
-            height="28"
+            width="24"
+            height="24"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -83,16 +90,16 @@ const estActif = (lien: (typeof liens)[number]) =>
             stroke-linecap="round"
             aria-hidden="true"
           >
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="12" x2="21" y2="12"></line>
-            <line x1="3" y1="18" x2="21" y2="18"></line>
+            <line x1="4" y1="7" x2="20" y2="7"></line>
+            <line x1="4" y1="12" x2="20" y2="12"></line>
+            <line x1="4" y1="17" x2="20" y2="17"></line>
           </svg>
         </summary>
         <nav
           aria-label="Navigation mobile"
-          class="absolute right-0 top-full mt-2 w-64 bg-white shadow-lg border border-gray-200 z-50"
+          class="absolute right-0 top-full mt-3 w-72 p-2 bg-white rounded-md border border-filet shadow-[0_12px_32px_rgb(13_13_20/0.12)] z-50"
         >
-          <ul class="flex flex-col py-2">
+          <ul class="flex flex-col gap-1">
             {
               liens.map((lien) => (
                 <li>
@@ -100,8 +107,8 @@ const estActif = (lien: (typeof liens)[number]) =>
                     href={lien.href}
                     aria-current={estActif(lien) ? "page" : undefined}
                     class:list={[
-                      "block px-4 py-3 text-sm font-medium hover:bg-gray-50",
-                      estActif(lien) ? "text-gray-900" : "text-gray-700",
+                      "block px-3 py-2.5 rounded text-[15px] font-medium",
+                      estActif(lien) ? "bg-brume text-encre" : "text-encre-2 hover:bg-brume",
                     ]}
                   >
                     {lien.label}
@@ -109,12 +116,15 @@ const estActif = (lien: (typeof liens)[number]) =>
                 </li>
               ))
             }
-            <li class="px-4 py-3 sm:hidden">
-              <a
-                href="/reserver"
-                class="btn-fleche block text-center bg-id-postur-dark text-white font-semibold py-3 px-4 transition duration-200 motion-safe:active:scale-[0.98]"
-              >
-                Prendre rendez-vous
+            <li class="p-1 pt-2 sm:hidden">
+              <a href="/reserver" class="btn btn-noir w-full">
+                Prendre rendez-vous <span aria-hidden="true">↗</span>
+              </a>
+            </li>
+            <li class="px-3 py-2 text-sm text-encre-2">
+              Ou appelez le{" "}
+              <a href={`tel:${ENTREPRISE.telephone}`} class="font-semibold text-encre">
+                {ENTREPRISE.telephoneAffiche}
               </a>
             </li>
           </ul>

@@ -1,0 +1,84 @@
+---
+/** Déroulé d'une séance en trois temps, puis les deux vidéos de présentation. */
+const etapes = [
+  {
+    numero: "01",
+    titre: "On parle de vous",
+    texte: "Votre pratique, vos objectifs, vos douleurs éventuelles et votre morphologie.",
+    image: "/images/romain-hardy-studio.webp",
+    alt: "Romain Hardy dans le studio ID Postur",
+  },
+  {
+    numero: "02",
+    titre: "On mesure",
+    texte: "Capture de mouvement STT en 3D ou en 2D : des mesures fiables, au millimètre.",
+    image: "/images/etudes-posturales-studio.webp",
+    alt: "Analyse d'un cycliste en capture de mouvement dans le studio",
+  },
+  {
+    numero: "03",
+    titre: "On règle",
+    texte: "Hauteur de selle, recul, potence, cales : votre vélo repart ajusté à vous.",
+    image: "/images/reglage-cales-pedale.webp",
+    alt: "Réglage des cales d'un cycliste sur son vélo",
+  },
+];
+---
+
+<section class="bg-brume">
+  <div class="max-w-7xl mx-auto px-5 md:px-8 lg:px-10 py-20 md:py-28 flex flex-col gap-12">
+    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+      <div class="flex flex-col gap-4">
+        <p class="pastille bg-white">Comment ça se passe</p>
+        <h2 class="text-4xl md:text-[3.25rem] leading-[1.04] tracking-[-0.035em]">
+          Une séance, <span class="accent">trois temps</span>.
+        </h2>
+      </div>
+      <p class="text-[17px] leading-relaxed text-encre-2 max-w-sm">
+        Chaque étude est menée de bout en bout par Romain, dans le studio de La
+        Mézière.
+      </p>
+    </div>
+
+    <ol class="grid gap-5 md:grid-cols-3">
+      {
+        etapes.map((e) => (
+          <li class="flex flex-col rounded-md bg-white overflow-hidden">
+            <img src={e.image} alt={e.alt} width="600" height="360" loading="lazy" class="w-full aspect-[5/3] object-cover" />
+            <div class="flex flex-col gap-2.5 p-7">
+              <span class="font-id-postur text-sm font-semibold tracking-wide text-id-postur-dark">{e.numero}</span>
+              <h3 class="text-2xl tracking-[-0.03em]">{e.titre}</h3>
+              <p class="text-[15px] leading-relaxed text-encre-2">{e.texte}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="flex flex-col gap-5 pt-4">
+      <h3 class="text-2xl tracking-[-0.03em]">ID Postur en vidéo</h3>
+      <div class="grid gap-5 md:grid-cols-2">
+        <div class="aspect-video overflow-hidden rounded-md bg-encre">
+          <iframe
+            class="w-full h-full"
+            src="https://www.youtube-nocookie.com/embed/5iGajrIt3I0?si=HbiRRXqWhc0Tr2tv"
+            title="Vidéo 1 : Aperçu des fonctionnalités ID Postur"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="aspect-video overflow-hidden rounded-md bg-encre">
+          <iframe
+            class="w-full h-full"
+            src="https://www.youtube-nocookie.com/embed/9cvgGC2bqQ0?si=DTMPE88Pc0eN6rET"
+            title="Vidéo 2 : Cas d'utilisation et bénéfices ID Postur"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

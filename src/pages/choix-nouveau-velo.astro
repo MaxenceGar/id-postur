@@ -1,8 +1,9 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import "../styles/global.css";
 import Formulecomponent from "../components/formulecomponent.astro";
 import AutresPrestations from "../components/autres-prestations.astro";
+import PageHero from "../components/PageHero.astro";
+import FaqListe from "../components/FaqListe.astro";
 import { formatPrix, getPrestation } from "../data/tarifs";
 import { noeudService } from "../lib/schema";
 import { SITE_URL } from "../data/entreprise";
@@ -48,62 +49,46 @@ const services = [
   schema={services}
 >
 
-  <div
-    class="w-full h-96 relative bg-[url('/images/choix-nouveau-velo-reglage.webp')] bg-cover bg-center flex items-center justify-center bg-black/50 bg-blend-overlay"
-  >
-    <div class="grid grid-cols-1 text-white px-4">
-      <h1 class="text-2xl md:text-3xl font-semibold text-center">
-        Choisissez votre nouveau vélo en toute confiance
-      </h1>
-      <div
-        class="h-[2px] w-10 bg-id-postur-dark mx-auto mt-4 mb-10 rounded-full"
-      >
-      </div>
-      <p class="text-center max-w-4xl mx-auto pb-4">
-        Avant d'investir dans un nouveau vélo, <strong>ID Postur</strong> vous accompagne
-        à Rennes pour valider la taille, l'ergonomie et la compatibilité avec votre
-        morphologie. Un conseil éclairé qui évite les mauvais achats et prépare votre
-        future étude posturale.
-      </p>
-    </div>
-  </div>
+  <PageHero
+    ariane="Choix d'un nouveau vélo"
+    pastille="Conseil avant l'achat à Rennes"
+    titre={["Choisissez votre vélo ", "en confiance", "."]}
+    intro="Avant d'investir dans un nouveau vélo, ID Postur vous accompagne pour valider la taille, l'ergonomie et la compatibilité avec votre morphologie. Un conseil éclairé qui évite les mauvais achats et prépare votre future étude posturale."
+    image="/images/choix-nouveau-velo-reglage.webp"
+    alt="Validation de la taille d'un nouveau vélo chez ID Postur"
+    puces={[`${formatPrix(choix.price)} · ${choix.duration}`, choix.disciplines]}
+    ctas={[
+      { href: "#formule", label: "Voir la formule" },
+      { href: "/etudes-posturales", label: "Voir les études", secondaire: true },
+    ]}
+  />
 
-  <section class="py-16">
-    <div class="container px-5 mx-auto">
-      <h2 class="text-xl md:text-3xl font-semibold">
-        Un rendez-vous court pour sécuriser votre achat
+  <section id="formule" class="bg-brume">
+    <div class="max-w-7xl mx-auto px-5 md:px-8 lg:px-10 py-20 md:py-24 flex flex-col gap-10">
+      <h2 class="text-3xl md:text-[2.5rem] leading-[1.06] tracking-[-0.035em]">
+        Un rendez-vous court pour <span class="accent">sécuriser</span> votre achat
       </h2>
-      <div class="h-[2px] w-10 bg-id-postur-dark mt-4 mb-10 rounded-full"></div>
-      <div class="max-w-md">
-        <Formulecomponent prestation={choix} highlight />
+      <div class="grid gap-5 lg:grid-cols-[1.4fr_1fr]">
+        <Formulecomponent prestation={choix} />
+        <div class="flex flex-col gap-5">
+          <a href="/etudes-posturales" class="sur-fond-sombre group flex grow flex-col gap-4 rounded-md bg-encre p-7 md:p-8">
+            <h3 class="text-2xl md:text-[1.75rem] leading-tight tracking-[-0.03em] text-white">
+              Et une fois le vélo <span class="accent">acheté</span> ?
+            </h3>
+            <p class="text-[15px] leading-relaxed text-[#b4b4bc]">
+              L'étude posturale règle ensuite votre position sur votre nouveau vélo, au millimètre, avec la capture de mouvement STT.
+            </p>
+            <span class="mt-auto inline-flex items-center gap-2 text-[15px] font-medium text-white">
+              Découvrir les études <span aria-hidden="true">↗</span>
+            </span>
+          </a>
+          <img src="/images/etudes-posturales-studio.webp" alt="" width="600" height="320" loading="lazy" class="w-full aspect-[16/8] object-cover rounded-md" />
+        </div>
       </div>
     </div>
   </section>
 
   <AutresPrestations exclude="choix-nouveau-velo" />
 
-  <section class="relative px-6 pb-16 overflow-hidden">
-    <div class="relative max-w-5xl mx-auto text-center">
-      <h2 id="faq" class="text-2xl md:text-3xl font-semibold mb-4">
-        En savoir plus
-      </h2>
-      <div class="h-[2px] w-10 bg-id-postur-dark mx-auto mb-6"></div>
-
-      <div class="space-y-6 text-left">
-        {
-          faqItems.map((item) => (
-            <details class="group bg-white border border-gray-200 p-6 transition">
-              <summary class="flex items-center justify-between cursor-pointer list-none">
-                <h3 class="text-lg font-semibold">{item.question}</h3>
-                <span class="text-gray-400 transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none">
-                  +
-                </span>
-              </summary>
-              <p class="mt-4 leading-relaxed">{item.answer}</p>
-            </details>
-          ))
-        }
-      </div>
-    </div>
-  </section>
+  <FaqListe items={faqItems} />
 </BaseLayout>

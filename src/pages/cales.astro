@@ -1,8 +1,9 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import "../styles/global.css";
 import Formulecomponent from "../components/formulecomponent.astro";
 import AutresPrestations from "../components/autres-prestations.astro";
+import PageHero from "../components/PageHero.astro";
+import FaqListe from "../components/FaqListe.astro";
 import { formatPrix, getPrestation } from "../data/tarifs";
 import { noeudService } from "../lib/schema";
 import { SITE_URL } from "../data/entreprise";
@@ -52,69 +53,46 @@ const services = [
   schema={services}
 >
 
-  <div
-    class="w-full h-96 relative bg-[url('/images/reglage-cales-pedale.webp')] bg-cover bg-center flex items-center justify-center bg-black/50 bg-blend-overlay"
-  >
-    <div class="grid grid-cols-1 text-white px-4">
-      <h1 class="text-2xl md:text-3xl font-semibold text-center">
-        Réglage des cales vélo à Rennes
-      </h1>
-      <div
-        class="h-[2px] w-10 bg-id-postur-dark mx-auto mt-4 mb-10 rounded-full"
-      >
-      </div>
-      <p class="text-center max-w-4xl mx-auto pb-4">
-        <span class="font-bold">ID Postur</span> vous aide à trouver le positionnement
-        idéal de vos <span class="font-bold">cales</span>, au millimètre près. Que vous pratiquiez la
-        <span class="font-bold">route, le VTT, le gravel ou le chrono</span>, un
-        réglage précis améliore votre confort, votre efficacité de pédalage et
-        limite les risques de blessures.
-      </p>
-      <div class="inline-block mx-auto">
-        <a
-          class="text-center inline-block px-6 py-2 bg-id-postur-dark text-white font-medium hover:opacity-90 transition duration-300 cursor-pointer"
-          href="/etudes-posturales"
-        >
-          Voir les études posturales
-        </a>
-      </div>
-    </div>
-  </div>
+  <PageHero
+    ariane="Réglage des cales"
+    pastille="Réglage des cales vélo à Rennes"
+    titre={["Vos cales, ", "au millimètre", "."]}
+    intro="ID Postur vous aide à trouver le positionnement idéal de vos cales. Que vous pratiquiez la route, le VTT, le gravel ou le chrono, un réglage précis améliore votre confort, votre efficacité de pédalage et limite les risques de blessure."
+    image="/images/reglage-cales-pedale.webp"
+    alt="Réglage des cales d'un cycliste sur la pédale, chez ID Postur"
+    puces={[`${formatPrix(cales.price)} · ${cales.duration}`, cales.disciplines]}
+    ctas={[
+      { href: "#formule", label: "Voir la formule" },
+      { href: "/etudes-posturales", label: "Voir les études", secondaire: true },
+    ]}
+  />
 
-  <section class="py-16">
-    <div class="container px-5 mx-auto">
-      <h2 class="text-xl md:text-3xl font-semibold">Le réglage des cales</h2>
-      <div class="h-[2px] w-10 bg-id-postur-dark mt-4 mb-10 rounded-full"></div>
-      <div class="max-w-md">
-        <Formulecomponent prestation={cales} highlight />
+  <section id="formule" class="bg-brume">
+    <div class="max-w-7xl mx-auto px-5 md:px-8 lg:px-10 py-20 md:py-24 flex flex-col gap-10">
+      <h2 class="text-3xl md:text-[2.5rem] leading-[1.06] tracking-[-0.035em]">
+        Le réglage des <span class="accent">cales</span>
+      </h2>
+      <div class="grid gap-5 lg:grid-cols-[1.4fr_1fr]">
+        <Formulecomponent prestation={cales} />
+        <div class="flex flex-col gap-5">
+          <a href="/etudes-posturales" class="sur-fond-sombre group flex grow flex-col gap-4 rounded-md bg-encre p-7 md:p-8">
+            <h3 class="text-2xl md:text-[1.75rem] leading-tight tracking-[-0.03em] text-white">
+              Déjà inclus dans <span class="accent">l'étude posturale</span>.
+            </h3>
+            <p class="text-[15px] leading-relaxed text-[#b4b4bc]">
+              Le positionnement des cales fait partie de l'étude 3D comme de l'étude 2D. Ce rendez-vous de 20 minutes s'adresse à ceux qui veulent uniquement régler leurs cales, par exemple après un changement de chaussures.
+            </p>
+            <span class="mt-auto inline-flex items-center gap-2 text-[15px] font-medium text-white">
+              Découvrir les études <span aria-hidden="true">↗</span>
+            </span>
+          </a>
+          <img src="/images/etude-posturale-reglage-genou.webp" alt="" width="600" height="320" loading="lazy" class="w-full aspect-[16/8] object-cover rounded-md" />
+        </div>
       </div>
     </div>
   </section>
 
   <AutresPrestations exclude="reglage-cales" />
 
-  <section class="relative px-6 pb-16 overflow-hidden">
-    <div class="relative max-w-5xl mx-auto text-center">
-      <h2 id="faq" class="text-2xl md:text-3xl font-semibold mb-4">
-        En savoir plus
-      </h2>
-      <div class="h-[2px] w-10 bg-id-postur-dark mx-auto mb-6"></div>
-
-      <div class="space-y-6 text-left">
-        {
-          faqItems.map((item) => (
-            <details class="group bg-white border border-gray-200 p-6 transition">
-              <summary class="flex items-center justify-between cursor-pointer list-none">
-                <h3 class="text-lg font-semibold">{item.question}</h3>
-                <span class="text-gray-400 transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none">
-                  +
-                </span>
-              </summary>
-              <p class="mt-4 leading-relaxed">{item.answer}</p>
-            </details>
-          ))
-        }
-      </div>
-    </div>
-  </section>
+  <FaqListe items={faqItems} />
 </BaseLayout>

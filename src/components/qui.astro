@@ -1,26 +1,57 @@
-<section class="container px-5 py-24 mx-auto">
-  <img
-    src="/images/romain-hardy-studio.webp"
-    width="640"
-    height="640"
-    class="w-48 h-48 object-cover rounded-full block mx-auto mb-6 hover:scale-105 transition-all delay-75 duration-300 ease-in-out"
-    alt="Romain Hardy, fondateur d'ID Postur, dans son studio d'étude posturale"
-    loading="lazy"
-  />
+---
+/** Le fondateur, et les athlètes qui lui ont fait confiance. */
+const pros = [
+  { nom: "Warren Barguil", role: "Cycliste professionnel", photo: "/images/warren-barguil.webp" },
+  { nom: "Amandine Fouquenet", role: "Cycliste professionnelle", photo: "/images/AmandineFouquenet.webp" },
+  { nom: "Thibault Gernalec", role: "Cycliste professionnel", photo: "/images/thibaultgernalec.webp" },
+  { nom: "Yann Guyot", role: "Triathlète", photo: "/images/yannguyot.jpg" },
+  { nom: "Robin Lemercier", role: "Triathlète", photo: "/images/robin-lemercier.jpg" },
+  { nom: "Florentin Lecamus", role: "Cycliste professionnel", photo: "/images/florentin-lecamus.jpg" },
+  { nom: "Swan Gloux", role: "Cycliste professionnel", photo: "/images/Swan-gloux.jpg" },
+];
+---
 
-  <div class="h-[2px] w-10 bg-id-postur-dark mx-auto mb-6 rounded-full"></div>
+<section class="max-w-7xl mx-auto px-5 md:px-8 lg:px-10 py-20 md:py-28">
+  <div class="grid gap-12 lg:gap-18 lg:grid-cols-[0.8fr_1.2fr] items-center">
+    <img
+      src="/images/romain-hardy-studio.webp"
+      width="640"
+      height="640"
+      class="w-full max-w-md lg:max-w-none aspect-[6/7] object-cover rounded-md"
+      alt="Romain Hardy, fondateur d'ID Postur, dans son studio d'étude posturale"
+      loading="lazy"
+    />
 
-  <p class="text-gray-600 uppercase tracking-wide mb-8 text-center">
-    by Romain Hardy
-  </p>
+    <div class="flex flex-col gap-6">
+      <p class="pastille">Le fondateur</p>
+      <h2 class="text-3xl md:text-5xl leading-[1.08] tracking-[-0.035em] max-w-2xl">
+        Le regard d'un ancien <span class="accent">coureur pro</span>.
+      </h2>
+      <p class="text-[17px] leading-relaxed text-encre-2 max-w-xl">
+        <strong class="font-semibold text-encre">ID Postur</strong> est un centre
+        d'étude posturale pour le cycliste, fondé en 2023 par
+        <strong class="font-semibold text-encre">Romain Hardy</strong>, ancien
+        cycliste professionnel. Route, VTT, gravel, triathlon : il met une
+        expertise scientifique au service de chaque athlète, pour gagner en
+        performance et réduire les douleurs.
+      </p>
 
-  <p class="leading-relaxed mb-8 text-left md:text-center text-base">
-    <strong>ID Postur</strong> est un centre d’étude posturale pour le cycliste,
-    fondé en 2023 par
-    <strong>Romain Hardy</strong>, ancien cycliste professionnel. Nous avons
-    déjà accompagné plus de <strong>300 cyclistes</strong> dans l’optimisation de
-    leur position pour gagner en performance et réduire les douleurs. Route, VTT,
-    Gravel, Triathlon : améliorez votre confort et vos performances grâce à une expertise
-    scientifique au service de chaque athlète.
-  </p>
+      <div class="flex flex-col gap-3 pt-2">
+        <p class="text-sm font-semibold text-encre-3">Ils m'ont fait confiance</p>
+        <ul class="flex flex-wrap gap-2.5">
+          {
+            pros.map((p) => (
+              <li class="flex items-center gap-2.5 rounded-md bg-brume py-2 pl-2 pr-4">
+                <img src={p.photo} alt="" width="36" height="36" loading="lazy" class="size-9 rounded object-cover object-top" />
+                <span class="flex flex-col">
+                  <span class="text-sm font-semibold text-encre">{p.nom}</span>
+                  <span class="text-xs text-encre-2">{p.role}</span>
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
 </section>

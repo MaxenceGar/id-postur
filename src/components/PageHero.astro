@@ -1,0 +1,68 @@
+---
+/**
+ * Hero des pages intérieures, DA « Atelier » : fil d'Ariane, H1 avec un mot
+ * en italique rouge, photo arrondie et badge flottant des points clés.
+ */
+export interface Props {
+  /** Libellé de la page courante dans le fil d'Ariane visuel. */
+  ariane: string;
+  pastille: string;
+  /** H1 : texte avant le mot en italique, le mot, puis la suite. */
+  titre: [string, string, string];
+  intro: string;
+  image: string;
+  alt: string;
+  puces?: string[];
+  ctas: { href: string; label: string; secondaire?: boolean }[];
+}
+
+const { ariane, pastille, titre, intro, image, alt, puces = [], ctas } = Astro.props;
+---
+
+<section class="max-w-7xl mx-auto px-5 md:px-8 lg:px-10 pt-8 pb-16 md:pt-10 md:pb-24">
+  <div class="grid gap-12 lg:gap-16 lg:grid-cols-[1fr_1fr] items-center">
+    <div class="flex flex-col gap-6">
+      <nav aria-label="Fil d'Ariane" class="flex items-center gap-2 text-[13px] font-medium text-encre-3">
+        <a href="/" class="hover:text-encre transition-colors">Accueil</a>
+        <span aria-hidden="true">/</span>
+        <span class="text-encre" aria-current="page">{ariane}</span>
+      </nav>
+      <p class="pastille pastille-rose">{pastille}</p>
+      <h1 class="text-[2.5rem] sm:text-6xl xl:text-[4.25rem] leading-[1.03] tracking-[-0.04em]">
+        {titre[0]}<span class="accent">{titre[1]}</span>{titre[2]}
+      </h1>
+      <p class="text-lg leading-relaxed text-encre-2 max-w-xl">{intro}</p>
+      <div class="flex flex-wrap gap-3">
+        {
+          ctas.map((c, i) => (
+            <a href={c.href} class:list={["btn", c.secondaire ? "btn-contour" : i === 0 ? "btn-rouge" : "btn-noir"]}>
+              {c.label} {!c.secondaire && <span aria-hidden="true">↗</span>}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="relative sm:pl-6 sm:pb-6">
+      <img
+        src={image}
+        alt={alt}
+        width="1200"
+        height="1100"
+        class="w-full aspect-[16/11] object-cover rounded-md"
+      />
+      {
+        puces.length > 0 && (
+          <ul class="badge-flottant sm:absolute left-0 bottom-0 mt-4 sm:mt-0 flex flex-col gap-2.5 p-5">
+            {puces.map((p) => (
+              <li class="flex items-center gap-2.5 text-sm font-medium text-encre">
+                <span class="size-1.5 rounded-full bg-id-postur-dark" aria-hidden="true" />
+                {p}
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </div>
+  </div>
+</section>

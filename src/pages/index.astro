@@ -4,8 +4,8 @@ import Chiffres from "../components/chiffres.astro";
 import Hero from "../components/hero.astro";
 import Qui from "../components/qui.astro";
 import Faq from "../components/faq.astro";
-import Confiances from "../components/confiances.astro";
-import Partenaires from "../components/partenaires.astro";
+import Methode from "../components/methode.astro";
+import Avis from "../components/avis.astro";
 import Formule from "../components/formule.astro";
 import SEO from "../components/seo.astro";
 import { FAQ_ACCUEIL } from "../data/faq";
@@ -43,13 +43,12 @@ const services = [
 ---
 
 <BaseLayout faq={FAQ_ACCUEIL} schema={services}>
-  <!-- Sections normales -->
   <Hero />
   <Chiffres />
-  <Qui />
   <Formule />
-  <Confiances />
-  <Partenaires />
+  <Methode />
+  <Qui />
+  <Avis />
   <Faq />
   <SEO />
 </BaseLayout>

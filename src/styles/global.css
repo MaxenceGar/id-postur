@@ -1,33 +1,133 @@
 @import "tailwindcss";
-/* Inter (variable, graisses 100-900 + axe opsz) : corps de texte. */
-@import '@fontsource-variable/inter/opsz.css';
-@import '@fontsource/poppins/100.css';
-@import '@fontsource/poppins/200.css';
-@import '@fontsource/poppins/300.css';
-@import '@fontsource/poppins/400.css';
-@import '@fontsource/poppins/500.css';
-@import '@fontsource/poppins/600.css';
-@import '@fontsource/poppins/700.css';
-@import '@fontsource/poppins/800.css';
-@import '@fontsource/poppins/900.css';
+/* DA « Atelier » : Plus Jakarta Sans pour les titres, DM Sans pour le texte. */
+@import '@fontsource/plus-jakarta-sans/500.css';
+@import '@fontsource/plus-jakarta-sans/600.css';
+@import '@fontsource/plus-jakarta-sans/600-italic.css';
+@import '@fontsource/plus-jakarta-sans/700.css';
+@import '@fontsource/dm-sans/400.css';
+@import '@fontsource/dm-sans/500.css';
+@import '@fontsource/dm-sans/600.css';
 
 @theme {
   --color-id-postur: #F80000;
   --color-id-postur-dark: #c00000;
   --color-bermuda: #78dcca;
+  /* Palette Atelier : encre, gris et rosé autour du rouge ID Postur. */
+  --color-encre: #161616;
+  --color-encre-2: #5f5f68;
+  --color-encre-3: #9a9aa2;
+  --color-brume: #f5f5f6;
+  --color-filet: #e7e7ea;
+  --color-rose: #fbeaea;
+  --color-nuit: #202023;
 }
 
 @theme {
-  --font-id-postur: 'Poppins', sans-serif;
+  --font-id-postur: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
   /* Police par défaut de tout le site (corps de texte). */
-  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
 }
 
-/* Corps de texte en Inter (via --font-sans), titres en Poppins semi-gras. */
+/* Corps de texte en DM Sans (via --font-sans), titres en Plus Jakarta Sans. */
 @layer base {
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-id-postur);
-    letter-spacing: -0.01em;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    color: var(--color-encre);
+  }
+  /* Titres posés sur une photo sombre : ils suivent le texte blanc du parent. */
+  .text-white :is(h1, h2, h3, h4, h5, h6) {
+    color: inherit;
+  }
+}
+
+@layer components {
+  /* Le mot clé d'un titre : italique rouge. */
+  .accent {
+    font-style: italic;
+    color: var(--color-id-postur-dark);
+  }
+  .sur-fond-sombre .accent {
+    color: #ff4d4d;
+  }
+
+  /* Petite étiquette au-dessus des titres. */
+  .pastille {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: fit-content;
+    padding: 0.375rem 0.75rem;
+    border-radius: 4px;
+    background: var(--color-brume);
+    color: var(--color-encre-2);
+    font-size: 0.8125rem;
+    font-weight: 500;
+  }
+  .pastille::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--color-id-postur-dark);
+  }
+  .pastille-rose {
+    background: var(--color-rose);
+    color: var(--color-id-postur-dark);
+  }
+
+  /* Boutons : angles nets, flèche discrète. */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.375rem;
+    border-radius: 4px;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    line-height: 1.2;
+    transition: background-color 0.2s, border-color 0.2s, transform 0.2s;
+  }
+  .btn:active {
+    transform: scale(0.98);
+  }
+  .btn-noir {
+    background: var(--color-encre);
+    color: #fff;
+  }
+  .btn-noir:hover {
+    background: #2c2c31;
+  }
+  .btn-rouge {
+    background: var(--color-id-postur-dark);
+    color: #fff;
+  }
+  .btn-rouge:hover {
+    background: #a30000;
+  }
+  .btn-contour {
+    background: #fff;
+    color: var(--color-encre);
+    box-shadow: inset 0 0 0 1px var(--color-filet);
+  }
+  .btn-contour:hover {
+    box-shadow: inset 0 0 0 1px var(--color-encre-3);
+  }
+  .btn-contour-sombre {
+    color: #fff;
+    box-shadow: inset 0 0 0 1px #3a3a40;
+  }
+  .btn-contour-sombre:hover {
+    box-shadow: inset 0 0 0 1px #8a8a93;
+  }
+
+  /* Badge flottant sur les photos. */
+  .badge-flottant {
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 12px 32px rgb(13 13 20 / 0.1);
   }
 }
 

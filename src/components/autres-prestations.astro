@@ -10,22 +10,31 @@ export interface Props {
   /** Slug de la prestation à ne pas afficher (celle de la page courante). */
   exclude?: string;
   title?: string;
+  /** Masque la carte « Étude posturale » (sur la page des études elle-même). */
+  sansEtude?: boolean;
 }
 
-const { exclude, title = "Les autres prestations ID Postur" } = Astro.props;
+const { exclude, title = "Les autres prestations ID Postur", sansEtude = false } = Astro.props;
+
+const IMAGES: Record<string, string> = {
+  "/etudes-posturales": "/images/etudes-posturales-studio.webp",
+  "/cales": "/images/reglage-cales-pedale.webp",
+  "/choix-nouveau-velo": "/images/choix-nouveau-velo-reglage.webp",
+  "/rendez-vous-divers": "/images/rendez-vous-ajustement-selle.webp",
+};
 
 /** Une seule carte pour les études posturales : elles partagent la même page. */
 const etude = ETUDES_POSTURALES[0];
 
 const liens = [
-  {
+  ...(sansEtude ? [] : [{
     href: etude.page,
     title: "Étude posturale 3D et 2D",
     description:
       "L'analyse complète de votre position sur le vélo, en 3D ou en 2D, pour gagner en confort et en performance.",
     prix: `à partir de ${formatPrix(PRIX_ENTREE_ETUDE)}`,
     duree: `${ETUDES_POSTURALES[1].duration} à ${etude.duration}`,
-  },
+  }]),
   ...PRESTATIONS_COURTES.filter((p) => p.slug !== exclude).map((p) => ({
     href: p.page,
     title: p.title,
@@ -36,30 +45,30 @@ const liens = [
 ];
 ---
 
-<section class="py-16">
-  <div class="container mx-auto px-2 md:px-5">
-    <h2 class="text-xl md:text-3xl font-semibold">{title}</h2>
-    <div class="h-[2px] w-10 bg-id-postur-dark mt-4 mb-4 rounded-full"></div>
+<section class="max-w-7xl mx-auto px-5 md:px-8 lg:px-10 py-20 md:py-24 flex flex-col gap-10">
+  <div class="flex flex-col gap-4">
+    <p class="pastille">Autres prestations</p>
+    <h2 class="text-3xl md:text-[2.5rem] leading-[1.06] tracking-[-0.035em]">{title}</h2>
+  </div>
 
-    <div class="grid gap-8 md:grid-cols-3 py-10">
-      {
-        liens.map((lien) => (
-          <a
-            href={lien.href}
-            class="block bg-white border border-gray-200 p-6 hover:border-gray-400 transition"
-          >
-            <h3 class="text-xl font-semibold text-gray-900 mb-2">
-              {lien.title}
-            </h3>
-            <p class="text-sm text-gray-500 mb-4">{lien.description}</p>
-            <p class="text-2xl font-bold text-gray-900">{lien.prix}</p>
-            <p class="text-sm text-gray-700">⏱ {lien.duree}</p>
-            <span class="inline-block mt-4 text-sm font-semibold text-gray-900">
-              En savoir plus →
+  <div class="grid gap-5 md:grid-cols-3">
+    {
+      liens.map((lien) => (
+        <a
+          href={lien.href}
+          class="group flex flex-col rounded-md border border-filet overflow-hidden transition-colors hover:border-encre-3"
+        >
+          <img src={IMAGES[lien.href]} alt="" width="600" height="340" loading="lazy" class="w-full aspect-[16/9] object-cover" />
+          <span class="flex grow flex-col gap-2 p-6">
+            <span class="font-id-postur text-xl font-semibold tracking-[-0.025em] text-encre">{lien.title}</span>
+            <span class="text-sm leading-relaxed text-encre-2">{lien.description}</span>
+            <span class="mt-auto flex items-center justify-between pt-3 text-sm">
+              <span class="font-semibold text-id-postur-dark">{lien.prix} · {lien.duree}</span>
+              <span class="grid place-items-center size-8 rounded bg-brume text-encre transition-colors group-hover:bg-encre group-hover:text-white" aria-hidden="true">↗</span>
             </span>
-          </a>
-        ))
-      }
-    </div>
+          </span>
+        </a>
+      ))
+    }
   </div>
 </section>

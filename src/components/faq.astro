@@ -1,8 +1,6 @@
 ---
-import "../styles/global.css";
 import { FAQ_ACCUEIL } from "../data/faq";
-import { ENTREPRISE } from "../data/entreprise";
-
+import FaqListe from "./FaqListe.astro";
 /**
  * La liste vit dans src/data/faq.ts : BaseLayout la reçoit aussi via la prop
  * `faq` de la page d'accueil pour générer le balisage FAQPage. Une seule
@@ -10,46 +8,7 @@ import { ENTREPRISE } from "../data/entreprise";
  */
 ---
 
-<section class="relative py-28 px-6 overflow-hidden bg-white">
-  <div
-    class="relative max-w-5xl mx-auto grid gap-10 lg:grid-cols-[2fr_3fr] text-left"
-  >
-    <!-- Bloc d'intro : au-dessus des questions sur mobile, à gauche sur desktop -->
-    <div class="lg:sticky lg:top-28">
-      <h2 id="faq" class="text-[35px]/10 font-semibold text-gray-900 mb-4">
-        Vos questions sur l'étude posturale vélo à Rennes
-      </h2>
-      <div class="h-[2px] w-10 bg-id-postur-dark mb-6"></div>
-      <p class="text-[16px] text-[#4A4843] leading-[1.7] mb-8">
-        Vous ne trouvez pas votre réponse ? Appelez-nous au {ENTREPRISE.telephoneAffiche} ou
-        écrivez-nous, on vous répond rapidement.
-      </p>
-      <a
-        href="/reserver"
-        class="btn-fleche inline-block bg-[#f5f5f6] text-[#1C1B1A] text-[14px] font-semibold py-3 px-6 border border-[#d4d4d4] transition duration-200 motion-safe:active:scale-[0.98]"
-      >
-        Prendre rendez-vous
-      </a>
-    </div>
-
-    <div class="space-y-2.5 lg:space-y-5 text-left">
-      {
-        FAQ_ACCUEIL.map((item) => (
-          <details class="group bg-[#f5f5f6] border border-[#e4e4e4] p-2.5 transition-colors duration-200 hover:border-gray-400 open:border-id-postur-dark/40">
-            <summary class="flex items-center justify-between cursor-pointer list-none">
-              <h3 class="text-[15px] font-semibold text-gray-900">
-                {item.question}
-              </h3>
-              <span class="text-[#4A4843] transition-transform duration-300 group-open:rotate-45 text-xl leading-none select-none">
-                +
-              </span>
-            </summary>
-            <p class="faq-reponse mt-4 text-gray-600 leading-relaxed text-[13px]">
-              {item.answer}
-            </p>
-          </details>
-        ))
-      }
-    </div>
-  </div>
-</section>
+<FaqListe
+  items={FAQ_ACCUEIL}
+  titre={["Vos questions sur l'", "étude posturale", " vélo à Rennes."]}
+/>

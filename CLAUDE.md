@@ -26,7 +26,7 @@ Fiche de référence pour travailler vite et juste sur ce site. **Priorité : SE
 - **Astro 5.16** (SSG pur, **aucun JS côté client** hors Speed Insights).
 - **Tailwind CSS 4** via `@tailwindcss/vite` (pas de `tailwind.config.js`, tout est dans [global.css](src/styles/global.css)).
 - **Animations** : CSS natives (`@keyframes` + `IntersectionObserver` inline pour les reveals — voir [global.css](src/styles/global.css) et [chiffres.astro](src/components/chiffres.astro)). Respect `prefers-reduced-motion`.
-- **Fonts** : `@fontsource/poppins` (locale, toutes graisses).
+- **Fonts** : DA « Atelier » — `@fontsource/plus-jakarta-sans` (titres, mot clé en italique rouge via `.accent`) et `@fontsource/dm-sans` (texte). Maquettes Figma : fichier « ID Postur V2 », page « Atelier — pages ».
 - **Embeds** : `astro-embed` (YouTube).
 - **Perf** : `@vercel/speed-insights/astro` intégré dans BaseLayout. Build ~1s, 0 JS généré pour les pages.
 - **Hébergement** : Vercel. Domaine : **https://id-postur.fr**.
@@ -43,6 +43,7 @@ npm run preview   # preview prod localement
 - `--color-id-postur: #F80000`
 - `--color-id-postur-dark: #c00000`
 - Accessibles via classes Tailwind `bg-id-postur`, `text-id-postur`, etc.
+- Palette Atelier : `encre` #161616, `encre-2`, `encre-3`, `brume` #f5f5f6, `filet` #e7e7ea, `rose` #fbeaea, `nuit`. Composants CSS : `.btn` (+ `.btn-noir`, `.btn-rouge`, `.btn-contour`), `.pastille`, `.accent`, `.badge-flottant`. Angles nets : 4 px (boutons) et 6 px (cartes).
 
 ---
 

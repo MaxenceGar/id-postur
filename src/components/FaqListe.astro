@@ -1,0 +1,57 @@
+---
+import { ENTREPRISE } from "../data/entreprise";
+import type { Question } from "../lib/schema";
+
+/**
+ * FAQ commune à toutes les pages : intro à gauche, questions dépliables à
+ * droite. Passer la MÊME liste que la prop `faq` du BaseLayout, pour que le
+ * balisage FAQPage corresponde exactement au contenu visible.
+ */
+export interface Props {
+  items: Question[];
+  /** Titre : texte avant le mot en italique, le mot, puis la suite. */
+  titre?: [string, string, string];
+  intro?: string;
+}
+
+const {
+  items,
+  titre = ["En savoir ", "plus", "."],
+  intro = `Vous ne trouvez pas votre réponse ? Appelez-nous au ${ENTREPRISE.telephoneAffiche}, on vous répond rapidement.`,
+} = Astro.props;
+---
+
+<section class="max-w-7xl mx-auto px-5 md:px-8 lg:px-10 py-20 md:py-28">
+  <div class="grid gap-10 lg:gap-20 lg:grid-cols-[minmax(0,26rem)_1fr]">
+    <div class="flex flex-col gap-5 lg:sticky lg:top-28 self-start">
+      <p class="pastille">Questions fréquentes</p>
+      <h2 id="faq" class="text-3xl md:text-[2.75rem] leading-[1.06] tracking-[-0.035em]">
+        {titre[0]}<span class="accent">{titre[1]}</span>{titre[2]}
+      </h2>
+      <p class="text-base leading-relaxed text-encre-2">{intro}</p>
+      <a href="/reserver" class="btn btn-noir w-fit">
+        Prendre rendez-vous <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+
+    <div class="border-t border-filet">
+      {
+        items.map((item, i) => (
+          <details class="group border-b border-filet" open={i === 0}>
+            <summary class="flex items-center justify-between gap-6 py-6 cursor-pointer list-none">
+              <h3 class="text-lg md:text-[19px] leading-snug tracking-[-0.02em]">{item.question}</h3>
+              <span
+                class="grid place-items-center size-8 shrink-0 rounded bg-brume text-encre text-lg transition-colors group-open:bg-encre group-open:text-white"
+                aria-hidden="true"
+              >
+                <span class="group-open:hidden">+</span>
+                <span class="hidden group-open:inline">–</span>
+              </span>
+            </summary>
+            <p class="faq-reponse pb-6 pr-14 text-base leading-relaxed text-encre-2">{item.answer}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
