@@ -15,7 +15,7 @@
   /* Palette Atelier : encre, gris et rosé autour du rouge ID Postur. */
   --color-encre: #161616;
   --color-encre-2: #5f5f68;
-  --color-encre-3: #9a9aa2;
+  --color-encre-3: #74747c;
   --color-brume: #f5f5f6;
   --color-filet: #e7e7ea;
   --color-rose: #fbeaea;
@@ -35,6 +35,20 @@
     font-weight: 600;
     letter-spacing: -0.03em;
     color: var(--color-encre);
+    text-wrap: balance;
+  }
+  p,
+  li,
+  dd {
+    text-wrap: pretty;
+  }
+  /* Fond d'attente des photos : jamais de trou blanc pendant le chargement. */
+  main img {
+    background-color: var(--color-brume);
+  }
+  /* Un numéro de téléphone ne se coupe jamais. */
+  a[href^="tel:"] {
+    white-space: nowrap;
   }
   /* Titres posés sur une photo sombre : ils suivent le texte blanc du parent. */
   .text-white :is(h1, h2, h3, h4, h5, h6) {
@@ -72,12 +86,9 @@
     border-radius: 999px;
     background: var(--color-id-postur-dark);
   }
-  .pastille-rose {
-    background: var(--color-rose);
-    color: var(--color-id-postur-dark);
-  }
 
-  /* Boutons : angles nets, flèche discrète. */
+  /* Boutons : angles nets, fond fixe. Le mouvement est porté par le texte
+     (.roll, lettre par lettre) et la flèche (.fleche), façon cimalp.com. */
   .btn {
     display: inline-flex;
     align-items: center;
@@ -88,24 +99,23 @@
     font-size: 0.9375rem;
     font-weight: 500;
     line-height: 1.2;
-    transition: background-color 0.2s, border-color 0.2s, transform 0.2s;
-  }
-  .btn:active {
-    transform: scale(0.98);
+    transition:
+      background-color 0.25s var(--ease-doux),
+      box-shadow 0.25s var(--ease-doux);
   }
   .btn-noir {
     background: var(--color-encre);
     color: #fff;
   }
   .btn-noir:hover {
-    background: #2c2c31;
+    background: #2a2a2e;
   }
   .btn-rouge {
     background: var(--color-id-postur-dark);
     color: #fff;
   }
   .btn-rouge:hover {
-    background: #a30000;
+    background: #ad0000;
   }
   .btn-contour {
     background: #fff;
@@ -115,6 +125,13 @@
   .btn-contour:hover {
     box-shadow: inset 0 0 0 1px var(--color-encre-3);
   }
+  .btn-blanc {
+    background: #fff;
+    color: var(--color-encre);
+  }
+  .btn-blanc:hover {
+    background: var(--color-filet);
+  }
   .btn-contour-sombre {
     color: #fff;
     box-shadow: inset 0 0 0 1px #3a3a40;
@@ -123,11 +140,93 @@
     box-shadow: inset 0 0 0 1px #8a8a93;
   }
 
+  /* Libellé lettre par lettre : chaque lettre porte sa copie en ombre portée
+     1.3em plus bas, et remonte au survol avec un décalage de 10 ms par lettre
+     (posé en ligne par Roll.astro). La boîte coupe ce qui dépasse. */
+  .roll {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    vertical-align: top;
+    line-height: 1.2;
+  }
+  .roll > span {
+    display: inline-block;
+    text-shadow: 0 1.3em currentColor;
+    transform: translateY(0) rotate(0.001deg);
+    transition: transform var(--duree-roll) var(--ease-roll);
+  }
+  :is(.btn, .group, .lien-anime):hover .roll > span {
+    transform: translateY(-1.3em) rotate(0.001deg);
+  }
+
+  /* Flèche : elle sort en diagonale pendant qu'une copie arrive. */
+  .fleche {
+    display: inline-grid;
+    width: 1em;
+    height: 1em;
+    overflow: hidden;
+    line-height: 1;
+  }
+  .fleche > span {
+    grid-area: 1 / 1;
+    display: grid;
+    place-items: center;
+    transition: translate var(--duree-roll) var(--ease-roll);
+  }
+  .fleche > span + span {
+    translate: -110% 110%;
+  }
+  :is(.btn, .group, .lien-anime):hover .fleche > span:first-child {
+    translate: 110% -110%;
+  }
+  :is(.btn, .group, .lien-anime):hover .fleche > span + span {
+    translate: 0 0;
+  }
+  .fleche-bas > span + span {
+    translate: 0 -110%;
+  }
+  :is(.btn, .group, .lien-anime):hover .fleche-bas > span:first-child {
+    translate: 0 110%;
+  }
+  .fleche-droite > span + span {
+    translate: -110% 0;
+  }
+  :is(.btn, .group, .lien-anime):hover .fleche-droite > span:first-child {
+    translate: 110% 0;
+  }
+
+  /* Cartes cliquables : la photo s'approche à peine, le filet se fonce. */
+  .carte-survol {
+    transition: border-color 0.25s var(--ease-doux);
+  }
+  .carte-survol img {
+    transition: transform var(--duree-roll) var(--ease-roll);
+  }
+  .carte-survol:hover img {
+    transform: scale(1.03);
+  }
+
+  /* Lien texte : soulignement qui se dessine de gauche à droite. */
+  .lien-souligne {
+    background: linear-gradient(currentColor, currentColor) no-repeat 0 100% / 0 1px;
+    padding-bottom: 2px;
+    transition: background-size 0.5s var(--ease-roll);
+  }
+  .lien-souligne:hover {
+    background-size: 100% 1px;
+  }
+
   /* Badge flottant sur les photos. */
   .badge-flottant {
     background: #fff;
     border-radius: 6px;
-    box-shadow: 0 12px 32px rgb(13 13 20 / 0.1);
+    box-shadow: inset 0 0 0 1px var(--color-filet);
+  }
+  @media (min-width: 640px) {
+    .badge-flottant {
+      box-shadow: 0 12px 32px rgb(13 13 20 / 0.1);
+    }
   }
 }
 
@@ -270,6 +369,10 @@ details[open] > .faq-reponse {
  * ouverture instantanée, comme avant — simple amélioration progressive. */
 :root {
   interpolate-size: allow-keywords;
+  /* Micro-interactions (reprises de cimalp.com) : départ net, longue arrivée. */
+  --ease-roll: cubic-bezier(0.625, 0.05, 0, 1);
+  --duree-roll: 0.65s;
+  --ease-doux: cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 details:has(> .faq-reponse)::details-content {
   opacity: 0;
@@ -338,5 +441,14 @@ details:has(> .faq-reponse)[open]::details-content {
   }
   .hero-media-fixe {
     display: block;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roll > span,
+  .fleche > span,
+  .carte-survol img,
+  .lien-souligne {
+    transition: none;
   }
 }

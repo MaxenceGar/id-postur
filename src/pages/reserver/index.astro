@@ -4,6 +4,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import "../../styles/global.css";
 import { BESOINS, CALCOM, RESULTATS } from "../../data/parcours";
 import { formatPrix, getPrestation } from "../../data/tarifs";
+import Roll from "../../components/Roll.astro";
 
 /**
  * Parcours de réservation pas à pas.
@@ -156,11 +157,12 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
   description="Quelques questions pour trouver la prestation ID Postur qui vous correspond, au bon tarif, et réserver votre créneau."
   noindex={true}
 >
-  <section class="bg-[#f5f5f6] min-h-[80vh] py-10 md:py-16">
-    <div class="container mx-auto px-5 max-w-3xl" id="parcours">
+  <section class="bg-brume min-h-[80vh] py-8 md:py-14">
+    <div class="max-w-7xl mx-auto px-5 md:px-8 lg:px-10 grid gap-8 lg:gap-10 lg:grid-cols-[minmax(0,1fr)_22rem] items-start" id="parcours">
+     <div class="min-w-0">
       <!-- Progression -->
-      <div class="mb-8">
-        <div class="flex items-center justify-between text-sm text-gray-500 mb-2">
+      <div class="mb-10">
+        <div class="flex items-center justify-between text-sm text-encre-3 mb-3">
           <button
             type="button"
             data-retour
@@ -169,38 +171,53 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
             <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
             Retour
           </button>
-          <span data-compteur>Étape 1</span>
+          <span data-compteur class="font-medium tabular-nums">Étape 1</span>
         </div>
-        <div class="h-1.5 bg-filet rounded-full overflow-hidden">
-          <div data-barre class="h-full bg-id-postur-dark rounded-full transition-[width] duration-500 ease-out" style="width: 8%"></div>
+        <div class="h-[3px] bg-filet overflow-hidden">
+          <div data-barre class="h-full bg-encre transition-[width] duration-700 ease-[cubic-bezier(0.625,0.05,0,1)]" style="width: 8%"></div>
         </div>
       </div>
 
       <!-- Étape 1 : besoin -->
       <section class="etape" data-etape="besoin">
-        <p class="pastille pastille-rose mb-4">Prendre rendez-vous</p>
+        <p class="pastille bg-white mb-4">Prendre rendez-vous</p>
         <h1 class="etape-titre text-3xl md:text-[2.5rem] leading-[1.08] tracking-[-0.035em] text-encre mb-3" tabindex="-1">
-          Que souhaitez-vous <span class="accent">faire</span>&nbsp;?
+          Que <span class="whitespace-nowrap">souhaitez-vous</span> <span class="accent">faire</span>&nbsp;?
         </h1>
         <p class="text-gray-600 mb-8">
           Quelques questions et vous saurez exactement quoi réserver, au bon tarif.
         </p>
-        <div class="grid gap-4 sm:grid-cols-2">
+        {/* L'étude, ouverte à tous, en grand ; les rendez-vous courts dessous. */}
+        <button type="button" class="choix choix-vedette group" data-choix={BESOINS[0].id} data-libelle={BESOINS[0].titre}>
+          <img src="/images/etudes-posturales-studio.webp" alt="" width="480" height="340" class="choix-photo" />
+          <span class="flex-1 flex flex-col gap-2 text-left">
+            <span class="flex flex-wrap items-center gap-2.5">
+              <span class="font-id-postur text-2xl font-semibold tracking-[-0.03em] text-encre">{BESOINS[0].titre}</span>
+              <span class="rounded bg-brume px-2 py-1 text-xs font-medium text-encre-2">Ouverte à tous</span>
+            </span>
+            <span class="text-[15px] leading-relaxed text-encre-2 max-w-lg">{BESOINS[0].detail} En 3D ou en 2D.</span>
+          </span>
+          <span class="choix-fleche"><span class="fleche fleche-droite" aria-hidden="true"><span>→</span><span>→</span></span></span>
+        </button>
+
+        <div class="flex items-center gap-4 my-8 text-[13px] font-medium text-encre-3">
+          <span class="h-px grow bg-filet"></span>
+          Déjà client ID Postur
+          <span class="h-px grow bg-filet"></span>
+        </div>
+
+        <div class="grid gap-3 sm:grid-cols-2 sm:[&>:last-child:nth-child(odd)]:col-span-2">
           {
-            BESOINS.map((b) => (
-              <button type="button" class="choix" data-choix={b.id} data-libelle={b.titre}>
+            BESOINS.slice(1).map((b) => (
+              <button type="button" class="choix group" data-choix={b.id} data-libelle={b.titre}>
                 <span class="choix-icone">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" set:html={ICONES[b.icone]} />
                 </span>
                 <span class="flex-1 text-left">
                   <span class="block font-id-postur text-[17px] font-semibold tracking-[-0.02em] text-encre">{b.titre}</span>
-                  <span class="block text-sm text-gray-600 mt-1">{b.detail}</span>
-                  {b.clientsSeulement && (
-                    <span class="inline-block mt-2.5 rounded bg-brume text-xs font-medium text-encre-2 px-2 py-1">
-                      Réservé aux clients ID Postur
-                    </span>
-                  )}
+                  <span class="block text-sm leading-relaxed text-encre-2 mt-1">{b.detail}</span>
                 </span>
+                <span class="choix-fleche"><span class="fleche fleche-droite" aria-hidden="true"><span>→</span><span>→</span></span></span>
               </button>
             ))
           }
@@ -214,18 +231,18 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
             <h2 class="etape-titre text-3xl md:text-[2.5rem] leading-[1.08] tracking-[-0.035em] text-encre mb-3" tabindex="-1">
               {etape.question}
             </h2>
-            {etape.aide && <p class="text-gray-600 mb-8 max-w-2xl">{etape.aide}</p>}
-            {!etape.aide && <div class="mb-8" />}
-            <div class="grid gap-4 sm:grid-cols-2">
+            {etape.aide && <p class="text-[17px] leading-relaxed text-encre-2 mb-10 max-w-2xl">{etape.aide}</p>}
+            {!etape.aide && <div class="mb-10" />}
+            <div class="grid gap-3 sm:grid-cols-2">
               {etape.choix.map((c, i) => (
                 <button
                   type="button"
-                  class:list={["choix", etape.choix.length === 3 && i === 2 && "sm:col-span-2"]}
+                  class:list={["choix group", etape.choix.length === 3 && i === 2 && "sm:col-span-2"]}
                   data-choix={c.valeur}
                   data-libelle={c.titre}
                 >
                   {c.badge ? (
-                    <span class="choix-icone font-bold text-lg">{c.badge}</span>
+                    <span class="choix-icone font-id-postur font-semibold text-lg tracking-[-0.03em]">{c.badge}</span>
                   ) : (
                     c.icone && (
                       <span class="choix-icone">
@@ -234,9 +251,10 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
                     )
                   )}
                   <span class="flex-1 text-left">
-                    <span class="block font-semibold text-gray-900">{c.titre}</span>
-                    {c.detail && <span class="block text-sm text-gray-600 mt-1">{c.detail}</span>}
+                    <span class="block font-id-postur text-[17px] font-semibold tracking-[-0.02em] text-encre">{c.titre}</span>
+                    {c.detail && <span class="block text-sm leading-relaxed text-encre-2 mt-1">{c.detail}</span>}
                   </span>
+                  <span class="choix-fleche"><span class="fleche fleche-droite" aria-hidden="true"><span>→</span><span>→</span></span></span>
                 </button>
               ))}
             </div>
@@ -258,26 +276,26 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
         <h2 class="etape-titre text-3xl md:text-[2.5rem] leading-[1.08] tracking-[-0.035em] text-encre mb-3" tabindex="-1">
           Commençons par votre étude posturale
         </h2>
-        <p class="text-gray-600 mb-8 max-w-2xl">
-          Ce rendez-vous s'appuie sur les mesures de votre étude : il est réservé aux cyclistes déjà passés chez ID Postur. Bonne nouvelle, l'étude règle aussi ce point.
+        <p class="text-[17px] leading-relaxed text-encre-2 mb-10 max-w-2xl">
+          Ce rendez-vous s'appuie sur les mesures de votre étude&nbsp;: il est réservé aux cyclistes déjà passés chez ID Postur. Bonne nouvelle, l'étude règle aussi ce point.
         </p>
-        <div class="grid gap-4 sm:grid-cols-2">
-          <button type="button" class="choix" data-choix="etude" data-libelle="Commencer par une étude">
+        <div class="grid gap-3 sm:grid-cols-2">
+          <button type="button" class="choix group" data-choix="etude" data-libelle="Commencer par une étude">
             <span class="choix-icone">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" set:html={ICONES.etude} />
             </span>
             <span class="flex-1 text-left">
-              <span class="block font-semibold text-gray-900">Réserver une étude posturale</span>
-              <span class="block text-sm text-gray-600 mt-1">En 3D ou en 2D, sur votre vélo</span>
+              <span class="block font-id-postur text-[17px] font-semibold tracking-[-0.02em] text-encre">Réserver une étude posturale</span>
+              <span class="block text-sm leading-relaxed text-encre-2 mt-1">En 3D ou en 2D, sur votre vélo</span>
             </span>
           </button>
-          <button type="button" class="choix" data-choix="etude-studio" data-libelle="Étude sur le vélo du studio">
+          <button type="button" class="choix group" data-choix="etude-studio" data-libelle="Étude sur le vélo du studio">
             <span class="choix-icone">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" set:html={ICONES.studio} />
             </span>
             <span class="flex-1 text-left">
-              <span class="block font-semibold text-gray-900">Vous achetez un vélo ?</span>
-              <span class="block text-sm text-gray-600 mt-1">Faites votre étude sur le vélo du studio pour connaître la taille exacte à acheter</span>
+              <span class="block font-id-postur text-[17px] font-semibold tracking-[-0.02em] text-encre">Vous achetez un vélo ?</span>
+              <span class="block text-sm leading-relaxed text-encre-2 mt-1">Faites votre étude sur le vélo du studio pour connaître la taille exacte à acheter</span>
             </span>
           </button>
         </div>
@@ -287,33 +305,51 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
       {
         RESULTATS.map((r) => (
           <section class="etape" data-etape={`resultat-${r.id}`} data-resultat hidden>
-            <p class="text-sm font-semibold uppercase tracking-wider text-gray-500 mb-2">Votre rendez-vous</p>
+            <p class="pastille bg-white mb-4">Votre rendez-vous</p>
             <h2 class="etape-titre text-3xl md:text-[2.5rem] leading-[1.08] tracking-[-0.035em] text-encre mb-2" tabindex="-1">
               {r.titre}
             </h2>
-            <p class="text-gray-600 mb-6">{r.pourQui}</p>
+            <p class="text-[17px] text-encre-2 mb-8">{r.pourQui}</p>
 
-            <div class="bg-white rounded-md border border-filet p-6 md:p-8">
-              <div class="flex flex-wrap items-end gap-x-8 gap-y-3 mb-6">
-                <p class="text-4xl font-semibold text-gray-900">{r.prix}</p>
-                <p class="text-gray-700"><span class="text-gray-500">Durée</span><br /><strong>{r.duree}</strong></p>
+            <div class="bg-white rounded-md p-6 md:p-8">
+              <div class="grid grid-cols-2 sm:grid-cols-[auto_auto_1fr] gap-px bg-filet rounded overflow-hidden border border-filet mb-7">
+                <p class="bg-white px-5 py-4 flex flex-col gap-1">
+                  <span class="text-[13px] text-encre-3">Tarif</span>
+                  <span class="font-id-postur text-3xl font-semibold tracking-[-0.04em] text-encre">{r.prix}</span>
+                </p>
+                <p class="bg-white px-5 py-4 flex flex-col gap-1">
+                  <span class="text-[13px] text-encre-3">Durée</span>
+                  <span class="font-id-postur text-3xl font-semibold tracking-[-0.04em] text-encre">{r.duree}</span>
+                </p>
                 {r.disciplines && (
-                  <p class="text-gray-700"><span class="text-gray-500">Disciplines</span><br /><strong>{r.disciplines}</strong></p>
+                  <p class="bg-white px-5 py-4 flex flex-col gap-1 col-span-2 sm:col-span-1">
+                    <span class="text-[13px] text-encre-3">Disciplines</span>
+                    <span class="text-[15px] font-medium text-encre">{r.disciplines}</span>
+                  </p>
                 )}
               </div>
 
-              <p class="text-sm font-semibold text-gray-900 mb-2">À apporter</p>
-              <ul class="text-sm text-gray-700 space-y-1 mb-4">
-                {r.aApporter.map((a) => (
-                  <li class="flex gap-2">
-                    <svg viewBox="0 0 24 24" class="w-4 h-4 mt-0.5 shrink-0 text-gray-900" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
-                    {a}
-                  </li>
-                ))}
-              </ul>
-              {r.note && <p class="text-sm text-gray-900 font-medium mb-6">{r.note}</p>}
+              <div class="grid gap-6 md:grid-cols-2 mb-2">
+                <div>
+                  <p class="text-[13px] font-semibold text-encre mb-3">À apporter</p>
+                  <ul class="text-sm text-encre-2 space-y-2">
+                    {r.aApporter.map((a) => (
+                      <li class="flex items-start gap-2.5">
+                        <span class="size-1.5 shrink-0 mt-[0.55em] bg-encre" aria-hidden="true" />
+                        {a}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                {r.note && (
+                  <p class="flex gap-2.5 self-start rounded bg-brume p-4 text-sm leading-relaxed text-encre-2">
+                    <svg viewBox="0 0 24 24" class="size-4 mt-0.5 shrink-0 text-encre" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 11v5M12 8h.01" /></svg>
+                    <span>{r.note}</span>
+                  </p>
+                )}
+              </div>
 
-              <p class="text-xs text-gray-500 mb-3" data-recap></p>
+              <p class="sr-only" data-recap></p>
 
               {/* Le calendrier (unique, plus bas) vient se loger ici quand
                   ce récapitulatif s'affiche. */}
@@ -327,18 +363,18 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
             </div>
 
             {r.aConfirmer && (
-              <p class="mt-4 text-sm bg-[#FFF7E0] border border-[#F2C94C] text-gray-800 px-4 py-3">
+              <p class="mt-4 rounded text-sm bg-[#FFF7E0] border border-[#F2C94C] text-encre px-4 py-3">
                 <strong>Prototype, à confirmer avec Romain :</strong> {r.aConfirmer}
               </p>
             )}
 
-            <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-gray-600">
-              <button type="button" data-recommencer class="font-semibold text-gray-900 underline hover:opacity-80">
+            <div class="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-encre-2">
+              <button type="button" data-recommencer class="lien-souligne font-medium text-encre">
                 Recommencer
               </button>
-              <span>
+              <span class="lg:hidden">
                 Une question ? Appelez le{" "}
-                <a href={`tel:${ENTREPRISE.telephone}`} class="text-gray-900 font-semibold">{ENTREPRISE.telephoneAffiche}</a>
+                <a href={`tel:${ENTREPRISE.telephone}`} class="text-encre font-semibold">{ENTREPRISE.telephoneAffiche}</a>
               </span>
             </div>
           </section>
@@ -353,62 +389,62 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
       <div id="calendrier" class="mt-8 pt-8 border-t border-filet" hidden>
         <!-- 1. Jour et heure -->
         <div data-cal-etape="creneau">
-          <p class="font-semibold text-gray-900 mb-4">Choisissez votre créneau</p>
-          <div class="grid gap-6 md:grid-cols-[minmax(0,1fr)_14rem]">
+          <p class="font-id-postur text-2xl font-semibold tracking-[-0.03em] text-encre mb-6">Choisissez votre <span class="accent">créneau</span>.</p>
+          <div class="grid gap-8 md:grid-cols-[minmax(0,1fr)_13rem]">
             <!-- Mois -->
             <div>
               <div class="flex items-center justify-between mb-3">
                 <button type="button" class="cal-fleche" data-cal-mois-nav="-1" aria-label="Mois précédent">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
                 </button>
-                <p class="font-semibold text-gray-900 capitalize" data-cal-mois-titre aria-live="polite"></p>
+                <p class="font-id-postur text-lg font-semibold tracking-[-0.02em] text-encre first-letter:uppercase" data-cal-mois-titre aria-live="polite"></p>
                 <button type="button" class="cal-fleche" data-cal-mois-nav="1" aria-label="Mois suivant">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg>
                 </button>
               </div>
-              <div class="grid grid-cols-7 gap-1 text-center text-xs font-semibold text-gray-500 mb-1" aria-hidden="true">
-                <span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span>
+              <div class="grid grid-cols-7 gap-1.5 text-center text-xs font-medium text-encre-3 mb-2" aria-hidden="true">
+                <span>lun.</span><span>mar.</span><span>mer.</span><span>jeu.</span><span>ven.</span><span>sam.</span><span>dim.</span>
               </div>
-              <div class="grid grid-cols-7 gap-1" data-cal-mois role="group" aria-label="Jours du mois"></div>
+              <div class="grid grid-cols-7 gap-1.5" data-cal-mois role="group" aria-label="Jours du mois"></div>
             </div>
             <!-- Horaires du jour choisi -->
             <div>
-              <p class="text-sm font-semibold text-gray-900 mb-3 first-letter:uppercase" data-cal-jour-titre></p>
-              <div class="grid grid-cols-3 md:grid-cols-2 gap-2 md:max-h-[22rem] md:overflow-y-auto md:overflow-x-hidden md:pr-1" data-cal-heures role="group" aria-label="Horaires disponibles"></div>
+              <p class="font-id-postur text-[17px] font-semibold tracking-[-0.02em] text-encre mb-3 first-letter:uppercase" data-cal-jour-titre></p>
+              <div class="grid grid-cols-3 md:grid-cols-1 gap-2 md:max-h-[22rem] md:overflow-y-auto md:overflow-x-hidden md:pr-1" data-cal-heures role="group" aria-label="Horaires disponibles"></div>
             </div>
           </div>
-          <p class="text-sm text-gray-500" data-cal-message aria-live="polite"></p>
+          <p class="text-sm text-encre-3" data-cal-message aria-live="polite"></p>
         </div>
 
         <!-- 2. Coordonnées -->
         <form data-cal-etape="coordonnees" hidden class="space-y-4" novalidate>
-          <div class="flex items-center justify-between gap-4 bg-[#f5f5f6] px-4 py-3">
-            <p class="text-sm"><span class="text-gray-500">Votre créneau</span><br /><strong class="text-gray-900" data-cal-resume></strong></p>
-            <button type="button" data-cal-changer class="text-sm font-semibold text-gray-900 underline shrink-0">Changer</button>
+          <div class="flex items-center justify-between gap-4 rounded bg-brume px-5 py-4">
+            <p class="text-sm"><span class="text-encre-3">Votre créneau</span><br /><strong class="font-id-postur text-[17px] tracking-[-0.02em] text-encre first-letter:uppercase inline-block" data-cal-resume></strong></p>
+            <button type="button" data-cal-changer class="lien-souligne text-sm font-medium text-encre shrink-0">Changer</button>
           </div>
           <div class="grid gap-4 sm:grid-cols-2">
-            <label class="block text-sm font-medium text-gray-900">
+            <label class="block text-sm font-medium text-encre">
               Prénom et nom
               <input name="nom" required autocomplete="name" class="cal-champ" />
             </label>
-            <label class="block text-sm font-medium text-gray-900">
+            <label class="block text-sm font-medium text-encre">
               Téléphone
               <input name="telephone" type="tel" required autocomplete="tel" inputmode="tel" class="cal-champ" />
             </label>
           </div>
-          <label class="block text-sm font-medium text-gray-900">
+          <label class="block text-sm font-medium text-encre">
             E-mail
             <input name="email" type="email" required autocomplete="email" class="cal-champ" />
           </label>
-          <label class="block text-sm font-medium text-gray-900">
-            Une précision pour Romain ? <span class="font-normal text-gray-500">(facultatif)</span>
+          <label class="block text-sm font-medium text-encre">
+            Une précision pour Romain ? <span class="font-normal text-encre-3">(facultatif)</span>
             <textarea name="message" rows="3" class="cal-champ" placeholder="Douleur, objectif, type de vélo…"></textarea>
           </label>
-          <p class="text-xs text-gray-500">
+          <p class="text-xs text-encre-3">
             Vos coordonnées servent uniquement à organiser votre rendez-vous.
             <a href="/mentions-legales" class="underline">En savoir plus</a>
           </p>
-          <p class="text-sm text-gray-900 font-medium" data-cal-erreur aria-live="assertive"></p>
+          <p class="text-sm text-id-postur-dark font-medium" data-cal-erreur aria-live="assertive"></p>
           <button
             type="submit"
             class="btn btn-rouge w-full py-4 text-base disabled:opacity-60"
@@ -422,36 +458,68 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
           <div class="cal-coche mx-auto mb-5" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
           </div>
-          <p class="text-2xl font-bold text-gray-900 mb-1" tabindex="-1" data-cal-titre-confirmation>C'est réservé !</p>
-          <p class="text-gray-700 mb-1" data-cal-resume-final></p>
-          <p class="text-sm text-gray-500 mb-6">
+          <p class="font-id-postur text-3xl font-semibold tracking-[-0.035em] text-encre mb-2" tabindex="-1" data-cal-titre-confirmation>C'est <span class="accent">réservé</span>&nbsp;!</p>
+          <p class="text-encre-2 mb-1 first-letter:uppercase" data-cal-resume-final></p>
+          <p class="text-sm text-encre-3 mb-6">
             {ENTREPRISE.adresse.rue}, {ENTREPRISE.adresse.codePostal} {ENTREPRISE.adresse.ville}
           </p>
-          <p class="text-sm text-gray-600 mb-6" data-cal-email-info></p>
+          <p class="text-sm text-encre-2 mb-6" data-cal-email-info></p>
           <div class="flex flex-col sm:flex-row justify-center gap-3">
             <button type="button" data-cal-ics class="btn btn-noir">
-              Ajouter à mon agenda
+              <Roll texte="Ajouter à mon agenda" fleche="↓" />
             </button>
             <a href={FICHE_GOOGLE} target="_blank" rel="noopener" class="btn btn-contour">
-              Voir l'itinéraire
+              <Roll texte="Voir l'itinéraire" fleche="↗" />
             </a>
           </div>
         </div>
 
-        <p data-cal-demo hidden class="mt-6 text-sm bg-[#FFF7E0] border border-[#F2C94C] text-gray-800 px-4 py-3">
-          <strong>Démo :</strong> créneaux factices, aucun rendez-vous n'est réellement pris. Ils viendront de l'agenda de Romain une fois son compte Cal.com branché.
+        <p data-cal-demo hidden class="mt-6 rounded text-sm bg-[#FFF7E0] border border-[#F2C94C] text-gray-800 px-4 py-3">
+          <strong>Démo&nbsp;:</strong> créneaux factices, aucun rendez-vous n'est réellement pris. Ils viendront de l'agenda de Romain une fois son compte Cal.com branché.
         </p>
       </div>
 
       <noscript>
         <p class="mt-8 text-gray-700">
-          Réservez directement :
+          Réservez directement&nbsp;:
           <a href="/reserver/premiere-etude" class="text-gray-900 font-semibold underline">première étude posturale</a>
           ·
           <a href="/reserver/deja-client" class="text-gray-900 font-semibold underline">déjà client</a>
           · ou appelez le {ENTREPRISE.telephoneAffiche}.
         </p>
       </noscript>
+     </div>
+
+      <!-- Récapitulatif : se remplit au fil des réponses. -->
+      <aside class="sur-fond-sombre lg:sticky lg:top-24 rounded-md bg-encre p-7 text-[#b4b4bc] flex-col gap-6 hidden lg:flex data-[rempli]:flex" aria-label="Votre réservation" data-resume>
+        <div class="flex flex-col gap-2">
+          <p class="text-[13px] font-medium text-[#ff4d4d]">Votre réservation</p>
+          <p class="font-id-postur text-2xl font-semibold leading-tight tracking-[-0.03em] text-white" data-resume-titre>
+            Quelques questions, et c'est réglé.
+          </p>
+        </div>
+        <ol class="flex flex-col border-t border-[#2c2c31]" data-resume-liste>
+          <li data-resume-vide>
+            <ol class="flex flex-col">
+              {["Votre besoin", "Votre situation", "Votre formule", "Votre créneau"].map((e, i) => (
+                <li class="flex items-center gap-3 border-b border-[#2c2c31] py-3.5 text-sm text-[#6b6b73]">
+                  <span class="font-id-postur text-xs font-semibold tabular-nums">{String(i + 1).padStart(2, "0")}</span>
+                  {e}
+                </li>
+              ))}
+            </ol>
+          </li>
+        </ol>
+        <div class="flex items-center gap-3 border-t border-[#2c2c31] pt-5">
+          <img src="/images/romain-hardy-studio.webp" alt="" width="44" height="44" class="size-11 rounded-full object-cover" />
+          <p class="text-[13px] leading-snug">
+            Romain vous accueille au studio,<br />{ENTREPRISE.adresse.rue}, {ENTREPRISE.adresse.ville}.
+          </p>
+        </div>
+        <a href={`tel:${ENTREPRISE.telephone}`} class="btn btn-contour-sombre w-full">
+          <Roll texte={`Un doute ? ${ENTREPRISE.telephoneAffiche}`} />
+        </a>
+      </aside>
     </div>
   </section>
 </BaseLayout>
@@ -471,18 +539,74 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
     text-align: left;
     cursor: pointer;
     transition:
-      border-color 0.2s,
-      box-shadow 0.2s,
+      border-color 0.25s,
       transform 0.2s;
   }
   .choix:hover,
   .choix:focus-visible {
     border-color: var(--color-encre);
-    box-shadow: 0 12px 28px -14px rgb(0 0 0 / 0.25);
     outline: none;
   }
   .choix:active {
-    transform: scale(0.98);
+    transform: scale(0.99);
+  }
+  /* Carte d'entrée « étude posturale » : photo à gauche, plus grande. */
+  .choix-vedette {
+    align-items: center;
+    gap: 1.5rem;
+    padding: 0.875rem;
+  }
+  .choix-photo {
+    width: 11rem;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 4px;
+    flex-shrink: 0;
+    transition: transform var(--duree-roll) var(--ease-roll);
+  }
+  @media (max-width: 639px) {
+    .choix-vedette {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .choix-photo {
+      width: 100%;
+    }
+  }
+  /* Pastille fléchée à droite de chaque choix : elle se fonce au survol. */
+  .choix-fleche {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    align-self: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 4px;
+    background: var(--color-brume);
+    color: var(--color-encre);
+    transition:
+      background-color 0.25s,
+      color 0.25s;
+  }
+  .choix:hover .choix-fleche,
+  .choix:focus-visible .choix-fleche {
+    background: var(--color-encre);
+    color: #fff;
+  }
+  @media (max-width: 639px) {
+    .choix-fleche {
+      width: 1.75rem;
+      height: 1.75rem;
+      background: transparent;
+    }
+  }
+  @media (max-width: 639px) {
+    .choix-vedette .choix-fleche {
+      display: none;
+    }
+  }
+  .choix-vedette .choix-fleche {
+    margin-right: 0.75rem;
   }
   /* Le titre reçoit le focus à chaque question (lecteurs d'écran) : pas
      besoin du cadre de focus, ce n'est pas un élément cliquable. */
@@ -780,6 +904,7 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
       barre.style.width = Math.max(8, pourcent) + "%";
       compteur.textContent = estResultat ? "Votre rendez-vous" : `Étape ${n} sur ${total}`;
       boutonRetour.disabled = pile.length === 0;
+      majResume(cible, estResultat);
 
       if (estResultat) {
         const recap = cible.querySelector("[data-recap]");
@@ -792,6 +917,32 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
       const titre = cible.querySelector(".etape-titre");
       if (titre && sens !== "init") titre.focus({ preventScroll: true });
       window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    /** Récapitulatif latéral : une ligne par réponse, le titre du rendez-vous à la fin. */
+    const resume = racine.querySelector("[data-resume]");
+    const resumeTitre = racine.querySelector("[data-resume-titre]");
+    const resumeListe = racine.querySelector("[data-resume-liste]");
+    const resumeVide = resumeListe.querySelector("[data-resume-vide]");
+    const titreInitial = resumeTitre.textContent.trim();
+    function majResume(cible, estResultat) {
+      resumeListe.querySelectorAll("[data-resume-ligne]").forEach((l) => l.remove());
+      resumeVide.hidden = libelles.length > 0;
+      resume.toggleAttribute("data-rempli", libelles.length > 0);
+      libelles.forEach((texte, i) => {
+        const li = document.createElement("li");
+        li.dataset.resumeLigne = "";
+        li.className = "flex items-start gap-3 border-b border-[#2c2c31] py-3.5 text-sm text-white";
+        const num = document.createElement("span");
+        num.className = "font-id-postur text-xs font-semibold text-[#ff4d4d] pt-0.5 tabular-nums";
+        num.textContent = String(i + 1).padStart(2, "0");
+        const txt = document.createElement("span");
+        txt.textContent = texte;
+        li.append(num, txt);
+        resumeListe.append(li);
+      });
+      const titre = estResultat ? cible.querySelector(".etape-titre")?.textContent.trim() : null;
+      resumeTitre.textContent = titre || titreInitial;
     }
 
     function courant() {

@@ -1,4 +1,5 @@
 ---
+import Roll from "./Roll.astro";
 import {
   AVIS_GOOGLE,
   ENTREPRISE,
@@ -27,10 +28,10 @@ const prestations = [
   { href: "/etude-posturale-nantes", label: "Étude posturale près de Nantes" },
 ];
 
-/** Sur les pages de réservation, l'appel « Prendre rendez-vous » tournerait en rond. */
-const afficherAppel = !Astro.url.pathname.startsWith("/reserver");
+/** Sur les pages de réservation l'appel tournerait en rond ; sur les mentions, il n'a rien à faire. */
+const afficherAppel = !/^\/(reserver|mentions-legales)/.test(Astro.url.pathname);
 
-const lien = "text-[#b4b4bc] hover:text-white transition-colors";
+const lien = "lien-souligne text-[#b4b4bc] hover:text-white transition-colors";
 const titre = "text-xs font-semibold uppercase tracking-[0.12em] text-white mb-5";
 ---
 
@@ -51,10 +52,10 @@ const titre = "text-xs font-semibold uppercase tracking-[0.12em] text-white mb-5
       </div>
       <div class="flex flex-col sm:flex-row sm:items-center gap-3 shrink-0">
         <a href="/reserver" class="btn btn-rouge">
-          Prendre rendez-vous <span aria-hidden="true">↗</span>
+          <Roll texte="Prendre rendez-vous" fleche="↗" />
         </a>
         <a href={`tel:${ENTREPRISE.telephone}`} class="btn btn-contour-sombre">
-          {ENTREPRISE.telephoneAffiche}
+          <Roll texte={ENTREPRISE.telephoneAffiche} />
         </a>
       </div>
     </div>
@@ -63,9 +64,9 @@ const titre = "text-xs font-semibold uppercase tracking-[0.12em] text-white mb-5
 
   <!-- Colonnes -->
   <div
-    class="max-w-7xl mx-auto px-5 md:px-8 lg:px-10 py-14 md:py-16 grid gap-12 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_0.8fr]"
+    class="max-w-7xl mx-auto px-5 md:px-8 lg:px-10 py-14 md:py-16 grid grid-cols-2 gap-x-8 gap-y-12 lg:grid-cols-[1.4fr_1fr_1fr_0.8fr]"
   >
-    <div>
+    <div class="col-span-2 lg:col-span-1">
       <img
         src={ENTREPRISE.logo}
         alt="ID Postur"
@@ -85,7 +86,7 @@ const titre = "text-xs font-semibold uppercase tracking-[0.12em] text-white mb-5
         class="mt-5 inline-flex items-center gap-2 text-sm group"
         aria-label={`${AVIS_GOOGLE.nombre} avis Google, note 5 sur 5`}
       >
-        <span class="text-amber-400 tracking-tighter" aria-hidden="true">★★★★★</span>
+        <span class="text-amber-500 tracking-tighter" aria-hidden="true">★★★★★</span>
         <span class="text-white font-semibold">5,0</span>
         <span class="group-hover:text-white transition-colors">· {AVIS_GOOGLE.nombre} avis Google</span>
       </a>

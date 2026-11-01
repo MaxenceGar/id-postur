@@ -1,0 +1,32 @@
+---
+import { fr } from "../lib/typo";
+
+/**
+ * Contenu animé d'un bouton, façon cimalp.com : au survol, chaque lettre
+ * remonte et laisse place à sa copie, avec 10 ms de décalage par lettre ; la
+ * flèche sort en diagonale pendant qu'une autre arrive. Découpage fait au
+ * build, animation en CSS seul (`.roll`, `.fleche` dans global.css). Le
+ * parent déclenche l'effet s'il porte `.btn`, `.group` ou `.lien-anime`.
+ */
+export interface Props {
+  texte: string;
+  /** Flèche à afficher après le texte ; omettre pour aucune. */
+  fleche?: "↗" | "↓" | "→";
+}
+
+const { texte, fleche } = Astro.props;
+const lettres = [...fr(texte)].map((c) => (c === " " ? " " : c));
+---
+
+<span class="sr-only">{texte}</span>
+<span class="roll" aria-hidden="true">
+  {lettres.map((c, i) => <span style={`transition-delay:${(i * 0.01).toFixed(2)}s`}>{c}</span>)}
+</span>
+{
+  fleche && (
+    <span class:list={["fleche", fleche === "↓" && "fleche-bas", fleche === "→" && "fleche-droite"]} aria-hidden="true">
+      <span>{fleche}</span>
+      <span>{fleche}</span>
+    </span>
+  )
+}

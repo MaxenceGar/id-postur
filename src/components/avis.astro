@@ -1,4 +1,5 @@
 ---
+import Roll from "./Roll.astro";
 import { AVIS_GOOGLE, ENTREPRISE, FICHE_GOOGLE } from "../data/entreprise";
 
 /** Extraits d'avis Google, partenaires et carte cadeau. */
@@ -32,7 +33,7 @@ const partenaires = [
     <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
       <div class="flex flex-col gap-4">
         <p class="pastille bg-white">Avis Google · 5,0</p>
-        <h2 class="text-4xl md:text-[3.25rem] leading-[1.04] tracking-[-0.035em]">
+        <h2 class="text-[2rem] sm:text-4xl md:text-[3.25rem] leading-[1.04] tracking-[-0.035em]">
           Ce qu'ils <span class="accent">disent</span> de nous.
         </h2>
       </div>
@@ -40,18 +41,18 @@ const partenaires = [
         href={FICHE_GOOGLE}
         target="_blank"
         rel="noopener"
-        class="text-[17px] text-encre-2 hover:text-encre transition-colors"
+        class="lien-anime inline-flex items-center gap-2 text-[17px] text-encre-2 hover:text-encre transition-colors"
       >
-        Une note moyenne de 5,0 sur {AVIS_GOOGLE.nombre} avis Google <span aria-hidden="true">↗</span>
+        <Roll texte={`5,0 sur ${AVIS_GOOGLE.nombre} avis Google`} fleche="↗" />
       </a>
     </div>
 
-    <ul class="grid gap-5 md:grid-cols-3">
+    <ul class="-mx-5 px-5 flex gap-3 overflow-x-auto snap-x snap-mandatory scroll-px-5 [scrollbar-width:none] md:mx-0 md:px-0 md:grid md:grid-cols-3 md:gap-5 md:overflow-visible">
       {
         avis.map((a) => (
-          <li class="flex flex-col justify-between gap-6 rounded-md bg-white p-7 md:p-8">
+          <li class="flex w-[85%] shrink-0 snap-start flex-col justify-between gap-6 rounded-md bg-white p-6 md:w-auto md:p-8">
             <div class="flex flex-col gap-4">
-              <span class="text-amber-500 tracking-tight" aria-label="5 étoiles sur 5">★★★★★</span>
+              <span class="text-amber-500 tracking-tight" role="img" aria-label="5 étoiles sur 5">★★★★★</span>
               <blockquote class="text-[17px] leading-relaxed text-encre">« {a.texte} »</blockquote>
             </div>
             <p class="flex items-center justify-between border-t border-filet pt-4">
@@ -63,8 +64,9 @@ const partenaires = [
       }
     </ul>
 
-    <div class="flex flex-wrap items-center gap-x-10 gap-y-5">
+    <div class="flex flex-col gap-4 md:flex-row md:flex-wrap md:items-center md:gap-x-10">
       <p class="text-sm font-semibold text-encre-3">Partenaires</p>
+      <div class="grid grid-cols-1 gap-3 sm:flex sm:flex-wrap sm:gap-x-10">
       {
         partenaires.map((p) => (
           <span class="flex items-center gap-3">
@@ -73,6 +75,7 @@ const partenaires = [
           </span>
         ))
       }
+      </div>
     </div>
 
     <!-- Carte cadeau -->
@@ -91,12 +94,12 @@ const partenaires = [
         </h3>
         <p class="text-[15px] leading-relaxed text-encre-2 max-w-xl">
           Pour l'achat et le règlement de votre carte cadeau, contactez-nous par
-          e-mail ({ENTREPRISE.email}) ou en message privé sur Instagram
+          e&#8209;mail ({ENTREPRISE.email}) ou en message privé sur Instagram
           (@idpostur).
         </p>
       </div>
       <a href="/id-postur-carte-cadeau.pdf" class="btn btn-noir shrink-0">
-        Télécharger la carte cadeau <span aria-hidden="true">↓</span>
+        <Roll texte="Télécharger la carte cadeau" fleche="↓" />
       </a>
     </div>
   </div>

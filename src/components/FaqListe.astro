@@ -1,6 +1,8 @@
 ---
+import Roll from "./Roll.astro";
 import { ENTREPRISE } from "../data/entreprise";
 import type { Question } from "../lib/schema";
+import { fr } from "../lib/typo";
 
 /**
  * FAQ commune à toutes les pages : intro à gauche, questions dépliables à
@@ -26,11 +28,11 @@ const {
     <div class="flex flex-col gap-5 lg:sticky lg:top-28 self-start">
       <p class="pastille">Questions fréquentes</p>
       <h2 id="faq" class="text-3xl md:text-[2.75rem] leading-[1.06] tracking-[-0.035em]">
-        {titre[0]}<span class="accent">{titre[1]}</span>{titre[2]}
+        {fr(titre[0])}<span class="accent">{fr(titre[1])}</span>{fr(titre[2])}
       </h2>
-      <p class="text-base leading-relaxed text-encre-2">{intro}</p>
+      <p class="text-base leading-relaxed text-encre-2">{fr(intro)}</p>
       <a href="/reserver" class="btn btn-noir w-fit">
-        Prendre rendez-vous <span aria-hidden="true">↗</span>
+        <Roll texte="Prendre rendez-vous" fleche="↗" />
       </a>
     </div>
 
@@ -39,7 +41,7 @@ const {
         items.map((item, i) => (
           <details class="group border-b border-filet" open={i === 0}>
             <summary class="flex items-center justify-between gap-6 py-6 cursor-pointer list-none">
-              <h3 class="text-lg md:text-[19px] leading-snug tracking-[-0.02em]">{item.question}</h3>
+              <h3 class="text-lg md:text-[19px] leading-snug tracking-[-0.02em]">{fr(item.question)}</h3>
               <span
                 class="grid place-items-center size-8 shrink-0 rounded bg-brume text-encre text-lg transition-colors group-open:bg-encre group-open:text-white"
                 aria-hidden="true"
@@ -48,7 +50,7 @@ const {
                 <span class="hidden group-open:inline">–</span>
               </span>
             </summary>
-            <p class="faq-reponse pb-6 pr-14 text-base leading-relaxed text-encre-2">{item.answer}</p>
+            <p class="faq-reponse pb-6 pr-14 text-base leading-relaxed text-encre-2">{fr(item.answer)}</p>
           </details>
         ))
       }

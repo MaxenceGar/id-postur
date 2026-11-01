@@ -2,7 +2,7 @@
 /** Bandeau de chiffres clés, juste sous le hero. */
 const chiffres = [
   { valeur: "800+", libelle: "études posturales réalisées" },
-  { valeur: "25+", libelle: "athlètes professionnels accompagnés" },
+  { valeur: "25+", libelle: "athlètes pros accompagnés" },
   { valeur: "3 ans", libelle: "d'expérience terrain et analyse" },
   { valeur: "< 1 mm", libelle: "de précision en capture 3D" },
 ];
@@ -14,7 +14,7 @@ const chiffres = [
       chiffres.map((c, i) => (
         <div
           class:list={[
-            "flex flex-col-reverse gap-1.5 p-6 md:p-8 border-filet",
+            "flex flex-col-reverse justify-end gap-1.5 p-6 md:p-8 border-filet",
             i % 2 === 1 && "border-l",
             i >= 2 && "border-t lg:border-t-0",
             i === 2 && "lg:border-l",

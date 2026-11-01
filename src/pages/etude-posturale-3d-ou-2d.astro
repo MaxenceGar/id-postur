@@ -1,6 +1,8 @@
 ---
+import PageHero from "../components/PageHero.astro";
+import FaqListe from "../components/FaqListe.astro";
+import Roll from "../components/Roll.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import "../styles/global.css";
 import {
   COMPARATIF_3D_2D,
   ETUDES_POSTURALES,
@@ -14,7 +16,7 @@ import {
   getPrestation,
 } from "../data/tarifs";
 import { noeudService } from "../lib/schema";
-import { ENTREPRISE, SITE_URL } from "../data/entreprise";
+import { SITE_URL } from "../data/entreprise";
 
 const troisD = getPrestation("etude-posturale-3d");
 const deuxD = getPrestation("etude-posturale-2d");
@@ -77,219 +79,159 @@ const services = [
   faq={faqItems}
   schema={services}
 >
-  <!-- HERO -->
-  <section class="bg-gray-50 py-16 md:py-24">
-    <div class="container mx-auto px-5 max-w-4xl text-center">
-      <h1 class="text-3xl md:text-5xl leading-[1.06] tracking-[-0.035em]">
-        Étude posturale 3D ou 2D : quelle différence ?
-      </h1>
-      <p class="text-gray-700 leading-relaxed">
-        ID Postur propose deux formats d'étude posturale à Rennes : la <strong
-          >3D</strong
-        >, la plus complète, et la <strong>2D</strong>, plus courte. Les deux se
-        déroulent sur votre propre vélo, mais ne couvrent pas les mêmes
-        disciplines : les vélos de chrono et de triathlon relèvent
-        exclusivement de la 3D. Cette page vous aide à choisir le format adapté
-        à votre pratique et à votre budget.
-      </p>
-    </div>
-  </section>
+  <PageHero
+    ariane="3D ou 2D"
+    pastille="Comparatif des deux formats"
+    titre={["Étude posturale ", "3D ou 2D", " : laquelle choisir ?"]}
+    intro="Deux formats d'étude posturale à Rennes : la 3D, la plus complète, et la 2D, plus courte. Les deux se déroulent sur votre propre vélo, mais ne couvrent pas les mêmes disciplines : les vélos de chrono et de triathlon relèvent exclusivement de la 3D."
+    image="/images/etude-posturale-3d-capture.webp"
+    alt="Cycliste analysée en capture de mouvement 3D dans le studio ID Postur"
+    puces={[`3D : ${formatPrix(troisD.price)} · ${troisD.duration}`, `2D : ${formatPrix(deuxD.price)} · ${deuxD.duration}`, "Chrono et triathlon : 3D uniquement"]}
+    ctas={[
+      { href: "#comparatif", label: "Voir le comparatif" },
+      { href: "/reserver", label: "Prendre rendez-vous", secondaire: true },
+    ]}
+  />
 
   <!-- BLOCS ALTERNÉS 3D / 2D -->
-  {
-    FORMATS_ETUDE.map((format) => (
-      <section class="container mx-auto px-5 py-16" id={format.ancre}>
-        <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-10 items-center">
-          <div class:list={[format.imageADroite ? "md:order-1" : "md:order-2"]}>
-            <h2 class="text-2xl md:text-4xl leading-[1.1] tracking-[-0.03em]">{format.titre}</h2>
-            <p class="text-lg font-semibold text-gray-900 mb-4">
-              {format.accroche}
-            </p>
-            {format.paragraphes.map((paragraphe) => (
-              <p class="text-gray-700 leading-relaxed mb-4">{paragraphe}</p>
-            ))}
-            <ul class="text-sm text-gray-600 space-y-1 mb-6">
-              <li class="font-medium text-gray-700">À apporter :</li>
-              {format.prestation.equipment.map((item) => (
-                <li>{item}</li>
-              ))}
-            </ul>
-            <a
-              href="/reserver"
-              class="inline-flex justify-center items-center px-6 py-3 bg-id-postur-dark text-white font-semibold hover:opacity-90 transition"
-            >
-              Réserver une étude {format.titre.includes("3D") ? "3D" : "2D"}
-            </a>
-          </div>
-          <div class:list={[format.imageADroite ? "md:order-2" : "md:order-1"]}>
+  <section class="bg-brume">
+    <div class="max-w-7xl mx-auto px-5 md:px-8 lg:px-10 py-20 md:py-28 flex flex-col gap-5">
+      {
+        FORMATS_ETUDE.map((format, i) => (
+          <article id={format.ancre} class="grid lg:grid-cols-2 rounded-md bg-white overflow-hidden scroll-mt-28">
             <img
               src={format.image}
               alt={format.imageAlt}
               width="800"
               height="600"
               loading="lazy"
-              class="w-full h-auto object-cover shadow-sm"
+              class:list={["w-full h-full min-h-72 object-cover", i % 2 === 1 && "lg:order-2"]}
             />
-          </div>
-        </div>
-      </section>
-    ))
-  }
+            <div class="flex flex-col gap-5 p-7 md:p-10 lg:p-12">
+              <p class="pastille">{format.titre.includes("3D") ? "La plus complète" : "Plus courte"}</p>
+              <h2 class="text-3xl md:text-[2.5rem] leading-[1.06] tracking-[-0.035em]">
+                {format.titre.replace(/ (3D|2D)$/, " ")}<span class="accent">{format.titre.includes("3D") ? "3D" : "2D"}</span>
+              </h2>
+              <p class="font-id-postur text-lg font-semibold tracking-[-0.02em] text-encre">{format.accroche}</p>
+              {format.paragraphes.map((paragraphe) => (
+                <p class="text-[15px] leading-relaxed text-encre-2">{paragraphe}</p>
+              ))}
+              <div class="flex flex-col gap-2.5 border-t border-filet pt-5">
+                <p class="text-[13px] font-semibold text-encre">À apporter</p>
+                <ul class="grid gap-x-6 gap-y-1.5 sm:grid-cols-2 text-sm text-encre-2">
+                  {format.prestation.equipment.map((item) => (
+                    <li class="flex items-start gap-2.5">
+                      <span class="size-1.5 shrink-0 mt-[0.55em] bg-encre" aria-hidden="true" />
+                      {item.replace(/^•\s*/, "")}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <a href="/reserver" class="btn btn-noir w-fit mt-2">
+                <Roll texte={`Réserver une étude ${format.titre.includes("3D") ? "3D" : "2D"}`} fleche="↗" />
+              </a>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
 
   <!--
     ÉQUIPES — on énonce uniquement que ces équipes utilisent l'analyse 3D.
-    Aucune affirmation d'un lien avec ID Postur, aucun logo : une citation
+    Aucune affirmation d'un lien avec ID Postur, aucun logo&nbsp;: une citation
     textuelle n'engage que ce qu'elle dit.
   -->
-  <section class="border-y border-gray-200 bg-white py-14">
-    <div class="container mx-auto px-5 max-w-4xl text-center">
-      <h2 class="text-2xl md:text-4xl leading-[1.1] tracking-[-0.03em] mb-4">
-        L'analyse 3D, la référence du peloton professionnel
-      </h2>
-      <p class="text-gray-700 leading-relaxed mb-8">
-        C'est la technologie retenue par les plus grandes équipes du World Tour
-        pour réaliser les études posturales de leurs coureurs. Un niveau de
-        précision pensé pour la compétition, accessible à tous les cyclistes
-        chez ID Postur.
-      </p>
-      <ul class="flex flex-wrap justify-center gap-4">
-        {
-          EQUIPES_3D.map((equipe) => (
-            <li class="border border-gray-200 bg-gray-50 px-6 py-3 text-sm font-semibold text-gray-800">
-              {equipe}
-            </li>
-          ))
-        }
+  <section class="max-w-7xl mx-auto px-5 md:px-8 lg:px-10 pt-20 md:pt-28">
+    <div class="sur-fond-sombre grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:items-center rounded-md bg-encre p-8 md:p-12">
+      <div class="flex flex-col gap-4">
+        <h2 class="text-3xl md:text-[2.5rem] leading-[1.06] tracking-[-0.035em] text-white">
+          L'analyse 3D, la référence du <span class="accent">peloton pro</span>.
+        </h2>
+        <p class="text-[15px] leading-relaxed text-[#b4b4bc] max-w-xl">
+          C'est la technologie retenue par les plus grandes équipes du World Tour
+          pour réaliser les études posturales de leurs coureurs. Un niveau de
+          précision pensé pour la compétition, accessible à tous les cyclistes
+          chez ID Postur.
+        </p>
+      </div>
+      <ul class="flex flex-wrap gap-2.5 lg:justify-end">
+        {EQUIPES_3D.map((equipe) => <li class="rounded bg-nuit px-4 py-3 text-[15px] font-semibold text-white">{equipe}</li>)}
       </ul>
     </div>
   </section>
 
   <!-- TABLEAU COMPARATIF -->
-  <section class="bg-gray-50 py-16">
-    <div class="container mx-auto px-5 max-w-4xl">
-      <h2 class="text-2xl md:text-4xl leading-[1.1] tracking-[-0.03em]">
-        Étude 3D et étude 2D en un coup d'œil
+  <section id="comparatif" class="max-w-7xl mx-auto px-5 md:px-8 lg:px-10 pt-20 md:pt-28 flex flex-col gap-10 scroll-mt-24">
+    <div class="flex flex-col gap-4">
+      <p class="pastille">En un coup d'œil</p>
+      <h2 class="text-[2rem] sm:text-4xl md:text-[3.25rem] leading-[1.04] tracking-[-0.035em]">
+        La 3D et la 2D, <span class="accent">côte à côte</span>.
       </h2>
-
-      <div class="overflow-x-auto">
-        <table class="w-full text-left border-collapse bg-white min-w-125">
-          <thead>
-            <tr class="border-b border-gray-200">
-              <th class="p-4 font-semibold text-gray-700"></th>
-              <th class="p-4 font-semibold text-gray-900">Étude 3D</th>
-              <th class="p-4 font-semibold text-gray-900">Étude 2D</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              COMPARATIF_3D_2D.map((ligne) => (
-                <tr class="border-b border-gray-100 align-top transition-colors duration-200 hover:bg-gray-50">
-                  <th class="p-4 font-medium text-gray-700 text-sm">
-                    {ligne.critere}
-                  </th>
-                  <td class="p-4 text-sm text-gray-700">{ligne.troisD}</td>
-                  <td class="p-4 text-sm text-gray-700">{ligne.deuxD}</td>
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
-      </div>
-
-      <p class="text-sm text-gray-600 mt-6">{REGLE_DEJA_CLIENT}</p>
     </div>
-  </section>
 
-  <!-- COMMENT CHOISIR (rendu seulement si le contenu est renseigné) -->
-  {
-    afficherPourQui && (
-      <section class="container mx-auto px-5 py-16">
-        <div class="max-w-5xl mx-auto">
-          <h2 class="text-2xl md:text-4xl leading-[1.1] tracking-[-0.03em]">
-            Comment choisir entre les deux ?
-          </h2>
-
-          <div class="grid md:grid-cols-2 gap-8">
-            <div class="border border-gray-200 bg-white p-6">
-              <h3 class="text-xl font-semibold mb-4">Choisissez la 3D si…</h3>
-              <ul class="space-y-2 text-sm text-gray-700">
-                {POUR_QUI_3D.map((raison) => (
-                  <li>• {raison}</li>
-                ))}
-              </ul>
-            </div>
-            <div class="border border-gray-200 bg-white p-6">
-              <h3 class="text-xl font-semibold mb-4">Choisissez la 2D si…</h3>
-              <ul class="space-y-2 text-sm text-gray-700">
-                {POUR_QUI_2D.map((raison) => (
-                  <li>• {raison}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
+    <!-- Mobile : une carte par format plutôt qu'un tableau à faire défiler. -->
+    <div class="grid gap-4 md:hidden">
+      {[["3D", "troisD"], ["2D", "deuxD"]].map(([f, cle]) => (
+        <div class="rounded-md border border-filet overflow-hidden">
+          <p class="bg-brume px-5 py-4 font-id-postur text-lg font-semibold tracking-[-0.02em] text-encre">Étude <span class="accent">{f}</span></p>
+          <dl class="divide-y divide-filet">
+            {COMPARATIF_3D_2D.map((ligne) => (
+              <div class="grid grid-cols-[7.5rem_1fr] gap-3 px-5 py-3.5 text-sm">
+                <dt class="font-semibold text-encre">{ligne.critere}</dt>
+                <dd class="leading-relaxed text-encre-2">{ligne[cle as "troisD" | "deuxD"]}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
-      </section>
-    )
-  }
-
-  <!-- CTA -->
-  <section class="container mx-auto px-5 py-16">
-    <div
-      class="max-w-4xl mx-auto border border-gray-200 bg-white p-8 text-center"
-    >
-      <h2 class="text-2xl md:text-4xl leading-[1.1] tracking-[-0.03em] mb-4">
-        Prêt à réserver votre étude posturale ?
-      </h2>
-      <p class="text-gray-700 mb-6">
-        Indiquez si vous êtes déjà venu chez ID Postur, puis choisissez votre
-        format et votre créneau.
-      </p>
-      <a
-        href="/reserver"
-        class="inline-flex justify-center items-center px-8 py-3 bg-id-postur-dark text-white font-semibold hover:opacity-90 transition"
-      >
-        Prendre rendez-vous
-      </a>
-      <p class="text-sm text-gray-600 mt-4">
-        Ou par téléphone au <a
-          href={`tel:${ENTREPRISE.telephone}`}
-          class="text-gray-900 font-semibold">{ENTREPRISE.telephoneAffiche}</a
-        >
-      </p>
+      ))}
     </div>
+
+    <div class="hidden md:block overflow-x-auto rounded-md border border-filet">
+      <table class="w-full text-left border-collapse min-w-[36rem]">
+        <thead>
+          <tr class="bg-brume">
+            <th class="p-5 w-1/4"><span class="sr-only">Critère</span></th>
+            <th class="p-5 font-id-postur text-lg font-semibold tracking-[-0.02em] text-encre">Étude <span class="accent">3D</span></th>
+            <th class="p-5 font-id-postur text-lg font-semibold tracking-[-0.02em] text-encre">Étude <span class="accent">2D</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            COMPARATIF_3D_2D.map((ligne) => (
+              <tr class="border-t border-filet align-top">
+                <th class="p-5 text-sm font-semibold text-encre">{ligne.critere}</th>
+                <td class="p-5 text-sm leading-relaxed text-encre-2">{ligne.troisD}</td>
+                <td class="p-5 text-sm leading-relaxed text-encre-2">{ligne.deuxD}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <p class="text-[15px] text-encre-2">{REGLE_DEJA_CLIENT}</p>
+
+    {
+      afficherPourQui && (
+        <div class="grid gap-5 md:grid-cols-2">
+          {[["la 3D", POUR_QUI_3D], ["la 2D", POUR_QUI_2D]].map(([nom, raisons]) => (
+            <div class="flex flex-col gap-4 rounded-md bg-brume p-7">
+              <h3 class="text-xl tracking-[-0.025em]">Choisissez <span class="accent">{nom}</span> si…</h3>
+              <ul class="flex flex-col gap-2 text-[15px] text-encre-2">
+                {(raisons as string[]).map((raison) => (
+                  <li class="flex items-start gap-2.5">
+                    <span class="mt-2 size-1.5 shrink-0 bg-encre" aria-hidden="true" />
+                    {raison}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      )
+    }
   </section>
 
-  <!-- FAQ -->
-  <section class="bg-gray-50 py-16">
-    <div class="container mx-auto px-5 max-w-4xl">
-      <h2 class="text-2xl md:text-4xl leading-[1.1] tracking-[-0.03em] text-center mb-4">
-        Questions fréquentes sur la 3D et la 2D
-      </h2>
-
-      <div class="space-y-6">
-        {
-          faqItems.map((item) => (
-            <details class="group bg-white border border-[#e4e4e4] p-2.5 transition-colors duration-200 hover:border-gray-400 open:border-id-postur-dark/40">
-              <summary class="flex items-center justify-between cursor-pointer list-none">
-                <h3 class="text-[15px] font-semibold">{item.question}</h3>
-                <span class="text-gray-400 transition-transform duration-300 group-open:rotate-45 text-3xl leading-none select-none">
-                  +
-                </span>
-              </summary>
-              <p class="faq-reponse mt-4 text-gray-700 leading-relaxed">{item.answer}</p>
-            </details>
-          ))
-        }
-      </div>
-
-      <p class="text-center text-sm text-gray-600 mt-10">
-        <a
-          href="/etudes-posturales"
-          class="text-gray-900 font-semibold underline hover:opacity-80"
-        >
-          Voir toutes les formules d'étude posturale et leurs tarifs
-        </a>
-      </p>
-    </div>
-  </section>
+  <FaqListe items={faqItems} titre={["Questions sur la ", "3D et la 2D", "."]} />
 </BaseLayout>

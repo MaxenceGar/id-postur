@@ -1,4 +1,5 @@
 ---
+import Roll from "../components/Roll.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Formulecomponent from "../components/formulecomponent.astro";
 import PageHero from "../components/PageHero.astro";
@@ -101,7 +102,7 @@ const services = [
       <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
         <div class="flex flex-col gap-4">
           <p class="pastille bg-white">Première étude chez ID Postur</p>
-          <h2 class="text-4xl md:text-[3.25rem] leading-[1.04] tracking-[-0.035em]">
+          <h2 class="text-[2rem] sm:text-4xl md:text-[3.25rem] leading-[1.04] tracking-[-0.035em]">
             Choisissez votre <span class="accent">format</span>.
           </h2>
         </div>
@@ -125,7 +126,7 @@ const services = [
         }
       </div>
 
-      <div class="flex flex-col lg:flex-row lg:items-center gap-6 rounded-md bg-rose p-7 md:p-8">
+      <div class="flex flex-col lg:flex-row lg:items-center gap-6 rounded-md bg-white p-7 md:p-8">
         <div class="flex flex-col gap-2 grow">
           <h2 class="text-2xl md:text-[1.75rem] tracking-[-0.03em]">Déjà venu chez ID Postur&nbsp;?</h2>
           <p class="text-[15px] leading-relaxed text-encre-2 max-w-2xl">
@@ -133,60 +134,60 @@ const services = [
             depuis votre première étude.
           </p>
         </div>
-        <div class="flex gap-3">
+        <div class="grid grid-cols-2 gap-3 lg:flex">
           {[troisDClient, deuxDClient].map((p) => (
-            <div class="flex flex-col rounded bg-white px-5 py-3">
+            <div class="flex flex-col rounded bg-brume px-5 py-3">
               <span class="text-[13px] text-encre-2">Étude {p.slug.includes("3d") ? "3D" : "2D"}</span>
               <span class="font-id-postur text-2xl font-semibold tracking-[-0.03em] text-encre">{formatPrix(p.price)}</span>
             </div>
           ))}
         </div>
         <a href="/reserver/deja-client" class="btn btn-noir shrink-0">
-          Tarif déjà client <span aria-hidden="true">↗</span>
+          <Roll texte="Tarif déjà client" fleche="↗" />
         </a>
       </div>
 
       <div class="flex flex-col md:flex-row md:items-center gap-6 rounded-md bg-white p-7 md:p-8">
         <div class="flex flex-col gap-2 grow">
-          <p class="text-sm font-medium text-id-postur-dark">Offre particulière · {moinsDe15.baseline}</p>
-          <h2 class="text-2xl md:text-[1.75rem] tracking-[-0.03em]">{moinsDe15.title}</h2>
+          <p class="text-sm font-medium text-encre-3">Offre particulière · {moinsDe15.baseline}</p>
+          <h2 class="text-2xl md:text-[1.75rem] tracking-[-0.03em]">{moinsDe15.title.replace(" — ", "\u00a0— ")}</h2>
           <p class="text-[15px] leading-relaxed text-encre-2 max-w-2xl">
             Une formule à tarif unique pour les jeunes cyclistes, réalisée avec
             la technologie d'analyse 2D sur une séance de {moinsDe15.duration}.
-            Le tarif reste le même à chaque visite : la croissance modifie les
+            Le tarif reste le même à chaque visite&nbsp;: la croissance modifie les
             mesures, l'étude est donc refaite entièrement.
           </p>
         </div>
         <p class="font-id-postur text-4xl font-semibold tracking-[-0.04em] text-encre shrink-0">
           {formatPrix(moinsDe15.price)} <span class="font-sans text-base font-medium tracking-normal text-encre-2">· {moinsDe15.duration}</span>
         </p>
-        <a href="/reserver/premiere-etude" class="btn btn-contour shrink-0">Réserver cette formule</a>
+        <a href="/reserver/premiere-etude" class="btn btn-contour shrink-0"><Roll texte="Réserver cette formule" /></a>
       </div>
     </div>
   </section>
 
-  <section class="max-w-7xl mx-auto px-5 md:px-8 lg:px-10 py-20 md:py-28 flex flex-col gap-12">
+  <section class="max-w-7xl mx-auto px-5 md:px-8 lg:px-10 pt-20 md:pt-28 flex flex-col gap-12">
     <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
       <div class="flex flex-col gap-4">
         <p class="pastille">Le réglage</p>
-        <h2 class="text-4xl md:text-[3.25rem] leading-[1.04] tracking-[-0.035em]">
+        <h2 class="text-[2rem] sm:text-4xl md:text-[3.25rem] leading-[1.04] tracking-[-0.035em]">
           Ce que l'on <span class="accent">ajuste</span> sur votre vélo.
         </h2>
       </div>
       <p class="text-[17px] leading-relaxed text-encre-2 max-w-md">
         Les mesures guident chaque réglage. Débutant ou confirmé, l'objectif est
-        le même : progresser sans douleur.
+        le même&nbsp;: progresser sans douleur.
       </p>
     </div>
 
-    <ul class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+    <ul class="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
       {
         reglages.map((r) => (
           <li class="flex flex-col rounded-md border border-filet overflow-hidden">
             <img src={r.image} alt="" width="500" height="360" loading="lazy" class="w-full aspect-[4/3] object-cover" />
-            <div class="flex flex-col gap-2 p-6">
-              <h3 class="text-xl tracking-[-0.025em]">{r.titre}</h3>
-              <p class="text-sm leading-relaxed text-encre-2">{r.texte}</p>
+            <div class="flex flex-col gap-2 p-4 sm:p-6">
+              <h3 class="text-base sm:text-xl tracking-[-0.025em]">{r.titre}</h3>
+              <p class="text-[13px] sm:text-sm leading-relaxed text-encre-2">{r.texte}</p>
             </div>
           </li>
         ))
@@ -202,11 +203,15 @@ const services = [
       </ul>
     </div>
 
-    <p class="text-[15px] text-encre-2">
-      Vous venez de Nantes ou de sa région&nbsp;? Consultez notre page dédiée aux
-      <a href="/etude-posturale-nantes" class="font-semibold text-encre underline underline-offset-4">cyclistes nantais</a>
-      : trajet, organisation de la journée et tarifs.
-    </p>
+    <a href="/etude-posturale-nantes" class="lien-anime group flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-md border border-filet p-5 md:px-7 transition-colors hover:border-encre-3">
+      <span class="text-[15px] text-encre-2">
+        <strong class="font-semibold text-encre">Vous venez de Nantes ou de sa région&nbsp;?</strong>
+        Trajet, organisation de la journée et tarifs&nbsp;: tout est sur notre page dédiée.
+      </span>
+      <span class="inline-flex items-center gap-2 text-[15px] font-medium text-encre shrink-0">
+        <Roll texte="Cyclistes nantais" fleche="↗" />
+      </span>
+    </a>
   </section>
 
   <AutresPrestations sansEtude title="Besoin d'un réglage ponctuel ?" />

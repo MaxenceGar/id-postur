@@ -46,11 +46,11 @@ const EQUIPEMENT_ETUDE = [
  * réserve un créneau qui ne peut pas le prendre en charge.
  */
 export const RESTRICTION_2D =
-  "Non disponible pour les vélos de chrono et de triathlon : ces positions nécessitent l'étude 3D.";
+  "Non disponible pour les vélos de chrono et de triathlon\u00a0: ces positions nécessitent l'étude 3D.";
 
 /** La captation 3D est perturbée par les matières réfléchissantes. */
 const NOTE_3D =
-  "À savoir : évitez les vêtements réfléchissants, ils perturbent la captation 3D.";
+  "À savoir\u00a0: évitez les vêtements réfléchissants, ils perturbent la captation 3D.";
 
 const DISCIPLINES_TOUTES = "Route, VTT, gravel, chrono et triathlon";
 const DISCIPLINES_2D = "Route, VTT et gravel";
@@ -72,7 +72,7 @@ export const EQUIPES_3D = [
 
 /** Formulation unique de la règle « déjà client », réutilisée partout. */
 export const REGLE_DEJA_CLIENT =
-  "Vous avez déjà réalisé une étude posturale chez ID Postur ? Nous disposons déjà de vos mesures : l'étude est plus rapide, et donc moins chère.";
+  "Vous avez déjà réalisé une étude posturale chez ID Postur\u00a0? Nous disposons déjà de vos mesures\u00a0: l'étude est plus rapide, et donc moins chère.";
 
 export const ETUDES_POSTURALES: Prestation[] = [
   {

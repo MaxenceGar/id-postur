@@ -1,4 +1,5 @@
 ---
+import Roll from "../components/Roll.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Formulecomponent from "../components/formulecomponent.astro";
 import AutresPrestations from "../components/autres-prestations.astro";
@@ -65,13 +66,16 @@ const services = [
 
   <section id="formule" class="bg-brume">
     <div class="max-w-7xl mx-auto px-5 md:px-8 lg:px-10 py-20 md:py-24 flex flex-col gap-10">
-      <h2 class="text-3xl md:text-[2.5rem] leading-[1.06] tracking-[-0.035em]">
-        Un rendez-vous court pour <span class="accent">sécuriser</span> votre achat
-      </h2>
+      <div class="flex flex-col gap-4">
+        <p class="pastille bg-white">La formule</p>
+        <h2 class="text-3xl md:text-[2.5rem] leading-[1.06] tracking-[-0.035em]">
+          Un rendez-vous court pour <span class="accent">sécuriser</span> votre achat
+        </h2>
+      </div>
       <div class="grid gap-5 lg:grid-cols-[1.4fr_1fr]">
         <Formulecomponent prestation={choix} />
-        <div class="flex flex-col gap-5">
-          <a href="/etudes-posturales" class="sur-fond-sombre group flex grow flex-col gap-4 rounded-md bg-encre p-7 md:p-8">
+        <div class="flex flex-col gap-5 lg:self-start lg:sticky lg:top-24">
+          <a href="/etudes-posturales" class="carte-survol sur-fond-sombre group flex grow flex-col gap-4 rounded-md bg-encre p-7 md:p-8">
             <h3 class="text-2xl md:text-[1.75rem] leading-tight tracking-[-0.03em] text-white">
               Et une fois le vélo <span class="accent">acheté</span> ?
             </h3>
@@ -79,10 +83,9 @@ const services = [
               L'étude posturale règle ensuite votre position sur votre nouveau vélo, au millimètre, avec la capture de mouvement STT.
             </p>
             <span class="mt-auto inline-flex items-center gap-2 text-[15px] font-medium text-white">
-              Découvrir les études <span aria-hidden="true">↗</span>
+              <Roll texte="Découvrir les études" fleche="↗" />
             </span>
           </a>
-          <img src="/images/etudes-posturales-studio.webp" alt="" width="600" height="320" loading="lazy" class="w-full aspect-[16/8] object-cover rounded-md" />
         </div>
       </div>
     </div>

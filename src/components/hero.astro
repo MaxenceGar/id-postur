@@ -1,10 +1,10 @@
 ---
-import { AVIS_GOOGLE, FICHE_GOOGLE } from "../data/entreprise";
+import Roll from "./Roll.astro";
 
 /**
  * Hero de l'accueil, DA « Atelier » : accroche à gauche, vidéo de séance à
- * droite avec des badges flottants (avis, fondateur, précision). Le H1 porte
- * le mot-clé local ; le grand titre visuel suit juste dessous.
+ * droite. Le H1 porte le mot-clé local ; le grand titre visuel suit juste
+ * dessous.
  */
 ---
 
@@ -12,7 +12,7 @@ import { AVIS_GOOGLE, FICHE_GOOGLE } from "../data/entreprise";
   <div class="grid gap-14 lg:gap-16 lg:grid-cols-[1fr_1.05fr] items-center">
     <!-- Texte -->
     <div class="flex flex-col gap-7 animate-fade-in-left">
-      <h1 class="pastille pastille-rose font-sans tracking-normal">
+      <h1 class="pastille font-sans tracking-normal">
         Étude posturale vélo à Rennes
       </h1>
       <p
@@ -25,11 +25,11 @@ import { AVIS_GOOGLE, FICHE_GOOGLE } from "../data/entreprise";
         grâce à une étude posturale personnalisée, menée par un ancien coureur
         professionnel.
       </p>
-      <div class="flex flex-wrap gap-3">
-        <a href="/reserver" class="btn btn-rouge">
-          Prendre rendez-vous <span aria-hidden="true">↗</span>
+      <div class="flex flex-col sm:flex-row gap-3">
+        <a href="/reserver" class="btn btn-rouge py-4 sm:py-3.5">
+          <Roll texte="Prendre rendez-vous" fleche="↗" />
         </a>
-        <a href="#formules" class="btn btn-contour">Voir les tarifs</a>
+        <a href="#formules" class="btn btn-contour py-4 sm:py-3.5"><Roll texte="Voir les tarifs" /></a>
       </div>
       <div class="flex items-center gap-3.5 pt-2">
         <div class="flex -space-x-2.5" aria-hidden="true">
@@ -44,7 +44,7 @@ import { AVIS_GOOGLE, FICHE_GOOGLE } from "../data/entreprise";
     </div>
 
     <!-- Vidéo + badges -->
-    <div class="relative animate-fade-in-right sm:pl-6 sm:pb-6">
+    <div class="animate-fade-in-right">
       <div class="hero-media overflow-hidden rounded-md">
         <video
           class="w-full h-auto aspect-[4/5] sm:aspect-[5/5] object-cover"
@@ -69,30 +69,6 @@ import { AVIS_GOOGLE, FICHE_GOOGLE } from "../data/entreprise";
           height="720"
           loading="lazy"
         />
-      </div>
-
-      <a
-        href={FICHE_GOOGLE}
-        target="_blank"
-        rel="noopener"
-        aria-label={`Voir nos ${AVIS_GOOGLE.nombre} avis Google, note 5 sur 5`}
-        class="badge-flottant absolute left-3 sm:left-0 bottom-3 sm:bottom-16 px-4 py-3 flex flex-col gap-0.5 hover:-translate-y-0.5 transition-transform"
-      >
-        <span class="text-sm text-amber-500 tracking-tight" aria-hidden="true">★★★★★</span>
-        <span class="text-[15px] font-semibold text-encre">5,0 · {AVIS_GOOGLE.nombre} avis Google</span>
-      </a>
-
-      <div class="badge-flottant absolute right-3 top-3 sm:-right-4 sm:top-8 hidden sm:flex items-center gap-3 py-3 pl-3 pr-5">
-        <img src="/images/romain-hardy-studio.webp" alt="" width="44" height="44" class="size-11 rounded-full object-cover" />
-        <span class="flex flex-col">
-          <span class="text-[15px] font-semibold text-encre">Romain Hardy</span>
-          <span class="text-[13px] text-encre-2">Ancien coureur pro</span>
-        </span>
-      </div>
-
-      <div class="absolute right-3 bottom-3 sm:right-6 sm:bottom-14 hidden sm:flex items-center gap-2.5 rounded bg-encre px-4 py-2.5 text-sm font-medium text-white">
-        <span class="size-2 rounded-full bg-[#ff3b3b]" aria-hidden="true"></span>
-        Précision &lt; 1 mm
       </div>
     </div>
   </div>

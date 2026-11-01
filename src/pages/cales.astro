@@ -1,4 +1,5 @@
 ---
+import Roll from "../components/Roll.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Formulecomponent from "../components/formulecomponent.astro";
 import AutresPrestations from "../components/autres-prestations.astro";
@@ -69,13 +70,16 @@ const services = [
 
   <section id="formule" class="bg-brume">
     <div class="max-w-7xl mx-auto px-5 md:px-8 lg:px-10 py-20 md:py-24 flex flex-col gap-10">
-      <h2 class="text-3xl md:text-[2.5rem] leading-[1.06] tracking-[-0.035em]">
-        Le réglage des <span class="accent">cales</span>
-      </h2>
+      <div class="flex flex-col gap-4">
+        <p class="pastille bg-white">Le réglage</p>
+        <h2 class="text-3xl md:text-[2.5rem] leading-[1.06] tracking-[-0.035em]">
+          Le réglage des <span class="accent">cales</span>
+        </h2>
+      </div>
       <div class="grid gap-5 lg:grid-cols-[1.4fr_1fr]">
         <Formulecomponent prestation={cales} />
-        <div class="flex flex-col gap-5">
-          <a href="/etudes-posturales" class="sur-fond-sombre group flex grow flex-col gap-4 rounded-md bg-encre p-7 md:p-8">
+        <div class="flex flex-col gap-5 lg:self-start lg:sticky lg:top-24">
+          <a href="/etudes-posturales" class="carte-survol sur-fond-sombre group flex grow flex-col gap-4 rounded-md bg-encre p-7 md:p-8">
             <h3 class="text-2xl md:text-[1.75rem] leading-tight tracking-[-0.03em] text-white">
               Déjà inclus dans <span class="accent">l'étude posturale</span>.
             </h3>
@@ -83,10 +87,9 @@ const services = [
               Le positionnement des cales fait partie de l'étude 3D comme de l'étude 2D. Ce rendez-vous de 20 minutes s'adresse à ceux qui veulent uniquement régler leurs cales, par exemple après un changement de chaussures.
             </p>
             <span class="mt-auto inline-flex items-center gap-2 text-[15px] font-medium text-white">
-              Découvrir les études <span aria-hidden="true">↗</span>
+              <Roll texte="Découvrir les études" fleche="↗" />
             </span>
           </a>
-          <img src="/images/etude-posturale-reglage-genou.webp" alt="" width="600" height="320" loading="lazy" class="w-full aspect-[16/8] object-cover rounded-md" />
         </div>
       </div>
     </div>

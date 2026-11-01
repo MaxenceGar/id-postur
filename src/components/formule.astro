@@ -1,4 +1,5 @@
 ---
+import Roll from "./Roll.astro";
 import { BESOINS } from "../data/parcours";
 import { formatPrix, getPrestation } from "../data/tarifs";
 
@@ -16,13 +17,13 @@ const deuxD = getPrestation("etude-posturale-2d");
   <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
     <div class="flex flex-col gap-4">
       <p class="pastille">Prestations</p>
-      <h2 class="text-4xl md:text-[3.25rem] leading-[1.04] tracking-[-0.035em]">
-        Que souhaitez-vous <span class="accent">faire</span>&nbsp;?
+      <h2 class="text-[2rem] sm:text-4xl md:text-[3.25rem] leading-[1.04] tracking-[-0.035em]">
+        Que <span class="whitespace-nowrap">souhaitez-vous</span> <span class="accent">faire</span>&nbsp;?
       </h2>
     </div>
     <p class="text-[17px] leading-relaxed text-encre-2 max-w-sm">
-      Choisissez votre besoin, on vous guide jusqu'au bon créneau. L'étude
-      posturale est ouverte à tous.
+      Choisissez votre besoin, on vous guide jusqu'au bon créneau.
+      L'étude posturale est ouverte à&nbsp;tous.
     </p>
   </div>
 
@@ -30,7 +31,7 @@ const deuxD = getPrestation("etude-posturale-2d");
     <!-- Étude 3D, en grand -->
     <a
       href={`/reserver?besoin=${etude.id}`}
-      class="group flex flex-col rounded-md bg-brume overflow-hidden"
+      class="carte-survol group flex flex-col rounded-md bg-brume overflow-hidden"
     >
       <div class="overflow-hidden">
         <img
@@ -39,11 +40,11 @@ const deuxD = getPrestation("etude-posturale-2d");
           width="1200"
           height="660"
           loading="lazy"
-          class="w-full aspect-[16/9] object-cover transition-transform duration-500 motion-safe:group-hover:scale-[1.03]"
+          class="w-full aspect-[16/9] object-cover"
         />
       </div>
       <div class="flex flex-col gap-3 p-7 md:p-8">
-        <p class="pastille pastille-rose">La plus complète</p>
+        <p class="pastille">La plus complète</p>
         <h3 class="text-3xl md:text-[2.5rem] leading-[1.05] tracking-[-0.035em]">
           Étude posturale <span class="accent">3D</span>
         </h3>
@@ -55,7 +56,7 @@ const deuxD = getPrestation("etude-posturale-2d");
           <p class="text-lg font-semibold text-encre">
             {formatPrix(troisD.price)} · {troisD.duration}
           </p>
-          <span class="btn btn-noir">Je commence <span aria-hidden="true">↗</span></span>
+          <span class="btn btn-noir"><Roll texte="Je commence" fleche="↗" /></span>
         </div>
       </div>
     </a>
@@ -63,7 +64,7 @@ const deuxD = getPrestation("etude-posturale-2d");
     <div class="flex flex-col gap-5">
       <a
         href={`/reserver?besoin=${etude.id}`}
-        class="group flex flex-col sm:flex-row sm:items-center gap-6 rounded-md bg-brume p-5"
+        class="carte-survol group flex flex-col sm:flex-row sm:items-center gap-6 rounded-md bg-brume p-5"
       >
         <img
           src="/images/etude-posturale-2d-analyse-video.webp"
@@ -73,42 +74,58 @@ const deuxD = getPrestation("etude-posturale-2d");
           loading="lazy"
           class="w-full sm:w-48 aspect-[4/3] sm:aspect-square rounded object-cover"
         />
-        <div class="flex flex-col gap-2.5">
+        <div class="flex grow flex-col gap-2.5">
           <h3 class="text-[1.75rem] leading-tight tracking-[-0.03em]">
             Étude posturale <span class="accent">2D</span>
           </h3>
           <p class="text-[15px] leading-relaxed text-encre-2">
             Vue latérale, 50+ mesures automatiques. {deuxD.disciplines}.
           </p>
-          <p class="font-semibold text-encre">
-            {formatPrix(deuxD.price)} · {deuxD.duration}
-          </p>
+          <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+            <p class="font-semibold text-encre">
+              {formatPrix(deuxD.price)} · {deuxD.duration}
+            </p>
+            <span class="inline-flex items-center gap-1.5 text-sm font-medium text-encre">
+              <Roll texte="Je commence" fleche="↗" />
+            </span>
+          </div>
         </div>
       </a>
 
       <a
         href="/etude-posturale-3d-ou-2d"
-        class="sur-fond-sombre group flex grow flex-col justify-between gap-6 rounded-md bg-encre p-7 md:p-8"
+        class="carte-survol sur-fond-sombre group flex grow flex-col gap-4 rounded-md bg-encre p-7 md:p-8"
       >
         <h3 class="text-[1.75rem] leading-tight tracking-[-0.03em] text-white max-w-sm">
-          3D ou 2D&nbsp;? <span class="accent">On vous aide</span> à choisir.
+          3D ou 2D&nbsp;? <span class="accent">On vous aide.</span>
         </h3>
         <p class="text-[15px] leading-relaxed text-[#b4b4bc] max-w-md">
-          Triathlon, chrono, asymétrie ou douleur persistante : la 3D. Une
-          première position sur route ou en VTT : la 2D suffit souvent.
+          Triathlon, chrono, asymétrie ou douleur persistante&nbsp;: la 3D. Une
+          première position sur route ou en VTT&nbsp;: la 2D suffit souvent.
         </p>
-        <span class="inline-flex items-center gap-2 text-[15px] font-medium text-white">
-          Comparer les deux formats
-          <span aria-hidden="true" class="transition-transform motion-safe:group-hover:translate-x-0.5 motion-safe:group-hover:-translate-y-0.5">↗</span>
+        <dl class="mt-2 grid grid-cols-2 gap-px overflow-hidden rounded bg-[#2c2c31] text-sm">
+          {[[troisD, "3D"], [deuxD, "2D"]].map(([p, f]) => (
+            <div class="flex flex-col gap-1.5 bg-nuit p-4">
+              <dt class="font-id-postur text-lg font-semibold tracking-[-0.02em] text-white">Étude {f}</dt>
+              <dd class="text-[#b4b4bc]">{formatPrix(p.price)} · {p.duration}</dd>
+              <dd class="text-[#8a8a93]">{p.disciplines}</dd>
+            </div>
+          ))}
+        </dl>
+        <span class="mt-auto inline-flex items-center gap-2 pt-2 text-[15px] font-medium text-white">
+          <Roll texte="Comparer les deux formats" fleche="↗" />
         </span>
       </a>
     </div>
   </div>
 
   <!-- Rendez-vous courts, réservés aux clients -->
-  <div class="flex flex-col gap-5 pt-2">
-    <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-      <h3 class="text-2xl tracking-[-0.03em]">Déjà client ID Postur&nbsp;?</h3>
+  <div class="flex flex-col gap-6 pt-8">
+    <div class="flex flex-col gap-3">
+      <p class="pastille">Déjà client</p>
+      <h3 class="text-2xl md:text-3xl tracking-[-0.03em]">
+        Un réglage ponctuel, <span class="accent">sans tout refaire</span>.
+      </h3>
       <p class="text-[15px] text-encre-2">
         Rendez-vous courts, réservés aux cyclistes déjà venus en étude.
       </p>
@@ -118,7 +135,7 @@ const deuxD = getPrestation("etude-posturale-2d");
         courts.map((b) => (
           <a
             href={`/reserver?besoin=${b.id}`}
-            class="group flex flex-col justify-between gap-4 rounded-md border border-filet p-5 transition-colors hover:border-encre-3"
+            class="carte-survol group flex items-center justify-between gap-4 rounded-md border border-filet p-4 sm:p-5 hover:border-encre-3 xl:flex-col xl:items-stretch"
           >
             <span class="flex flex-col gap-2">
               <span class="font-id-postur text-[17px] font-semibold leading-snug tracking-[-0.02em] text-encre">
@@ -126,8 +143,11 @@ const deuxD = getPrestation("etude-posturale-2d");
               </span>
               <span class="text-sm leading-relaxed text-encre-2">{b.detail}</span>
             </span>
-            <span class="inline-flex items-center gap-1.5 text-sm font-medium text-id-postur-dark">
-              C'est parti <span aria-hidden="true">↗</span>
+            <span class="hidden xl:inline-flex items-center gap-1.5 text-sm font-medium text-encre">
+              <Roll texte="C'est parti" fleche="↗" />
+            </span>
+            <span class="xl:hidden grid place-items-center size-9 shrink-0 rounded bg-brume text-encre transition-colors group-hover:bg-encre group-hover:text-white">
+              <span class="fleche" aria-hidden="true"><span>↗</span><span>↗</span></span>
             </span>
           </a>
         ))
