@@ -28,7 +28,7 @@ const prestations = [
   { href: "/etude-posturale-nantes", label: "Étude posturale près de Nantes" },
 ];
 
-/** Sur les pages de réservation l'appel tournerait en rond ; sur les mentions, il n'a rien à faire. */
+/** Sur les pages de réservation l'appel à l'action tournerait en rond ; sur les mentions, il n'a rien à faire. */
 const afficherAppel = !/^\/(reserver|mentions-legales)/.test(Astro.url.pathname);
 
 const lien = "lien-souligne text-[#b4b4bc] hover:text-white transition-colors";
@@ -54,8 +54,8 @@ const titre = "text-xs font-semibold uppercase tracking-[0.12em] text-white mb-5
         <a href="/reserver" class="btn btn-rouge">
           <Roll texte="Prendre rendez-vous" fleche="↗" />
         </a>
-        <a href={`tel:${ENTREPRISE.telephone}`} class="btn btn-contour-sombre">
-          <Roll texte={ENTREPRISE.telephoneAffiche} />
+        <a href={`mailto:${ENTREPRISE.email}`} class="btn btn-contour-sombre">
+          <Roll texte="Nous écrire" />
         </a>
       </div>
     </div>
@@ -127,11 +127,11 @@ const titre = "text-xs font-semibold uppercase tracking-[0.12em] text-white mb-5
           {ENTREPRISE.adresse.codePostal} {ENTREPRISE.adresse.ville}
         </a>
         <p>{ENTREPRISE.horaires.affiches}</p>
-        <a href={`tel:${ENTREPRISE.telephone}`} class={`${lien} block`}>
-          {ENTREPRISE.telephoneAffiche}
-        </a>
         <a href={`mailto:${ENTREPRISE.email}`} class={`${lien} block`}>
           {ENTREPRISE.email}
+        </a>
+        <a href={`tel:${ENTREPRISE.telephone}`} class={`${lien} block`}>
+          {ENTREPRISE.telephoneAffiche}
         </a>
       </address>
     </div>

@@ -174,8 +174,8 @@ const services = [
           Nous adaptons les créneaux en début ou fin de journée pour éviter les
           heures de pointe entre Nantes et Rennes.
         </p>
-        <a href={`tel:${ENTREPRISE.telephone}`} class="btn btn-contour-sombre w-fit mt-auto">
-          <Roll texte={`Trouver un horaire : ${ENTREPRISE.telephoneAffiche}`} />
+        <a href={`mailto:${ENTREPRISE.email}`} class="btn btn-contour-sombre w-fit mt-auto">
+          <Roll texte="Trouver un horaire par e-mail" fleche="↗" />
         </a>
       </div>
     </div>
@@ -282,7 +282,7 @@ const services = [
         <Roll texte="Réserver mon étude posturale" fleche="↗" />
       </a>
       <p class="text-[15px] text-encre-2">
-        Ou par téléphone au <a href={`tel:${ENTREPRISE.telephone}`} class="font-semibold text-encre">{ENTREPRISE.telephoneAffiche}</a>
+        Ou par e-mail à <a href={`mailto:${ENTREPRISE.email}`} class="font-semibold text-encre">{ENTREPRISE.email}</a>
       </p>
     </div>
   </section>
@@ -313,7 +313,7 @@ const services = [
           fondé ID Postur en 2023 à La Mézière, près de Rennes.
         </p>
         <p class="text-[15px] leading-relaxed text-encre-2">
-          Plus de <strong class="font-semibold text-encre">800 études posturales</strong>
+          Plus de <strong class="font-semibold text-encre">1000 positions</strong>
           réalisées, <strong class="font-semibold text-encre">25+ athlètes professionnels</strong>
           accompagnés, et une note de <strong class="font-semibold text-encre">5/5 sur {AVIS_GOOGLE.nombre} avis Google</strong>.
           Son expérience terrain de coureur pro nourrit chaque réglage.

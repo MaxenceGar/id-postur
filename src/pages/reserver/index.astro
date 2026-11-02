@@ -373,8 +373,8 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
                 Recommencer
               </button>
               <span class="lg:hidden">
-                Une question ? Appelez le{" "}
-                <a href={`tel:${ENTREPRISE.telephone}`} class="text-encre font-semibold">{ENTREPRISE.telephoneAffiche}</a>
+                Une question ? Écrivez à{" "}
+                <a href={`mailto:${ENTREPRISE.email}`} class="text-encre font-semibold">{ENTREPRISE.email}</a>
               </span>
             </div>
           </section>
@@ -485,7 +485,7 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
           <a href="/reserver/premiere-etude" class="text-gray-900 font-semibold underline">première étude posturale</a>
           ·
           <a href="/reserver/deja-client" class="text-gray-900 font-semibold underline">déjà client</a>
-          · ou appelez le {ENTREPRISE.telephoneAffiche}.
+          · ou écrivez-nous à {ENTREPRISE.email}.
         </p>
       </noscript>
      </div>
@@ -516,8 +516,8 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
             Romain vous accueille au studio,<br />{ENTREPRISE.adresse.rue}, {ENTREPRISE.adresse.ville}.
           </p>
         </div>
-        <a href={`tel:${ENTREPRISE.telephone}`} class="btn btn-contour-sombre w-full">
-          <Roll texte={`Un doute ? ${ENTREPRISE.telephoneAffiche}`} />
+        <a href={`mailto:${ENTREPRISE.email}`} class="btn btn-contour-sombre w-full">
+          <Roll texte="Un doute ? Écrivez-nous" fleche="↗" />
         </a>
       </aside>
     </div>
@@ -1017,7 +1017,7 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
   define:vars={{
     calcom: CALCOM,
     lieu: `${ENTREPRISE.nom}, ${ENTREPRISE.adresse.rue}, ${ENTREPRISE.adresse.codePostal} ${ENTREPRISE.adresse.ville}`,
-    telephone: { lien: ENTREPRISE.telephone, affiche: ENTREPRISE.telephoneAffiche },
+    email: ENTREPRISE.email,
   }}
 >
   (() => {
@@ -1236,10 +1236,10 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
     }
 
     function enPanne() {
-      // Cal.com injoignable : on retombe sur Calendly s'il existe, sinon le téléphone.
+      // Cal.com injoignable : on retombe sur Calendly s'il existe, sinon l'e-mail.
       message.innerHTML = presta.calendly
         ? `Le calendrier ne répond pas. <a class="underline font-semibold text-gray-900" target="_blank" rel="nofollow noopener" href="${presta.calendly}">Réserver sur Calendly</a>`
-        : "Le calendrier ne répond pas. Appelez-nous pour réserver.";
+        : `Le calendrier ne répond pas. Écrivez-nous à <a class="underline font-semibold text-gray-900" href="mailto:${email}">${email}</a> pour réserver.`;
     }
 
     /** Affiche le mois `m` ; sélectionne son premier jour libre si besoin. */
@@ -1302,7 +1302,7 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
       if (!Object.keys(creneaux).length) {
         mois = depart;
         afficherMois();
-        message.textContent = "Aucun créneau disponible pour le moment. Appelez-nous, on trouve une solution.";
+        message.textContent = "Aucun créneau disponible pour le moment. Écrivez-nous à " + email + ", on trouve une solution.";
         return;
       }
       await allerAuMois(depart);
@@ -1383,7 +1383,7 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
           await allerAuMois(mois);
           message.textContent = "Ce créneau vient d'être pris. Choisissez-en un autre.";
         } else {
-          erreur.innerHTML = `La réservation n'a pas abouti. Réessayez dans un instant, ou appelez-nous au <a class="underline" href="tel:${telephone.lien}">${telephone.affiche}</a>.`;
+          erreur.innerHTML = `La réservation n'a pas abouti. Réessayez dans un instant, ou écrivez-nous à <a class="underline" href="mailto:${email}">${email}</a>.`;
         }
       } finally {
         bouton.disabled = false;

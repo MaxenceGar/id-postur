@@ -110,7 +110,7 @@ export interface Resultat {
   disciplines?: string;
   aApporter: string[];
   note?: string;
-  /** Lien Calendly de secours si Cal.com ne répond pas (null : on propose le téléphone). */
+  /** Lien Calendly de secours si Cal.com ne répond pas (null : on propose l'e-mail). */
   lien: string | null;
   /** Durée du créneau à bloquer dans l'agenda, en minutes. */
   dureeMinutes: number;

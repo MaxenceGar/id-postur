@@ -109,7 +109,7 @@ export const AVIS_GOOGLE = {
 
 /** Chiffres clés de l'activité, repris à l'identique partout. */
 export const CHIFFRES = {
-  etudes: "800+",
+  etudes: "1000+",
   pros: "25+",
   anciennete: "3+",
 } as const;
@@ -118,7 +118,7 @@ export const FONDATEUR = {
   nom: "Romain Hardy",
   role: "Fondateur d'ID Postur, spécialiste de l'étude posturale cycliste",
   description:
-    "Ancien cycliste professionnel, Romain Hardy a fondé ID Postur en 2023 à La Mézière, près de Rennes. Il réalise les études posturales avec la technologie de capture de mouvement STT : plus de 800 études menées et plus de 25 athlètes professionnels accompagnés.",
+    "Ancien cycliste professionnel, Romain Hardy a fondé ID Postur en 2023 à La Mézière, près de Rennes. Il réalise les études posturales avec la technologie de capture de mouvement STT : plus de 1000 études menées et plus de 25 athlètes professionnels accompagnés.",
   image: "/images/romain-hardy-studio.webp",
   expertises: [
     "Étude posturale cycliste",

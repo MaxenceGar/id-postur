@@ -66,10 +66,10 @@ const estActif = (lien: (typeof liens)[number]) =>
 
     <div class="flex items-center gap-4">
       <a
-        href={`tel:${ENTREPRISE.telephone}`}
+        href={`mailto:${ENTREPRISE.email}`}
         class="hidden xl:inline text-sm font-medium text-encre-2 hover:text-encre transition-colors"
       >
-        {ENTREPRISE.telephoneAffiche}
+        {ENTREPRISE.email}
       </a>
       <a href="/reserver" class="btn btn-noir hidden sm:inline-flex">
         <Roll texte="Prendre rendez-vous" fleche="↗" />
@@ -127,9 +127,9 @@ const estActif = (lien: (typeof liens)[number]) =>
               </a>
             </li>
             <li class="px-3 py-2 text-sm text-encre-2">
-              Ou appelez le{" "}
-              <a href={`tel:${ENTREPRISE.telephone}`} class="font-semibold text-encre">
-                {ENTREPRISE.telephoneAffiche}
+              Une question ? Écrivez à{" "}
+              <a href={`mailto:${ENTREPRISE.email}`} class="font-semibold text-encre break-all">
+                {ENTREPRISE.email}
               </a>
             </li>
           </ul>
