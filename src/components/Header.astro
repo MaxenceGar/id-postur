@@ -67,9 +67,10 @@ const estActif = (lien: (typeof liens)[number]) =>
     <div class="flex items-center gap-4">
       <a
         href={`mailto:${ENTREPRISE.email}`}
+        title={ENTREPRISE.email}
         class="hidden xl:inline text-sm font-medium text-encre-2 hover:text-encre transition-colors"
       >
-        {ENTREPRISE.email}
+        Me contacter
       </a>
       <a href="/reserver" class="btn btn-noir hidden sm:inline-flex">
         <Roll texte="Prendre rendez-vous" fleche="↗" />
