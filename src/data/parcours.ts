@@ -12,7 +12,7 @@
  * sert plus que de secours si Cal.com ne répond pas.
  */
 
-import { getPrestation } from "./tarifs";
+import { formatPrix, getPrestation } from "./tarifs";
 
 const etude3D = getPrestation("etude-posturale-3d");
 const etude2D = getPrestation("etude-posturale-2d");
@@ -99,6 +99,114 @@ export const BESOINS: ChoixBesoin[] = [
     clientsSeulement: true,
   },
 ];
+
+/** Les choix d'une étape : [valeur, titre, détail, icône]. */
+export type Choix = { valeur: string; titre: string; detail?: string; icone?: string; badge?: string };
+
+/** Étapes 2 et suivantes (l'aiguillage est dans src/lib/parcours-routage.ts). */
+export const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] = [
+  {
+    id: "format",
+    question: "Quel format d'étude ?",
+    aide: "Les deux se font avec la capture de mouvement STT. La 3D est la plus complète.",
+    choix: [
+      {
+        valeur: "3d",
+        titre: "Étude 3D",
+        detail: `${etude3D.duration} · à partir de ${formatPrix(etude3D.price)} · toutes disciplines, chrono et triathlon compris`,
+        badge: "3D",
+      },
+      {
+        valeur: "2d",
+        titre: "Étude 2D",
+        detail: `${etude2D.duration} · à partir de ${formatPrix(etude2D.price)} · route, VTT et gravel`,
+        badge: "2D",
+      },
+      {
+        valeur: "aide",
+        titre: "Je ne sais pas, aidez-moi à choisir",
+        icone: "aide",
+      },
+    ],
+  },
+  {
+    id: "aide-chrono",
+    question: "Roulez-vous en chrono ou en triathlon ?",
+    choix: [
+      { valeur: "oui", titre: "Oui", detail: "Vélo de chrono ou de triathlon", icone: "chrono" },
+      { valeur: "non", titre: "Non", detail: "Route, VTT ou gravel", icone: "velo" },
+    ],
+  },
+  {
+    id: "aide-route",
+    question: "Les deux formats vous conviennent",
+    aide: "La 3D analyse votre position dans les trois plans : elle repère aussi les asymétries gauche/droite et les désalignements des genoux ou du bassin. La 2D, en vue latérale, va à l'essentiel en moins de temps.",
+    choix: [
+      {
+        valeur: "3d",
+        titre: "Je choisis la 3D",
+        detail: `L'analyse la plus complète · ${etude3D.duration}`,
+        badge: "3D",
+      },
+      {
+        valeur: "2d",
+        titre: "Je choisis la 2D",
+        detail: `Plus courte · ${etude2D.duration}`,
+        badge: "2D",
+      },
+    ],
+  },
+  {
+    id: "client",
+    question: "Avez-vous déjà fait une étude posturale complète chez ID Postur ?",
+    aide: "Ne compte pas : une étude faite ailleurs, un réglage de cales, un conseil d'achat ou un rendez-vous court.",
+    choix: [
+      { valeur: "non", titre: "Non, c'est ma première", detail: "Nous partons de zéro", icone: "non" },
+      { valeur: "oui", titre: "Oui, je suis déjà venu", detail: "Tarif client : nous avons déjà vos mesures", icone: "oui" },
+    ],
+  },
+  {
+    id: "velo",
+    question: "Sur quel vélo ?",
+    choix: [
+      { valeur: "velo", titre: "Sur mon vélo", detail: "On règle votre position sur votre vélo actuel", icone: "velo" },
+      {
+        valeur: "studio",
+        titre: "Sur le vélo du studio",
+        detail: "Pour définir la taille exacte de votre futur vélo, avant de l'acheter",
+        icone: "studio",
+      },
+    ],
+  },
+  {
+    id: "selle",
+    question: "Ajouter la cartographie de pression de selle ?",
+    aide: "Le capteur Velometrik montre comment votre poids se répartit sur la selle : utile en cas d'inconfort ou pour choisir une selle.",
+    choix: [
+      { valeur: "avec", titre: "Oui, avec la pression de selle", detail: "+30 €", icone: "selle" },
+      { valeur: "sans", titre: "Non merci", detail: "L'étude 2D seule", icone: "non" },
+    ],
+  },
+  {
+    id: "client-court",
+    question: "Avez-vous déjà fait une étude posturale complète chez ID Postur ?",
+    aide: "Ce rendez-vous court part des mesures de votre étude : il est réservé aux cyclistes déjà passés chez ID Postur.",
+    choix: [
+      { valeur: "oui", titre: "Oui, je suis déjà venu", icone: "oui" },
+      { valeur: "non", titre: "Non, pas encore", icone: "non" },
+    ],
+  },
+  {
+    id: "mise-en-position",
+    question: "Votre étude était en 3D ou en 2D ?",
+    aide: "On reporte sur votre nouveau vélo la position mesurée lors de votre étude.",
+    choix: [
+      { valeur: "3d", titre: "En 3D", badge: "3D" },
+      { valeur: "2d", titre: "En 2D", badge: "2D" },
+    ],
+  },
+];
+
 
 export interface Resultat {
   id: string;

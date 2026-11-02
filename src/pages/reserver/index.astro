@@ -2,8 +2,7 @@
 import { ENTREPRISE, FICHE_GOOGLE } from "../../data/entreprise";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import "../../styles/global.css";
-import { BESOINS, CALCOM, RESULTATS } from "../../data/parcours";
-import { formatPrix, getPrestation } from "../../data/tarifs";
+import { BESOINS, CALCOM, ETAPES, RESULTATS } from "../../data/parcours";
 import Roll from "../../components/Roll.astro";
 
 /**
@@ -19,9 +18,6 @@ import Roll from "../../components/Roll.astro";
  * <noscript> renvoie vers les anciennes pages de réservation.
  * Page en noindex : aucune valeur en résultat de recherche.
  */
-
-const etude3D = getPrestation("etude-posturale-3d");
-const etude2D = getPrestation("etude-posturale-2d");
 
 /** Icônes au trait (24×24), dans l'esprit du reste du site. */
 const ICONES: Record<string, string> = {
@@ -43,112 +39,6 @@ const ICONES: Record<string, string> = {
   selle: '<path d="M4 9c0-2 3-3 8-3s8 1 8 3-4 3-8 3-8-1-8-3Z"/><path d="M12 12v8M9 20h6"/>',
   chrono: '<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M10 2h4"/>',
 };
-
-/** Les choix d'une étape : [valeur, titre, détail, icône]. */
-type Choix = { valeur: string; titre: string; detail?: string; icone?: string; badge?: string };
-
-const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] = [
-  {
-    id: "format",
-    question: "Quel format d'étude ?",
-    aide: "Les deux se font avec la capture de mouvement STT. La 3D est la plus complète.",
-    choix: [
-      {
-        valeur: "3d",
-        titre: "Étude 3D",
-        detail: `${etude3D.duration} · à partir de ${formatPrix(etude3D.price)} · toutes disciplines, chrono et triathlon compris`,
-        badge: "3D",
-      },
-      {
-        valeur: "2d",
-        titre: "Étude 2D",
-        detail: `${etude2D.duration} · à partir de ${formatPrix(etude2D.price)} · route, VTT et gravel`,
-        badge: "2D",
-      },
-      {
-        valeur: "aide",
-        titre: "Je ne sais pas, aidez-moi à choisir",
-        icone: "aide",
-      },
-    ],
-  },
-  {
-    id: "aide-chrono",
-    question: "Roulez-vous en chrono ou en triathlon ?",
-    choix: [
-      { valeur: "oui", titre: "Oui", detail: "Vélo de chrono ou de triathlon", icone: "chrono" },
-      { valeur: "non", titre: "Non", detail: "Route, VTT ou gravel", icone: "velo" },
-    ],
-  },
-  {
-    id: "aide-route",
-    question: "Les deux formats vous conviennent",
-    aide: "La 3D analyse votre position dans les trois plans : elle repère aussi les asymétries gauche/droite et les désalignements des genoux ou du bassin. La 2D, en vue latérale, va à l'essentiel en moins de temps.",
-    choix: [
-      {
-        valeur: "3d",
-        titre: "Je choisis la 3D",
-        detail: `L'analyse la plus complète · ${etude3D.duration}`,
-        badge: "3D",
-      },
-      {
-        valeur: "2d",
-        titre: "Je choisis la 2D",
-        detail: `Plus courte · ${etude2D.duration}`,
-        badge: "2D",
-      },
-    ],
-  },
-  {
-    id: "client",
-    question: "Avez-vous déjà fait une étude posturale complète chez ID Postur ?",
-    aide: "Ne compte pas : une étude faite ailleurs, un réglage de cales, un conseil d'achat ou un rendez-vous court.",
-    choix: [
-      { valeur: "non", titre: "Non, c'est ma première", detail: "Nous partons de zéro", icone: "non" },
-      { valeur: "oui", titre: "Oui, je suis déjà venu", detail: "Tarif client : nous avons déjà vos mesures", icone: "oui" },
-    ],
-  },
-  {
-    id: "velo",
-    question: "Sur quel vélo ?",
-    choix: [
-      { valeur: "velo", titre: "Sur mon vélo", detail: "On règle votre position sur votre vélo actuel", icone: "velo" },
-      {
-        valeur: "studio",
-        titre: "Sur le vélo du studio",
-        detail: "Pour définir la taille exacte de votre futur vélo, avant de l'acheter",
-        icone: "studio",
-      },
-    ],
-  },
-  {
-    id: "selle",
-    question: "Ajouter la cartographie de pression de selle ?",
-    aide: "Le capteur Velometrik montre comment votre poids se répartit sur la selle : utile en cas d'inconfort ou pour choisir une selle.",
-    choix: [
-      { valeur: "avec", titre: "Oui, avec la pression de selle", detail: "+30 €", icone: "selle" },
-      { valeur: "sans", titre: "Non merci", detail: "L'étude 2D seule", icone: "non" },
-    ],
-  },
-  {
-    id: "client-court",
-    question: "Avez-vous déjà fait une étude posturale complète chez ID Postur ?",
-    aide: "Ce rendez-vous court part des mesures de votre étude : il est réservé aux cyclistes déjà passés chez ID Postur.",
-    choix: [
-      { valeur: "oui", titre: "Oui, je suis déjà venu", icone: "oui" },
-      { valeur: "non", titre: "Non, pas encore", icone: "non" },
-    ],
-  },
-  {
-    id: "mise-en-position",
-    question: "Votre étude était en 3D ou en 2D ?",
-    aide: "On reporte sur votre nouveau vélo la position mesurée lors de votre étude.",
-    choix: [
-      { valeur: "3d", titre: "En 3D", badge: "3D" },
-      { valeur: "2d", titre: "En 2D", badge: "2D" },
-    ],
-  },
-];
 
 ---
 
@@ -780,7 +670,9 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
   }
 </style>
 
-<script is:inline>
+<script>
+  import { RESULTAT_DIRECT, suivant } from "../../lib/parcours-routage";
+
   (() => {
     const racine = document.getElementById("parcours");
     const barre = racine.querySelector("[data-barre]");
@@ -792,73 +684,10 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
     let pile = [];
     const libelles = [];
 
-    const CLIENTS_SEULEMENT = ["nouveau-velo", "cales", "micro-reglage", "prolongateurs", "taille-velo"];
-    const RESULTAT_COURT = {
-      cales: "client-cales",
-      "micro-reglage": "client-micro-reglage",
-      prolongateurs: "client-prolongateurs",
-      "taille-velo": "client-taille-velo",
-    };
-
     /** Mesure GA4, seulement si le visiteur a accepté (gtag.js chargé). */
     function mesurer(etape, choix) {
       if (window.google_tag_data && typeof window.gtag === "function") {
         window.gtag("event", "parcours_reservation", { etape, choix });
-      }
-    }
-
-    /** Après le vélo : option selle en 2D, récapitulatif en 3D (selle comprise). */
-    function apresVelo() {
-      return reponses.format === "3d" ? `resultat-etude-3d-${reponses.velo}` : "selle";
-    }
-
-    /** Après le format : on saute ce qui est déjà connu (cas d'un refus). */
-    function apresFormat() {
-      const r = reponses;
-      if (r.client !== "non") return "client";
-      return r.velo ? apresVelo() : "velo";
-    }
-
-    /** Écran suivant selon l'écran courant et la réponse. */
-    function suivant(etape, choix) {
-      const r = reponses;
-      switch (etape) {
-        case "besoin":
-          r.besoin = choix;
-          return CLIENTS_SEULEMENT.includes(choix) ? "client-court" : "format";
-        case "format":
-          if (choix === "aide") return "aide-chrono";
-          r.format = choix;
-          return apresFormat();
-        case "aide-chrono":
-          if (choix === "oui") {
-            r.format = "3d";
-            return apresFormat();
-          }
-          return "aide-route";
-        case "aide-route":
-          r.format = choix;
-          return apresFormat();
-        case "client":
-          r.client = choix;
-          if (choix === "oui") return `resultat-client-etude-${r.format}`;
-          return "velo";
-        case "velo":
-          r.velo = choix;
-          return apresVelo();
-        case "selle":
-          return `resultat-etude-2d-${r.velo}${choix === "avec" ? "-selle" : ""}`;
-        case "client-court":
-          if (choix === "non") return "refus";
-          if (r.besoin === "nouveau-velo") return "mise-en-position";
-          return `resultat-${RESULTAT_COURT[r.besoin]}`;
-        case "mise-en-position":
-          return `resultat-client-mise-en-position-${choix}`;
-        case "refus":
-          // Il vient de dire qu'il n'est pas client : on ne repose pas la question.
-          reponses = { besoin: "etude", client: "non" };
-          if (choix === "etude-studio") reponses.velo = "studio";
-          return "format";
       }
     }
 
@@ -975,12 +804,12 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
       if (bouton) {
         const etape = courant();
         const choix = bouton.dataset.choix;
-        avancer(suivant(etape, choix), choix, bouton.dataset.libelle);
+        avancer(suivant(etape, choix, reponses), choix, bouton.dataset.libelle);
         return;
       }
       const direct = e.target.closest("[data-aller-resultat]");
       if (direct) {
-        avancer(`resultat-${direct.dataset.allerResultat}`, direct.dataset.allerResultat, "Moins de 15 ans");
+        avancer(`resultat-${direct.dataset.allerResultat}`, direct.dataset.allerResultat, RESULTAT_DIRECT.libelle);
         return;
       }
       if (e.target.closest("[data-retour]")) {
@@ -1005,7 +834,7 @@ const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] 
     const besoin = new URLSearchParams(location.search).get("besoin");
     const carte = besoin && racine.querySelector(`[data-etape="besoin"] [data-choix="${CSS.escape(besoin)}"]`);
     if (carte) {
-      avancer(suivant("besoin", besoin), besoin, carte.dataset.libelle);
+      avancer(suivant("besoin", besoin, reponses), besoin, carte.dataset.libelle);
     } else {
       afficher("besoin", "init");
     }
