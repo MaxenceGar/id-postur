@@ -48,17 +48,19 @@ import Roll from "./Roll.astro";
       <div class="hero-media overflow-hidden rounded-md">
         <video
           class="w-full h-auto aspect-[4/5] sm:aspect-[5/5] object-cover"
-          width="1280"
-          height="720"
+          width="640"
+          height="640"
           poster="/images/hero-etude-posturale-poster.webp"
           autoplay
           muted
           loop
           playsinline
           disablepictureinpicture
-          preload="auto"
+          preload="metadata"
           aria-label="Séance d'étude posturale chez ID Postur : examen sur table, réglage du vélo et analyse du pédalage par capture de mouvement"
         >
+          {/* Vidéo recadrée au carré (le cadre ne montre jamais plus) ; version légère sur mobile. */}
+          <source src="/videos/hero-etude-posturale-mobile.mp4" type="video/mp4" media="(max-width: 640px)" />
           <source src="/videos/hero-etude-posturale.mp4" type="video/mp4" />
         </video>
         <img
