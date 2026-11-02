@@ -111,7 +111,7 @@ export const ETUDES_POSTURALES: Prestation[] = [
     title: "Étude posturale 3D — déjà client",
     description:
       "Même analyse 3D complète, au tarif réduit réservé aux cyclistes dont nous avons déjà les mesures.",
-    price: 200,
+    price: 180,
     duration: "2h30",
     durationISO: "PT2H30M",
     disciplines: DISCIPLINES_TOUTES,
@@ -303,7 +303,7 @@ export const COMPARATIF_3D_2D: LigneComparatif[] = [
   },
   {
     critere: "Tarif si vous êtes déjà venu",
-    troisD: "200€",
+    troisD: "180€",
     deuxD: "120€",
   },
   {

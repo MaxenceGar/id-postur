@@ -244,7 +244,6 @@ export const RESULTATS: Resultat[] = [
     disciplines: etude3DClient.disciplines,
     aApporter: APPORTER_ETUDE,
     lien: etude3DClient.link,
-    aConfirmer: "Prix ancien client inchangé ? (Q1)",
   },
   {
     id: "client-etude-2d",
