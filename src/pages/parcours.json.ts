@@ -17,7 +17,7 @@ const REFUS = {
   question: "Commençons par votre étude posturale",
   choix: [
     { valeur: "etude", titre: "Réserver une étude posturale" },
-    { valeur: "etude-studio", titre: "Vous achetez un vélo ?" },
+    { valeur: "taille-velo", titre: "Vous achetez un vélo ?" },
   ],
 };
 

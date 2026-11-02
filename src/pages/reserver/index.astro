@@ -90,6 +90,27 @@ const ICONES: Record<string, string> = {
           <span class="choix-fleche"><span class="fleche fleche-droite" aria-hidden="true"><span>→</span><span>→</span></span></span>
         </button>
 
+        {/* Autres rendez-vous ouverts à tous (ex. la taille du futur vélo, sur le Zwift Ride). */}
+        <div class="grid gap-3 mt-3">
+          {
+            BESOINS.slice(1).filter((b) => !b.clientsSeulement).map((b) => (
+              <button type="button" class="choix group" data-choix={b.id} data-libelle={b.titre}>
+                <span class="choix-icone">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" set:html={ICONES[b.icone]} />
+                </span>
+                <span class="flex-1 text-left">
+                  <span class="flex flex-wrap items-center gap-2.5">
+                    <span class="font-id-postur text-[17px] font-semibold tracking-[-0.02em] text-encre">{b.titre}</span>
+                    <span class="rounded bg-brume px-2 py-1 text-xs font-medium text-encre-2">Ouvert à tous</span>
+                  </span>
+                  <span class="block text-sm leading-relaxed text-encre-2 mt-1">{b.detail}</span>
+                </span>
+                <span class="choix-fleche"><span class="fleche fleche-droite" aria-hidden="true"><span>→</span><span>→</span></span></span>
+              </button>
+            ))
+          }
+        </div>
+
         <div class="flex items-center gap-4 my-8 text-[13px] font-medium text-encre-3">
           <span class="h-px grow bg-filet"></span>
           Déjà client ID Postur
@@ -98,7 +119,7 @@ const ICONES: Record<string, string> = {
 
         <div class="grid gap-3 sm:grid-cols-2 sm:[&>:last-child:nth-child(odd)]:col-span-2">
           {
-            BESOINS.slice(1).map((b) => (
+            BESOINS.filter((b) => b.clientsSeulement).map((b) => (
               <button type="button" class="choix group" data-choix={b.id} data-libelle={b.titre}>
                 <span class="choix-icone">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" set:html={ICONES[b.icone]} />
@@ -179,13 +200,13 @@ const ICONES: Record<string, string> = {
               <span class="block text-sm leading-relaxed text-encre-2 mt-1">En 3D ou en 2D, sur votre vélo</span>
             </span>
           </button>
-          <button type="button" class="choix group" data-choix="etude-studio" data-libelle="Étude sur le vélo du studio">
+          <button type="button" class="choix group" data-choix="taille-velo" data-libelle="Choix de la taille sur le Zwift Ride">
             <span class="choix-icone">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" set:html={ICONES.studio} />
             </span>
             <span class="flex-1 text-left">
               <span class="block font-id-postur text-[17px] font-semibold tracking-[-0.02em] text-encre">Vous achetez un vélo ?</span>
-              <span class="block text-sm leading-relaxed text-encre-2 mt-1">Faites votre étude sur le vélo du studio pour connaître la taille exacte à acheter</span>
+              <span class="block text-sm leading-relaxed text-encre-2 mt-1">20 min sur le Zwift Ride du studio pour connaître la taille exacte à acheter, ouvert à tous</span>
             </span>
           </button>
         </div>
@@ -694,8 +715,7 @@ const ICONES: Record<string, string> = {
     /** Questions qui restent après l'écran `id`, d'après ce qu'on sait déjà. */
     function restantes(id) {
       const r = reponses;
-      const apresClient = () =>
-        r.client === "oui" ? 0 : (r.velo ? 0 : 1) + (r.format === "2d" ? 1 : 0);
+      const apresClient = () => (r.client !== "oui" && r.format === "2d" ? 1 : 0);
       switch (id) {
         case "besoin":
           return 3;
@@ -704,13 +724,11 @@ const ICONES: Record<string, string> = {
         case "aide-route":
           return (r.client ? 0 : 1) + apresClient();
         case "client":
-          return (r.velo ? 0 : 1) + (r.format === "2d" ? 1 : 0);
-        case "velo":
           return r.format === "2d" ? 1 : 0;
         case "client-court":
-          return r.besoin === "nouveau-velo" ? 1 : 0;
+          return r.besoin === "nouveau-velo" ? 1 : 0; // le format de la nouvelle étude
         case "refus":
-          return 1 + (r.velo ? 0 : 1);
+          return 1;
         default:
           return 0;
       }

@@ -11,32 +11,35 @@ export type Reponses = {
   besoin?: string;
   format?: string;
   client?: string;
-  velo?: string;
 };
 
 /** Besoins réservés aux cyclistes déjà passés par une étude ID Postur. */
-export const CLIENTS_SEULEMENT = ["nouveau-velo", "cales", "micro-reglage", "prolongateurs", "taille-velo"];
+export const CLIENTS_SEULEMENT = ["nouveau-velo", "cales", "micro-reglage", "prolongateurs"];
 
 /** Rendez-vous court → résultat correspondant. */
 export const RESULTAT_COURT: Record<string, string> = {
   cales: "client-cales",
   "micro-reglage": "client-micro-reglage",
   prolongateurs: "client-prolongateurs",
-  "taille-velo": "client-taille-velo",
 };
 
 /** Raccourci depuis l'écran « format » : l'étude des moins de 15 ans. */
 export const RESULTAT_DIRECT = { depuis: "format", vers: "resultat-etude-moins-15", libelle: "Moins de 15 ans" };
 
-/** Après le vélo : option selle en 2D, récapitulatif en 3D (selle comprise). */
-function apresVelo(r: Reponses) {
-  return r.format === "3d" ? `resultat-etude-3d-${r.velo}` : "selle";
+/** Rendez-vous ouvert à tous, sans étude préalable : directement le récapitulatif. */
+export const RESULTAT_OUVERT: Record<string, string> = {
+  "taille-velo": "taille-velo",
+};
+
+/** Nouvelle étude : option selle en 2D, récapitulatif en 3D (selle comprise). */
+function apresEtude(r: Reponses) {
+  return r.format === "3d" ? "resultat-etude-3d-velo" : "selle";
 }
 
 /** Après le format : on saute ce qui est déjà connu (cas d'un refus). */
 function apresFormat(r: Reponses) {
-  if (r.client !== "non") return "client";
-  return r.velo ? apresVelo(r) : "velo";
+  if (r.client === "oui") return `resultat-client-etude-${r.format}`;
+  return r.client === "non" ? apresEtude(r) : "client";
 }
 
 /**
@@ -47,6 +50,7 @@ export function suivant(etape: string, choix: string, r: Reponses): string | und
   switch (etape) {
     case "besoin":
       r.besoin = choix;
+      if (RESULTAT_OUVERT[choix]) return `resultat-${RESULTAT_OUVERT[choix]}`;
       return CLIENTS_SEULEMENT.includes(choix) ? "client-court" : "format";
     case "format":
       if (choix === "aide") return "aide-chrono";
@@ -64,23 +68,22 @@ export function suivant(etape: string, choix: string, r: Reponses): string | und
     case "client":
       r.client = choix;
       if (choix === "oui") return `resultat-client-etude-${r.format}`;
-      return "velo";
-    case "velo":
-      r.velo = choix;
-      return apresVelo(r);
+      return apresEtude(r);
     case "selle":
-      return `resultat-etude-2d-${r.velo}${choix === "avec" ? "-selle" : ""}`;
+      return `resultat-etude-2d-velo${choix === "avec" ? "-selle" : ""}`;
     case "client-court":
       if (choix === "non") return "refus";
-      if (r.besoin === "nouveau-velo") return "mise-en-position";
+      // Nouveau vélo d'un client : une nouvelle étude au tarif client, sur ce vélo.
+      if (r.besoin === "nouveau-velo") {
+        r.client = "oui";
+        return "format";
+      }
       return `resultat-${RESULTAT_COURT[r.besoin ?? ""]}`;
-    case "mise-en-position":
-      return `resultat-client-mise-en-position-${choix}`;
     case "refus":
       // Il vient de dire qu'il n'est pas client : on ne repose pas la question.
       for (const k of Object.keys(r) as (keyof Reponses)[]) delete r[k];
+      if (RESULTAT_OUVERT[choix]) return `resultat-${RESULTAT_OUVERT[choix]}`;
       Object.assign(r, { besoin: "etude", client: "non" });
-      if (choix === "etude-studio") r.velo = "studio";
       return "format";
   }
 }

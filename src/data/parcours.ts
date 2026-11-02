@@ -28,7 +28,7 @@ const rdvDivers = getPrestation("rendez-vous-divers");
  * réservation tourne en DÉMO : créneaux factices, aucune réservation réelle.
  * Le `calcomSlug` de chaque résultat est l'identifiant du type de rendez-vous
  * dans Cal.com (cal.com/id-postur/<slug>). Plusieurs résultats peuvent
- * partager le même type, ex. l'étude 3D sur son vélo ou sur celui du studio.
+ * partager le même type, ex. la selle et l'étude 2D sur son vélo.
  */
 export const CALCOM = {
   username: "id-postur" as string | null,
@@ -59,14 +59,14 @@ export const BESOINS: ChoixBesoin[] = [
     id: "etude",
     titre: "Une étude posturale",
     detail:
-      "L'analyse complète de votre position, sur votre vélo ou pour définir la taille de votre futur vélo.",
+      "L'analyse complète de votre position, sur votre vélo.",
     icone: "etude",
     clientsSeulement: false,
   },
   {
     id: "nouveau-velo",
     titre: "Régler mon nouveau vélo",
-    detail: "Reporter votre position sur le vélo que vous venez d'acheter.",
+    detail: "Une nouvelle étude sur le vélo que vous venez d'acheter, au tarif client.",
     icone: "velo",
     clientsSeulement: true,
   },
@@ -94,9 +94,9 @@ export const BESOINS: ChoixBesoin[] = [
   {
     id: "taille-velo",
     titre: "Choisir la taille de mon futur vélo",
-    detail: "Valider la taille et l'ergonomie avant d'acheter.",
+    detail: "20 min sur le Zwift Ride du studio, pour connaître la taille exacte à acheter.",
     icone: "regle",
-    clientsSeulement: true,
+    clientsSeulement: false,
   },
 ];
 
@@ -113,13 +113,13 @@ export const ETAPES: { id: string; question: string; aide?: string; choix: Choix
       {
         valeur: "3d",
         titre: "Étude 3D",
-        detail: `${etude3D.duration} · à partir de ${formatPrix(etude3D.price)} · toutes disciplines, chrono et triathlon compris`,
+        detail: `${etude3D.duration} · ${formatPrix(etude3D.price)}, ${formatPrix(etude3DClient.price)} si vous êtes déjà client · toutes disciplines, chrono et triathlon compris`,
         badge: "3D",
       },
       {
         valeur: "2d",
         titre: "Étude 2D",
-        detail: `${etude2D.duration} · à partir de ${formatPrix(etude2D.price)} · route, VTT et gravel`,
+        detail: `${etude2D.duration} · ${formatPrix(etude2D.price)}, ${formatPrix(etude2DClient.price)} si vous êtes déjà client · route, VTT et gravel`,
         badge: "2D",
       },
       {
@@ -166,19 +166,6 @@ export const ETAPES: { id: string; question: string; aide?: string; choix: Choix
     ],
   },
   {
-    id: "velo",
-    question: "Sur quel vélo ?",
-    choix: [
-      { valeur: "velo", titre: "Sur mon vélo", detail: "On règle votre position sur votre vélo actuel", icone: "velo" },
-      {
-        valeur: "studio",
-        titre: "Sur le vélo du studio",
-        detail: "Pour définir la taille exacte de votre futur vélo, avant de l'acheter",
-        icone: "studio",
-      },
-    ],
-  },
-  {
     id: "selle",
     question: "Ajouter la cartographie de pression de selle ?",
     aide: "Le capteur Velometrik montre comment votre poids se répartit sur la selle : utile en cas d'inconfort ou pour choisir une selle.",
@@ -194,15 +181,6 @@ export const ETAPES: { id: string; question: string; aide?: string; choix: Choix
     choix: [
       { valeur: "oui", titre: "Oui, je suis déjà venu", icone: "oui" },
       { valeur: "non", titre: "Non, pas encore", icone: "non" },
-    ],
-  },
-  {
-    id: "mise-en-position",
-    question: "Votre étude était en 3D ou en 2D ?",
-    aide: "On reporte sur votre nouveau vélo la position mesurée lors de votre étude.",
-    choix: [
-      { valeur: "3d", titre: "En 3D", badge: "3D" },
-      { valeur: "2d", titre: "En 2D", badge: "2D" },
     ],
   },
 ];
@@ -233,11 +211,6 @@ const APPORTER_ETUDE = [
   "Votre tenue complète (cuissard et maillot)",
   "Vos chaussures et vos cales",
 ];
-const APPORTER_ETUDE_STUDIO = [
-  "Votre tenue complète (cuissard et maillot)",
-  "Vos chaussures et vos cales",
-  "Le modèle du vélo que vous visez, si vous l'avez déjà repéré",
-];
 const APPORTER_COURT = ["Votre vélo", "Vos chaussures et vos cales", "Votre tenue de vélo"];
 
 /** Écran final : une prestation par combinaison de réponses. */
@@ -255,21 +228,6 @@ export const RESULTATS: Resultat[] = [
     aApporter: APPORTER_ETUDE,
     note: "Pression de selle (Velometrik) comprise. Évitez les vêtements réfléchissants : ils perturbent la captation 3D.",
     lien: etude3D.link,
-  },
-  {
-    id: "etude-3d-studio",
-    dureeMinutes: 150,
-    calcomSlug: "etude-posturale-3d",
-    titre: "Étude posturale 3D sur le vélo du studio",
-    pourQui: "Première étude, pour définir la taille exacte de votre futur vélo",
-    prix: `${etude3D.price} €`,
-    duree: etude3D.duration,
-    disciplines: etude3D.disciplines,
-    aApporter: APPORTER_ETUDE_STUDIO,
-    note: "Pression de selle (Velometrik) comprise. Une fois votre vélo acheté, on fixe ensemble un rendez-vous pour le régler.",
-    lien: etude3D.link,
-    aConfirmer:
-      "Même type de rendez-vous que l'étude 3D sur son vélo, ou un type dédié ? (Q3) · Nom du vélo du studio (Q4)",
   },
   // — Nouveau client, étude 2D
   {
@@ -297,35 +255,6 @@ export const RESULTATS: Resultat[] = [
     aApporter: APPORTER_ETUDE,
     note: etude2D.note,
     lien: null,
-    aConfirmer: "Type de rendez-vous « 2D + selle » séparé, ou simple question au moment de réserver ? (Q2)",
-  },
-  {
-    id: "etude-2d-studio",
-    dureeMinutes: 90,
-    calcomSlug: "etude-posturale-2d",
-    titre: "Étude posturale 2D sur le vélo du studio",
-    pourQui: "Première étude, pour définir la taille exacte de votre futur vélo",
-    prix: `${etude2D.price} €`,
-    duree: etude2D.duration,
-    disciplines: etude2D.disciplines,
-    aApporter: APPORTER_ETUDE_STUDIO,
-    note: "Une fois votre vélo acheté, on fixe ensemble un rendez-vous pour le régler.",
-    lien: etude2D.link,
-    aConfirmer: "Même type de rendez-vous que l'étude 2D sur son vélo, ou un type dédié ? (Q3) · Nom du vélo du studio (Q4)",
-  },
-  {
-    id: "etude-2d-studio-selle",
-    dureeMinutes: 90,
-    calcomSlug: "etude-posturale-2d-selle",
-    titre: "Étude posturale 2D sur le vélo du studio + pression de selle",
-    pourQui: "Première étude pour définir la taille de votre futur vélo, avec cartographie de pression de selle",
-    prix: `${etude2D.price + 30} €`,
-    duree: etude2D.duration,
-    disciplines: etude2D.disciplines,
-    aApporter: APPORTER_ETUDE_STUDIO,
-    note: "Une fois votre vélo acheté, on fixe ensemble un rendez-vous pour le régler.",
-    lien: null,
-    aConfirmer: "Type « 2D + selle » séparé ou non (Q2, Q3)",
   },
   {
     id: "etude-moins-15",
@@ -365,31 +294,6 @@ export const RESULTATS: Resultat[] = [
     aApporter: APPORTER_ETUDE,
     note: etude2DClient.note,
     lien: etude2DClient.link,
-    aConfirmer: "Prix ancien client inchangé ? (Q1)",
-  },
-  {
-    id: "client-mise-en-position-3d",
-    dureeMinutes: 60,
-    calcomSlug: "mise-en-position-3d",
-    titre: "Mise en position 3D de votre nouveau vélo",
-    pourQui: "On reporte votre position, mesurée en 3D, sur votre nouveau vélo",
-    prix: "180 €",
-    duree: "À confirmer",
-    aApporter: ["Votre nouveau vélo", "Vos chaussures et vos cales", "Votre tenue complète"],
-    lien: null,
-    aConfirmer: "Durée provisoire d'1 h (Q6) · C'est bien le rendez-vous qui suit une étude sur le vélo du studio ? (Q6)",
-  },
-  {
-    id: "client-mise-en-position-2d",
-    dureeMinutes: 60,
-    calcomSlug: "mise-en-position-2d",
-    titre: "Mise en position 2D de votre nouveau vélo",
-    pourQui: "On reporte votre position, mesurée en 2D, sur votre nouveau vélo",
-    prix: "120 €",
-    duree: "À confirmer",
-    aApporter: ["Votre nouveau vélo", "Vos chaussures et vos cales", "Votre tenue complète"],
-    lien: null,
-    aConfirmer: "Durée provisoire d'1 h (Q6) · Même prix que l'étude 2D ancien client, c'est voulu ? (Q1)",
   },
   {
     id: "client-cales",
@@ -401,7 +305,6 @@ export const RESULTATS: Resultat[] = [
     duree: cales.duration,
     aApporter: APPORTER_COURT,
     lien: cales.link,
-    aConfirmer: "Prix des rendez-vous de 20 min inchangé ? (Q1)",
   },
   {
     id: "client-micro-reglage",
@@ -413,7 +316,6 @@ export const RESULTATS: Resultat[] = [
     duree: rdvDivers.duration,
     aApporter: APPORTER_COURT,
     lien: rdvDivers.link,
-    aConfirmer: "Prix des rendez-vous de 20 min inchangé ? (Q1)",
   },
   {
     id: "client-prolongateurs",
@@ -425,18 +327,16 @@ export const RESULTATS: Resultat[] = [
     duree: "20 minutes",
     aApporter: ["Votre vélo", "Vos prolongateurs", "Vos chaussures et vos cales"],
     lien: null,
-    aConfirmer: "Prix à confirmer (Q1)",
   },
   {
-    id: "client-taille-velo",
+    id: "taille-velo",
     dureeMinutes: 20,
     calcomSlug: "choix-taille-velo",
     titre: "Choix de la taille de votre futur vélo",
-    pourQui: "Rendez-vous court, réservé aux clients ID Postur",
+    pourQui: "Sur le Zwift Ride du studio, avant d'acheter votre vélo",
     prix: `${choixVelo.price} €`,
     duree: choixVelo.duration,
     aApporter: choixVelo.equipment.map((e) => e.replace(/^•\s*/, "")),
     lien: choixVelo.link,
-    aConfirmer: "Prix des rendez-vous de 20 min inchangé ? (Q1)",
   },
 ];

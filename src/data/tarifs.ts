@@ -163,15 +163,15 @@ export const PRESTATIONS_COURTES: Prestation[] = [
     baseline: "Avant l'achat",
     title: "Choix de votre nouveau vélo",
     description:
-      "Validation de la taille et de l'ergonomie du vélo que vous envisagez, avant de finaliser votre achat.",
+      "Sur le Zwift Ride du studio, on définit la taille et l'ergonomie qu'il vous faut, avant d'acheter votre vélo.",
     price: 30,
     duration: "20 minutes",
     durationISO: "PT20M",
     disciplines: DISCIPLINES_TOUTES,
     equipment: [
-      "• Le vélo que vous envisagez",
-      "• Vos chaussures et vos cales",
       "• Votre tenue de vélo",
+      "• Vos chaussures et vos cales",
+      "• Le modèle que vous visez, si vous l'avez repéré",
     ],
     link: "https://calendly.com/idpostur/choix-nouveau-velo",
     page: "/choix-nouveau-velo",

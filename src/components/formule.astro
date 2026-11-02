@@ -3,7 +3,9 @@ import Roll from "./Roll.astro";
 import { BESOINS } from "../data/parcours";
 import { formatPrix, getPrestation } from "../data/tarifs";
 
-const [etude, ...courts] = BESOINS;
+const etude = BESOINS[0];
+/** Rendez-vous courts réservés aux clients (le choix de la taille, ouvert à tous, a sa propre page). */
+const courts = BESOINS.filter((b) => b.clientsSeulement);
 const troisD = getPrestation("etude-posturale-3d");
 const deuxD = getPrestation("etude-posturale-2d");
 /**
@@ -130,7 +132,7 @@ const deuxD = getPrestation("etude-posturale-2d");
         Rendez-vous courts, réservés aux cyclistes déjà venus en étude.
       </p>
     </div>
-    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {
         courts.map((b) => (
           <a

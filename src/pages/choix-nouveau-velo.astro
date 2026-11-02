@@ -20,7 +20,7 @@ const faqItems = [
   {
     question: "Dois-je venir avec le vélo que j'envisage d'acheter ?",
     answer:
-      "Idéalement oui : nous validons alors directement la taille et l'ergonomie du modèle. Si le vélo n'est pas disponible, venez avec ses caractéristiques précises (taille, géométrie, longueur de potence) et votre vélo actuel comme point de comparaison.",
+      "Non, pas besoin : la séance se fait sur le Zwift Ride du studio, que Romain ajuste à vos mesures pour trouver la taille et l'ergonomie qui vous conviennent. Venez en tenue avec vos chaussures et vos cales. Si vous avez déjà repéré un modèle, apportez ses caractéristiques (taille, géométrie) pour qu'on les compare.",
   },
   {
     question: "Ce rendez-vous remplace-t-il une étude posturale ?",
@@ -54,7 +54,7 @@ const services = [
     ariane="Choix d'un nouveau vélo"
     pastille="Conseil avant l'achat à Rennes"
     titre={["Choisissez votre vélo ", "en confiance", "."]}
-    intro="Avant d'investir dans un nouveau vélo, ID Postur vous accompagne pour valider la taille, l'ergonomie et la compatibilité avec votre morphologie. Un conseil éclairé qui évite les mauvais achats et prépare votre future étude posturale."
+    intro="Avant d'investir dans un nouveau vélo, ID Postur vous accompagne sur le Zwift Ride du studio pour définir la taille, l'ergonomie et la compatibilité avec votre morphologie. Un conseil éclairé qui évite les mauvais achats et prépare votre future étude posturale."
     image="/images/choix-nouveau-velo-reglage.webp"
     alt="Validation de la taille d'un nouveau vélo chez ID Postur"
     puces={[`${formatPrix(choix.price)} · ${choix.duration}`, choix.disciplines]}
@@ -73,7 +73,7 @@ const services = [
         </h2>
       </div>
       <div class="grid gap-5 lg:grid-cols-[1.4fr_1fr]">
-        <Formulecomponent prestation={choix} />
+        <Formulecomponent prestation={choix} ctaHref="/reserver?besoin=taille-velo" />
         <div class="flex flex-col gap-5 lg:self-start lg:sticky lg:top-24">
           <a href="/etudes-posturales" class="carte-survol sur-fond-sombre group flex grow flex-col gap-4 rounded-md bg-encre p-7 md:p-8">
             <h3 class="text-2xl md:text-[1.75rem] leading-tight tracking-[-0.03em] text-white">

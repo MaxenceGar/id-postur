@@ -31,6 +31,26 @@ const HORAIRES = {
   fin: ENTREPRISE.horaires.fermeture,
 };
 
+/**
+ * Créneaux réservés à certains rendez-vous (donnés par Romain le 03/11/2026).
+ * Un type sans `horaire` suit les horaires d'ouverture ci-dessus.
+ * Cal.com ne propose que les créneaux qui tiennent EN ENTIER dans la plage :
+ * une étude 3D de 2 h 30 sur 9 h – 11 h 30 = un seul départ, à 9 h.
+ */
+const HORAIRES_DEDIES = {
+  "Études 3D": [{ days: HORAIRES.jours, startTime: "09:00", endTime: "11:30" }],
+  "Rendez-vous courts": [{ days: ["Friday"], startTime: "17:00", endTime: "19:00" }],
+  "Études 2D": [
+    { days: ["Monday"], startTime: "13:30", endTime: "16:30" },
+    { days: ["Tuesday"], startTime: "14:30", endTime: "19:00" },
+    { days: ["Wednesday"], startTime: "16:00", endTime: "19:00" },
+    { days: ["Thursday"], startTime: "13:30", endTime: "16:30" },
+    { days: ["Friday"], startTime: "15:30", endTime: "17:00" },
+  ],
+};
+
+const JOURS = { Monday: "lun.", Tuesday: "mar.", Wednesday: "mer.", Thursday: "jeu.", Friday: "ven.", Saturday: "sam.", Sunday: "dim." };
+
 /** Réglages communs à tous les types. */
 const COMMUN = {
   locations: [{ type: "address", address: ADRESSE, public: true }],
@@ -47,75 +67,73 @@ const COMMUN = {
 const TYPES = [
   {
     slug: "etude-posturale-3d",
+    horaire: "Études 3D",
     title: "Étude posturale 3D",
     lengthInMinutes: 150,
-    description: "Première étude posturale 3D (capture STT 3DMA), sur votre vélo ou sur le vélo du studio.",
+    description: "Première étude posturale 3D (capture STT 3DMA), sur votre vélo.",
   },
   {
     slug: "etude-posturale-2d",
+    horaire: "Études 2D",
     title: "Étude posturale 2D",
     lengthInMinutes: 90,
     description: "Première étude posturale 2D (analyse vidéo STT 2DMA), route, VTT et gravel.",
   },
   {
     slug: "etude-posturale-2d-selle",
+    horaire: "Études 2D",
     title: "Étude posturale 2D + pression de selle",
-    lengthInMinutes: 90, // PROVISOIRE (Q2)
+    lengthInMinutes: 90,
     description: "Première étude posturale 2D avec cartographie de pression de selle (Velometrik).",
   },
   {
     slug: "etude-moins-15-ans",
+    horaire: "Études 2D",
     title: "Étude posturale moins de 15 ans",
     lengthInMinutes: 90,
     description: "Étude posturale 2D pour les jeunes cyclistes de moins de 15 ans.",
   },
   {
     slug: "client-etude-3d",
+    horaire: "Études 3D",
     title: "Nouvelle étude posturale 3D (client)",
     lengthInMinutes: 150,
     description: "Nouvelle étude 3D pour un cycliste déjà venu chez ID Postur.",
   },
   {
     slug: "client-etude-2d",
+    horaire: "Études 2D",
     title: "Nouvelle étude posturale 2D (client)",
     lengthInMinutes: 90,
     description: "Nouvelle étude 2D pour un cycliste déjà venu chez ID Postur.",
   },
   {
-    slug: "mise-en-position-3d",
-    title: "Mise en position 3D d'un nouveau vélo",
-    lengthInMinutes: 60, // PROVISOIRE (Q6)
-    description: "Report de la position mesurée en 3D sur votre nouveau vélo.",
-  },
-  {
-    slug: "mise-en-position-2d",
-    title: "Mise en position 2D d'un nouveau vélo",
-    lengthInMinutes: 60, // PROVISOIRE (Q6)
-    description: "Report de la position mesurée en 2D sur votre nouveau vélo.",
-  },
-  {
     slug: "reglage-cales",
+    horaire: "Rendez-vous courts",
     title: "Réglage des chaussures et/ou cales",
     lengthInMinutes: 20,
     description: "Positionnement de vos cales au millimètre. Réservé aux clients ID Postur.",
   },
   {
     slug: "micro-reglage",
+    horaire: "Rendez-vous courts",
     title: "Micro-réglage",
     lengthInMinutes: 20,
     description: "Retouche sur un vélo déjà réglé par Romain. Réservé aux clients ID Postur.",
   },
   {
     slug: "prolongateurs",
+    horaire: "Rendez-vous courts",
     title: "Pose et réglage de prolongateurs",
     lengthInMinutes: 20,
     description: "Montage et réglage de prolongateurs. Réservé aux clients ID Postur.",
   },
   {
     slug: "choix-taille-velo",
+    horaire: "Rendez-vous courts",
     title: "Choix de la taille de votre futur vélo",
     lengthInMinutes: 20,
-    description: "Validation de la taille et de l'ergonomie avant l'achat. Réservé aux clients ID Postur.",
+    description: "Sur le Zwift Ride du studio : la taille et l'ergonomie de votre futur vélo, avant l'achat. Ouvert à tous.",
   },
 ];
 
@@ -187,16 +205,35 @@ async function main() {
     }
   }
 
-  // 2. Types de rendez-vous
+  // 2. Horaires dédiés (créés à côté des horaires d'ouverture, jamais par défaut)
+  const plages = await appel("GET", "/schedules", "2024-06-11");
+  const idsHoraires = {};
+  for (const [nom, availability] of Object.entries(HORAIRES_DEDIES)) {
+    const existant = plages.find((p) => p.name === nom);
+    const resume = availability.map((a) => `${a.days.length === 5 ? "lun.–ven." : a.days.map((j) => JOURS[j]).join(", ")} ${a.startTime}–${a.endTime}`).join(" · ");
+    if (existant && JSON.stringify(existant.availability) === JSON.stringify(availability) && existant.timeZone === "Europe/Paris") {
+      console.log(`= Horaires « ${nom} » déjà à jour (${resume})`);
+      idsHoraires[nom] = existant.id;
+    } else if (existant) {
+      console.log(`~ Horaires « ${nom} » → ${resume}`);
+      if (!ESSAI) await appel("PATCH", `/schedules/${existant.id}`, "2024-06-11", { timeZone: "Europe/Paris", availability });
+      idsHoraires[nom] = existant.id;
+    } else {
+      console.log(`+ Horaires « ${nom} » : créés (${resume})`);
+      if (!ESSAI) idsHoraires[nom] = (await appel("POST", "/schedules", "2024-06-11", { name: nom, timeZone: "Europe/Paris", availability, isDefault: false })).id;
+    }
+  }
+
+  // 3. Types de rendez-vous
   const existants = await appel("GET", "/event-types", "2024-06-14");
-  for (const type of TYPES) {
-    const corps = { ...COMMUN, ...type, scheduleId: horaire.id };
+  for (const { horaire: plage, ...type } of TYPES) {
+    const corps = { ...COMMUN, ...type, scheduleId: plage ? idsHoraires[plage] : horaire.id };
     const existant = existants.find((e) => e.slug === type.slug);
     if (existant) {
-      console.log(`~ ${type.slug} (${type.lengthInMinutes} min) : mis à jour`);
+      console.log(`~ ${type.slug} (${type.lengthInMinutes} min, ${plage ?? "horaires d'ouverture"}) : mis à jour`);
       if (!ESSAI) await appel("PATCH", `/event-types/${existant.id}`, "2024-06-14", corps);
     } else {
-      console.log(`+ ${type.slug} (${type.lengthInMinutes} min) : créé`);
+      console.log(`+ ${type.slug} (${type.lengthInMinutes} min, ${plage ?? "horaires d'ouverture"}) : créé`);
       if (!ESSAI) await appel("POST", "/event-types", "2024-06-14", corps);
     }
   }
