@@ -144,6 +144,17 @@ const ICONES: Record<string, string> = {
             </h2>
             {etape.aide && <p class="text-[17px] leading-relaxed text-encre-2 mb-10 max-w-2xl">{etape.aide}</p>}
             {!etape.aide && <div class="mb-10" />}
+            {etape.photo && (
+              <img
+                src={etape.photo.src}
+                alt={etape.photo.alt}
+                width="1400"
+                height="788"
+                loading="lazy"
+                decoding="async"
+                class="-mt-4 mb-8 w-full aspect-[16/9] sm:aspect-[16/7] object-cover rounded-md"
+              />
+            )}
             <div class="grid gap-3 sm:grid-cols-2">
               {etape.choix.map((c, i) => (
                 <button

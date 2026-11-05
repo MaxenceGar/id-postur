@@ -104,7 +104,8 @@ export const BESOINS: ChoixBesoin[] = [
 export type Choix = { valeur: string; titre: string; detail?: string; icone?: string; badge?: string };
 
 /** Étapes 2 et suivantes (l'aiguillage est dans src/lib/parcours-routage.ts). */
-export const ETAPES: { id: string; question: string; aide?: string; choix: Choix[] }[] = [
+/** `photo` : illustration facultative, affichée entre l'aide et les choix. */
+export const ETAPES: { id: string; question: string; aide?: string; photo?: { src: string; alt: string }; choix: Choix[] }[] = [
   {
     id: "format",
     question: "Quel format d'étude ?",
@@ -169,6 +170,10 @@ export const ETAPES: { id: string; question: string; aide?: string; choix: Choix
     id: "selle",
     question: "Ajouter la cartographie de pression de selle ?",
     aide: "Le capteur Velometrik montre comment votre poids se répartit sur la selle : utile en cas d'inconfort ou pour choisir une selle.",
+    photo: {
+      src: "/images/pression-selle-velometrik.webp",
+      alt: "Cycliste sur le vélo du studio ID Postur, la cartographie de pression de selle Velometrik affichée à l'écran",
+    },
     choix: [
       { valeur: "avec", titre: "Oui, avec la pression de selle", detail: "+30 €", icone: "selle" },
       { valeur: "sans", titre: "Non merci", detail: "L'étude 2D seule", icone: "non" },
