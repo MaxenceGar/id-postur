@@ -228,6 +228,12 @@ export const TOUTES_PRESTATIONS: Prestation[] = [
   ...PRESTATIONS_COURTES,
 ];
 
+/** Option cartographie de pression de selle (Velometrik) en 2D ; comprise d'office en 3D. */
+export const SUPPLEMENT_SELLE_2D = 30;
+
+/** Pose et réglage de prolongateurs (rendez-vous court, réservé aux clients). */
+export const PRIX_PROLONGATEURS = 30;
+
 /** Formate un prix pour l'affichage : 300 → "300€". */
 export const formatPrix = (prix: number): string => `${prix}€`;
 

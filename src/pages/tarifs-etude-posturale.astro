@@ -1,0 +1,228 @@
+---
+import FaqListe from "../components/FaqListe.astro";
+import Roll from "../components/Roll.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { ENTREPRISE, SITE_URL } from "../data/entreprise";
+import {
+  ETUDES_POSTURALES,
+  OFFRES_PARTICULIERES,
+  PRESTATIONS_COURTES,
+  PRIX_PROLONGATEURS,
+  SUPPLEMENT_SELLE_2D,
+  formatPrix,
+  getPrestation,
+} from "../data/tarifs";
+import { noeudService } from "../lib/schema";
+
+/**
+ * Tous les prix sur une page, pour les recherches « prix / tarif / coût d'une
+ * étude posturale vélo » (aucune page ne les captait). Chaque chiffre vient de
+ * src/data/tarifs.ts : affichage et JSON-LD ne peuvent pas diverger.
+ */
+const troisD = getPrestation("etude-posturale-3d");
+const deuxD = getPrestation("etude-posturale-2d");
+const troisDClient = getPrestation("etude-posturale-3d-deja-client");
+const deuxDClient = getPrestation("etude-posturale-2d-deja-client");
+const moins15 = getPrestation("etude-moins-de-15-ans");
+const cales = getPrestation("reglage-cales");
+const zwiftRide = getPrestation("choix-nouveau-velo");
+const microReglage = getPrestation("rendez-vous-divers");
+
+const etudes = [
+  { nom: "Étude posturale 3D", premiere: troisD.price, client: troisDClient.price, duree: troisD.duration, detail: "Toutes disciplines, chrono et triathlon compris. Pression de selle comprise." },
+  { nom: "Étude posturale 2D", premiere: deuxD.price, client: deuxDClient.price, duree: deuxD.duration, detail: "Route, VTT et gravel." },
+  { nom: "Étude 2D + pression de selle", premiere: deuxD.price + SUPPLEMENT_SELLE_2D, client: null, duree: deuxD.duration, detail: "Cartographie Velometrik de la répartition du poids sur la selle." },
+  { nom: "Étude moins de 15 ans", premiere: moins15.price, client: null, duree: moins15.duration, detail: "Analyse 2D, tarif unique : la croissance oblige à tout refaire à chaque venue." },
+];
+
+const courts = [
+  { nom: "Réglage des chaussures et des cales", prix: cales.price, duree: cales.duration, pourQui: "Clients ID Postur", href: "/cales" },
+  { nom: "Micro-réglage du vélo", prix: microReglage.price, duree: microReglage.duration, pourQui: "Clients ID Postur", href: "/rendez-vous-divers" },
+  { nom: "Pose et réglage de prolongateurs", prix: PRIX_PROLONGATEURS, duree: "20 minutes", pourQui: "Clients ID Postur", href: "/rendez-vous-divers" },
+  { nom: "Choix de la taille de votre futur vélo", prix: zwiftRide.price, duree: zwiftRide.duration, pourQui: "Ouvert à tous, sur le Zwift Ride du studio", href: "/choix-nouveau-velo" },
+];
+
+const faqItems = [
+  {
+    question: "Combien coûte une étude posturale vélo ?",
+    answer: `Chez ID Postur, une première étude posturale coûte ${formatPrix(troisD.price)} en 3D (${troisD.duration}) et ${formatPrix(deuxD.price)} en 2D (${deuxD.duration}). Pour un cycliste déjà venu, c'est ${formatPrix(troisDClient.price)} en 3D et ${formatPrix(deuxDClient.price)} en 2D.`,
+  },
+  {
+    question: "Pourquoi l'étude 3D est-elle plus chère que la 2D ?",
+    answer: `La 3D mesure le cycliste et le vélo dans les trois plans, par capture optique, sur une séance plus longue (${troisD.duration} contre ${deuxD.duration}). Elle est la seule à prendre en charge le chrono et le triathlon, et la cartographie de pression de selle y est comprise.`,
+  },
+  {
+    question: "Qu'est-ce que le tarif « déjà client » ?",
+    answer: `Si vous avez déjà fait une étude posturale complète chez ID Postur, vos mesures sont connues : la nouvelle étude va plus vite et coûte ${formatPrix(troisDClient.price)} en 3D et ${formatPrix(deuxDClient.price)} en 2D, par exemple après l'achat d'un nouveau vélo. La séance sur le Zwift Ride et les rendez-vous courts ne comptent pas comme une étude.`,
+  },
+  {
+    question: "La pression de selle est-elle comprise ?",
+    answer: `Oui en 3D. En 2D, la cartographie de pression de selle Velometrik est une option à ${formatPrix(SUPPLEMENT_SELLE_2D)}, soit ${formatPrix(deuxD.price + SUPPLEMENT_SELLE_2D)} pour l'étude.`,
+  },
+  {
+    question: "Combien coûte un réglage de cales ?",
+    answer: `${formatPrix(cales.price)} pour un rendez-vous de ${cales.duration}, réservé aux cyclistes déjà venus en étude. Le réglage des cales est de toute façon compris dans l'étude posturale.`,
+  },
+  {
+    question: "Peut-on offrir une étude posturale ?",
+    answer: `Oui, avec la carte cadeau ID Postur. Pour l'acheter, écrivez à ${ENTREPRISE.email} ou envoyez un message à @idpostur sur Instagram.`,
+  },
+];
+
+const services = [
+  noeudService({
+    id: "etude-posturale",
+    name: "Étude posturale cycliste",
+    serviceType: "Bike fitting",
+    description:
+      "Analyse de la position du cycliste sur son vélo par capture de mouvement STT, en 3D ou en 2D, suivie du réglage complet du vélo. Route, VTT, gravel, chrono et triathlon.",
+    page: "/tarifs-etude-posturale",
+    prestations: [...ETUDES_POSTURALES, ...OFFRES_PARTICULIERES],
+    image: `${SITE_URL}/images/etude-posturale-3d-capture.webp`,
+  }),
+  noeudService({
+    id: "rendez-vous-courts",
+    name: "Réglages et conseils vélo",
+    serviceType: "Réglage vélo",
+    description: "Rendez-vous courts : réglage des cales, micro-réglages, prolongateurs et choix de la taille d'un vélo avant l'achat.",
+    page: "/tarifs-etude-posturale",
+    prestations: PRESTATIONS_COURTES,
+  }),
+];
+---
+
+<BaseLayout
+  title="Prix étude posturale vélo à Rennes, 3D et 2D | ID Postur"
+  description={`Tarifs ID Postur : étude posturale ${formatPrix(troisD.price)} en 3D, ${formatPrix(deuxD.price)} en 2D, ${formatPrix(troisDClient.price)} et ${formatPrix(deuxDClient.price)} si vous êtes déjà venu. Réglage des cales ${formatPrix(cales.price)}. Studio près de Rennes.`}
+  ogImage="/images/etude-posturale-3d-capture.webp"
+  faq={faqItems}
+  schema={services}
+  dateModified="2026-11-07"
+>
+  <section class="max-w-7xl mx-auto px-5 md:px-8 lg:px-10 pt-8 pb-12 md:pt-10 md:pb-16 flex flex-col gap-6">
+    <nav aria-label="Fil d'Ariane" class="flex items-center gap-2 text-[13px] font-medium text-encre-3">
+      <a href="/" class="hover:text-encre transition-colors">Accueil</a>
+      <span aria-hidden="true">/</span>
+      <span class="text-encre" aria-current="page">Tarifs</span>
+    </nav>
+    <p class="pastille w-fit">Tarifs 2026</p>
+    <h1 class="text-[2.5rem] sm:text-6xl xl:text-[4.25rem] leading-[1.03] tracking-[-0.04em] max-w-4xl">
+      Le prix d'une <span class="accent">étude posturale</span> vélo.
+    </h1>
+    <!-- La réponse d'abord : c'est ce que Google et les moteurs IA reprennent. -->
+    <p class="text-[17px] leading-relaxed text-encre-2 max-w-2xl">
+      Une première étude posturale coûte <strong class="font-semibold text-encre">{formatPrix(troisD.price)} en 3D</strong>
+      ({troisD.duration}) et <strong class="font-semibold text-encre">{formatPrix(deuxD.price)} en 2D</strong> ({deuxD.duration}).
+      Déjà venu chez ID Postur&nbsp;? C'est {formatPrix(troisDClient.price)} en 3D et {formatPrix(deuxDClient.price)} en 2D.
+      Tous les prix s'entendent TTC, au studio de {ENTREPRISE.adresse.ville}, près de Rennes.
+    </p>
+  </section>
+
+  <!-- Études posturales -->
+  <section class="max-w-7xl mx-auto px-5 md:px-8 lg:px-10 pb-16 md:pb-20 flex flex-col gap-6">
+    <h2 class="text-3xl md:text-[2.5rem] leading-[1.06] tracking-[-0.035em]">Les études <span class="accent">posturales</span></h2>
+
+    <!-- Mobile : une carte par étude. -->
+    <div class="grid gap-3 md:hidden">
+      {etudes.map((e) => (
+        <div class="rounded-md border border-filet p-5 flex flex-col gap-3">
+          <div class="flex items-baseline justify-between gap-4">
+            <p class="font-id-postur text-lg font-semibold tracking-[-0.02em] text-encre">{e.nom}</p>
+            <p class="text-sm text-encre-2 shrink-0">{e.duree}</p>
+          </div>
+          <dl class="grid grid-cols-2 gap-3 text-sm">
+            <div><dt class="text-encre-3">Première étude</dt><dd class="font-id-postur text-2xl font-semibold text-encre">{formatPrix(e.premiere)}</dd></div>
+            <div><dt class="text-encre-3">Déjà client</dt><dd class="font-id-postur text-2xl font-semibold text-encre">{e.client ? formatPrix(e.client) : "—"}</dd></div>
+          </dl>
+          <p class="text-sm leading-relaxed text-encre-2">{e.detail}</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="hidden md:block overflow-x-auto rounded-md border border-filet">
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="bg-brume text-sm">
+            <th class="p-5 font-semibold text-encre">Étude</th>
+            <th class="p-5 font-semibold text-encre">Première étude</th>
+            <th class="p-5 font-semibold text-encre">Déjà client</th>
+            <th class="p-5 font-semibold text-encre">Durée</th>
+            <th class="p-5 font-semibold text-encre w-2/5">Pour qui, ce qui change</th>
+          </tr>
+        </thead>
+        <tbody>
+          {etudes.map((e) => (
+            <tr class="border-t border-filet align-top">
+              <th class="p-5 font-id-postur text-[17px] font-semibold tracking-[-0.02em] text-encre">{e.nom}</th>
+              <td class="p-5 font-id-postur text-2xl font-semibold text-encre">{formatPrix(e.premiere)}</td>
+              <td class="p-5 font-id-postur text-2xl font-semibold text-encre">{e.client ? formatPrix(e.client) : <span class="text-encre-3 text-base font-sans font-normal">—</span>}</td>
+              <td class="p-5 text-sm text-encre-2">{e.duree}</td>
+              <td class="p-5 text-sm leading-relaxed text-encre-2">{e.detail}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grid gap-4 md:grid-cols-2">
+      <div class="rounded-md bg-brume p-6 md:p-7 flex flex-col gap-3">
+        <h3 class="text-xl tracking-[-0.025em]">Compris dans chaque étude</h3>
+        <ul class="flex flex-col gap-2 text-[15px] text-encre-2">
+          <li class="flex gap-2.5"><span class="mt-2 size-1.5 shrink-0 bg-encre" aria-hidden="true"></span>Un échange sur votre pratique, vos objectifs et vos douleurs éventuelles</li>
+          <li class="flex gap-2.5"><span class="mt-2 size-1.5 shrink-0 bg-encre" aria-hidden="true"></span>La capture de mouvement STT, en 3D ou en 2D</li>
+          <li class="flex gap-2.5"><span class="mt-2 size-1.5 shrink-0 bg-encre" aria-hidden="true"></span>Le réglage du vélo : hauteur et recul de selle, potence, cintre, cales</li>
+        </ul>
+      </div>
+      <div class="rounded-md bg-brume p-6 md:p-7 flex flex-col gap-3">
+        <h3 class="text-xl tracking-[-0.025em]">3D ou 2D&nbsp;?</h3>
+        <p class="text-[15px] leading-relaxed text-encre-2">
+          Chrono, triathlon, asymétrie ou douleur persistante&nbsp;: la 3D. Une première
+          position sur route, en VTT ou en gravel&nbsp;: la 2D suffit souvent.
+        </p>
+        <a href="/etude-posturale-3d-ou-2d" class="lien-anime inline-flex w-fit items-center gap-2 text-[15px] font-medium text-encre">
+          <Roll texte="Comparer les deux formats" fleche="→" />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rendez-vous courts -->
+  <section class="bg-brume">
+    <div class="max-w-7xl mx-auto px-5 md:px-8 lg:px-10 py-16 md:py-20 flex flex-col gap-6">
+      <h2 class="text-3xl md:text-[2.5rem] leading-[1.06] tracking-[-0.035em]">Les rendez-vous <span class="accent">courts</span></h2>
+      <p class="text-[15px] leading-relaxed text-encre-2 max-w-2xl">
+        Des séances de 20 minutes pour un réglage précis. Elles partent des mesures de
+        votre étude, sauf le choix de la taille d'un vélo, ouvert à tous.
+      </p>
+      <ul class="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        {courts.map((c) => (
+          <li>
+            <a href={c.href} class="carte-survol group flex h-full flex-col gap-3 rounded-md bg-white p-6 border border-transparent hover:border-encre-3">
+              <p class="font-id-postur text-[17px] font-semibold leading-snug tracking-[-0.02em] text-encre">{c.nom}</p>
+              <p class="font-id-postur text-3xl font-semibold tracking-[-0.03em] text-encre">{formatPrix(c.prix)} <span class="font-sans text-sm font-medium tracking-normal text-encre-2">· {c.duree}</span></p>
+              <p class="mt-auto text-sm text-encre-2">{c.pourQui}</p>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Réserver -->
+  <section class="max-w-7xl mx-auto px-5 md:px-8 lg:px-10 pt-16 md:pt-20">
+    <div class="flex flex-col gap-4 rounded-md border border-filet p-7 md:p-10 lg:flex-row lg:items-center lg:justify-between lg:gap-8">
+      <div class="flex flex-col gap-2 max-w-2xl">
+        <h2 class="text-2xl md:text-3xl tracking-[-0.03em]">Le bon tarif, <span class="accent">sans se tromper</span>.</h2>
+        <p class="text-[15px] leading-relaxed text-encre-2">
+          Quelques questions et le parcours de réservation vous propose la bonne
+          prestation, au bon prix, avec les créneaux de Romain.
+        </p>
+      </div>
+      <a href="/reserver" class="btn btn-noir w-fit shrink-0">
+        <Roll texte="Prendre rendez-vous" fleche="↗" />
+      </a>
+    </div>
+  </section>
+
+  <FaqListe items={faqItems} titre={["Questions sur les ", "tarifs", "."]} />
+</BaseLayout>

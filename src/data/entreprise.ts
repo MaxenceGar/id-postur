@@ -181,6 +181,7 @@ export const LIBELLES_FIL_ARIANE: Record<string, string> = {
   "/choix-nouveau-velo": "Choix d'un nouveau vélo",
   "/rendez-vous-divers": "Rendez-vous divers",
   "/athletes-accompagnes": "Athlètes accompagnés",
+  "/tarifs-etude-posturale": "Tarifs",
   "/mentions-legales": "Mentions légales",
   "/reserver": "Réserver",
 };

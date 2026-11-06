@@ -12,7 +12,7 @@
  * sert plus que de secours si Cal.com ne répond pas.
  */
 
-import { formatPrix, getPrestation } from "./tarifs";
+import { PRIX_PROLONGATEURS, SUPPLEMENT_SELLE_2D, formatPrix, getPrestation } from "./tarifs";
 
 const etude3D = getPrestation("etude-posturale-3d");
 const etude2D = getPrestation("etude-posturale-2d");
@@ -175,7 +175,7 @@ export const ETAPES: { id: string; question: string; aide?: string; photo?: { sr
       alt: "Cycliste sur le vélo du studio ID Postur, la cartographie de pression de selle Velometrik affichée à l'écran",
     },
     choix: [
-      { valeur: "avec", titre: "Oui, avec la pression de selle", detail: "+30 €", icone: "selle" },
+      { valeur: "avec", titre: "Oui, avec la pression de selle", detail: `+${SUPPLEMENT_SELLE_2D} €`, icone: "selle" },
       { valeur: "sans", titre: "Non merci", detail: "L'étude 2D seule", icone: "non" },
     ],
   },
@@ -254,7 +254,7 @@ export const RESULTATS: Resultat[] = [
     calcomSlug: "etude-posturale-2d-selle",
     titre: "Étude posturale 2D + pression de selle",
     pourQui: "Première étude, sur votre vélo, avec cartographie de pression de selle (Velometrik)",
-    prix: `${etude2D.price + 30} €`,
+    prix: `${etude2D.price + SUPPLEMENT_SELLE_2D} €`,
     duree: etude2D.duration,
     disciplines: etude2D.disciplines,
     aApporter: APPORTER_ETUDE,
@@ -328,7 +328,7 @@ export const RESULTATS: Resultat[] = [
     calcomSlug: "prolongateurs",
     titre: "Pose et réglage de prolongateurs",
     pourQui: "Rendez-vous court, réservé aux clients ID Postur",
-    prix: "30 €",
+    prix: `${PRIX_PROLONGATEURS} €`,
     duree: "20 minutes",
     aApporter: ["Votre vélo", "Vos prolongateurs", "Vos chaussures et vos cales"],
     lien: null,

@@ -18,6 +18,7 @@ const liens = [
   { href: "/cales", label: "Cales" },
   { href: "/choix-nouveau-velo", label: "Choix d'un vélo" },
   { href: "/rendez-vous-divers", label: "Rendez-vous divers" },
+  { href: "/tarifs-etude-posturale", label: "Tarifs" },
 ];
 
 const chemin = Astro.url.pathname.replace(/\/$/, "") || "/";
@@ -50,7 +51,7 @@ const estActif = (lien: (typeof liens)[number]) =>
                 href={lien.href}
                 aria-current={estActif(lien) ? "page" : undefined}
                 class:list={[
-                  "block px-4 py-2 rounded text-sm font-medium transition-colors",
+                  "block whitespace-nowrap px-3 xl:px-4 py-2 rounded text-sm font-medium transition-colors",
                   estActif(lien)
                     ? "bg-white text-encre shadow-[0_1px_4px_rgb(0_0_0/0.08)]"
                     : "text-encre-2 hover:text-encre hover:bg-white/60",

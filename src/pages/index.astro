@@ -9,9 +9,9 @@ import Avis from "../components/avis.astro";
 import Formule from "../components/formule.astro";
 import SEO from "../components/seo.astro";
 import { FAQ_ACCUEIL } from "../data/faq";
-import { ETUDES_POSTURALES, OFFRES_PARTICULIERES, PRESTATIONS_COURTES } from "../data/tarifs";
+import { ETUDES_POSTURALES, OFFRES_PARTICULIERES, PRESTATIONS_COURTES, PRIX_ENTREE_ETUDE, formatPrix } from "../data/tarifs";
 import { noeudService } from "../lib/schema";
-import { SITE_URL } from "../data/entreprise";
+import { AVIS_GOOGLE, SITE_URL } from "../data/entreprise";
 
 /**
  * L'accueil expose les deux familles de prestations. Les `Offer` sont
@@ -42,7 +42,16 @@ const services = [
 ];
 ---
 
-<BaseLayout faq={FAQ_ACCUEIL} schema={services}>
+<!--
+  Titre : la recherche générique « étude posturale vélo » d'abord (781 impressions
+  en position 9 sur Search Console, août–nov. 2026), la marque ensuite.
+-->
+<BaseLayout
+  title="Étude posturale vélo à Rennes en 3D ou 2D | ID Postur"
+  description={`Étude posturale vélo près de Rennes par Romain Hardy, ex-coureur pro : capture 3D ou 2D dès ${formatPrix(PRIX_ENTREE_ETUDE)}, réglage complet du vélo. 5,0 sur ${AVIS_GOOGLE.nombre} avis Google.`}
+  faq={FAQ_ACCUEIL}
+  schema={services}
+>
   <Hero />
   <Chiffres />
   <Formule />

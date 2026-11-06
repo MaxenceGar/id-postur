@@ -58,6 +58,8 @@ ${PRESTATIONS_COURTES.map(ligneePrestation).join("\n")}
 - [Accueil](${canonique("/")}) — présentation, formules, avis et questions fréquentes.
 - [Étude posturale vélo à Rennes](${canonique("/etudes-posturales")}) — détail des formats 3D et 2D, tarifs et déroulé.
 - [Étude posturale 3D ou 2D](${canonique("/etude-posturale-3d-ou-2d")}) — comparatif détaillé des deux formats, pour choisir.
+- [Tarifs](${canonique("/tarifs-etude-posturale")}) — tous les prix : études 3D et 2D, tarif déjà client, option selle, rendez-vous courts.
+- [Athlètes accompagnés](${canonique("/athletes-accompagnes")}) — cyclistes professionnels, champions régionaux de VTT et triathlètes passés par le studio.
 - [Réglage des cales](${canonique("/cales")}) — positionnement des cales au millimètre.
 - [Choix d'un nouveau vélo](${canonique("/choix-nouveau-velo")}) — validation de la taille et de l'ergonomie avant l'achat.
 - [Rendez-vous divers](${canonique("/rendez-vous-divers")}) — micro-réglage ou conseil technique ponctuel.
