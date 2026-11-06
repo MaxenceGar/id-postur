@@ -28,6 +28,14 @@
   --font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
 }
 
+/* Très grands écrans : le contenu passe de 1280 à 1440 px de large (toutes
+   les sections utilisent max-w-7xl), sinon il n'occupe que la moitié d'un 2560 px. */
+@media (min-width: 1800px) {
+  :root {
+    --container-7xl: 90rem;
+  }
+}
+
 /* Corps de texte en DM Sans (via --font-sans), titres en Plus Jakarta Sans. */
 @layer base {
   h1, h2, h3, h4, h5, h6 {
