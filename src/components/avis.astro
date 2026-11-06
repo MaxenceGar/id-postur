@@ -47,10 +47,11 @@ const partenaires = [
       </a>
     </div>
 
-    <ul class="-mx-5 px-5 flex gap-3 overflow-x-auto snap-x snap-mandatory scroll-px-5 [scrollbar-width:none] md:mx-0 md:px-0 md:grid md:grid-cols-3 md:gap-5 md:overflow-visible">
+    {/* Carrousel jusqu'à la tablette, trois colonnes seulement quand elles ont la place. */}
+    <ul class="-mx-5 px-5 md:-mx-8 md:px-8 flex gap-3 md:gap-5 overflow-x-auto snap-x snap-mandatory scroll-px-5 md:scroll-px-8 [scrollbar-width:none] lg:mx-0 lg:px-0 lg:grid lg:grid-cols-3 lg:overflow-visible">
       {
         avis.map((a) => (
-          <li class="flex w-[85%] shrink-0 snap-start flex-col justify-between gap-6 rounded-md bg-white p-6 md:w-auto md:p-8">
+          <li class="flex w-[85%] sm:w-[60%] md:w-[46%] shrink-0 snap-start flex-col justify-between gap-6 rounded-md bg-white p-6 md:p-8 lg:w-auto">
             <div class="flex flex-col gap-4">
               <span class="text-amber-500 tracking-tight" role="img" aria-label="5 étoiles sur 5">★★★★★</span>
               <blockquote class="text-[17px] leading-relaxed text-encre">« {a.texte} »</blockquote>
@@ -79,7 +80,8 @@ const partenaires = [
     </div>
 
     <!-- Carte cadeau -->
-    <div class="flex flex-col md:flex-row md:items-center gap-8 rounded-md bg-white p-7 md:p-10">
+    <!-- En ligne seulement à partir de lg : entre 768 et 1023 px, le bouton sortait de l'écran. -->
+    <div class="flex flex-col lg:flex-row lg:items-center gap-8 rounded-md bg-white p-7 md:p-10">
       <img
         src="/images/carte-cadeau-id-postur.webp"
         alt="Illustration de la carte cadeau ID Postur"
@@ -98,7 +100,7 @@ const partenaires = [
           (@idpostur).
         </p>
       </div>
-      <a href="/id-postur-carte-cadeau.pdf" class="btn btn-noir shrink-0">
+      <a href="/id-postur-carte-cadeau.pdf" class="btn btn-noir w-fit shrink-0">
         <Roll texte="Télécharger la carte cadeau" fleche="↓" />
       </a>
     </div>
