@@ -8,6 +8,12 @@ const pros = [
   { nom: "Robin Lemercier", role: "Triathlète", photo: "/images/robin-lemercier.jpg" },
   { nom: "Florentin Lecamus", role: "Cycliste professionnel", photo: "/images/florentin-lecamus.jpg" },
   { nom: "Swan Gloux", role: "Cycliste professionnel", photo: "/images/Swan-gloux.jpg" },
+  { nom: "Anaïs Morichon", role: "Cycliste professionnelle", photo: "/images/athlete-anais-morichon.webp" },
+  { nom: "Axel Mariault", role: "Cycliste professionnel", photo: "/images/athlete-axel-mariault.webp" },
+  { nom: "Maxence Lemardelé", role: "Champion de Normandie VTT", photo: "/images/athlete-maxence-lemardele.webp" },
+  { nom: "Emile Sinquin", role: "Champion de Bretagne VTT", photo: "/images/athlete-emile-sinquin.webp" },
+  { nom: "Aurélien Le Lay", role: "Triathlète", photo: "/images/athlete-aurelien-le-lay.webp" },
+  { nom: "Valentin Tortelier", role: "Triathlète", photo: "/images/athlete-valentin-tortelier.webp" },
 ];
 ---
 
@@ -38,15 +44,16 @@ const pros = [
 
       <div class="flex flex-col gap-4 border-t border-filet pt-6">
         <p class="text-sm font-semibold text-encre">Ils lui ont fait confiance</p>
-        <div class="flex flex-col sm:flex-row sm:items-center gap-4">
-          <ul class="flex -space-x-2.5 shrink-0" aria-hidden="true">
+        {/* Portraits au-dessus des noms : la rangée passe à la ligne s'il en faut. */}
+        <div class="flex flex-col gap-4">
+          <ul class="flex flex-wrap gap-y-2 pr-2.5" aria-hidden="true">
             {pros.map((p) => (
-              <li><img src={p.photo} alt="" width="48" height="48" loading="lazy" class="size-12 rounded-full object-cover object-top ring-2 ring-white" /></li>
+              <li class="-mr-2.5"><img src={p.photo} alt="" width="48" height="48" loading="lazy" class="size-11 sm:size-12 rounded-full object-cover object-top ring-2 ring-white" /></li>
             ))}
           </ul>
           <p class="text-sm leading-relaxed text-encre-2">
             {pros.map((p, i) => (
-              <><span class="font-medium text-encre">{p.nom}</span><span class="text-encre-3">{` (${p.role.toLowerCase()})`}</span>{i < pros.length - 2 ? ", " : i === pros.length - 2 ? " et " : "."}</>
+              <><span class="font-medium text-encre">{p.nom}</span><span class="text-encre-3">{` (${p.role.charAt(0).toLowerCase() + p.role.slice(1)})`}</span>{i < pros.length - 2 ? ", " : i === pros.length - 2 ? " et " : "."}</>
             ))}
           </p>
         </div>
