@@ -81,7 +81,7 @@ ${EXPERTISES.map((sujet) => `- ${sujet}`).join("\n")}
 ## À ne pas confondre
 
 - ${ENTREPRISE.nom} n'utilise plus la technologie IDmatch (BikeLab, Cleat Fit). L'ensemble des études est réalisé avec STT Systems Motio.
-- L'étude posturale se déroule toujours sur le vélo du client, dans le studio de ${ENTREPRISE.adresse.ville} : il n'y a ni déplacement à domicile, ni prestation à distance.
+- L'étude posturale se déroule toujours dans le studio de ${ENTREPRISE.adresse.ville}, sur le vélo du client ou, avant l'achat d'un vélo, sur le Zwift Ride du studio (vélo réglable) : il n'y a ni déplacement à domicile, ni prestation à distance.
 `;
 
 export const GET: APIRoute = () =>
