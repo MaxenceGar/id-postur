@@ -22,6 +22,8 @@ const troisD = getPrestation("etude-posturale-3d");
 const deuxD = getPrestation("etude-posturale-2d");
 const troisDClient = getPrestation("etude-posturale-3d-deja-client");
 const deuxDClient = getPrestation("etude-posturale-2d-deja-client");
+/** Séance sur le Zwift Ride du studio, avant l'achat : ni une étude 3D ni une 2D. */
+const zwiftRide = getPrestation("choix-nouveau-velo");
 
 const afficherPourQui = POUR_QUI_3D.length > 0 && POUR_QUI_2D.length > 0;
 
@@ -40,9 +42,8 @@ const faqItems = [
       "Non. Les positions de chrono et de triathlon ne sont pas prises en charge par l'analyse 2D : elles nécessitent l'étude posturale 3D. L'étude 2D reste disponible pour la route, le VTT et le gravel.",
   },
   {
-    question: "Puis-je faire mon étude posturale avant d'acheter mon vélo ?",
-    answer:
-      "Oui, en 3D comme en 2D. L'étude se fait alors sur le Zwift Ride du studio, un vélo réglable dans tous les sens : hauteur et recul de selle, hauteur et éloignement du cintre. On trouve votre position idéale, et vous repartez en sachant quelle taille et quelle géométrie de vélo acheter. Venez simplement en tenue, avec vos chaussures et vos cales.",
+    question: "Je n'ai pas encore acheté mon vélo : par quoi commencer ?",
+    answer: `Par une séance sur le Zwift Ride du studio, ouverte à tous : ${zwiftRide.duration}, ${formatPrix(zwiftRide.price)}. Ce n'est ni une étude 3D ni une étude 2D : sur ce vélo réglable dans tous les sens (hauteur et recul de selle, hauteur et éloignement du cintre), on prend vos mesures pour définir la taille et la géométrie du vélo à acheter. Une fois votre vélo reçu, vous faites dessus votre étude posturale, en 3D ou en 2D.`,
   },
   {
     question: "Pourquoi éviter les vêtements réfléchissants en 3D ?",
@@ -220,16 +221,17 @@ const services = [
     <!-- Étude avant l'achat, sur le vélo réglable du studio. -->
     <div class="flex flex-col gap-3 rounded-md bg-brume p-7 md:p-8 md:flex-row md:items-center md:justify-between md:gap-8">
       <div class="flex flex-col gap-2 max-w-2xl">
-        <h3 class="text-xl md:text-2xl tracking-[-0.025em]">Pas encore de vélo&nbsp;? <span class="accent">Aucun problème</span>.</h3>
+        <h3 class="text-xl md:text-2xl tracking-[-0.025em]">Pas encore de vélo&nbsp;? <span class="accent">Commencez par le Zwift Ride</span>.</h3>
         <p class="text-[15px] leading-relaxed text-encre-2">
-          L'étude 3D comme l'étude 2D peut se faire avant l'achat, sur le Zwift
-          Ride du studio : un vélo réglable dans tous les sens, sur lequel on
-          trouve votre position idéale. Vous repartez en sachant exactement
-          quelle taille et quelle géométrie acheter.
+          Une séance à part, ouverte à tous ({zwiftRide.duration}, {formatPrix(zwiftRide.price)}) :
+          sur le Zwift Ride du studio, un vélo réglable dans tous les sens, on
+          prend vos mesures pour définir la taille et la géométrie du vélo à
+          acheter. Une fois votre vélo reçu, vous faites dessus votre étude 3D
+          ou 2D.
         </p>
       </div>
-      <a href="/reserver?besoin=etude" class="btn btn-noir w-fit shrink-0">
-        <Roll texte="Réserver mon étude" fleche="↗" />
+      <a href="/reserver?besoin=taille-velo" class="btn btn-noir w-fit shrink-0">
+        <Roll texte="Réserver la séance Zwift Ride" fleche="↗" />
       </a>
     </div>
 

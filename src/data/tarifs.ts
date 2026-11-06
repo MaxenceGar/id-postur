@@ -317,11 +317,6 @@ export const COMPARATIF_3D_2D: LigneComparatif[] = [
     deuxD: "Vélo, tenue complète, chaussures et cales",
   },
   {
-    critere: "Avant l'achat d'un vélo",
-    troisD: "Possible sur le Zwift Ride du studio, un vélo réglable dans tous les sens",
-    deuxD: "Possible sur le Zwift Ride du studio, un vélo réglable dans tous les sens",
-  },
-  {
     critere: "Vêtements réfléchissants",
     troisD: "À éviter : ils perturbent la captation",
     deuxD: "Sans importance",
