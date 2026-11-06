@@ -21,6 +21,16 @@
       "source": "/etude-posturale/",
       "destination": "/etudes-posturales/",
       "permanent": true
+    },
+    {
+      "source": "/reserver/premiere-etude/",
+      "destination": "/reserver/?besoin=etude",
+      "permanent": true
+    },
+    {
+      "source": "/reserver/deja-client/",
+      "destination": "/reserver/?besoin=etude",
+      "permanent": true
     }
   ],
   "headers": [

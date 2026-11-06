@@ -183,6 +183,4 @@ export const LIBELLES_FIL_ARIANE: Record<string, string> = {
   "/athletes-accompagnes": "Athlètes accompagnés",
   "/mentions-legales": "Mentions légales",
   "/reserver": "Réserver",
-  "/reserver/premiere-etude": "Première étude",
-  "/reserver/deja-client": "Déjà client",
 };

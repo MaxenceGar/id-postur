@@ -403,11 +403,9 @@ const ICONES: Record<string, string> = {
 
       <noscript>
         <p class="mt-8 text-gray-700">
-          Réservez directement&nbsp;:
-          <a href="/reserver/premiere-etude" class="text-gray-900 font-semibold underline">première étude posturale</a>
-          ·
-          <a href="/reserver/deja-client" class="text-gray-900 font-semibold underline">déjà client</a>
-          · ou écrivez-nous à {ENTREPRISE.email}.
+          Réservez directement sur
+          <a href={`https://cal.com/${CALCOM.username}`} class="text-gray-900 font-semibold underline">notre agenda en ligne</a>
+          ou écrivez-nous à {ENTREPRISE.email}.
         </p>
       </noscript>
      </div>

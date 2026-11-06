@@ -12,8 +12,6 @@ import sitemap from '@astrojs/sitemap';
  */
 const NOINDEX_PATHS = [
   '/reserver',
-  '/reserver/premiere-etude',
-  '/reserver/deja-client',
 ];
 
 // https://astro.build/config
