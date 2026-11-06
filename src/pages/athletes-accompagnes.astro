@@ -1,0 +1,68 @@
+---
+import Roll from "../components/Roll.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { ATHLETES, roleEnPhrase } from "../data/athletes";
+import { CHIFFRES } from "../data/entreprise";
+---
+
+<BaseLayout
+  title="Athlètes accompagnés : cyclistes pros et triathlètes | ID Postur"
+  description="Cyclistes professionnels, champions régionaux de VTT, triathlètes : les athlètes qui ont confié leur position à ID Postur, près de Rennes."
+  ogImage="/images/romain-hardy-studio.webp"
+>
+  <section class="max-w-7xl mx-auto px-5 md:px-8 lg:px-10 pt-8 pb-12 md:pt-10 md:pb-16 flex flex-col gap-6">
+    <nav aria-label="Fil d'Ariane" class="flex items-center gap-2 text-[13px] font-medium text-encre-3">
+      <a href="/" class="hover:text-encre transition-colors">Accueil</a>
+      <span aria-hidden="true">/</span>
+      <span class="text-encre" aria-current="page">Athlètes accompagnés</span>
+    </nav>
+    <p class="pastille w-fit">{CHIFFRES.etudes} positions réalisées depuis 2023</p>
+    <h1 class="text-[2.5rem] sm:text-6xl xl:text-[4.25rem] leading-[1.03] tracking-[-0.04em] max-w-4xl">
+      Ils nous ont confié <span class="accent">leur position</span>.
+    </h1>
+    <p class="text-[17px] leading-relaxed text-encre-2 max-w-2xl">
+      Cyclistes professionnels, champions régionaux de VTT, triathlètes&nbsp;: ils
+      sont passés par le studio de Romain Hardy pour gagner en confort et en
+      performance. La même étude posturale est proposée à tous les cyclistes,
+      quel que soit le niveau.
+    </p>
+  </section>
+
+  <!-- Le mur : une photo par athlète. -->
+  <section class="max-w-7xl mx-auto px-5 md:px-8 lg:px-10 pb-20 md:pb-28">
+    <ul class="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
+      {
+        ATHLETES.map((a) => (
+          <li class="flex flex-col gap-3">
+            <img
+              src={a.photoGrande ?? a.photo}
+              alt={`${a.nom}, ${roleEnPhrase(a.role)}`}
+              width="640"
+              height="800"
+              loading="lazy"
+              decoding="async"
+              class="w-full aspect-[4/5] object-cover object-top rounded-md bg-brume"
+            />
+            <div class="flex flex-col gap-0.5">
+              <p class="font-id-postur text-[17px] font-semibold tracking-[-0.02em] text-encre">{a.nom}</p>
+              <p class="text-sm text-encre-2">{a.role}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="mt-14 flex flex-col gap-4 rounded-md bg-brume p-7 md:p-10 md:flex-row md:items-center md:justify-between md:gap-8">
+      <div class="flex flex-col gap-2 max-w-2xl">
+        <h2 class="text-2xl md:text-3xl tracking-[-0.03em]">À votre tour de trouver <span class="accent">votre position</span>.</h2>
+        <p class="text-[15px] leading-relaxed text-encre-2">
+          Route, VTT, gravel, chrono ou triathlon&nbsp;: quelques questions et vous
+          saurez exactement quoi réserver.
+        </p>
+      </div>
+      <a href="/reserver" class="btn btn-noir w-fit shrink-0">
+        <Roll texte="Prendre rendez-vous" fleche="↗" />
+      </a>
+    </div>
+  </section>
+</BaseLayout>

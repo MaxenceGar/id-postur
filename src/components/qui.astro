@@ -1,20 +1,7 @@
 ---
-/** Le fondateur, et les athlètes qui lui ont fait confiance. */
-const pros = [
-  { nom: "Warren Barguil", role: "Cycliste professionnel", photo: "/images/warren-barguil.webp" },
-  { nom: "Amandine Fouquenet", role: "Cycliste professionnelle", photo: "/images/AmandineFouquenet.webp" },
-  { nom: "Thibault Gernalec", role: "Cycliste professionnel", photo: "/images/thibaultgernalec.webp" },
-  { nom: "Yann Guyot", role: "Triathlète", photo: "/images/yannguyot.jpg" },
-  { nom: "Robin Lemercier", role: "Triathlète", photo: "/images/robin-lemercier.jpg" },
-  { nom: "Florentin Lecamus", role: "Cycliste professionnel", photo: "/images/florentin-lecamus.jpg" },
-  { nom: "Swan Gloux", role: "Cycliste professionnel", photo: "/images/Swan-gloux.jpg" },
-  { nom: "Anaïs Morichon", role: "Cycliste professionnelle", photo: "/images/athlete-anais-morichon.webp" },
-  { nom: "Axel Mariault", role: "Cycliste professionnel", photo: "/images/athlete-axel-mariault.webp" },
-  { nom: "Maxence Lemardelé", role: "Champion de Normandie VTT", photo: "/images/athlete-maxence-lemardele.webp" },
-  { nom: "Emile Sinquin", role: "Champion de Bretagne VTT", photo: "/images/athlete-emile-sinquin.webp" },
-  { nom: "Aurélien Le Lay", role: "Triathlète", photo: "/images/athlete-aurelien-le-lay.webp" },
-  { nom: "Valentin Tortelier", role: "Triathlète", photo: "/images/athlete-valentin-tortelier.webp" },
-];
+import Roll from "./Roll.astro";
+import { ATHLETES as pros, roleEnPhrase } from "../data/athletes";
+/** Le fondateur, et les athlètes qui lui ont fait confiance (liste complète : /athletes-accompagnes). */
 ---
 
 <section class="max-w-7xl mx-auto px-5 md:px-8 lg:px-10 py-20 md:py-28">
@@ -53,9 +40,12 @@ const pros = [
           </ul>
           <p class="text-sm leading-relaxed text-encre-2">
             {pros.map((p, i) => (
-              <><span class="font-medium text-encre">{p.nom}</span><span class="text-encre-3">{` (${p.role.charAt(0).toLowerCase() + p.role.slice(1)})`}</span>{i < pros.length - 2 ? ", " : i === pros.length - 2 ? " et " : "."}</>
+              <><span class="font-medium text-encre">{p.nom}</span><span class="text-encre-3">{` (${roleEnPhrase(p.role)})`}</span>{i < pros.length - 2 ? ", " : i === pros.length - 2 ? " et " : "."}</>
             ))}
           </p>
+          <a href="/athletes-accompagnes" class="btn btn-contour w-fit">
+            <Roll texte="Voir tous les athlètes" fleche="→" />
+          </a>
         </div>
       </div>
     </div>
